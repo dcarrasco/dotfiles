@@ -1,9 +1,13 @@
 [user]
-	name = Daniel Carrasco (pc trabajo)
-
+	name = Daniel Carrasco
 	email = danielcarrasco17@gmail.com
 
 [alias]
+
+	br=branch -v
+	co=checkout
+	s=status -s
+	df = diff --color --color-words --abbrev
 
 	#graph
 	graph=log --graph --all --pretty=format:'%C(cyan)%h%C(reset) %C(green)%ar%C(reset) %C(reset)%s%C(reset) %C(yellow)%an%C(reset) %C(magenta reverse white)%d%C(reset)'
