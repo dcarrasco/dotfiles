@@ -16,7 +16,7 @@ alias h="history"
 alias j="jobs"
 alias st="/d/util/Sublime\ Text\ Build\ 3065\ x64/sublime_text.exe &"
 alias log="cd /d/Mis_Documentos/00\ Logistica"
-alias web="cd ~/Sites/inv-fija"
+alias web="cd ~/Sites/sirioweb/www/inv-fija"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
