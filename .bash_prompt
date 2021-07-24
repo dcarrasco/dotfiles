@@ -105,10 +105,10 @@ else
 fi;
 
 # Set the terminal title to the current working directory.
-PS1="\n${default}\u@wsl2 - ";
-PS1+="${green}\W${reset}";
+PS1="\n\[${default}\]\u\[${default}\]@\[${purple}\]wsl2\[${default}\] - ";
+PS1+="\[${green}\]\W\[${reset}\]";
 PS1+="\$(prompt_git \"${cyan}\")"; # Git repository details
-PS1+="${reset} \$ "; # `$` (and reset color)
+PS1+="\[${reset}\] \$ "; # `$` (and reset color)
 export PS1;
 
 PS2="\[${yellow}\]? \[${reset}\]";
