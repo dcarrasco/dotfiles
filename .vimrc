@@ -33,8 +33,8 @@ set laststatus=2
 
 
 "--------------- Visuals ---------------"
-set guifont=Monaco:h12
-set linespace=10
+set guifont=Consolas:h11
+set linespace=8
 set guioptions-=l
 set guioptions-=L
 set guioptions-=r
@@ -77,15 +77,15 @@ nnoremap <Leader>vs :vsp<cr>
 noremap <Leader>sp :sp<cr>
 noremap <silent><Leader>p :CtrlP<cr>
 noremap <silent><Leader>o :CtrlPTag<cr>
-noremap <Leader>f :tj <c-r><c-w><cr>zz
+noremap <Leader>f :tj <c-r><c-w><cr>
 
 nnoremap ñ :
 nnoremap ' `
 
 
 " Windows mgmt ---------------------
-"nnoremap <c-j> <c-w>j
-"nnoremap <c-k> <c-w>k
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 nnoremap <c-up> <c-w>+
@@ -99,8 +99,6 @@ noremap k gk
 nnoremap ¿ /
 nnoremap { {zz
 nnoremap } }zz
-nnoremap <c-j> <c-f>zz
-nnoremap <c-k> <c-b>zz
 
 onoremap q i"
 vnoremap q i"
@@ -118,7 +116,7 @@ nnoremap <c-tab> :bn<cr>
 nnoremap <c-s-tab> :bp<cr>
 nnoremap <Leader><tab> :bn<cr>
 nnoremap <Leader><s-tab> :bp<cr>
-nnoremap <tab> :buffer<space>
+nnoremap <tab> :b<space>
 nnoremap <silent><Leader>q :bd<cr>
 
 nnoremap <Leader>h :tab help<space>
