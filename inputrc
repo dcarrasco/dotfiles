@@ -1,4 +1,4 @@
-# Make Tab autocomplete regardless of filename case
+#Make Tab autocomplete regardless of filename case
 set completion-ignore-case on
 
 # List all matches in case multiple possible completions are possible
@@ -38,3 +38,11 @@ set convert-meta off
 
 # Use Alt/Meta + Delete to delete the preceding word
 "\e[3;3~": kill-word
+
+set bell-style visible
+
+set editing-mode vi
+set keymap vi-command
+set colored-completion-prefix on
+set colored-stats on
+
