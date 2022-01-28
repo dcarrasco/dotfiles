@@ -26,18 +26,21 @@ set path+=**
 set wildmenu
 
 set ruler
+set number
+set numberwidth=5
+set relativenumber
+
 set showcmd
 set notitle
 set laststatus=2
 set showtabline=1         " show tab line
 set autoindent
-set scrolloff=3
+set scrolloff=5
 " set visualbell
 set cursorline
 
-set number
-set numberwidth=5
-set relativenumber
+set noshowmode
+set shiftwidth=4
 
 
 "--------------- Visuals ---------------"
@@ -186,27 +189,24 @@ set statusline+=%#Cursor#%{(mode()=='c')?'\ \ \ COMMAND\ \ \ ':''}
 set statusline+=%#Statusline#
 set statusline+=\ [%n]       " buffer number
 set statusline+=%m           " flag modificacion del archivo
-set statusline+=%r           " flag readonly file
-set statusline+=%h           " help buffer flag
+"set statusline+=%r           " flag readonly file
+"set statusline+=%h           " help buffer flag
 "set statusline+=\ %F         " path y nombre del archivo
 set statusline+=\ %t         " solo nombre del archivo
 "set statusline+=\ %{StatuslineGit()}
 set statusline+=\ %=         " separation point
-set statusline+=\ [%Y]         " file type
-set statusline+=\ [%{&fileencoding?&fileencondig:&encoding}]    " file encoding
-set statusline+=\ %{ShowFileFormatFlag(&fileformat)}            " file format
+set statusline+=\ %Y\ \|        " file type
+set statusline+=\ %{&fileencoding?&fileencondig:&encoding}\ \|    " file encoding
+set statusline+=\ %{ShowFileFormatFlag(&fileformat)}\             " file format
 "set statusline+=\ %{mode()}            " file format
+set statusline+=\ %#Search#\ %3p%%      " % de linea respecto del total
 set statusline+=\ %#Cursor#
-set statusline+=\ %3l/%L            " Numero de linea actual / numero de lineas totales
-set statusline+=\ :\ %-2c%V        " Numero de la columna
-set statusline+=\ (%3p%%)\          " % de linea respecto del total
+"set statusline+=\ %3l/%L            " Numero de linea actual / numero de lineas totales
+"set statusline+=\ :\ %-2c%V        " Numero de la columna
+set statusline+=\ \ %3l:%-2c\ \             " Numero de linea actual / numero de lineas totales
 
 " elimina ultimos espacios de las lineas al grabar
 autocmd BufWritePre * %s/\s\+$//e
-
-" default the statusline to green when entering Vim
-set noshowmode
-set shiftwidth=4
 
 
 " GitGutter ----------------------------------------------------------------
@@ -236,17 +236,18 @@ let Tlist_File_Fold_Auto_Close = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
+let Tlist_php_settings = 'php;f:function'
 
 
 " Functions ----------------------------------------------------------------
 
 function! ShowFileFormatFlag(var)
     if (a:var == 'dos')
-        return '[dos]'
+        return 'dos'
     elseif (a:var=='mac')
-        return '[mac]'
+        return 'mac'
     else
-        return '[unix]'
+        return 'unix'
     endif
 endfunction
 
