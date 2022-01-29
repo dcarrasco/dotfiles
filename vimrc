@@ -2,8 +2,9 @@ set nocompatible              " be iMproved, required
 
 so ~/.vim/plugins.vim
 
-set history=500
 syntax on
+set history=500
+set updatetime=2000
 
 set backspace=indent,eol,start
 let mapleader=','
@@ -19,7 +20,7 @@ set fileencoding=utf-8
 set fileformat=unix
 "set fileformats=unix,dos
 set tags=./tags,tags,.git/tags;
-"set grepprg=C:\\util\\bin\\grep\ -n\ -R\ --exclude-dir=.git\ --include=*.php
+set grepprg=grep\ -n\ -R\ --exclude-dir=storage\ --exclude-dir=.git\ --exclude=tags\ --include=*.php
 set grepformat=%f:%l:%m
 
 set path+=**
@@ -27,7 +28,7 @@ set wildmenu
 
 set ruler
 set number
-set numberwidth=5
+set numberwidth=4
 set relativenumber
 
 set showcmd
@@ -76,30 +77,33 @@ set hlsearch
 
 
 "--------------- Mappings ---------------"
-"nmap <Leader>ev :e $MYVIMRC<cr>
-nmap <Leader>ev :e ~/.vimrc<cr>
-nmap <Leader>pv :e ~/.vim/plugins.vim<cr>
-nmap <Leader><space> :nohlsearch<cr>
-nnoremap <Leader>w :w<cr>
-nnoremap <Leader>vs :vsp<cr>
-noremap <Leader>sp :sp<cr>
-"noremap <silent><Leader>p :CtrlP<cr>
-nnoremap <silent><Leader>p :FZF<cr>
-"noremap <silent><Leader>o :CtrlPTag<cr>
-"noremap <silent><Leader>o :CtrlPTag<cr>
-nnoremap <silent><Leader>f :FZFTselect <c-r><c-w><cr>
-"nnoremap <Leader>f :tj <c-r><c-w><cr>
-nnoremap <silent><Leader>s :TlistToggle<cr>
+"nnoremap <Leader>ev :e $MYVIMRC<CR>
+nnoremap <Leader>ev :tab edit ~/.vimrc<CR>
+nnoremap <Leader>ep :tab edit ~/.vim/plugins.vim<CR>
+nnoremap <Leader>et :tab edit ~/.tmux.conf<CR>
+nnoremap <Leader><space> :nohls<CR>
+nnoremap <Leader>w :w<CR>
+"noremap <silent><Leader>p :CtrlP<CR>
+nnoremap <silent><Leader>p :FZF<CR>
+"noremap <silent><Leader>o :CtrlPTag<CR>
+"noremap <silent><Leader>o :CtrlPTag<CR>
+nnoremap <silent><Leader>f :FZFTselect <c-r><c-w><CR>
+"nnoremap <Leader>f :tj <c-r><c-w><CR>
+nnoremap <silent><Leader>s :TlistToggle<CR>
 
 " Latam Keyboard mgmt ---------------------
 nnoremap ñ :
 nnoremap ¿ /
-nnoremap ' `
-nnoremap ` '
 nnoremap <f3> <c-]>
 
+" US Keyboard mgmt ---------------------
+nnoremap ; :
+nnoremap : ;
 
 " Windows mgmt ---------------------
+nnoremap <Leader>vs :vsp<CR>           " Vertical Split
+nnoremap <Leader>sp :sp<CR>            " Horizontal Split
+nnoremap <silent><Leader>m :on<CR>     " Maximizes window
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
@@ -110,6 +114,8 @@ nnoremap <c-left> <c-w><
 nnoremap <c-right> <c-w>>
 
 " Movement mgmt ---------------------
+nnoremap ' `
+nnoremap ` '
 inoremap jj <Esc>
 noremap j gj
 noremap k gk
@@ -145,19 +151,19 @@ inoremap $$ $this->
 
 " Buffer related -------------------------------------------------------------
 nnoremap <f5> :buffers<CR>:buffer<space>
-nnoremap <c-tab> :bn<cr>
-nnoremap <c-s-tab> :bp<cr>
-nnoremap <Leader><tab> :bn<cr>
-nnoremap <Leader><s-tab> :bp<cr>
+nnoremap <c-tab> :bn<CR>
+nnoremap <c-s-tab> :bp<CR>
+nnoremap <Leader><tab> :bn<CR>
+nnoremap <Leader><s-tab> :bp<CR>
 nnoremap <tab> :b<space>
-nnoremap <silent><Leader>q :bd<cr>
+nnoremap <silent><Leader>q :bd<CR>
 
 nnoremap <Leader>h :tab help<space>
 
 "Make NERDTree easier to toggle ----------------------------------------------
 let g:NERDTreeMinimalUI = 1
-nmap <silent><Leader>d :NERDTreeToggle<cr>
-nmap <c-1> :NERDTreeToggle<cr>
+nnoremap <silent><Leader>d :NERDTreeToggle<CR>
+"nnoremap <c-1> :NERDTreeToggle<CR>
 " Open NERDTree when VIM starts with no arguments
 "autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
@@ -180,32 +186,33 @@ augroup END
 
 "--------------- Config Status Line ---------------"
 set statusline=
-set statusline+=%#StatusLine#%{(mode()=='n')?'\ \ \ \ NORMAL\ \ \ ':''}
-set statusline+=%#DiffAdd#%{(mode()=='i')?'\ \ \ \ INSERT\ \ \ ':''}
-set statusline+=%#ErrorMsg#%{(mode()=='r')?'\ \ \ \ REPLACE\ \ ':''}
-set statusline+=%#DiffChange#%{(mode()=='V')?'\ \ \ \ VISUAL\ \ \ ':''}
-set statusline+=%#DiffChange#%{(mode()=='^V')?'\ \ \ \ VISUAL\ \ \ ':''}
-set statusline+=%#Cursor#%{(mode()=='c')?'\ \ \ COMMAND\ \ \ ':''}
+set statusline+=%#Search#%{(NewMode()=='n')?'\ \ \ \ NORMAL\ \ \ ':''}
+set statusline+=%#DiffAdd#%{(NewMode()=='i')?'\ \ \ \ INSERT\ \ \ ':''}
+set statusline+=%#ErrorMsg#%{(NewMode()=='r')?'\ \ \ \ REPLACE\ \ ':''}
+set statusline+=%#DiffChange#%{(NewMode()=='V')?'\ \ \ \ VISUAL\ \ \ ':''}
+set statusline+=%#DiffChange#%{(NewMode()=='<c-v>')?'\ \ \ \ VISUAL\ \ \ ':''}
+set statusline+=%#Cursor#%{(NewMode()=='c')?'\ \ \ \ COMMAND\ \ ':''}
 set statusline+=%#Statusline#
 set statusline+=\ [%n]       " buffer number
 set statusline+=%m           " flag modificacion del archivo
 "set statusline+=%r           " flag readonly file
 "set statusline+=%h           " help buffer flag
 "set statusline+=\ %F         " path y nombre del archivo
-set statusline+=\ %t         " solo nombre del archivo
+set statusline+=\ %t\         " solo nombre del archivo
 "set statusline+=\ %{StatuslineGit()}
 set statusline+=\ %=         " separation point
 set statusline+=\ %Y\ \|        " file type
 set statusline+=\ %{&fileencoding?&fileencondig:&encoding}\ \|    " file encoding
 set statusline+=\ %{ShowFileFormatFlag(&fileformat)}\             " file format
-"set statusline+=\ %{mode()}            " file format
+"set statusline+=\ %{NewMode()}            " file format
 set statusline+=\ %#Search#\ %3p%%      " % de linea respecto del total
 set statusline+=\ %#Cursor#
 "set statusline+=\ %3l/%L            " Numero de linea actual / numero de lineas totales
 "set statusline+=\ :\ %-2c%V        " Numero de la columna
 set statusline+=\ \ %3l:%-2c\ \             " Numero de linea actual / numero de lineas totales
 
-" elimina ultimos espacios de las lineas al grabar
+
+" Elimina ultimos espacios de las lineas al grabar -------------------------
 autocmd BufWritePre * %s/\s\+$//e
 
 
@@ -217,6 +224,12 @@ highlight def link GitGutterDeleteLineNr GitGutterDeleteLine
 highlight def link GitGutterChangeDeleteLineNr GitGutterChangeDeleteLine
 "let g:gitgutter_highlight_lines = 1
 let g:gitgutter_highlight_linenrs = 1
+
+nnoremap <Leader>gn :GitGutterNextHunk<CR>
+nnoremap <Leader>gp :GitGutterPrevHunk<CR>
+nnoremap <Leader>gv :GitGutterPreviewHunk<CR>
+nnoremap <Leader>gu :GitGutterUndoHunk<CR>
+
 autocmd BufWritePost * GitGutter
 
 
@@ -229,6 +242,7 @@ let g:VM_maps['Find Subword Under'] = '<C-d>'
 " Snipmate -----------------------------------------------------------------
 let g:snipMate = { 'snippet_version' : 1 }
 
+
 " TList --------------------------------------------------------------------
 let Tlist_Close_On_Select = 1
 let Tlist_Enable_Fold_Column = 0
@@ -236,7 +250,7 @@ let Tlist_File_Fold_Auto_Close = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
-let Tlist_php_settings = 'php;f:function'
+let tlist_php_settings = 'php;f:function'
 
 
 " Functions ----------------------------------------------------------------
@@ -249,6 +263,13 @@ function! ShowFileFormatFlag(var)
     else
         return 'unix'
     endif
+endfunction
+
+function! NewMode()
+    if ( mode() == "\<c-v>")
+        return 'v'
+    else
+        return mode()
 endfunction
 
 function! GitBranch()
