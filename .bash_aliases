@@ -70,4 +70,8 @@ alias fresh='php artisan migrate:fresh --seed'
 alias tinker='php artisan tinker'
 alias t='vendor/bin/phpunit'
 
+# Source bash_prompt ====================================================================
+if [ -f ~/.bash_prompt ]; then
+    . ~/.bash_prompt
+fi
 
