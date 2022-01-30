@@ -6,7 +6,7 @@ alias ll='ls -lhF --color=auto'
 alias la='ls -laFh --color=auto'
 alias lsd="ls -lFh --color | grep '^d'"
 alias ls='ls --color=auto -F'
-alias l.="ls -a --color | grep '^\.'"
+alias l.="ls -a --color | grep --color=never '^\.'"
 
 alias diff='diff --color'
 
@@ -48,7 +48,7 @@ alias dtop='docker stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPU
 function dce { docker compose exec --env SERVICE_NAME=$1 $1 sh -l; }
 export -f dce
 
-function drun { docker run --rm -it -v /home/daniel/:/home/daniel/ -v /home/daniel/code/docker-gastos/profile:/root/.profile -w /home/daniel/code $1 sh -l; }
+function drun { docker run --rm -it -v /home/daniel/:/home/daniel/ -w /home/daniel/ $1 bash; }
 export -f drun
 
 
@@ -57,7 +57,7 @@ alias g=git
 alias gaa='git add --all'
 alias gc='git commit -m $@'
 alias nah='git reset --hard | git clean -df'
-alias gs='git status $@'
+alias gs='git status -s $@'
 alias gg='git graph $@'
 alias gl='git l $@'
 alias gd='git diff $@'
