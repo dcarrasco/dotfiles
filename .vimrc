@@ -90,6 +90,7 @@ nnoremap <silent><Leader>p :FZF<CR>
 nnoremap <silent><Leader>f :FZFTselect <c-r><c-w><CR>
 "nnoremap <Leader>f :tj <c-r><c-w><CR>
 nnoremap <silent><Leader>s :TlistToggle<CR>
+nnoremap <silent><Leader>i :call PhpInsertUse()<CR>
 
 " Latam Keyboard mgmt ---------------------
 nnoremap ñ :
@@ -254,6 +255,8 @@ let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 let tlist_php_settings = 'php;f:function'
 
+" PHP Namespace ---------------------------------------------------------------
+let g:php_namespace_sort_after_insert = 1
 
 " Functions ----------------------------------------------------------------
 

@@ -22,8 +22,8 @@ Plugin 'mg979/vim-visual-multi'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
-
 Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'arnaud-lb/vim-php-namespace'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
