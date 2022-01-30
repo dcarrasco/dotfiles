@@ -94,7 +94,7 @@ prompt_git() {
 if [[ "${USER}" == "root" ]]; then
 	userStyle="${red}";
 else
-	userStyle="${orange}";
+	userStyle="${default}";
 fi;
 
 # Highlight the hostname when connected via SSH.
@@ -106,7 +106,7 @@ fi;
 
 # Set the terminal title to the current working directory.
 #PS1="\n\[${default}\]\u\[${default}\]@\[${purple}\]wsl2\[${default}\] - ";
-PS1="\n\[${default}\]\u\[${default}\]@\[${purple}\]\H\[${default}\] - ";
+PS1="\n\[${userStyle}\]\u\[${default}\]@\[${purple}\]\H\[${default}\] - ";
 PS1+="\[${green}\]\W\[${reset}\]";
 PS1+="\$(prompt_git \"${cyan}\")"; # Git repository details
 PS1+="\[${reset}\] \$ "; # `$` (and reset color)
