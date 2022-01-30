@@ -219,7 +219,7 @@ autocmd BufWritePre * %s/\s\+$//e
 
 
 " GitGutter ----------------------------------------------------------------
-highlight SignColumn guibg=none
+"highlight SignColumn guibg=none
 highlight def link GitGutterAddLineNr GitGutterAddLine
 highlight def link GitGutterChangeLineNr GitGutterChangeLine
 highlight def link GitGutterDeleteLineNr GitGutterDeleteLine
