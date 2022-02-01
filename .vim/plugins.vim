@@ -25,6 +25,14 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'arnaud-lb/vim-php-namespace'
 
+Plugin 'phpactor/phpactor'
+Plugin 'ncm2/ncm2'
+Plugin 'roxma/nvim-yarp'
+Plugin 'phpactor/ncm2-phpactor'
+Plugin 'ncm2/ncm2-ultisnips'
+Plugin 'SirVer/ultisnips'
+
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required

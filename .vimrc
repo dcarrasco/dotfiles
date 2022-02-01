@@ -3,6 +3,7 @@ set nocompatible              " be iMproved, required
 so ~/.vim/plugins.vim
 
 syntax on
+syntax enable
 set history=500
 set updatetime=2000
 
@@ -19,9 +20,10 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileformat=unix
 "set fileformats=unix,dos
-set tags=./tags,tags,.git/tags;
+set tags=./tags,tags,tags.vendor,.git/tags;
 set grepprg=grep\ -n\ -R\ --exclude-dir=storage\ --exclude-dir=.git\ --exclude=tags\ --include=*.php
 set grepformat=%f:%l:%m
+set colorcolumn=120
 
 set path+=**
 set wildmenu
@@ -40,6 +42,7 @@ set scrolloff=5
 " set visualbell
 set cursorline
 
+set signcolumn=yes         " siempre mostrar signcolumns
 set noshowmode
 set shiftwidth=4
 
@@ -72,25 +75,30 @@ set termguicolors
 
 "--------------- Search ---------------"
 set ignorecase
+set smartcase
 set incsearch
 set hlsearch
 
 
 "--------------- Mappings ---------------"
 "nnoremap <Leader>ev :e $MYVIMRC<CR>
-nnoremap <Leader>ev :tab edit ~/.vimrc<CR>
-nnoremap <Leader>ep :tab edit ~/.vim/plugins.vim<CR>
-nnoremap <Leader>et :tab edit ~/.tmux.conf<CR>
-nnoremap <Leader><space> :nohls<CR>
+nnoremap <Leader>ev :e ~/.vimrc<CR>
+nnoremap <Leader>ep :e ~/.vim/plugins.vim<CR>
+nnoremap <Leader>et :e ~/.tmux.conf<CR>
+"nnoremap <Leader><space> :nohls<CR>
+nnoremap <silent><esc> :noh<CR>
 nnoremap <Leader>w :w<CR>
 "noremap <silent><Leader>p :CtrlP<CR>
-nnoremap <silent><Leader>p :FZF<CR>
+nnoremap <silent><Leader>p :Files<CR>
+nnoremap <silent><Leader>P :GFiles<CR>
 "noremap <silent><Leader>o :CtrlPTag<CR>
 "noremap <silent><Leader>o :CtrlPTag<CR>
 nnoremap <silent><Leader>f :FZFTselect <c-r><c-w><CR>
 "nnoremap <Leader>f :tj <c-r><c-w><CR>
 nnoremap <silent><Leader>s :TlistToggle<CR>
 nnoremap <silent><Leader>i :call PhpInsertUse()<CR>
+" Disable anoying ex mode
+nnoremap Q <Nop>
 
 " Latam Keyboard mgmt ---------------------
 nnoremap ñ :
@@ -143,9 +151,15 @@ onoremap b i[
 vnoremap b i[
 nnoremap <M-j> ddp
 nnoremap <M-k> ddkkp
+" paste from yank
+nnoremap <C-p> "0p
+nnoremap <C-S-p> "0P
 
 " Select mgmt ---------------------
 vnoremap v V
+" indentar sin perder la seleccion
+vnoremap > >gv
+vnoremap < <gv
 
 " PHP mgmt ---------------------
 inoremap $$ $this->
@@ -164,8 +178,10 @@ nnoremap <silent><Leader>q :bd<CR>
 nnoremap <Leader>h :tab help<space>
 
 "Make NERDTree easier to toggle ----------------------------------------------
-let g:NERDTreeMinimalUI = 1
 nnoremap <silent><Leader>d :NERDTreeToggle<CR>
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '~'
 "nnoremap <c-1> :NERDTreeToggle<CR>
 " Open NERDTree when VIM starts with no arguments
 "autocmd StdinReadPre * let s:std_in=1
@@ -255,8 +271,19 @@ let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 let tlist_php_settings = 'php;f:function'
 
+
 " PHP Namespace ---------------------------------------------------------------
 let g:php_namespace_sort_after_insert = 1
+
+" Phpactor -------------------------------------------------------------------
+"autocmd Filetype php setlocal omnifunc=phpactor#Complete
+nnoremap <silent><Leader>mm :call phpactor#ContextMenu()<CR>
+nnoremap <silent><Leader>nn :call phpactor#Navigate()<CR>
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone
+inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 
 " Functions ----------------------------------------------------------------
 
