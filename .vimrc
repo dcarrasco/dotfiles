@@ -13,17 +13,17 @@ let mapleader=','
 set ttyfast
 set autoread          " reload file if changed outside vim
 set smartindent
+set autoindent
 set tabstop=4
 set softtabstop=4
 set expandtab
 set encoding=utf-8
 set fileencoding=utf-8
 set fileformat=unix
-"set fileformats=unix,dos
 set tags=./tags,tags,tags.vendor,.git/tags;
 set grepprg=grep\ -n\ -R\ --exclude-dir=storage\ --exclude-dir=.git\ --exclude=tags\ --include=*.php
-set grepformat=%f:%l:%m
 set colorcolumn=120
+set grepformat=%f:%l:%m
 
 set path+=**
 set wildmenu
@@ -38,7 +38,6 @@ set notitle
 set laststatus=2
 set noshowmode
 set showtabline=1         " show tab line
-set autoindent
 set scrolloff=5
 " set visualbell
 set cursorline
@@ -94,12 +93,13 @@ nnoremap <Leader>w :w<CR>
 "noremap <silent><Leader>p :CtrlP<CR>
 nnoremap <silent><Leader>p :Files<CR>
 nnoremap <silent><Leader>P :GFiles<CR>
-"noremap <silent><Leader>o :CtrlPTag<CR>
-"noremap <silent><Leader>o :CtrlPTag<CR>
-nnoremap <silent><Leader>f :FZFTselect <c-r><c-w><CR>
+noremap <silent><Leader>o :Commands<CR>
+nnoremap <silent><Leader>f :Tags <c-r><c-w><CR>
 "nnoremap <Leader>f :tj <c-r><c-w><CR>
 nnoremap <silent><Leader>s :TlistToggle<CR>
 nnoremap <silent><Leader>i :call PhpInsertUse()<CR>
+nnoremap <silent><Leader>d :NERDTreeToggle<CR>
+
 nnoremap <Leader>h :tab help<space>
 nnoremap <silent><Leader>hh :Helptags<CR>
 " Disable anoying ex mode
@@ -185,7 +185,6 @@ nnoremap <silent><Leader>q :bd<CR>
 
 
 "Make NERDTree easier to toggle ----------------------------------------------
-nnoremap <silent><Leader>d :NERDTreeToggle<CR>
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrowExpandable = '+'
 let g:NERDTreeDirArrowCollapsible = '~'
@@ -200,7 +199,7 @@ let g:fzf_colors = {
 \    'border': ['fg', 'Question'],
 \}
 "let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.6, 'yoffset': 0.1 } }
-let g:fzf_layout = { 'down': '30%' }
+let g:fzf_layout = { 'down': '40%' }
 
 "--------------- Auto-Commands ---------------"
 augroup autosourcing
@@ -212,6 +211,8 @@ augroup END
 
 
 "--------------- Config Status Line ---------------"
+nnoremap <Leader>cc :colorscheme nord<CR>
+
 let g:lightline = {
     \ 'colorscheme': 'nord',
     \ }
@@ -261,6 +262,10 @@ nnoremap <Leader>gp :GitGutterPrevHunk<CR>
 nnoremap <Leader>gv :GitGutterPreviewHunk<CR>
 nnoremap <Leader>gu :GitGutterUndoHunk<CR>
 
+nnoremap <Leader>gd :G diff<CR>
+nnoremap <Leader>gs :G<CR>
+
+" actualiza gitgutter al grabar
 autocmd BufWritePost * GitGutter
 
 
@@ -287,6 +292,7 @@ let tlist_php_settings = 'php;f:function'
 " PHP Namespace ---------------------------------------------------------------
 let g:php_namespace_sort_after_insert = 1
 
+"
 " Phpactor -------------------------------------------------------------------
 "autocmd Filetype php setlocal omnifunc=phpactor#Complete
 nnoremap <silent><Leader>mm :call phpactor#ContextMenu()<CR>
@@ -295,6 +301,16 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone
 inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+
+" Autocomplete ----------------------------------------------------------------
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone
+inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<tab>"
+inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<S-tab>"
+noremap <silent> <expr> <c-u> ncm2_ultisnips#expand_or("\<CR>", "n")
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 
 augroup focustoggle
