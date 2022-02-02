@@ -36,6 +36,7 @@ set relativenumber
 set showcmd
 set notitle
 set laststatus=2
+set noshowmode
 set showtabline=1         " show tab line
 set autoindent
 set scrolloff=5
@@ -43,7 +44,6 @@ set scrolloff=5
 set cursorline
 
 set signcolumn=yes         " siempre mostrar signcolumns
-set noshowmode
 set shiftwidth=4
 
 
@@ -59,7 +59,10 @@ set guioptions-=R
 "colorscheme hybrid_material
 colorscheme nord
 
-set t_Co=256
+if !has('gui_running')
+    set t_Co=256
+endif
+
 set background=dark
 set termguicolors
 "highlight CursorLine term=none cterm=none ctermbg=232
@@ -97,6 +100,8 @@ nnoremap <silent><Leader>f :FZFTselect <c-r><c-w><CR>
 "nnoremap <Leader>f :tj <c-r><c-w><CR>
 nnoremap <silent><Leader>s :TlistToggle<CR>
 nnoremap <silent><Leader>i :call PhpInsertUse()<CR>
+nnoremap <Leader>h :tab help<space>
+nnoremap <silent><Leader>hh :Helptags<CR>
 " Disable anoying ex mode
 nnoremap Q <Nop>
 
@@ -110,9 +115,12 @@ nnoremap ; :
 nnoremap : ;
 
 " Windows mgmt ---------------------
-nnoremap <Leader>vs :vsp<CR>           " Vertical Split
-nnoremap <Leader>sp :sp<CR>            " Horizontal Split
-nnoremap <silent><Leader>m :on<CR>     " Maximizes window
+" Vertical Split
+nnoremap <Leader>vs :vsp<CR>
+" Horizontal Split
+nnoremap <Leader>sp :sp<CR>
+" Maximizes window
+nnoremap <silent><Leader>m :on<CR>
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
@@ -175,7 +183,6 @@ nnoremap <S-h> :bp<CR>
 nnoremap <tab> :b<space>
 nnoremap <silent><Leader>q :bd<CR>
 
-nnoremap <Leader>h :tab help<space>
 
 "Make NERDTree easier to toggle ----------------------------------------------
 nnoremap <silent><Leader>d :NERDTreeToggle<CR>
@@ -191,44 +198,49 @@ let g:NERDTreeDirArrowCollapsible = '~'
 "let g:fzf_tags_prompt = 'Gd '
 let g:fzf_colors = {
 \    'border': ['fg', 'Question'],
-\    'bg': ['bg', 'Folded']
 \}
-let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.6, 'yoffset': 0.1 } }
+"let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.6, 'yoffset': 0.1 } }
+let g:fzf_layout = { 'down': '30%' }
 
 "--------------- Auto-Commands ---------------"
 augroup autosourcing
     autocmd!
-    autocmd BufWritePost .vimrc source %
+    autocmd BufWritePost .vimrc      source %
+    autocmd BufWritePost plugins.vim source %
 augroup END
 
 
 
 "--------------- Config Status Line ---------------"
-set statusline=
-set statusline+=%#Search#%{(NewMode()=='n')?'\ \ \ \ NORMAL\ \ \ ':''}
-set statusline+=%#DiffAdd#%{(NewMode()=='i')?'\ \ \ \ INSERT\ \ \ ':''}
-set statusline+=%#ErrorMsg#%{(NewMode()=='r')?'\ \ \ \ REPLACE\ \ ':''}
-set statusline+=%#DiffChange#%{(NewMode()=='V')?'\ \ \ \ VISUAL\ \ \ ':''}
-set statusline+=%#DiffChange#%{(NewMode()=='<c-v>')?'\ \ \ \ VISUAL\ \ \ ':''}
-set statusline+=%#Cursor#%{(NewMode()=='c')?'\ \ \ \ COMMAND\ \ ':''}
-set statusline+=%#Statusline#
-set statusline+=\ [%n]       " buffer number
-set statusline+=%m           " flag modificacion del archivo
+let g:lightline = {
+    \ 'colorscheme': 'nord',
+    \ }
+
+"set statusline=
+"set statusline+=%#Search#%{(NewMode()=='n')?'\ \ \ \ NORMAL\ \ \ ':''}
+"set statusline+=%#DiffAdd#%{(NewMode()=='i')?'\ \ \ \ INSERT\ \ \ ':''}
+"set statusline+=%#ErrorMsg#%{(NewMode()=='r')?'\ \ \ \ REPLACE\ \ ':''}
+"set statusline+=%#DiffChange#%{(NewMode()=='V')?'\ \ \ \ VISUAL\ \ \ ':''}
+"set statusline+=%#DiffChange#%{(NewMode()=='<c-v>')?'\ \ \ \ VISUAL\ \ \ ':''}
+"set statusline+=%#Cursor#%{(NewMode()=='c')?'\ \ \ \ COMMAND\ \ ':''}
+"set statusline+=%#Statusline#
+"set statusline+=\ [%n]       " buffer number
+"set statusline+=%m           " flag modificacion del archivo
 "set statusline+=%r           " flag readonly file
 "set statusline+=%h           " help buffer flag
 "set statusline+=\ %F         " path y nombre del archivo
-set statusline+=\ %t\         " solo nombre del archivo
+"set statusline+=\ %t\         " solo nombre del archivo
 "set statusline+=\ %{StatuslineGit()}
-set statusline+=\ %=         " separation point
-set statusline+=\ %Y\ \|        " file type
-set statusline+=\ %{&fileencoding?&fileencondig:&encoding}\ \|    " file encoding
-set statusline+=\ %{ShowFileFormatFlag(&fileformat)}\             " file format
+"set statusline+=\ %=         " separation point
+"set statusline+=\ %Y\ \|        " file type
+"set statusline+=\ %{&fileencoding?&fileencondig:&encoding}\ \|    " file encoding
+"set statusline+=\ %{ShowFileFormatFlag(&fileformat)}\             " file format
 "set statusline+=\ %{NewMode()}            " file format
-set statusline+=\ %#Search#\ %3p%%      " % de linea respecto del total
-set statusline+=\ %#Cursor#
+"set statusline+=\ %#Search#\ %3p%%      " % de linea respecto del total
+"set statusline+=\ %#Cursor#
 "set statusline+=\ %3l/%L            " Numero de linea actual / numero de lineas totales
 "set statusline+=\ :\ %-2c%V        " Numero de la columna
-set statusline+=\ \ %3l:%-2c\ \             " Numero de linea actual / numero de lineas totales
+"set statusline+=\ \ %3l:%-2c\ \             " Numero de linea actual / numero de lineas totales
 
 
 " Elimina ultimos espacios de las lineas al grabar -------------------------
@@ -283,6 +295,13 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone
 inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+
+augroup focustoggle
+  autocmd!
+  autocmd BufEnter,FocusGained * setlocal cursorline
+  autocmd BufLeave,FocusLost   * setlocal nocursorline
+augroup END
 
 
 " Functions ----------------------------------------------------------------

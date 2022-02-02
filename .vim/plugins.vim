@@ -5,8 +5,9 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-vinegar'
+"Plugin 'tpope/vim-vinegar'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 " Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'guns/xterm-color-table.vim'
@@ -31,6 +32,12 @@ Plugin 'roxma/nvim-yarp'
 Plugin 'phpactor/ncm2-phpactor'
 Plugin 'ncm2/ncm2-ultisnips'
 Plugin 'SirVer/ultisnips'
+
+Plugin 'easymotion/vim-easymotion'
+
+Plugin 'itchyny/lightline.vim'
+
+Plugin 'StanAngeloff/php.vim'
 
 
 " All of your Plugins must be added before the following line
