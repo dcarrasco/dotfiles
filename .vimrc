@@ -8,15 +8,17 @@ set history=500
 set updatetime=2000
 
 set backspace=indent,eol,start
-let mapleader=','
 
 set ttyfast
 set autoread          " reload file if changed outside vim
+
 set smartindent
 set autoindent
 set tabstop=4
 set softtabstop=4
 set expandtab
+set shiftwidth=4
+
 set encoding=utf-8
 set fileencoding=utf-8
 set fileformat=unix
@@ -32,6 +34,7 @@ set ruler
 set number
 set numberwidth=4
 set relativenumber
+set signcolumn=yes         " siempre mostrar signcolumns
 
 set showcmd
 set notitle
@@ -39,14 +42,13 @@ set laststatus=2
 set noshowmode
 set showtabline=1         " show tab line
 set scrolloff=5
-" set visualbell
+"set visualbell
 set cursorline
-
-set signcolumn=yes         " siempre mostrar signcolumns
-set shiftwidth=4
 
 
 "--------------- Visuals ---------------"
+colorscheme nord
+
 set guifont=Consolas:h11
 set linespace=8
 set guioptions-=l
@@ -54,25 +56,12 @@ set guioptions-=L
 set guioptions-=r
 set guioptions-=R
 
-"colorscheme atom
-"colorscheme hybrid_material
-colorscheme nord
-
 if !has('gui_running')
     set t_Co=256
 endif
 
 set background=dark
 set termguicolors
-"highlight CursorLine term=none cterm=none ctermbg=232
-"highlight CursorLineNr ctermfg=15 ctermbg=4
-"highlight LineNr ctermfg=8
-"highlight Normal term=none cterm=none ctermbg=0
-"highlight Normal term=none cterm=none ctermbg=21
-"highlight Visual ctermbg=5
-"highlight StatusLineNC cterm=none ctermbg=2
-"highlight User1 ctermfg=250 ctermbg=237 guifg=#c5c8c6 guibg=#455a64
-"highlight User2 ctermfg=250 ctermbg=237 guifg=#c5c8c6 guibg=#455a64
 
 
 "--------------- Search ---------------"
@@ -82,20 +71,24 @@ set incsearch
 set hlsearch
 
 
-"--------------- Mappings ---------------"
+" Leader Key -----------------------------------------------------------------
+let mapleader=','
+
+
+" Mappings -------------------------------------------------------------------
 "nnoremap <Leader>ev :e $MYVIMRC<CR>
 nnoremap <Leader>ev :e ~/.vimrc<CR>
 nnoremap <Leader>ep :e ~/.vim/plugins.vim<CR>
 nnoremap <Leader>et :e ~/.tmux.conf<CR>
 "nnoremap <Leader><space> :nohls<CR>
 nnoremap <silent><esc> :noh<CR>
-nnoremap <Leader>w :w<CR>
+nnoremap <silent><Leader>w :w<CR>
 "noremap <silent><Leader>p :CtrlP<CR>
 nnoremap <silent><Leader>p :Files<CR>
 nnoremap <silent><Leader>P :GFiles<CR>
-noremap <silent><Leader>o :Commands<CR>
+nnoremap <silent><Leader>o :Commands<CR>
 nnoremap <silent><Leader>f :Tags <c-r><c-w><CR>
-"nnoremap <Leader>f :tj <c-r><c-w><CR>
+nnoremap <silent><Leader>r :Ag <c-r><c-w><CR>
 nnoremap <silent><Leader>s :TlistToggle<CR>
 nnoremap <silent><Leader>i :call PhpInsertUse()<CR>
 nnoremap <silent><Leader>d :NERDTreeToggle<CR>
@@ -105,32 +98,49 @@ nnoremap <silent><Leader>hh :Helptags<CR>
 " Disable anoying ex mode
 nnoremap Q <Nop>
 
-" Latam Keyboard mgmt ---------------------
+
+" Latam Keyboard mgmt --------------------------------------------------------
 nnoremap ñ :
 nnoremap ¿ /
 nnoremap <f3> <c-]>
 
-" US Keyboard mgmt ---------------------
+" US Keyboard mgmt -----------------------------------------------------------
 nnoremap ; :
 nnoremap : ;
 
-" Windows mgmt ---------------------
+
+" Windows mgmt ---------------------------------------------------------------
 " Vertical Split
 nnoremap <Leader>vs :vsp<CR>
 " Horizontal Split
 nnoremap <Leader>sp :sp<CR>
 " Maximizes window
 nnoremap <silent><Leader>m :on<CR>
+" Change window
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-nnoremap <c-up> <c-w>+
-nnoremap <c-down> <c-w>-
+" Resize window
+nnoremap <c-s-left> <c-w>-
+nnoremap <c-s-right> <c-w>+
 nnoremap <c-left> <c-w><
 nnoremap <c-right> <c-w>>
 
-" Movement mgmt ---------------------
+
+" Buffer related -------------------------------------------------------------
+nnoremap <f5> :buffers<CR>:buffer<space>
+nnoremap <c-tab> :bn<CR>
+nnoremap <c-s-tab> :bp<CR>
+nnoremap <Leader><tab> :bn<CR>
+nnoremap <Leader><s-tab> :bp<CR>
+nnoremap <S-l> :bn<CR>
+nnoremap <S-h> :bp<CR>
+nnoremap <tab> :b<space>
+nnoremap <silent><Leader>q :bd<CR>
+
+
+" Movement mgmt --------------------------------------------------------------
 nnoremap ' `
 nnoremap ` '
 inoremap jj <Esc>
@@ -146,7 +156,7 @@ nnoremap 9 $
 vnoremap 9 $
 
 
-" Text mgmt ---------------------
+" Text mgmt ------------------------------------------------------------------
 onoremap q i"
 vnoremap q i"
 onoremap ' i'
@@ -163,25 +173,16 @@ nnoremap <M-k> ddkkp
 nnoremap <C-p> "0p
 nnoremap <C-S-p> "0P
 
-" Select mgmt ---------------------
+
+" Select mgmt ----------------------------------------------------------------
 vnoremap v V
 " indentar sin perder la seleccion
 vnoremap > >gv
 vnoremap < <gv
 
-" PHP mgmt ---------------------
-inoremap $$ $this->
 
-" Buffer related -------------------------------------------------------------
-nnoremap <f5> :buffers<CR>:buffer<space>
-nnoremap <c-tab> :bn<CR>
-nnoremap <c-s-tab> :bp<CR>
-nnoremap <Leader><tab> :bn<CR>
-nnoremap <Leader><s-tab> :bp<CR>
-nnoremap <S-l> :bn<CR>
-nnoremap <S-h> :bp<CR>
-nnoremap <tab> :b<space>
-nnoremap <silent><Leader>q :bd<CR>
+" PHP mgmt -------------------------------------------------------------------
+inoremap $$ $this->
 
 
 "Make NERDTree easier to toggle ----------------------------------------------
@@ -193,6 +194,7 @@ let g:NERDTreeDirArrowCollapsible = '~'
 "autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
+
 " FZF y FZF Tags --------------------------------------------------------------
 "let g:fzf_tags_prompt = 'Gd '
 let g:fzf_colors = {
@@ -201,7 +203,8 @@ let g:fzf_colors = {
 "let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.6, 'yoffset': 0.1 } }
 let g:fzf_layout = { 'down': '40%' }
 
-"--------------- Auto-Commands ---------------"
+
+"--------------- Auto-Commands -----------------------------------------------
 augroup autosourcing
     autocmd!
     autocmd BufWritePost .vimrc      source %
@@ -209,8 +212,7 @@ augroup autosourcing
 augroup END
 
 
-
-"--------------- Config Status Line ---------------"
+"--------------- Config Status Line ------------------------------------------
 nnoremap <Leader>cc :colorscheme nord<CR>
 
 let g:lightline = {
@@ -269,6 +271,7 @@ autocmd BufWritePre * %s/\s\+$//e
 
 
 " GitGutter ----------------------------------------------------------------
+
 "highlight SignColumn guibg=none
 highlight def link GitGutterAddLineNr GitGutterAddLine
 highlight def link GitGutterChangeLineNr GitGutterChangeLine
@@ -318,7 +321,7 @@ let g:php_namespace_sort_after_insert = 1
 nnoremap <silent><Leader>mm :call phpactor#ContextMenu()<CR>
 nnoremap <silent><Leader>nn :call phpactor#Navigate()<CR>
 
-"
+
 " Autocomplete ----------------------------------------------------------------
 augroup ncm2
     au!
@@ -343,7 +346,9 @@ augroup focustoggle
 augroup END
 
 
-" Functions ----------------------------------------------------------------
+" ----------------------------------------------------------------------------
+" Functions ------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
 function! ShowFileFormatFlag(var)
     if (a:var == 'dos')
