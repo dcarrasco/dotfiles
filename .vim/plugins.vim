@@ -14,9 +14,9 @@ Plugin 'guns/xterm-color-table.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-Plugin 'zackhsi/fzf-tags'
+"Plugin 'zackhsi/fzf-tags'
 " Plugin 'neoclide/coc.nvim'
-Plugin 'yegappan/taglist.vim'
+Plugin 'vim-scripts/taglist.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'mg979/vim-visual-multi'
 
@@ -26,8 +26,8 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'arnaud-lb/vim-php-namespace'
 
-Plugin 'phpactor/phpactor'
-Plugin 'ncm2/ncm2'
+Plugin 'phpactor/phpactor', { 'do': ':call phpactor#Update()', 'for': 'php' }
+Plugin 'ncm2/ncm2', {'for': 'php'}
 Plugin 'roxma/nvim-yarp'
 Plugin 'phpactor/ncm2-phpactor'
 Plugin 'ncm2/ncm2-ultisnips'

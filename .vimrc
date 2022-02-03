@@ -317,20 +317,23 @@ let g:php_namespace_sort_after_insert = 1
 "autocmd Filetype php setlocal omnifunc=phpactor#Complete
 nnoremap <silent><Leader>mm :call phpactor#ContextMenu()<CR>
 nnoremap <silent><Leader>nn :call phpactor#Navigate()<CR>
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone
-inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-
+"
 " Autocomplete ----------------------------------------------------------------
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone
-inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<tab>"
-inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<S-tab>"
-noremap <silent> <expr> <c-u> ncm2_ultisnips#expand_or("\<CR>", "n")
+augroup ncm2
+    au!
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+    au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+    au User Ncm2PopupClose set completeopt=menuone
+augroup END
+
+inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", "n") : "\<CR>")
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-tab> pumvisible() ? "\<C-p>" : "\<Tab>"
+
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
 
 
 augroup focustoggle
