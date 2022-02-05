@@ -20,6 +20,7 @@ set expandtab
 set shiftwidth=4
 set breakindent
 set showbreak=..
+set textwidth=0
 
 set encoding=utf-8
 set fileencoding=utf-8
@@ -279,8 +280,6 @@ autocmd BufWritePre * %s/\s\+$//e
 
 
 " GitGutter ----------------------------------------------------------------
-
-"highlight SignColumn guibg=none
 highlight def link GitGutterAddLineNr GitGutterAddLine
 highlight def link GitGutterChangeLineNr GitGutterChangeLine
 highlight def link GitGutterDeleteLineNr GitGutterDeleteLine
@@ -295,11 +294,15 @@ nnoremap ]g :GitGutterNextHunk<CR>
 nnoremap <Leader>gv :GitGutterPreviewHunk<CR>
 nnoremap <Leader>gu :GitGutterUndoHunk<CR>
 
-nnoremap <Leader>gd :G diff<CR>
-nnoremap <Leader>gs :G<CR>
-
 " actualiza gitgutter al grabar
 autocmd BufWritePost * GitGutter
+
+
+" fugitive ----------------------------------------------------------------
+nnoremap <Leader>g :Git<CR>
+nnoremap <Leader>gd :Git diff<CR>
+nnoremap <Leader>gs :Git<CR>
+nnoremap <Leader>gc :Git commit<CR>
 
 
 " VisualMulti ----------------------------------------------------------------
