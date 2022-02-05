@@ -18,6 +18,8 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 set shiftwidth=4
+set breakindent
+set showbreak=..
 
 set encoding=utf-8
 set fileencoding=utf-8
@@ -115,8 +117,10 @@ nnoremap <Leader>vs :vsp<CR>
 " Horizontal Split
 nnoremap <Leader>sp :sp<CR>
 " Maximizes window
-nnoremap <silent><Leader>m :on<CR>
-" Change window
+nnoremap <silent><Leader>m :only<CR>
+" Close the window
+nnoremap <silent><Leader>c :close<CR>
+" Move to window
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
@@ -138,6 +142,8 @@ nnoremap <S-l> :bn<CR>
 nnoremap <S-h> :bp<CR>
 nnoremap <tab> :b<space>
 nnoremap <silent><Leader>q :bd<CR>
+"open previous buffer
+nnoremap <silent><Leader>b :b#<CR>
 
 
 " Movement mgmt --------------------------------------------------------------
@@ -146,6 +152,8 @@ nnoremap ` '
 inoremap jj <Esc>
 noremap j gj
 noremap k gk
+nnoremap n nzz
+nnoremap N Nzz
 nnoremap { {zz
 nnoremap } }zz
 nnoremap 0 ^
@@ -280,8 +288,10 @@ highlight def link GitGutterChangeDeleteLineNr GitGutterChangeDeleteLine
 "let g:gitgutter_highlight_lines = 1
 let g:gitgutter_highlight_linenrs = 1
 
-nnoremap <Leader>gn :GitGutterNextHunk<CR>
 nnoremap <Leader>gp :GitGutterPrevHunk<CR>
+nnoremap <Leader>gn :GitGutterNextHunk<CR>
+nnoremap [g :GitGutterPrevHunk<CR>
+nnoremap ]g :GitGutterNextHunk<CR>
 nnoremap <Leader>gv :GitGutterPreviewHunk<CR>
 nnoremap <Leader>gu :GitGutterUndoHunk<CR>
 
@@ -331,7 +341,7 @@ augroup ncm2
 augroup END
 
 inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", "n") : "\<CR>")
-inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-tab> pumvisible() ? "\<C-p>" : "\<Tab>"
 
 let g:UltiSnipsJumpForwardTrigger="<tab>"
