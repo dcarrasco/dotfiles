@@ -164,6 +164,13 @@ vnoremap ^ 0
 nnoremap 9 $
 vnoremap 9 $
 
+" Terminal mgmt --------------------------------------------------------------
+tnoremap <Esc> <C-\><C-n>
+" Move to window
+tnoremap <c-j> <c-w>j
+tnoremap <c-k> <c-w>k
+tnoremap <c-h> <c-w>h
+tnoremap <c-l> <c-w>l
 
 " Text mgmt ------------------------------------------------------------------
 onoremap q i"
@@ -192,6 +199,10 @@ vnoremap < <gv
 
 " PHP mgmt -------------------------------------------------------------------
 inoremap $$ $this->
+
+"PHPdocumentor ---------------------------------------------------------------
+let g:pdv_template_dir = "~/.vim/bundle/pdv/templates_snip"
+nnoremap <buffer> <Leader>t :call pdv#DocumentWithSnip()<CR>
 
 
 "Make NERDTree easier to toggle ----------------------------------------------

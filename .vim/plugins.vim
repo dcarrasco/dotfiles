@@ -41,6 +41,9 @@ Plugin 'StanAngeloff/php.vim'
 
 Plugin 'editorconfig/editorconfig-vim'
 
+Plugin 'tobyS/pdv'
+Plugin 'tobyS/vmustache'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
