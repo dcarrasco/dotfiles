@@ -25,9 +25,10 @@ alias util='cd /mnt/c/util'
 alias o='explorer.exe'
 alias h='history'
 alias j='jobs'
-alias st='/mnt/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
+#alias st='/mnt/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 #alias subl='/mnt/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 alias vim=nvim
+alias v=nvim
 alias web='cd /mnt/c/Users/Daniel/Code'
 alias lara='cd /mnt/c/Users/Daniel/Code/gastos-alpine/app/'
 
@@ -48,7 +49,7 @@ alias dtop='docker stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPU
 function dce { docker compose exec --env SERVICE_NAME=$1 $1 sh -l; }
 export -f dce
 
-function drun { docker run --rm -it -v /home/daniel/:/home/daniel/ -w /home/daniel/ $1 bash; }
+function drun { docker run --rm -it -v /home/daniel/:/home/daniel/ -w /home/daniel/ $1 $2; }
 export -f drun
 
 
