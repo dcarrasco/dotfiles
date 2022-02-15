@@ -361,7 +361,8 @@ inoremap <expr> <S-tab> pumvisible() ? "\<C-p>" : "\<Tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-
+" VIM Commentary -------------------------------------------------------------
+autocmd Filetype php set commentstring=//%s
 
 augroup focustoggle
   autocmd!
