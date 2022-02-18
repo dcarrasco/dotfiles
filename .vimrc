@@ -7,6 +7,9 @@ syntax enable
 set history=500
 set updatetime=2000
 
+set noswapfile
+set nobackup
+
 set backspace=indent,eol,start
 
 set ttyfast
@@ -26,7 +29,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileformat=unix
 set tags=./tags,tags,tags.vendor,.git/tags;
-set grepprg=grep\ -n\ -R\ --exclude-dir=storage\ --exclude-dir=.git\ --exclude=tags\ --include=*.php
+set grepprg=grep\ -n\ -R\ --exclude-dir=storage\ --exclude-dir=.git\ --exclude=tags\ --exclude=tags.vendor\ --include=*.php
 set colorcolumn=120
 set grepformat=%f:%l:%m
 
@@ -44,9 +47,10 @@ set notitle
 set laststatus=2
 set noshowmode
 set showtabline=1         " show tab line
-set scrolloff=5
+set scrolloff=6
 "set visualbell
 set cursorline
+set splitbelow splitright
 
 
 "--------------- Visuals ---------------"
@@ -87,6 +91,7 @@ nnoremap <Leader>et :e ~/.tmux.conf<CR>
 nnoremap <silent><esc> :noh<CR>
 nnoremap <silent><Leader>w :w<CR>
 "noremap <silent><Leader>p :CtrlP<CR>
+nnoremap <C-p> :Files<CR>
 nnoremap <silent><Leader>p :Files<CR>
 nnoremap <silent><Leader>P :GFiles<CR>
 nnoremap <silent><Leader>o :Commands<CR>
@@ -127,10 +132,10 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 " Resize window
-nnoremap <c-s-left> <c-w>-
-nnoremap <c-s-right> <c-w>+
-nnoremap <c-left> <c-w><
-nnoremap <c-right> <c-w>>
+nnoremap <silent><M-Up> :resize +5<CR>
+nnoremap <silent><M-Down> :resize -5<CR>
+nnoremap <silent><M-Left> :vertical resize +5<CR>
+nnoremap <silent><M-Right> :vertical resize -5<CR>
 
 
 " Buffer related -------------------------------------------------------------
@@ -183,11 +188,15 @@ onoremap f i{
 vnoremap f i{
 onoremap b i[
 vnoremap b i[
-nnoremap <M-j> ddp
-nnoremap <M-k> ddkkp
+nnoremap Y y$
+"Mueve lineas hacia arriba y abajo
+nnoremap <silent><M-j> :move .+1<CR>==
+nnoremap <silent><M-k> :move .-2<CR>==
+vnoremap <silent><M-j> :move '>+1<CR>gv=gv
+vnoremap <silent><M-k> :move '<-2<CR>gv=gv
+" nnoremap <C-p> "0p
 " paste from yank
-nnoremap <C-p> "0p
-nnoremap <C-S-p> "0P
+" nnoremap <C-S-p> "0P
 
 
 " Select mgmt ----------------------------------------------------------------
@@ -196,6 +205,9 @@ vnoremap v V
 vnoremap > >gv
 vnoremap < <gv
 
+" Jump mgmt ----------------------------------------------------------------
+nnoremap <silent>[c :cp<CR>
+nnoremap <silent>]c :cn<CR>
 
 " PHP mgmt -------------------------------------------------------------------
 inoremap $$ $this->
