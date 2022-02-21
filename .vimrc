@@ -29,7 +29,6 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileformat=unix
 set tags=./tags,tags,tags.vendor,.git/tags;
-set grepprg=grep\ -n\ -R\ --exclude-dir=storage\ --exclude-dir=.git\ --exclude=tags\ --exclude=tags.vendor\ --include=*.php
 set colorcolumn=120
 set grepformat=%f:%l:%m
 
@@ -80,6 +79,7 @@ set hlsearch
 
 " Leader Key -----------------------------------------------------------------
 let mapleader=','
+" let mapleader=' '
 
 
 " Mappings -------------------------------------------------------------------
@@ -91,7 +91,7 @@ nnoremap <Leader>et :e ~/.tmux.conf<CR>
 nnoremap <silent><esc> :noh<CR>
 nnoremap <silent><Leader>w :w<CR>
 "noremap <silent><Leader>p :CtrlP<CR>
-nnoremap <C-p> :Files<CR>
+nnoremap <silent><C-p> :GFiles<CR>
 nnoremap <silent><Leader>p :Files<CR>
 nnoremap <silent><Leader>P :GFiles<CR>
 nnoremap <silent><Leader>o :Commands<CR>
@@ -100,11 +100,15 @@ nnoremap <silent><Leader>r :Ag <c-r><c-w><CR>
 nnoremap <silent><Leader>s :TlistToggle<CR>
 nnoremap <silent><Leader>i :call PhpInsertUse()<CR>
 nnoremap <silent><Leader>d :NERDTreeToggle<CR>
+nnoremap <silent><C-1> :NERDTreeToggle<CR>
 
 nnoremap <Leader>h :tab help<space>
 nnoremap <silent><Leader>hh :Helptags<CR>
 " Disable anoying ex mode
 nnoremap Q <Nop>
+"Exit VIM
+nnoremap <M-q> :q<CR>
+nnoremap <C-x> :<Up>
 
 
 " Latam Keyboard mgmt --------------------------------------------------------
@@ -170,7 +174,7 @@ nnoremap 9 $
 vnoremap 9 $
 
 " Terminal mgmt --------------------------------------------------------------
-tnoremap <Esc> <C-\><C-n>
+tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<C-\><C-n>"
 " Move to window
 tnoremap <c-j> <c-w>j
 tnoremap <c-k> <c-w>k
@@ -206,8 +210,12 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Jump mgmt ----------------------------------------------------------------
-nnoremap <silent>[c :cp<CR>
 nnoremap <silent>]c :cn<CR>
+nnoremap <silent>[c :cp<CR>
+nnoremap <silent> <Leader>j :cnext<CR>
+nnoremap <silent> <Leader>k :cprev<CR>
+"Cierra ventana quickfix con ESC
+autocmd FileType qf nnoremap <buffer><silent> <esc> :cclose<CR>
 
 " PHP mgmt -------------------------------------------------------------------
 inoremap $$ $this->
@@ -232,8 +240,11 @@ let g:NERDTreeDirArrowCollapsible = '~'
 let g:fzf_colors = {
 \    'border': ['fg', 'Question'],
 \}
-"let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.6, 'yoffset': 0.1 } }
+" let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'yoffset': 0.1 } }
 let g:fzf_layout = { 'down': '40%' }
+
+" command! -bang -nargs=? -complete=dir Files
+"     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--preview']}, <bang>0)
 
 
 "--------------- Auto-Commands -----------------------------------------------
@@ -366,12 +377,13 @@ augroup ncm2
     au User Ncm2PopupClose set completeopt=menuone
 augroup END
 
-inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", "n") : "\<CR>")
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-tab> pumvisible() ? "\<C-p>" : "\<Tab>"
+inoremap <silent> <expr> <C-u> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", "n") : "\<CR>")
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
 
 " VIM Commentary -------------------------------------------------------------
 autocmd Filetype php set commentstring=//%s
@@ -381,6 +393,25 @@ augroup focustoggle
   autocmd BufEnter,FocusGained * setlocal cursorline
   autocmd BufLeave,FocusLost   * setlocal nocursorline
 augroup END
+
+
+" PHPCS and PHPStan -----------------------------------------------------------
+"csv error format    NOT WORKING!!!!
+set errorformat+="%f"\\,%l\\,%c\\,%t%*[a-zA-Z]\\,"%m"\\,%*[a-zA-Z0-9_.-]\\,%*[0-9]\\,%*[0-9]
+"emacs error format   OK!
+set errorformat+=%f:%l:%c:\ %m
+
+command! Phpcs execute PHPCsLinter()
+command! Phpstan execute PHPStan()
+
+nnoremap <silent> <Leader>l :call PHPCsLinterFile()<CR>
+nnoremap <silent> <Leader>L :call PHPCsLinterAll()<CR>
+
+
+"Grep
+set grepprg=grep\ -n\ -R\ --exclude-dir=storage\ --exclude-dir=.git\ --exclude=tags\ --exclude=tags.vendor\ --include=*.php
+command! -nargs=+ Grep execute 'silent grep! <args>' | copen
+
 
 
 " ----------------------------------------------------------------------------
@@ -413,4 +444,31 @@ function! StatuslineGit()
     return strlen(l:branchname>0)?' (git:'.l:branchname.')':''
 endfunction
 
+function! PHPCsLinterFile()
+    let l:filename=@%
+    let l:phpcs_output=system('phpcs -q --report=emacs '.l:filename)
+    " echo l:phpcs_output
+    let l:phpcs_list=split(l:phpcs_output, "\n")
+    " unlet l:phpcs_list[0]
+    cexpr l:phpcs_list
+    copen 5
+endfunction
 
+function! PHPCsLinterAll()
+    let l:phpcs_output=system('phpcs -q --report=emacs')
+    " echo l:phpcs_output
+    let l:phpcs_list=split(l:phpcs_output, "\n")
+    " unlet l:phpcs_list[0]
+    cexpr l:phpcs_list
+    copen 5
+endfunction
+
+function! PHPStan()
+    let l:filename=@%
+    let l:php_output=system('./vendor/bin/phpstan --no-progress --error-format=raw analyse')
+    " echo l:php_output
+    let l:php_list=split(l:php_output, "\n")
+    unlet l:php_list[0]
+    cexpr l:php_list
+    copen 5
+endfunction

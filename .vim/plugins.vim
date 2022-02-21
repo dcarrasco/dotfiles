@@ -5,18 +5,18 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-"Plugin 'tpope/vim-vinegar'
+
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-commentary'
 Plugin 'scrooloose/nerdtree'
-" Plugin 'ctrlpvim/ctrlp.vim'
+
 Plugin 'guns/xterm-color-table.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-"Plugin 'zackhsi/fzf-tags'
-" Plugin 'neoclide/coc.nvim'
+Plugin 'zackhsi/fzf-tags'
+
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'mg979/vim-visual-multi'
@@ -34,6 +34,8 @@ Plugin 'phpactor/ncm2-phpactor'
 Plugin 'ncm2/ncm2-ultisnips'
 Plugin 'SirVer/ultisnips'
 
+" Plugin 'dense-analysis/ale'
+
 Plugin 'easymotion/vim-easymotion'
 
 Plugin 'itchyny/lightline.vim'
@@ -44,6 +46,8 @@ Plugin 'editorconfig/editorconfig-vim'
 
 Plugin 'tobyS/pdv'
 Plugin 'tobyS/vmustache'
+
+Plugin 'jacoborus/tender.vim'
 
 
 " All of your Plugins must be added before the following line

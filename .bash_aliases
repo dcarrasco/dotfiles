@@ -28,7 +28,6 @@ alias j='jobs'
 #alias st='/mnt/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 #alias subl='/mnt/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 alias vim=nvim
-alias v=nvim
 alias web='cd /mnt/c/Users/Daniel/Code'
 alias lara='cd /mnt/c/Users/Daniel/Code/gastos-alpine/app/'
 
