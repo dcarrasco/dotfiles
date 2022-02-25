@@ -62,7 +62,7 @@ alias gg='git graph $@'
 alias gl='git l $@'
 alias gd='git diff $@'
 
-# Laravel specific shortcuts ====================================================================
+# Laravel specific shortcuts ============================================================
 alias artisan='php artisan'
 alias dart='docker-compose exec app php artisan $@'
 alias migrate='php artisan migrate'
@@ -74,4 +74,9 @@ alias t='vendor/bin/phpunit'
 if [ -f ~/.bash_prompt ]; then
     . ~/.bash_prompt
 fi
+
+# FZF options ===========================================================================
+export FZF_DEFAULT_COMMAND="find $HOME"
+export FZF_CTRL_P_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="find $HOME -type d"
 
