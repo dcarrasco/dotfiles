@@ -4,6 +4,7 @@ so ~/.vim/plugins.vim
 
 syntax on
 syntax enable
+set noerrorbells
 set history=500
 set updatetime=2000
 
@@ -19,8 +20,8 @@ set smartindent
 set autoindent
 set tabstop=4
 set softtabstop=4
-set expandtab
 set shiftwidth=4
+set expandtab
 set breakindent
 set showbreak=..
 set textwidth=0
@@ -51,6 +52,13 @@ set scrolloff=6
 set cursorline
 set splitbelow splitright
 
+"--------------- Search ---------------"
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
+
 
 "--------------- Visuals ---------------"
 colorscheme nord
@@ -68,13 +76,6 @@ endif
 
 set background=dark
 set termguicolors
-
-
-"--------------- Search ---------------"
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
 
 
 " Leader Key -----------------------------------------------------------------
@@ -95,7 +96,9 @@ nnoremap <silent><C-p> :GFiles<CR>
 nnoremap <silent><Leader>p :Files<CR>
 nnoremap <silent><Leader>P :GFiles<CR>
 nnoremap <silent><Leader>o :Commands<CR>
-nnoremap <silent><Leader>f :Tags <c-r><c-w><CR>
+" nnoremap <silent><Leader>f :Tags <c-r><c-w><CR>
+nnoremap <silent><Leader>f :tj <c-r><c-w><CR>
+" nnoremap <silent><Leader>f :ltag <C-r><C-w><CR> <bar> :buffer #<CR> <bar> :lopen<CR>
 nnoremap <silent><Leader>r :Ag <c-r><c-w><CR>
 nnoremap <silent><Leader>s :TlistToggle<CR>
 nnoremap <silent><Leader>i :call PhpInsertUse()<CR>
@@ -144,12 +147,14 @@ nnoremap <silent><M-Right> :vertical resize -5<CR>
 
 " Buffer related -------------------------------------------------------------
 nnoremap <f5> :buffers<CR>:buffer<space>
-nnoremap <c-tab> :bn<CR>
-nnoremap <c-s-tab> :bp<CR>
-nnoremap <Leader><tab> :bn<CR>
-nnoremap <Leader><s-tab> :bp<CR>
-nnoremap <S-l> :bn<CR>
-nnoremap <S-h> :bp<CR>
+nnoremap <silent><c-s-tab> :bp<CR>
+nnoremap <silent><c-tab> :bn<CR>
+nnoremap <silent>[b :bp<CR>
+nnoremap <silent>]b :bn<CR>
+nnoremap <silent><Leader><s-tab> :bp<CR>
+nnoremap <silent><Leader><tab> :bn<CR>
+nnoremap <silent><S-l> :bn<CR>
+nnoremap <silent><S-h> :bp<CR>
 nnoremap <tab> :b<space>
 nnoremap <silent><Leader>q :bd<CR>
 "open previous buffer
@@ -210,12 +215,21 @@ vnoremap > >gv
 vnoremap < <gv
 
 " Jump mgmt ----------------------------------------------------------------
-nnoremap <silent>]c :cn<CR>
-nnoremap <silent>[c :cp<CR>
+nnoremap <silent>[q :cp<CR>
+nnoremap <silent>]q :cn<CR>
+nnoremap <silent>[Q :cfirst<CR>
+nnoremap <silent>]Q :clast<CR>
 nnoremap <silent> <Leader>j :cnext<CR>
 nnoremap <silent> <Leader>k :cprev<CR>
 "Cierra ventana quickfix con ESC
-autocmd FileType qf nnoremap <buffer><silent> <esc> :cclose<CR>
+autocmd FileType qf nnoremap <buffer><silent> <Esc> :cclose <bar> :lclose<CR>
+"Salta entre tags
+nnoremap <silent>[t :tprevious<CR>
+nnoremap <silent>]t :tnext<CR>
+nnoremap <silent>[l :lp<CR>
+nnoremap <silent>]l :lnext<CR>
+nnoremap <silent>[L :lfirst<CR>
+nnoremap <silent>]L :llast<CR>
 
 " PHP mgmt -------------------------------------------------------------------
 inoremap $$ $this->
@@ -377,7 +391,7 @@ augroup ncm2
     au User Ncm2PopupClose set completeopt=menuone
 augroup END
 
-inoremap <silent> <expr> <C-u> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", "n") : "\<CR>")
+inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", "n") : "\<CR>")
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
