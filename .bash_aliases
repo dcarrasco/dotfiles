@@ -76,8 +76,8 @@ if [ -f ~/.bash_prompt ]; then
 fi
 
 # FZF options ===========================================================================
-export FZF_DEFAULT_COMMAND="find $HOME"
-export FZF_ALT_C_COMMAND="find $HOME -type d"
+export FZF_DEFAULT_COMMAND="fdfind . $HOME"
+export FZF_ALT_C_COMMAND="fdfind --type d . $HOME"
 export FZF_CTRL_P_COMMAND="$FZF_DEFAULT_COMMAND"
 source /usr/share/doc/fzf/examples/key-bindings.bash
 source /usr/share/doc/fzf/examples/completion.bash
@@ -87,7 +87,8 @@ bind -x '"\C-f":"_tmux_fzf_"'
 
 
 function _tmux_fzf_() {
-    local dir=$(find ~ -type d | fzf)
+    # local dir=$(find ~ -type d | fzf)
+    local dir=$(fdfind --type d . ~ | fzf)
     local sess=$(basename $dir)
 
     tmuxsession $sess -c $dir
