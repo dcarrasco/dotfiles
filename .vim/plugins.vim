@@ -49,6 +49,9 @@ Plugin 'tobyS/vmustache'
 
 Plugin 'jacoborus/tender.vim'
 
+Plugin 'nvim-lua/plenary.nvim'
+Plugin 'nvim-telescope/telescope.nvim'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

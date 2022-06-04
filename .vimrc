@@ -25,6 +25,8 @@ set expandtab
 set breakindent
 set showbreak=..
 set textwidth=0
+set foldmethod=indent
+set foldlevel=99
 
 set encoding=utf-8
 set fileencoding=utf-8
@@ -92,10 +94,14 @@ nnoremap <Leader>et :e ~/.tmux.conf<CR>
 nnoremap <silent><esc> :noh<CR>
 nnoremap <silent><Leader>w :w<CR>
 "noremap <silent><Leader>p :CtrlP<CR>
-nnoremap <silent><C-p> :GFiles<CR>
-nnoremap <silent><Leader>p :Files<CR>
-nnoremap <silent><Leader>P :GFiles<CR>
-nnoremap <silent><Leader>o :Commands<CR>
+" nnoremap <silent><C-p> :GFiles<CR>
+nnoremap <silent><C-p> :Telescope git_files<CR>
+" nnoremap <silent><Leader>p :Files<CR>
+nnoremap <silent><Leader>p :Telescope find_files<CR>
+" nnoremap <silent><Leader>P :GFiles<CR>
+nnoremap <silent><Leader>P :Telescope git_files<CR>
+" nnoremap <silent><Leader>o :Commands<CR>
+nnoremap <silent><Leader>o :Telescope commands<CR>
 " nnoremap <silent><Leader>f :Tags <c-r><c-w><CR>
 nnoremap <silent><Leader>f :tj <c-r><c-w><CR>
 " nnoremap <silent><Leader>f :ltag <C-r><C-w><CR> <bar> :buffer #<CR> <bar> :lopen<CR>
@@ -106,7 +112,8 @@ nnoremap <silent><Leader>d :NERDTreeToggle<CR>
 nnoremap <silent><C-1> :NERDTreeToggle<CR>
 
 nnoremap <Leader>h :tab help<space>
-nnoremap <silent><Leader>hh :Helptags<CR>
+" nnoremap <silent><Leader>hh :Helptags<CR>
+nnoremap <silent><Leader>hh :Telescope help_tags<CR>
 " Disable anoying ex mode
 nnoremap Q <Nop>
 "Exit VIM
@@ -199,10 +206,9 @@ onoremap b i[
 vnoremap b i[
 nnoremap Y y$
 "Mueve lineas hacia arriba y abajo
-nnoremap <silent><M-j> :move .+1<CR>==
-nnoremap <silent><M-k> :move .-2<CR>==
-vnoremap <silent><M-j> :move '>+1<CR>gv=gv
-vnoremap <silent><M-k> :move '<-2<CR>gv=gv
+nnoremap J mzJ`z
+" nnoremap <silent><M-j> :move .+1<CR>==
+" nnoremap <silent><M-k> :move .-2<CR>==
 " nnoremap <C-p> "0p
 " paste from yank
 " nnoremap <C-S-p> "0P
@@ -213,6 +219,8 @@ vnoremap v V
 " indentar sin perder la seleccion
 vnoremap > >gv
 vnoremap < <gv
+vnoremap J :move '>+1<CR>gv=gv
+vnoremap K :move '<-2<CR>gv=gv
 
 " Jump mgmt ----------------------------------------------------------------
 nnoremap <silent>[q :cp<CR>
