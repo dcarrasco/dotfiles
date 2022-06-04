@@ -64,6 +64,9 @@ set hlsearch
 
 "--------------- Visuals ---------------"
 colorscheme nord
+"
+" set translucent background
+"autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE " transparent bg
 
 set guifont=Consolas:h11
 set linespace=8
