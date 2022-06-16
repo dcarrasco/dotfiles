@@ -49,7 +49,7 @@ set notitle
 set laststatus=2
 set noshowmode
 set showtabline=1         " show tab line
-set scrolloff=6
+set scrolloff=3
 "set visualbell
 set cursorline
 set splitbelow splitright
