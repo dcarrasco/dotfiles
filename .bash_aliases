@@ -80,7 +80,7 @@ export FZF_DEFAULT_COMMAND="fdfind ."
 export FZF_ALT_C_COMMAND="fdfind --type d . $HOME"
 export FZF_CTRL_P_COMMAND="$FZF_DEFAULT_COMMAND"
 source /usr/share/doc/fzf/examples/key-bindings.bash
-source /usr/share/doc/fzf/examples/completion.bash
+#source /usr/share/doc/fzf/examples/completion.bash
 
 # CTRL-F para directorio y session en tmux
 bind -x '"\C-f":"_tmux_fzf_"'
