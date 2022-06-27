@@ -27,12 +27,12 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'arnaud-lb/vim-php-namespace'
 
-Plugin 'phpactor/phpactor', { 'do': ':call phpactor#Update()', 'for': 'php' }
-Plugin 'ncm2/ncm2', {'for': 'php'}
-Plugin 'roxma/nvim-yarp'
-Plugin 'phpactor/ncm2-phpactor'
-Plugin 'ncm2/ncm2-ultisnips'
-Plugin 'SirVer/ultisnips'
+" Plugin 'phpactor/phpactor', { 'do': ':call phpactor#Update()', 'for': 'php' }
+" Plugin 'ncm2/ncm2', {'for': 'php'}
+" Plugin 'roxma/nvim-yarp'
+" Plugin 'phpactor/ncm2-phpactor'
+" Plugin 'ncm2/ncm2-ultisnips'
+" Plugin 'SirVer/ultisnips'
 
 " Plugin 'dense-analysis/ale'
 
@@ -52,6 +52,12 @@ Plugin 'jacoborus/tender.vim'
 Plugin 'nvim-lua/plenary.nvim'
 Plugin 'nvim-telescope/telescope.nvim'
 
+Plugin 'neovim/nvim-lspconfig'
+Plugin 'davidhalter/jedi-vim'
+" Plugin 'nvim-lua/completion-nvim'
+" Plugin 'williamboman/nvim-lsp-installer'
+" Plugin 'neoclide/coc.nvim'
+" Plugin 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build', 'branch': 'main' }
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

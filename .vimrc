@@ -1,6 +1,7 @@
 set nocompatible              " be iMproved, required
 
 so ~/.vim/plugins.vim
+luafile ~/.vim/lsp_config.lua
 
 syntax on
 syntax enable
@@ -32,7 +33,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileformat=unix
 set tags=./tags,tags,tags.vendor,.git/tags;
-set colorcolumn=120
+set colorcolumn=100
 set grepformat=%f:%l:%m
 
 set path+=**
@@ -63,10 +64,11 @@ set hlsearch
 
 
 "--------------- Visuals ---------------"
+" colorscheme one
 colorscheme nord
 "
 " set translucent background
-"autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE " transparent bg
+" autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
 
 set guifont=Consolas:h11
 set linespace=8
@@ -215,7 +217,7 @@ nnoremap J mzJ`z
 " nnoremap <C-p> "0p
 " paste from yank
 " nnoremap <C-S-p> "0P
-
+nnoremap <C-space> i <esc>
 
 " Select mgmt ----------------------------------------------------------------
 vnoremap v V
@@ -281,6 +283,7 @@ augroup END
 
 
 "--------------- Config Status Line ------------------------------------------
+" nnoremap <Leader>cc :colorscheme one<CR>
 nnoremap <Leader>cc :colorscheme nord<CR>
 
 let g:lightline = {
@@ -390,24 +393,39 @@ let g:php_namespace_sort_after_insert = 1
 "
 " Phpactor -------------------------------------------------------------------
 "autocmd Filetype php setlocal omnifunc=phpactor#Complete
-nnoremap <silent><Leader>mm :call phpactor#ContextMenu()<CR>
-nnoremap <silent><Leader>nn :call phpactor#Navigate()<CR>
+" nnoremap <silent><Leader>mm :call phpactor#ContextMenu()<CR>
+" nnoremap <silent><Leader>nn :call phpactor#Navigate()<CR>
 
 
 " Autocomplete ----------------------------------------------------------------
-augroup ncm2
-    au!
-    autocmd BufEnter * call ncm2#enable_for_buffer()
-    au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-    au User Ncm2PopupClose set completeopt=menuone
-augroup END
+" augroup ncm2
+"     au!
+"     autocmd BufEnter * call ncm2#enable_for_buffer()
+"     au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+"     au User Ncm2PopupClose set completeopt=menuone
+" augroup END
 
-inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", "n") : "\<CR>")
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", "n") : "\<CR>")
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+nnoremap <silent> <leader>lf <cmd>lua vim.lsp.buf.format()<CR>
 
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" inoremap <expr> <C-space> pumvisible() ? "\<C-y>": "\<C-x>\<C-o>"
+" inoremap <C-space> <Cmd>lua vim.lsp.buf.completion()<CR>
+let g:jedi#popup_select_first = 1
+
+set completeopt=menuone,longest
+set shortmess+=c
+" let g:completion_enable_auto_popup = 1
+" let g:completion_enable_auto_signature = 0
+" let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
+" let g:completion_trigger_character = ['.', '::']
+
+" imap <tab> <Plug>(completion_smart_tab)
+" imap <s-tab> <Plug>(completion_smart_s_tab)
+
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 
 " VIM Commentary -------------------------------------------------------------
