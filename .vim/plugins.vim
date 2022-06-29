@@ -5,19 +5,29 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-
+"
+" Surround plugin
 Plugin 'tpope/vim-surround'
+" Git plugin
 Plugin 'tpope/vim-fugitive'
+" Commentary plugin
 Plugin 'tpope/vim-commentary'
+" Nerdtree
 Plugin 'scrooloose/nerdtree'
 
+" Agrega simbolos diferecias git en el gutter
 Plugin 'airblade/vim-gitgutter'
+" FZF para vim
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+" Usa FZF en tags, combina :tags con :tselect
 Plugin 'zackhsi/fzf-tags'
 
+" Muestra la estructura del archivo
 Plugin 'vim-scripts/taglist.vim'
+" Inserta y borra el par de parentesis, brackets, curly braces
 Plugin 'jiangmiao/auto-pairs'
+" Agrega multiples cursores (verticales)
 Plugin 'mg979/vim-visual-multi'
 
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -25,6 +35,9 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'arnaud-lb/vim-php-namespace'
+
+" Muestra los mappings de la leader key
+Plugin 'liuchengxu/vim-which-key'
 
 " Plugin 'phpactor/phpactor', { 'do': ':call phpactor#Update()', 'for': 'php' }
 " Plugin 'ncm2/ncm2', {'for': 'php'}
@@ -35,19 +48,22 @@ Plugin 'arnaud-lb/vim-php-namespace'
 
 " Plugin 'dense-analysis/ale'
 
+" Simpler way to use some motions (w, b, j, k, f, s)
 Plugin 'easymotion/vim-easymotion'
 
+" Statusline
 Plugin 'itchyny/lightline.vim'
 
-Plugin 'StanAngeloff/php.vim'
-
+" Editor config properties
 Plugin 'editorconfig/editorconfig-vim'
 
+" PHP syntax
+Plugin 'StanAngeloff/php.vim'
+
+" Generate PHP Docblocks
 Plugin 'tobyS/pdv'
-Plugin 'tobyS/vmustache'
 
-Plugin 'jacoborus/tender.vim'
-
+" Telescope
 Plugin 'nvim-lua/plenary.nvim'
 Plugin 'nvim-telescope/telescope.nvim'
 
