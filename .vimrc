@@ -269,6 +269,7 @@ let g:fzf_colors = {
 \}
 " let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'yoffset': 0.1 } }
 let g:fzf_layout = { 'down': '40%' }
+let $FZF_DEFAULT_OPTS="--ansi --inline-info --preview-window 'right:65%' --preview 'batcat --style=header,grid'"
 
 " command! -bang -nargs=? -complete=dir Files
 "     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--preview']}, <bang>0)
