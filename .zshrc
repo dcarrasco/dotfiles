@@ -184,15 +184,17 @@ source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
 
 # CTRL-F para directorio y session en tmux
-bindkey -s "^f" '_tmux_fzf_^M'
+bindkey -s ^f "_tmux_fzf_\n"
 
 
 function _tmux_fzf_() {
     # local dir=$(find ~ -type d | fzf)
-    local dir=$(fdfind --type d . ~ | fzf)
-    local sess=$(basename $dir)
+    local dir=$(fdfind --type d . ~ ~/code --max-depth=1 | fzf)
 
-    tmuxsession $sess -c $dir
+    if [[ -n $dir ]]; then
+        local sess=$(basename $dir)
+        tmuxsession $sess -c $dir
+    fi
 }
 
 function tmuxsession() {
