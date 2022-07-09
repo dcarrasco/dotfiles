@@ -63,10 +63,12 @@ set hlsearch
 
 
 
-"--------------- Visuals ---------------"
-" colorscheme one
+" ############################################################################
+" Visuals
+" ############################################################################
+" colorscheme gruvbox
 colorscheme nord
-"
+
 " set translucent background
 " autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
 
@@ -85,10 +87,11 @@ set background=dark
 set termguicolors
 
 
+" ############################################################################
+" Keyboard Mappings
+" ############################################################################
 " Leader Key -----------------------------------------------------------------
 let mapleader=','
-" let mapleader=' '
-
 
 " Mappings -------------------------------------------------------------------
 "nnoremap <Leader>ev :e $MYVIMRC<CR>
@@ -99,30 +102,17 @@ nnoremap <Leader>et :e ~/.tmux.conf<CR>
 nnoremap <silent><esc> :noh<CR>
 nnoremap <silent><Leader>w :w<CR>
 "noremap <silent><Leader>p :CtrlP<CR>
-" nnoremap <silent><C-p> :GFiles<CR>
-nnoremap <silent><C-p> :Telescope git_files<CR>
-" nnoremap <silent><Leader>p :Files<CR>
-nnoremap <silent><Leader>p :Telescope find_files<CR>
-" nnoremap <silent><Leader>P :GFiles<CR>
-nnoremap <silent><Leader>P :Telescope git_files<CR>
-" nnoremap <silent><Leader>o :Commands<CR>
-nnoremap <silent><Leader>o :Telescope commands<CR>
-" nnoremap <silent><Leader>f :Tags <c-r><c-w><CR>
 nnoremap <silent><Leader>f :tj <c-r><c-w><CR>
 " nnoremap <silent><Leader>f :ltag <C-r><C-w><CR> <bar> :buffer #<CR> <bar> :lopen<CR>
-nnoremap <silent><Leader>r :Ag <c-r><c-w><CR>
 nnoremap <silent><Leader>s :TlistToggle<CR>
 nnoremap <silent><Leader>i :call PhpInsertUse()<CR>
-nnoremap <silent><Leader>d :NERDTreeToggle<CR>
-nnoremap <silent><C-1> :NERDTreeToggle<CR>
 
 nnoremap <Leader>h :tab help<space>
-" nnoremap <silent><Leader>hh :Helptags<CR>
-nnoremap <silent><Leader>hh :Telescope help_tags<CR>
 " Disable anoying ex mode
 nnoremap Q <Nop>
 "Exit VIM
 nnoremap <M-q> :q<CR>
+"Las command
 nnoremap <C-x> :<Up>
 
 
@@ -130,6 +120,7 @@ nnoremap <C-x> :<Up>
 nnoremap ñ :
 nnoremap ¿ /
 nnoremap <f3> <c-]>
+
 
 " US Keyboard mgmt -----------------------------------------------------------
 nnoremap ; :
@@ -170,7 +161,10 @@ nnoremap <silent><S-h> :bp<CR>
 nnoremap <tab> :b<space>
 nnoremap <silent><Leader>q :bd<CR>
 "open previous buffer
-nnoremap <silent><Leader>b :b#<CR>
+nnoremap <silent><Leader>bn :bn<CR>
+nnoremap <silent><Leader>bp :bp<CR>
+nnoremap <silent><Leader>bd :bd<CR>
+nnoremap <silent><Leader>bb :b#<CR>
 
 
 " Movement mgmt --------------------------------------------------------------
@@ -190,6 +184,7 @@ vnoremap ^ 0
 nnoremap 9 $
 vnoremap 9 $
 
+
 " Terminal mgmt --------------------------------------------------------------
 tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<C-\><C-n>"
 " Move to window
@@ -197,6 +192,7 @@ tnoremap <c-j> <c-w>j
 tnoremap <c-k> <c-w>k
 tnoremap <c-h> <c-w>h
 tnoremap <c-l> <c-w>l
+
 
 " Text mgmt ------------------------------------------------------------------
 onoremap q i"
@@ -212,11 +208,10 @@ vnoremap b i[
 nnoremap Y y$
 "Mueve lineas hacia arriba y abajo
 nnoremap J mzJ`z
-" nnoremap <silent><M-j> :move .+1<CR>==
-" nnoremap <silent><M-k> :move .-2<CR>==
 " nnoremap <C-p> "0p
 " paste from yank
 " nnoremap <C-S-p> "0P
+" Inserta espacio y enter
 nnoremap <C-space> i <esc>
 
 " Select mgmt ----------------------------------------------------------------
@@ -228,12 +223,12 @@ vnoremap J :move '>+1<CR>gv=gv
 vnoremap K :move '<-2<CR>gv=gv
 
 " Jump mgmt ----------------------------------------------------------------
-nnoremap <silent>[q :cp<CR>
-nnoremap <silent>]q :cn<CR>
-nnoremap <silent>[Q :cfirst<CR>
-nnoremap <silent>]Q :clast<CR>
-nnoremap <silent> <Leader>j :cnext<CR>
-nnoremap <silent> <Leader>k :cprev<CR>
+nnoremap <silent>[q :cp<CR>zz
+nnoremap <silent>]q :cn<CR>zz
+nnoremap <silent>[Q :cfirst<CR>zz
+nnoremap <silent>]Q :clast<CR>zz
+nnoremap <silent> <Leader>j :cnext<CR>zz
+nnoremap <silent> <Leader>k :cprev<CR>zz
 "Cierra ventana quickfix con ESC
 autocmd FileType qf nnoremap <buffer><silent> <Esc> :cclose <bar> :lclose<CR>
 "Salta entre tags
@@ -244,37 +239,6 @@ nnoremap <silent>]l :lnext<CR>
 nnoremap <silent>[L :lfirst<CR>
 nnoremap <silent>]L :llast<CR>
 
-" PHP mgmt -------------------------------------------------------------------
-inoremap $$ $this->
-
-"PHPdocumentor ---------------------------------------------------------------
-let g:pdv_template_dir = "~/.vim/bundle/pdv/templates_snip"
-nnoremap <buffer> <Leader>t :call pdv#DocumentWithSnip()<CR>
-
-
-"Make NERDTree easier to toggle ----------------------------------------------
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '~'
-"nnoremap <c-1> :NERDTreeToggle<CR>
-" Open NERDTree when VIM starts with no arguments
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
-
-
-" FZF y FZF Tags --------------------------------------------------------------
-"let g:fzf_tags_prompt = 'Gd '
-let g:fzf_colors = {
-\    'border': ['fg', 'Question'],
-\}
-" let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'yoffset': 0.1 } }
-let g:fzf_layout = { 'down': '40%' }
-let $FZF_DEFAULT_OPTS="--ansi --inline-info --preview-window 'right:65%' --preview 'batcat --style=header,grid'"
-
-" command! -bang -nargs=? -complete=dir Files
-"     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--preview']}, <bang>0)
-
-
 "--------------- Auto-Commands -----------------------------------------------
 augroup autosourcing
     autocmd!
@@ -284,8 +248,8 @@ augroup END
 
 
 "--------------- Config Status Line ------------------------------------------
-" nnoremap <Leader>cc :colorscheme one<CR>
 nnoremap <Leader>cc :colorscheme nord<CR>
+" nnoremap <Leader>cc :colorscheme nord<CR>
 
 let g:lightline = {
     \ 'colorscheme': 'nord',
@@ -295,6 +259,7 @@ let g:lightline = {
         \ },
     \ 'component_function': {
         \ 'gitbranch': 'FugitiveHead',
+        \ 'listbuffers': 'ListBuffers',
         \ },
     \ 'mode_map': {
         \ 'n' : ' NORMAL ',
@@ -342,6 +307,52 @@ let g:lightline = {
 autocmd BufWritePre * %s/\s\+$//e
 
 
+" ############################################################################
+" Plugin Settings
+" ############################################################################
+
+" Telescope ------------------------------------------------------------------
+nnoremap <silent><C-p> :Telescope git_files<CR>
+nnoremap <silent><Leader>p :Telescope find_files<CR>
+nnoremap <silent><Leader>P :Telescope git_files<CR>
+nnoremap <silent><Leader>o :Telescope commands<CR>
+nnoremap <silent><Leader>hh :Telescope help_tags<CR>
+
+
+" FZF y FZF Tags --------------------------------------------------------------
+" nnoremap <silent><C-p> :GFiles<CR>
+" nnoremap <silent><Leader>p :Files<CR>
+" nnoremap <silent><Leader>P :GFiles<CR>
+" nnoremap <silent><Leader>o :Commands<CR>
+" nnoremap <silent><Leader>f :Tags <c-r><c-w><CR>
+" nnoremap <silent><Leader>hh :Helptags<CR>
+nnoremap <silent><Leader>r :Ag <c-r><c-w><CR>
+
+"let g:fzf_tags_prompt = 'Gd '
+let g:fzf_colors = {
+\    'border': ['fg', 'Question'],
+\}
+" let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'yoffset': 0.1 } }
+let g:fzf_layout = { 'down': '40%' }
+let $FZF_DEFAULT_OPTS="--ansi --inline-info --preview-window 'right:65%' --preview 'batcat --style=header,grid'"
+
+" command! -bang -nargs=? -complete=dir Files
+"     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--preview']}, <bang>0)
+
+
+" NerdTree -----------------------------------------------------------------
+nnoremap <silent><Leader>d :NERDTreeToggle<CR>
+nnoremap <silent><C-1> :NERDTreeToggle<CR>
+
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '~'
+"nnoremap <c-1> :NERDTreeToggle<CR>
+" Open NERDTree when VIM starts with no arguments
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+
 " GitGutter ----------------------------------------------------------------
 highlight def link GitGutterAddLineNr GitGutterAddLine
 highlight def link GitGutterChangeLineNr GitGutterChangeLine
@@ -358,7 +369,10 @@ nnoremap <Leader>gv :GitGutterPreviewHunk<CR>
 nnoremap <Leader>gu :GitGutterUndoHunk<CR>
 
 " actualiza gitgutter al grabar
-autocmd BufWritePost * GitGutter
+augroup GitGutterConfig
+    autocmd!
+    autocmd BufWritePost * GitGutter
+augroup END
 
 
 " fugitive ----------------------------------------------------------------
@@ -391,7 +405,12 @@ let tlist_php_settings = 'php;f:function'
 " PHP Namespace ---------------------------------------------------------------
 let g:php_namespace_sort_after_insert = 1
 
-"
+
+"PHPdocumentor ---------------------------------------------------------------
+let g:pdv_template_dir = "~/.vim/bundle/pdv/templates_snip"
+nnoremap <buffer> <Leader>t :call pdv#DocumentWithSnip()<CR>
+
+
 " Phpactor -------------------------------------------------------------------
 "autocmd Filetype php setlocal omnifunc=phpactor#Complete
 " nnoremap <silent><Leader>mm :call phpactor#ContextMenu()<CR>
@@ -430,8 +449,6 @@ set shortmess+=c
 
 
 " VIM Commentary -------------------------------------------------------------
-autocmd Filetype php set commentstring=//%s
-
 augroup focustoggle
   autocmd!
   autocmd BufEnter,FocusGained * setlocal cursorline
@@ -439,17 +456,8 @@ augroup focustoggle
 augroup END
 
 
-" PHPCS and PHPStan -----------------------------------------------------------
-"csv error format    NOT WORKING!!!!
-set errorformat+="%f"\\,%l\\,%c\\,%t%*[a-zA-Z]\\,"%m"\\,%*[a-zA-Z0-9_.-]\\,%*[0-9]\\,%*[0-9]
-"emacs error format   OK!
-set errorformat+=%f:%l:%c:\ %m
-
 command! Phpcs execute PHPCsLinter()
 command! Phpstan execute PHPStan()
-
-nnoremap <silent> <Leader>l :call PHPCsLinterFile()<CR>
-nnoremap <silent> <Leader>L :call PHPCsLinterAll()<CR>
 
 
 "Grep
@@ -457,10 +465,37 @@ set grepprg=grep\ -n\ -R\ --exclude-dir=storage\ --exclude-dir=.git\ --exclude=t
 command! -nargs=+ Grep execute 'silent grep! <args>' | copen
 
 
+" ############################################################################
+" File specific settings
+" ############################################################################
 
-" ----------------------------------------------------------------------------
-" Functions ------------------------------------------------------------------
-" ----------------------------------------------------------------------------
+" PHP ------------------------------------------------------------------------
+autocmd Filetype php inoremap $$ $this->
+
+autocmd Filetype php set commentstring=//%s
+"
+"csv error format    NOT WORKING!!!!
+autocmd Filetype php set errorformat+="%f"\\,%l\\,%c\\,%t%*[a-zA-Z]\\,"%m"\\,%*[a-zA-Z0-9_.-]\\,%*[0-9]\\,%*[0-9]
+"emacs error format   OK!
+autocmd Filetype php set errorformat+=%f:%l:%c:\ %m
+
+autocmd Filetype php nnoremap <silent> <Leader>l :call PHPCsLinterFile()<CR>
+autocmd Filetype php nnoremap <silent> <Leader>L :call PHPCsLinterAll()<CR>
+
+
+" Python ---------------------------------------------------------------------
+
+autocmd Filetype python set makeprg=pylint\ --reports=n\ --score=n\ %:p
+autocmd Filetype python set errorformat=%f:%l:%c:\ %t%n:\ %m,%f:%l:\ %t%*[a-z]:\ %m,%-G%.%#
+
+autocmd Filetype python nnoremap <silent> <Leader>l :call PythonLint()<CR>
+autocmd Filetype python nnoremap <silent> <Leader>L :call PythonLint2()<CR>
+
+
+
+" ############################################################################
+" Functions
+" ############################################################################
 
 function! ShowFileFormatFlag(var)
     if (a:var == 'dos')
@@ -472,6 +507,7 @@ function! ShowFileFormatFlag(var)
     endif
 endfunction
 
+
 function! NewMode()
     if ( mode() == "\<c-v>")
         return 'v'
@@ -479,14 +515,22 @@ function! NewMode()
         return mode()
 endfunction
 
+
 function! GitBranch()
     return system('git rev-parse --abbrev-ref HEAD | tr -d "\n"')
 endfunction
+
 
 function! StatuslineGit()
     let l:branchname = GitBranch()
     return strlen(l:branchname>0)?' (git:'.l:branchname.')':''
 endfunction
+
+
+function! ListBuffers()
+    return "[".join(map(filter(getbufinfo({'buflisted':1}), {key, val -> val.bufnr != buffer_number()}), {key, val -> fnamemodify(val.name, ":t")}), " • ")."]"
+endfunction
+
 
 function! PHPCsLinterFile()
     let l:filename=@%
@@ -498,6 +542,7 @@ function! PHPCsLinterFile()
     copen 5
 endfunction
 
+
 function! PHPCsLinterAll()
     let l:phpcs_output=system('phpcs -q --report=emacs')
     " echo l:phpcs_output
@@ -507,6 +552,7 @@ function! PHPCsLinterAll()
     copen 5
 endfunction
 
+
 function! PHPStan()
     let l:filename=@%
     let l:php_output=system('./vendor/bin/phpstan --no-progress --error-format=raw analyse')
@@ -514,5 +560,25 @@ function! PHPStan()
     let l:php_list=split(l:php_output, "\n")
     unlet l:php_list[0]
     cexpr l:php_list
+    copen 5
+endfunction
+
+
+function! PythonLint()
+    let l:filename=@%
+    let l:python_output=system('pylint --reports=n --score=n '.l:filename)
+    let l:python_list=split(l:python_output, "\n")
+    unlet l:python_list[0]
+    cexpr l:python_list
+    copen 5
+endfunction
+
+
+function! PythonLint2()
+    let l:filename=@%
+    let l:python_output=system('mypy --strict '.l:filename)
+    let l:python_list=split(l:python_output, "\n")
+    unlet l:python_list[0]
+    cexpr l:python_list
     copen 5
 endfunction

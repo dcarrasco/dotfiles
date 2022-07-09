@@ -53,6 +53,7 @@ Plugin 'easymotion/vim-easymotion'
 
 " Statusline
 Plugin 'itchyny/lightline.vim'
+Plugin 'shinchu/lightline-gruvbox.vim'
 
 " Editor config properties
 Plugin 'editorconfig/editorconfig-vim'
@@ -76,4 +77,5 @@ Plugin 'davidhalter/jedi-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+
 filetype plugin indent on    " required
