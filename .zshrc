@@ -102,7 +102,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 unsetopt BEEP
-path+=("$HOME/config/composer/vendor/bin")
+path+=("$HOME/.config/composer/vendor/bin")
 path+=("$HOME/.local/bin")
 
 
