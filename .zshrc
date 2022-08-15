@@ -105,7 +105,6 @@ unsetopt BEEP
 path+=("$HOME/.config/composer/vendor/bin")
 path+=("$HOME/.local/bin")
 
-
 # List all files colorized in long format
 alias l='ls -CF --color=auto'
 alias ll='ls -lhF --color=auto'
