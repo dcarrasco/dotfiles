@@ -68,6 +68,8 @@ Plugin 'tobyS/pdv'
 Plugin 'nvim-lua/plenary.nvim'
 Plugin 'nvim-telescope/telescope.nvim'
 
+Plugin 'folke/tokyonight.nvim'
+
 Plugin 'neovim/nvim-lspconfig'
 Plugin 'davidhalter/jedi-vim'
 " Plugin 'nvim-lua/completion-nvim'

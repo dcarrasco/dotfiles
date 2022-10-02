@@ -67,7 +67,8 @@ set hlsearch
 " Visuals
 " ############################################################################
 " colorscheme gruvbox
-colorscheme nord
+" colorscheme nord
+colorscheme tokyonight
 
 " set translucent background
 " autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
@@ -183,6 +184,8 @@ nnoremap ^ 0
 vnoremap ^ 0
 nnoremap 9 $
 vnoremap 9 $
+" nnoremap <c-f> <c-f>zz
+" nnoremap <c-b> <c-b>zz
 
 
 " Terminal mgmt --------------------------------------------------------------
@@ -248,11 +251,11 @@ augroup END
 
 
 "--------------- Config Status Line ------------------------------------------
-nnoremap <Leader>cc :colorscheme nord<CR>
+nnoremap <Leader>cc :colorscheme tokyonight<CR>
 " nnoremap <Leader>cc :colorscheme nord<CR>
 
 let g:lightline = {
-    \ 'colorscheme': 'nord',
+    \ 'colorscheme': 'tokyonight',
     \ 'active': {
         \ 'left': [ [ 'mode', 'paste' ],
         \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
@@ -384,8 +387,8 @@ nnoremap <Leader>gc :Git commit<CR>
 
 " VisualMulti ----------------------------------------------------------------
 let g:VM_maps = {}
-let g:VM_maps['Find Under'] = '<C-d>'
-let g:VM_maps['Find Subword Under'] = '<C-d>'
+" let g:VM_maps['Find Under'] = '<C-d>'
+" let g:VM_maps['Find Subword Under'] = '<C-d>'
 
 
 " Snipmate -----------------------------------------------------------------
