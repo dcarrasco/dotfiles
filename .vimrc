@@ -1,7 +1,7 @@
 set nocompatible              " be iMproved, required
 
 so ~/.vim/plugins.vim
-luafile ~/.vim/lsp_config.lua
+" luafile ~/.vim/lsp_config.lua
 
 syntax on
 syntax enable
