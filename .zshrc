@@ -188,7 +188,7 @@ bindkey -s ^f "_tmux_fzf_\n"
 
 function _tmux_fzf_() {
     # local dir=$(find ~ -type d | fzf)
-    local dir=$(fdfind --type d . ~ ~/code --max-depth=1 | fzf)
+    local dir=$(fdfind --type d . ~ ~/code --max-depth=2 | fzf)
 
     if [[ -n $dir ]]; then
         local sess=$(basename $dir)
@@ -213,4 +213,3 @@ function tmuxsession() {
     fi
 }
 
-cd ~/code
