@@ -114,6 +114,7 @@ alias ls='ls --color=auto -F'
 alias l.="ls -a --color | grep --color=never '^\.'"
 
 alias diff='diff --color'
+alias fd='fdfind'
 
 alias ..="cd .."
 alias ...="cd ../.."
