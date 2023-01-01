@@ -1,0 +1,32 @@
+#!/bin/bash
+
+############################
+# INSTALL ZSH
+############################
+
+########## Variables
+
+dir=~/dotfiles                    # dotfiles directory
+file=.zshrc
+##########
+
+# create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
+echo "Installing ZSH"
+
+#check if exists dotfile
+if [[ -f $dir/$file ]]; then
+    echo "   $dir/$file exists in directory dotfiles"
+
+    if [[ -e ~/$file || -h $dir/$file ]]; then
+        echo "   ~/$file exists in home directory"
+        echo "   Deleting ~/$file"
+        rm ~/$file
+    else
+        echo "   ~/$file does not exists in home directory"
+    fi
+    echo "   Creating symlink from $dir/$file to ~/$file"
+    ln -s $dir/$file ~/$file
+else
+    echo "   $dir/$file does not exists in directory dotfiles"
+fi
+
