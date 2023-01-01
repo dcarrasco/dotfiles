@@ -15,14 +15,18 @@ neovimconfig=~/.config/nvim
 sudo apt update | sudo apt install -y neovim
 
 # Instala Vundle package manager
-if [[ -d ~/.vim/bundle/Vundle.vim ]]; then
-    echo "   Install Vundle"
+if [[ ! -d ~/.vim/bundle/Vundle.vim ]]; then
+    echo "   Instala Vundle"
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
-if [[ -d "$neovimconfig" ]]; then
-    echo "   Agrega source en init.vim"
+if [[ ! -d "$neovimconfig" ]]; then
+    echo "   Agrega directorio configuracion nvim"
     mkdir $neovimconfig
+fi
+
+if [[ ! -f "$neovimconfig/init.vim" ]]; then
+    echo "   Agrega source en init.vim"
     echo "source ~/.vimrc" > $neovimconfig/init.vim
 fi
 
