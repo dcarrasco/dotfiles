@@ -11,12 +11,17 @@ files=".vimrc .vim/plugins.vim"    # list of files/folders to symlink in homedir
 neovimconfig=~/.config/nvim
 ##########
 
-# Instala zsh y ohmyzsh
+# Instala neovim
 sudo apt update | sudo apt install -y neovim
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+# Instala Vundle package manager
+if [[ -d ]~/.vim/bundle/Vundle.vim ]; then
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+fi
 
 if [[ -d $neovimconfig ]]; then
     mkdir $neovimconfig
+fi
 echo "source ~/.vimrc" > $neovimconfig/init.vim
 
 # create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
