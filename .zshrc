@@ -140,15 +140,15 @@ alias lara='cd /mnt/c/Users/Daniel/Code/gastos-alpine/app/'
 # Docker ====================================================================
 # alias dmstart=docker-machine start
 # alias dmstop=docker-machine stop
-alias dc='sudo docker compose $@'
-alias dcu='sudo docker compose up -d'
-alias dcd='sudo docker compose down'
-alias dclsa='sudo docker container ls --all'
-alias dcbuild='sudo docker compose build --force-rm --pull'
-alias dps='sudo docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}"'
-alias dstop='sudo docker stop'
-alias drm='sudo docker rm'
-alias dtop='sudo docker stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}   {{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}\t{{.PIDs}}"'
+alias dc='docker compose $@'
+alias dcu='docker compose up -d'
+alias dcd='docker compose down'
+alias dclsa='docker container ls --all'
+alias dcbuild='docker compose build --force-rm --pull'
+alias dps='docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}"'
+alias dstop='docker stop'
+alias drm='docker rm'
+alias dtop='docker stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}   {{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}\t{{.PIDs}}"'
 #alias alpine='docker run -it --rm -v /c/Users/Daniel/:/home/Daniel/ -v /c/Users/Daniel/Code/docker-gastos/profile:/root/.profile -w /home/Daniel/Code --env SERVICE_NAME=alpine alpine:latest /bin/sh -l'
 
 function dce { sudo docker compose exec --env SERVICE_NAME=$1 $1 sh -l; }
