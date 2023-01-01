@@ -19,10 +19,10 @@ if [[ -d "~/.vim/bundle/Vundle.vim" ]]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
-if [[" -d $neovimconfig" ]]; then
+if [[ -d "$neovimconfig" ]]; then
     mkdir $neovimconfig
+    echo "source ~/.vimrc" > $neovimconfig/init.vim
 fi
-echo "source ~/.vimrc" > $neovimconfig/init.vim
 
 # create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 echo "Installing NEOVIM"
