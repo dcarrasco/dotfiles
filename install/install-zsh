@@ -7,11 +7,11 @@
 ########## Variables
 
 dir=~/dotfiles                    # dotfiles directory
-files=".zshrc"    # list of files/folders to symlink in homedir
+files=".zshrc .tmux.conf"    # list of files/folders to symlink in homedir
 ##########
 
 # Instala zsh y ohmyzsh
-sudo apt update | sudo apt install -y zsh curl
+sudo apt update | sudo apt install -y zsh curl tmux
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 
