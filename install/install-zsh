@@ -10,6 +10,11 @@ dir=~/dotfiles                    # dotfiles directory
 files=".zshrc"    # list of files/folders to symlink in homedir
 ##########
 
+# Instala zsh y ohmyzsh
+sudo apt update | sudo apt install -y zsh curl
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+
 # create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 echo "Installing ZSH"
 for file in $files; do
