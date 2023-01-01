@@ -68,7 +68,7 @@ set hlsearch
 " ############################################################################
 " colorscheme gruvbox
 " colorscheme nord
-colorscheme tokyonight
+" colorscheme tokyonight
 
 " set translucent background
 " autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
@@ -92,7 +92,8 @@ set termguicolors
 " Keyboard Mappings
 " ############################################################################
 " Leader Key -----------------------------------------------------------------
-let mapleader=','
+" let mapleader=','
+let mapleader=' '
 
 " Mappings -------------------------------------------------------------------
 "nnoremap <Leader>ev :e $MYVIMRC<CR>
@@ -102,7 +103,7 @@ nnoremap <Leader>et :e ~/.tmux.conf<CR>
 "nnoremap <Leader><space> :nohls<CR>
 nnoremap <silent><esc> :noh<CR>
 nnoremap <silent><Leader>w :w<CR>
-"noremap <silent><Leader>p :CtrlP<CR>
+" noremap <silent><Leader>p :CtrlP<CR>
 nnoremap <silent><Leader>f :tj <c-r><c-w><CR>
 " nnoremap <silent><Leader>f :ltag <C-r><C-w><CR> <bar> :buffer #<CR> <bar> :lopen<CR>
 nnoremap <silent><Leader>s :TlistToggle<CR>
@@ -112,7 +113,7 @@ nnoremap <Leader>h :tab help<space>
 " Disable anoying ex mode
 nnoremap Q <Nop>
 "Exit VIM
-nnoremap <M-q> :q<CR>
+" nnoremap <M-q> :q<CR>
 "Las command
 nnoremap <C-x> :<Up>
 
@@ -184,8 +185,8 @@ nnoremap ^ 0
 vnoremap ^ 0
 nnoremap 9 $
 vnoremap 9 $
-" nnoremap <c-f> <c-f>zz
-" nnoremap <c-b> <c-b>zz
+nnoremap <c-f> <c-f>zz
+nnoremap <c-b> <c-b>zz
 
 
 " Terminal mgmt --------------------------------------------------------------
@@ -246,16 +247,16 @@ nnoremap <silent>]L :llast<CR>
 augroup autosourcing
     autocmd!
     autocmd BufWritePost .vimrc      source %
+    autocmd BufWritePost .vimrc      :call VimColors()
     autocmd BufWritePost plugins.vim source %
 augroup END
 
 
 "--------------- Config Status Line ------------------------------------------
-nnoremap <Leader>cc :colorscheme tokyonight<CR>
-" nnoremap <Leader>cc :colorscheme nord<CR>
+nnoremap <Leader>cc :call VimColors()<CR>
 
 let g:lightline = {
-    \ 'colorscheme': 'tokyonight',
+    \ 'colorscheme': 'nord',
     \ 'active': {
         \ 'left': [ [ 'mode', 'paste' ],
         \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
@@ -329,7 +330,7 @@ nnoremap <silent><Leader>hh :Telescope help_tags<CR>
 " nnoremap <silent><Leader>o :Commands<CR>
 " nnoremap <silent><Leader>f :Tags <c-r><c-w><CR>
 " nnoremap <silent><Leader>hh :Helptags<CR>
-nnoremap <silent><Leader>r :Ag <c-r><c-w><CR>
+" nnoremap <silent><Leader>r :Ag <c-r><c-w><CR>
 
 "let g:fzf_tags_prompt = 'Gd '
 let g:fzf_colors = {
@@ -383,6 +384,42 @@ nnoremap <Leader>g :Git<CR>
 nnoremap <Leader>gd :Git diff<CR>
 nnoremap <Leader>gs :Git<CR>
 nnoremap <Leader>gc :Git commit<CR>
+
+
+" TreeSitter -----------------------------------------------------------------
+lua <<EOL
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "python", "help", "c", "lua", "rust" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOL
+
+
+" LSP Zero -----------------------------------------------------------------
+lua <<EOL
+local lsp = require('lsp-zero')
+
+lsp.preset('recommended')
+lsp.setup()
+EOL
 
 
 " VisualMulti ----------------------------------------------------------------
@@ -585,3 +622,11 @@ function! PythonLint2()
     cexpr l:python_list
     copen 5
 endfunction
+
+function! VimColors()
+    colorscheme nord
+    highlight Normal guibg=none ctermbg=none
+    highlight NormalFloat guibg=none ctermbg=none
+endfunction
+
+call VimColors()

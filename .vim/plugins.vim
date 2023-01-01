@@ -5,7 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-"
+
 " Surround plugin
 Plugin 'tpope/vim-surround'
 " Git plugin
@@ -15,7 +15,7 @@ Plugin 'tpope/vim-commentary'
 " Nerdtree
 Plugin 'scrooloose/nerdtree'
 
-" Agrega simbolos diferecias git en el gutter
+" Agrega simbolos diferencias git en el gutter
 Plugin 'airblade/vim-gitgutter'
 " FZF para vim
 Plugin 'junegunn/fzf'
@@ -30,11 +30,18 @@ Plugin 'jiangmiao/auto-pairs'
 " Agrega multiples cursores (verticales)
 Plugin 'mg979/vim-visual-multi'
 
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
+" Treesitter
+Plugin 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plugin 'nvim-treesitter/playground'
+
+" Indent guides
+Plugin 'lukas-reineke/indent-blankline.nvim'
 Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'arnaud-lb/vim-php-namespace'
+
+" Plugin 'MarcWeber/vim-addon-mw-utils'
+" Plugin 'tomtom/tlib_vim'
+" Plugin 'garbas/vim-snipmate'
+" Plugin 'arnaud-lb/vim-php-namespace'
 
 " Muestra los mappings de la leader key
 Plugin 'liuchengxu/vim-which-key'
@@ -58,20 +65,41 @@ Plugin 'shinchu/lightline-gruvbox.vim'
 " Editor config properties
 Plugin 'editorconfig/editorconfig-vim'
 
-" PHP syntax
-Plugin 'StanAngeloff/php.vim'
-
 " Generate PHP Docblocks
-Plugin 'tobyS/pdv'
+" Plugin 'tobyS/pdv'
 
 " Telescope
 Plugin 'nvim-lua/plenary.nvim'
-Plugin 'nvim-telescope/telescope.nvim'
+Plugin 'nvim-telescope/telescope.nvim', {'tag': '0.1.0'}
 
+" Colorschemes
 Plugin 'folke/tokyonight.nvim'
+Plugin 'rose-pine/neovim'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'navarasu/onedark.nvim'
 
+" LSP Support
 Plugin 'neovim/nvim-lspconfig'
-Plugin 'davidhalter/jedi-vim'
+Plugin 'williamboman/mason.nvim'
+Plugin 'williamboman/mason-lspconfig.nvim'
+
+" Autocompletion
+Plugin 'hrsh7th/nvim-cmp'
+Plugin 'hrsh7th/cmp-buffer'
+Plugin 'hrsh7th/cmp-path'
+Plugin 'saadparwaiz1/cmp_luasnip'
+Plugin 'hrsh7th/cmp-nvim-lsp'
+Plugin 'hrsh7th/cmp-nvim-lua'
+
+" Snippets
+Plugin 'L3MON4D3/LuaSnip'
+Plugin 'rafamadriz/friendly-snippets'
+
+Plugin 'VonHeikemen/lsp-zero.nvim'
+
+
+" Plugin 'neovim/nvim-lspconfig'
+" Plugin 'davidhalter/jedi-vim'
 " Plugin 'nvim-lua/completion-nvim'
 " Plugin 'williamboman/nvim-lsp-installer'
 " Plugin 'neoclide/coc.nvim'
