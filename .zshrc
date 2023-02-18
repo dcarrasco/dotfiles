@@ -9,7 +9,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="agnoster"
+ZSH_THEME="agnoster" # set by `omz`
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -124,16 +124,17 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # Folders ====================================================================
-alias d='cd /home/daniel/Dropbox'
-alias dl='cd /home/daniel/Descargas'
-alias dt='cd /home/daniel/Escritorio'
-alias util='cd /mnt/c/util'
+alias d='cd /mnt/c/Users/Daniel/Dropbox'
+alias dl='cd /mnt/c/Users/Daniel/Downloads'
+alias dt='cd /mnt/c/Users/Daniel/Desktop'
+alias util='cd /mnt/c/Users/Daniel/Util'
 # alias o='explorer.exe'
 alias h='history'
 alias j='jobs'
 #alias st='/mnt/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 #alias subl='/mnt/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 alias vim=nvim
+alias python=python3
 alias web='cd /mnt/c/Users/Daniel/Code'
 alias lara='cd /mnt/c/Users/Daniel/Code/gastos-alpine/app/'
 
