@@ -124,10 +124,10 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # Folders ====================================================================
-alias d='cd /mnt/c/Users/Daniel/Dropbox'
-alias dl='cd /mnt/c/Users/Daniel/Downloads'
-alias dt='cd /mnt/c/Users/Daniel/Desktop'
-alias util='cd /mnt/c/Users/Daniel/Util'
+alias d='cd /mnt/c/Users/danie/Dropbox'
+alias dl='cd /mnt/c/Users/danie/Downloads'
+alias dt='cd /mnt/c/Users/danie/Desktop'
+alias util='cd /mnt/c/Users/danie/Util'
 # alias o='explorer.exe'
 alias h='history'
 alias j='jobs'
