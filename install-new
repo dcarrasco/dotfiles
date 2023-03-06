@@ -1,0 +1,64 @@
+#! /bin/bash
+
+# INSTALA PAQUETES --------------------------------------------------------------------------------
+# sudo apt update
+sudo apt-get install git zsh fzf tmux fd-find ripgrep curl wget neovim python3 python3-pip python3-pylsp python3-venv -y
+
+
+# INSTALA OH MY ZSH -------------------------------------------------------------------------------
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+
+# CHEQUEA DIRECTORIO .config ----------------------------------------------------------------------
+if [[ -d ~/.config ]]; then
+    echo "Directorio ~/.config ya existe"
+else
+    echo "Creando directorio ~/.config"
+    mkdir ~/.config
+fi
+
+
+# INSTALA PACKER PARA NEOVIM ----------------------------------------------------------------------
+if [[ ! -f ~/.local/share/nvim/site/pack/packer/start/packer.nvim ]]; then
+    echo "Instalando neovim:packer..."
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+fi
+
+
+# INSTALA LINKS A ARCHIVOS CONFIGURACION ----------------------------------------------------------
+dir=~/dotfiles                    # dotfiles directory
+files=".gitconfig .tmux.conf gitignore .zshrc"    # list of files/folders to symlink in homedir
+
+pushd ~
+pwd
+
+# create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
+echo "Installing dotfiles"
+if [[ -d ~/.config/nvim ]]; then
+    echo "Directorio ~/.config/nvim ya existe"
+else
+    echo "Linkeando directorio ~/.config/nvim"
+    ln -s ~/dotfiles/.config/nvim ~/.config/nvim
+fi
+
+for file in $files; do
+    echo ""
+    echo "Processing file $file..."
+    #check if exists dotfile
+    if [[ -f $dir/$file ]]; then
+        echo "   $dir/$file exists in directory dotfiles"
+
+        if [[ -e ~/$file || -h $dir/$file ]]; then
+            echo "   ~/$file exists in home directory"
+            echo "   Deleting ~/$file"
+            rm ~/$file
+        else
+            echo "   ~/$file does not exists in home directory"
+        fi
+        echo "   Creating symlink from $dir/$file to ~/$file"
+        ln -s $dir/$file ~/$file
+    else
+        echo "   $dir/$file does not exists in directory dotfiles"
+    fi
+done
+
