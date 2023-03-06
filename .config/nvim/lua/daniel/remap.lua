@@ -1,154 +1,157 @@
-vim.keymap.set("x", "<leader>p", "\"_dP")
+local keymap = vim.keymap
+
+keymap.set("x", "<leader>p", "\"_dP")
 
 
 -- ############################################################################
 -- Keyboard Mappings from .vimrc
 -- ############################################################################
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set("n", "<Leader>ev", ":e ~/.config/nvim/init.lua<CR>")
-vim.keymap.set("n", "<Leader>ep", ":e ~/.vim/plugins.vim<CR>")
-vim.keymap.set("n", "<Leader>et", ":e ~/.tmux.conf<CR>")
-vim.keymap.set("n", "<esc>", ":noh<CR>", { silent = true })
-vim.keymap.set("n", "<Leader>w", ":w<CR>", { silent = true })
-vim.keymap.set("n", "<Leader>f", ":tj <c-r><c-w><CR>")
--- vim.keymap.set("n", "<Leader>s", ":TlistToggle<CR>")
--- vim.keymap.set("n", "<Leader>i", ":call PhpInsertUse()<CR>")
+keymap.set("n", "<leader>pv", vim.cmd.Ex)
+keymap.set("n", "<Leader>ev", ":e ~/.config/nvim/<CR>")
+keymap.set("n", "<Leader>ep", ":e ~/.vim/plugins.vim<CR>")
+keymap.set("n", "<Leader>et", ":e ~/.tmux.conf<CR>")
+keymap.set("n", "<esc>", ":noh<CR>", { silent = true })
+keymap.set("n", "<Leader>w", ":w<CR>", { silent = true })
+keymap.set("n", "<Leader>f", ":tj <c-r><c-w><CR>")
+-- keymap.set("n", "<Leader>s", ":TlistToggle<CR>")
+-- keymap.set("n", "<Leader>i", ":call PhpInsertUse()<CR>")
 
-vim.keymap.set("n", "<Leader>h", ":tab help<space>")
+keymap.set("n", "<Leader>h", ":tab help<space>")
 -- Disable anoying ex mode
-vim.keymap.set("n", "Q", "<nop>")
+keymap.set("n", "Q", "<nop>")
 -- Last command
-vim.keymap.set("n", "<C-x>", ":<Up>")
+keymap.set("n", "<C-x>", ":<Up>")
 
 
 -- Latam Keyboard mgmt --------------------------------------------------------
-vim.keymap.set("n", "ñ", ":")
-vim.keymap.set("n", "¿", "/")
-vim.keymap.set("n", "<f3>", "<c-]>")
+keymap.set("n", "ñ", ":")
+keymap.set("n", "¿", "/")
+keymap.set("n", "<f3>", "<c-]>")
 
 
 -- US Keyboard mgmt -----------------------------------------------------------
-vim.keymap.set("n", ";", ":")
-vim.keymap.set("n", ":", ";")
+keymap.set("n", ";", ":")
+keymap.set("n", ":", ";")
 
 
 -- Windows mgmt ---------------------------------------------------------------
 -- Vertical Split
-vim.keymap.set("n", "<Leader>vs", ":vsp<CR>")
+keymap.set("n", "<Leader>vs", ":vsp<CR>")
 -- Horizontal Split
-vim.keymap.set("n", "<Leader>sp", ":sp<CR>")
+keymap.set("n", "<Leader>sp", ":sp<CR>")
 -- Maximizes window
-vim.keymap.set("n", "<Leader>m", ":only<CR>")
+keymap.set("n", "<Leader>m", ":only<CR>")
 -- Close the window
-vim.keymap.set("n", "<Leader>c", ":close<CR>")
+keymap.set("n", "<Leader>c", ":close<CR>")
 -- Move to window
-vim.keymap.set("n", "<c-j>", "<c-w>j")
-vim.keymap.set("n", "<c-k>", "<c-w>k")
-vim.keymap.set("n", "<c-h>", "<c-w>h")
-vim.keymap.set("n", "<c-l>", "<c-w>l")
+keymap.set("n", "<c-j>", "<c-w>j")
+keymap.set("n", "<c-k>", "<c-w>k")
+keymap.set("n", "<c-h>", "<c-w>h")
+keymap.set("n", "<c-l>", "<c-w>l")
 -- Resize window
-vim.keymap.set("n", "<M-Up>", ":resize +5<CR>")
-vim.keymap.set("n", "<M-Down>", ":resize -5<CR>")
-vim.keymap.set("n", "<M-Left>", ":vertical resize +5<CR>")
-vim.keymap.set("n", "<M-Right>", ":vertical resize -5<CR>")
+keymap.set("n", "<M-Up>", ":resize +5<CR>")
+keymap.set("n", "<M-Down>", ":resize -5<CR>")
+keymap.set("n", "<M-Left>", ":vertical resize +5<CR>")
+keymap.set("n", "<M-Right>", ":vertical resize -5<CR>")
 
 
 -- Buffer related -------------------------------------------------------------
-vim.keymap.set("n", "<f5>", ":buffers<CR>:buffer<space>")
-vim.keymap.set("n", "<c-s-tab>", ":bp<CR>")
-vim.keymap.set("n", "<c-tab>", ":bn<CR>")
-vim.keymap.set("n", "[b", ":bp<CR>")
-vim.keymap.set("n", "]b", ":bn<CR>")
-vim.keymap.set("n", "<Leader><s-tab>", ":bp<CR>")
-vim.keymap.set("n", "<Leader><tab>", ":bn<CR>")
-vim.keymap.set("n", "<S-l>", ":bn<CR>")
-vim.keymap.set("n", "<S-h>", ":bp<CR>")
-vim.keymap.set("n", "<tab>", ":b<space>")
-vim.keymap.set("n", "<Leader>q", ":bd<CR>")
+keymap.set("n", "<f5>", ":buffers<CR>:buffer<space>")
+keymap.set("n", "<c-s-tab>", ":bp<CR>")
+keymap.set("n", "<c-tab>", ":bn<CR>")
+keymap.set("n", "[b", ":bp<CR>")
+keymap.set("n", "]b", ":bn<CR>")
+keymap.set("n", "<Leader><s-tab>", ":bp<CR>")
+keymap.set("n", "<Leader><tab>", ":bn<CR>")
+keymap.set("n", "<S-l>", ":bn<CR>")
+keymap.set("n", "<S-h>", ":bp<CR>")
+keymap.set("n", "<tab>", ":b<space>")
+keymap.set("n", "<Leader>q", ":bd<CR>")
 -- open previous buffer
-vim.keymap.set("n", "<Leader>bn", ":bn<CR>")
-vim.keymap.set("n", "<Leader>bp", ":bp<CR>")
-vim.keymap.set("n", "<Leader>bd", ":bd<CR>")
-vim.keymap.set("n", "<Leader>bb", ":b#<CR>")
+keymap.set("n", "<Leader>bn", ":bn<CR>")
+keymap.set("n", "<Leader>bp", ":bp<CR>")
+keymap.set("n", "<Leader>bd", ":bd<CR>")
+keymap.set("n", "<Leader>bb", ":b#<CR>")
 
 
 -- Movement mgmt --------------------------------------------------------------
-vim.keymap.set("n", "'", "`")
-vim.keymap.set("n", "`", "'")
-vim.keymap.set("i", "jj", "<Esc>")
-vim.keymap.set("n", "j", "gj")
-vim.keymap.set("n", "k", "gk")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
-vim.keymap.set("n", "{", "{zz")
-vim.keymap.set("n", "}", "}zz")
-vim.keymap.set("n", "0", "^")
-vim.keymap.set("n", "0", "^")
-vim.keymap.set("n", "^", "0")
-vim.keymap.set("n", "^", "0")
--- vim.keymap.set("n", "9", "$")
--- vim.keymap.set("n", "9", "$")
-vim.keymap.set("n", "<c-f>", "<c-f>zz")
-vim.keymap.set("n", "<c-b>", "<c-b>zz")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+keymap.set("n", "'", "`")
+keymap.set("n", "`", "'")
+keymap.set("i", "jj", "<Esc>")
+keymap.set("n", "j", "gj")
+keymap.set("n", "k", "gk")
+keymap.set("n", "n", "nzzzv")
+keymap.set("n", "N", "Nzzzv")
+keymap.set("n", "{", "{zz")
+keymap.set("n", "}", "}zz")
+keymap.set("n", "0", "^")
+keymap.set("n", "0", "^")
+keymap.set("n", "^", "0")
+keymap.set("n", "^", "0")
+-- keymap.set("n", "9", "$")
+-- keymap.set("n", "9", "$")
+keymap.set("n", "<c-f>", "<c-f>zz")
+keymap.set("n", "<c-b>", "<c-b>zz")
+keymap.set("n", "<C-d>", "<C-d>zz")
+keymap.set("n", "<C-u>", "<C-u>zz")
 
 
 -- Terminal mgmt --------------------------------------------------------------
--- vim.keymap.set("t", "<expr>", "<Esc> (&filetype == "fzf") ? "<Esc>-- : "<C-\><C-n>"")
+-- keymap.set("t", "<expr>", "<Esc> (&filetype == "fzf") ? "<Esc>-- : "<C-\><C-n>"")
 -- Move to window
-vim.keymap.set("t", "<c-j>", "<c-w>j")
-vim.keymap.set("t", "<c-k>", "<c-w>k")
-vim.keymap.set("t", "<c-h>", "<c-w>h")
-vim.keymap.set("t", "<c-l>", "<c-w>l")
+keymap.set("t", "<c-j>", "<c-w>j")
+keymap.set("t", "<c-k>", "<c-w>k")
+keymap.set("t", "<c-h>", "<c-w>h")
+keymap.set("t", "<c-l>", "<c-w>l")
 
 
 -- Text mgmt ------------------------------------------------------------------
-vim.keymap.set({"o", "v"}, "q", "i\"")
-vim.keymap.set({"o", "v"}, "'", "i'")
-vim.keymap.set({"o", "v"}, "p", "i(")
-vim.keymap.set({"o", "v"}, "f", "i{")
-vim.keymap.set({"o", "v"}, "b", "i[")
+keymap.set({"o", "v"}, "q", "i\"")
+keymap.set({"o", "v"}, "'", "i'")
+keymap.set({"o", "v"}, "p", "i(")
+keymap.set({"o", "v"}, "f", "i{")
+keymap.set({"o", "v"}, "b", "i[")
 
-vim.keymap.set("n", "Y", "y$")
+keymap.set("n", "Y", "y$")
 -- Junta lineas sin mover cursor
-vim.keymap.set("n", "J", "mzJ`z")
+keymap.set("n", "J", "mzJ`z")
 -- nnoremap <C-p> "0p
 -- paste from yank
 -- nnoremap <C-S-p> "0P
 -- Inserta espacio y enter
-vim.keymap.set("n", "<C-space>", "i <esc>")
+keymap.set("n", "<C-space>", "i <esc>")
+keymap.set("n", "x", '"_x')
 
 
 -- Select mgmt ----------------------------------------------------------------
-vim.keymap.set("v", "v", "V")
+keymap.set("v", "v", "V")
 -- indentar sin perder la seleccion
-vim.keymap.set("v", ">", ">gv")
-vim.keymap.set("v", "<", "<gv")
+keymap.set("v", ">", ">gv")
+keymap.set("v", "<", "<gv")
 -- Mueve lineas hacia arriba y abajo
-vim.keymap.set("v", "J", ":move '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":move '<-2<CR>gv=gv")
+keymap.set("v", "J", ":move '>+1<CR>gv=gv")
+keymap.set("v", "K", ":move '<-2<CR>gv=gv")
 
 --
 -- Jump mgmt ----------------------------------------------------------------
-vim.keymap.set("n", "[q", ":cp<CR>zz")
-vim.keymap.set("n", "]q", ":cn<CR>zz")
-vim.keymap.set("n", "[Q", ":cfirst<CR>zz")
-vim.keymap.set("n", "]Q", ":clast<CR>zz")
-vim.keymap.set("n", "<Leader>j", ":cnext<CR>zz")
-vim.keymap.set("n", "<Leader>k", ":cprev<CR>zz")
+keymap.set("n", "[q", ":cp<CR>zz")
+keymap.set("n", "]q", ":cn<CR>zz")
+keymap.set("n", "[Q", ":cfirst<CR>zz")
+keymap.set("n", "]Q", ":clast<CR>zz")
+keymap.set("n", "<Leader>j", ":cnext<CR>zz")
+keymap.set("n", "<Leader>k", ":cprev<CR>zz")
 -- Cierra ventana quickfix con ESC
 --autocmd FileType qf nnoremap <buffer> <Esc> :cclose <bar> :lclose<CR>
 --
 -- Salta entre tags
-vim.keymap.set("n", "[t", ":tprevious<CR>")
-vim.keymap.set("n", "]t", ":tnext<CR>")
-vim.keymap.set("n", "[l", ":lp<CR>")
-vim.keymap.set("n", "]l", ":lnext<CR>")
-vim.keymap.set("n", "[L", ":lfirst<CR>")
-vim.keymap.set("n", "]L", ":llast<CR>")
+keymap.set("n", "[t", ":tprevious<CR>")
+keymap.set("n", "]t", ":tnext<CR>")
+keymap.set("n", "[l", ":lp<CR>")
+keymap.set("n", "]l", ":lnext<CR>")
+keymap.set("n", "[L", ":lfirst<CR>")
+keymap.set("n", "]L", ":llast<CR>")
 
 
 -- --------------- Config Status Line ------------------------------------------
-vim.keymap.set("n", "<Leader>cc", ":lua ColorMyPencils()<CR>")
+keymap.set("n", "<Leader>cc", ":lua ColorMyPencils()<CR>")
