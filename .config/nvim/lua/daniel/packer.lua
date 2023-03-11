@@ -57,11 +57,11 @@ return require('packer').startup(function(use)
     use('arcticicestudio/nord-vim')
     use('navarasu/onedark.nvim')
     use({
-      'rose-pine/neovim',
-      as = 'rose-pine',
-      config = function()
-          vim.cmd('colorscheme rose-pine')
-      end
+        'rose-pine/neovim',
+        as = 'rose-pine',
+        config = function()
+            vim.cmd.colorscheme('rose-pine')
+        end
     })
 
 
