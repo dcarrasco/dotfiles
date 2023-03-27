@@ -3,25 +3,14 @@ font:
         # family: Noto Mono for Powerline
         # family: Monospace
         # family: Jetbrains Mono
+        # family: CodeNewRoman Nerd Font Mono
         family: MesloLGM Nerd Font Mono
         style: Regular
     bold:
-        # family: Noto Mono for Powerline
-        # family: Monospace
-        # family: Jetbrains Mono
-        family: MesloLGM Nerd Font Mono
         style: Bold
     italic:
-        # family: Noto Mono for Powerline
-        # family: Monospace
-        # family: Jetbrains Mono
-        family: MesloLGM Nerd Font Mono
         style: Italic
     bold_italic:
-        # family: Noto Mono for Powerline
-        # family: Monospace
-        # family: Jetbrains Mono
-        family: MesloLGM Nerd Font Mono
         style: Bold ItaliBold Italic
     size: 12
     offset:
@@ -34,6 +23,9 @@ window:
     opacity: 0.95
     # full / none
     decorations: full
+    padding:
+      x: 6
+      y: 6
     dimensions:
         columns: 100
         lines: 30

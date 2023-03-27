@@ -125,9 +125,9 @@ alias -- -="cd -"
 
 # Folders ====================================================================
 alias d='cd ~/Dropbox'
-alias dl='cd ~/Downloads'
-alias dt='cd ~/Desktop'
-alias util='cd /mnt/c/Users/Daniel\ Carrasco/Util'
+alias dl='cd ~/Descargas'
+alias dt='cd ~/Escritorio'
+# alias util='cd /mnt/c/Users/Daniel\ Carrasco/Util'
 # alias o='explorer.exe'
 alias h='history'
 alias j='jobs'
