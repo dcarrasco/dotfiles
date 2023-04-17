@@ -1,18 +1,21 @@
+live_config_reload: true
+
 font:
     normal:
         # family: Noto Mono for Powerline
         # family: Monospace
         # family: Jetbrains Mono
         # family: CodeNewRoman Nerd Font Mono
-        family: MesloLGM Nerd Font Mono
-        style: Regular
+        # family: MesloLGM Nerd Font Mono
+        family: SF Mono
+        style: Medium
     bold:
         style: Bold
     italic:
         style: Italic
     bold_italic:
         style: Bold ItaliBold Italic
-    size: 12
+    size: 16
     offset:
         y: 6
     glyph_offset:
@@ -20,9 +23,10 @@ font:
     draw_bold_text_with_bright_colors: true
 
 window:
-    opacity: 0.95
+    opacity: 0.90
     # full / none
     decorations: full
+    # decorations_theme_variant: Dark
     padding:
       x: 6
       y: 6
