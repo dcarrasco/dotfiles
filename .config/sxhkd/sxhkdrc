@@ -6,9 +6,15 @@
 super + t
 	alacritty
 
+super + Return
+    alacritty
+
 # program launcher
 super + a
 	rofi -show drun
+
+super + space
+    rofi -show drun
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -17,6 +23,9 @@ super + Escape
 # My program Hotkeys
 super + b
 	firefox
+
+super + v
+    virt-manager
 
 # super + p
 	# flameshot full -p /home/titus/SynologyDrive/Screenshots/
@@ -39,7 +48,9 @@ super + q
 # disable and enable
 super + m
     bspc desktop -l next
-	# synclient TouchpadOff=$(synclient -l | grep -q 'TouchpadOff.*1'; echo $?)
+
+super + ctrl + m
+	synclient TouchpadOff=$(synclient -l | grep -q 'TouchpadOff.*1'; echo $?)
 
 # send the newest marked node to the newest preselected node
 super + y
@@ -79,6 +90,9 @@ super + {p,b,comma,period}
 
 # focus the next/previous window in the current desktop
 super + {_,shift + }c
+	bspc node -f {next,prev}.local.!hidden.window
+
+alt + {_,shift + }Tab
 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
