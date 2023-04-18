@@ -1,6 +1,7 @@
 * {
     background: #1e222a;
-    foreground: #E5E9F0;
+    /* foreground: #E5E9F0; */
+    foreground: #D8DEE9;
     border-color: @background;
     bg-selected: #282c34;
     grey: #565c64;

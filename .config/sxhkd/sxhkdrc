@@ -18,7 +18,7 @@ super + Escape
 super + b
 	firefox
 
-# super + p 
+# super + p
 	# flameshot full -p /home/titus/SynologyDrive/Screenshots/
 
 # super + shift + p
@@ -36,8 +36,9 @@ super + alt + {q,r}
 super + q
 	bspc node -{c,k}
 
-# disable and enable 
-# super + m
+# disable and enable
+super + m
+    bspc desktop -l next
 	# synclient TouchpadOff=$(synclient -l | grep -q 'TouchpadOff.*1'; echo $?)
 
 # send the newest marked node to the newest preselected node
@@ -133,7 +134,7 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
-	
+
 # volume control
 XF86AudioLowerVolume
 	amixer set Master 5%-

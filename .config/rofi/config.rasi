@@ -1,7 +1,8 @@
 /** Basic config file **/
 
 configuration {
-  font: "FiraCode Nerd Font 16";
+  /* font: "FiraCode Nerd Font 16"; */
+  font: "SF Mono 16";
   show-icons: true;
   icon-theme: "Papirus";
   display-drun: "";
