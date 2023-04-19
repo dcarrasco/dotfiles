@@ -88,7 +88,7 @@ bspc rule -a Screenkey manage=off
 
 #Auto-Start
 bspc desktop -f ^9
-variety &
+[ $(ps -aux | grep variety | wc -l) -eq 1 ] && variety &
 sleep 0.50
 urxvtc &
 lxpolkit &
