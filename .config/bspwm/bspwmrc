@@ -92,7 +92,7 @@ bspc desktop -f ^9
 sleep 0.50
 urxvtc &
 lxpolkit &
-picom --config "$HOME/.config/bspwm/picom.conf" &
+picom --experimental-backends --config "$HOME/.config/bspwm/picom.conf" &
 # flameshot &
 # synology-drive &
 bspc desktop -f ^1

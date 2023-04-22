@@ -23,13 +23,13 @@ font:
     draw_bold_text_with_bright_colors: true
 
 window:
-    opacity: 0.90
+    opacity: 0.80
     # full / none
     decorations: full
     # decorations_theme_variant: Dark
     padding:
-      x: 6
-      y: 6
+      x: 10
+      y: 10
     dimensions:
         columns: 100
         lines: 30

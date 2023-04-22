@@ -2,7 +2,6 @@
 
 configuration {
   /* font: "FiraCode Nerd Font 16"; */
-  /* font: "SF Mono 16"; */
   font: "SF UI  Display 16";
   show-icons: true;
   /* icon-theme: "Papirus"; */
@@ -11,4 +10,6 @@ configuration {
   display-window: "﩯 ";
   display-combi: "  ";
 }
+
 @theme "themes/sidetab-nord.rasi"
+/* @theme "/dev/null" */
