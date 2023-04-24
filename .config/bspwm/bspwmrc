@@ -49,7 +49,7 @@ bspc config remove_disabled_monitors true
 bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
 #BSPWM Config
-bspc config border_width        3
+bspc config border_width        4
 bspc config top_padding         32
 bspc config right_padding       0
 bspc config left_padding        0
@@ -77,13 +77,13 @@ bspc config external_rules_command "$HOME/.config/bspwm/external_rules.sh"
 # Search "Bare-bones window manager by Angad Sharma" on dev.to for more
 bspc rule -a firefox desktop='^1' follow=on
 bspc rule -a Virt-manager desktop='^3' follow=on
-bspc rule -a wine desktop='^7' state=floating follow=on
 bspc rule -a Gimp desktop='^8' follow=on
-bspc rule -a yad state=floating follow=on
 bspc rule -a Variety state=floating
 bspc rule -a mplayer2 state=floating
-bspc rule -a Kupfer.py focus=on
-bspc rule -a Screenkey manage=off
+# bspc rule -a yad state=floating follow=on
+# bspc rule -a Kupfer.py focus=on
+# bspc rule -a Screenkey manage=off
+# bspc rule -a wine desktop='^7' state=floating follow=on
 # bspc rule -a Discord desktop='^6'
 # bspc rule -a synergy desktop='^9'
 #
@@ -96,10 +96,10 @@ bspc config pointer_action3 resize_corner
 bspc desktop -f ^9
 [ $(ps -aux | grep variety | wc -l) -eq 1 ] && variety &
 sleep 0.50
-urxvtc &
+# urxvtc &
 lxpolkit &
 picom --experimental-backends --config "$HOME/.config/bspwm/picom.conf" &
-[ $(ps -aux | grep psensor | wc -l) -eq 1 ] && psensor &
+# [ $(ps -aux | grep psensor | wc -l) -eq 1 ] && psensor &
 dropbox start &
 # flameshot &
 # synology-drive &
