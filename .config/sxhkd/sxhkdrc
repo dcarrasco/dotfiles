@@ -3,18 +3,12 @@
 #
 
 # terminal emulator
-super + t
+super + {t,Return}
 	alacritty
 
-super + Return
-    alacritty
-
 # program launcher
-super + a
-	rofi -show drun
-
-super + space
-    rofi -show drun
+super + {a,space}
+	rofi -show drun -matching fuzzy
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -26,6 +20,13 @@ super + b
 
 super + v
     virt-manager
+
+super + f
+	thunar
+
+# editor de configuraciones
+super + alt + e
+    /home/daniel/.config/polybar/scripts/edit-config.sh
 
 # super + p
 	# flameshot full -p /home/titus/SynologyDrive/Screenshots/
@@ -40,6 +41,9 @@ super + v
 # quit/restart bspwm
 super + alt + {q,r}
 	bspc {quit,wm -r}
+
+super + control + q
+    $HOME/.config/rofi/powermenu/powermenu.sh
 
 # close and kill
 super + q
@@ -60,8 +64,6 @@ super + y
 super + g
 	bspc node -s biggest.window
 
-super + f
-	thunar
 #
 # state/flags
 #
