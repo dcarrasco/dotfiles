@@ -77,6 +77,7 @@ bspc config external_rules_command "$HOME/.config/bspwm/external_rules.sh"
 # Search "Bare-bones window manager by Angad Sharma" on dev.to for more
 bspc rule -a firefox desktop='^1' follow=on
 bspc rule -a Virt-manager desktop='^3' follow=on
+bspc rule -a Thunar desktop='^4' follow=on
 bspc rule -a Gimp desktop='^8' follow=on
 bspc rule -a Variety state=floating
 bspc rule -a mplayer2 state=floating
