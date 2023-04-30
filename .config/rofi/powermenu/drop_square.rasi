@@ -33,21 +33,24 @@ window {
 prompt {
     enabled: 						true;
     padding:                        1% 1% 1% 0%;
-	background-color: 				@background-alt;
+	/* background-color: 				@background-alt; */
+    background-color:               #00000000;
 	text-color: 					@foreground;
 }
 
 textbox-prompt-colon {
 	expand: 						false;
 	str: 							"System |";
-	background-color: 				@background-alt;
+	/* background-color: 				@background-alt; */
+    background-color:               #00000000;
 	text-color: 					@foreground;
     padding:                        1% 0.5% 1% 7%;
 }
 
 inputbar {
 	children: 						[ textbox-prompt-colon, prompt ];
-    background-color:               @background-alt;
+    /* background-color:               @background-alt; */
+    background-color:               #00000000;
     text-color:                     @foreground;
     expand:                         false;
     border:                  		0% 0% 0.2% 0%;
@@ -59,7 +62,8 @@ inputbar {
 }
 
 listview {
-    background-color:               @background;
+    /* background-color:               @background; */
+    background-color:               #00000000;
     margin:                         0% 0% 0% 0%;
     spacing:                        3%;
     cycle:                          true;
@@ -75,7 +79,8 @@ mainbox {
 }
 
 element {
-    background-color:               @background-alt;
+    /* background-color:               @background-alt; */
+    background-color:               #00000000;
     text-color:                     @foreground;
     orientation:                    horizontal;
     border-radius:                  0%;

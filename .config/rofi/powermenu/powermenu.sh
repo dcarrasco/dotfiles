@@ -15,6 +15,7 @@
 # full_circle     full_square     full_rounded     full_alt
 # row_circle      row_square      row_rounded      row_alt
 
+# theme="drop_square"
 theme="drop_square"
 dir="$HOME/.config/rofi/powermenu"
 
