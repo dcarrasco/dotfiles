@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + {t,Return}
-	alacritty
+	kitty
 
 # program launcher
 super + {a,space}
