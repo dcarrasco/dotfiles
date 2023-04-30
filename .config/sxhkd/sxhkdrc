@@ -99,6 +99,9 @@ alt + {_,shift + }Tab
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
+super + brace{left,right}
+	bspc desktop -f {prev,next}.local
+
 # focus the last node/desktop
 super + {grave,Tab}
 	bspc {node,desktop} -f last
@@ -156,3 +159,9 @@ XF86AudioRaiseVolume
 	amixer set Master 5%+
 XF86AudioMute
     amixer set Master toggle
+
+# brightness control
+XF86MonBrightnessDown
+    light -U 10
+XF86MonBrightnessUp
+    light -A 10

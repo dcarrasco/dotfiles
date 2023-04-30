@@ -40,7 +40,7 @@ done &
 xsetroot -cursor_name left_ptr
 
 #Set Keyboard Layout
-setxkbmap -layout latam
+setxkbmap -layout latam,us
 # setxkbmap -layout en
 
 #Monitor Config
@@ -80,6 +80,7 @@ bspc rule -a Virt-manager desktop='^3' follow=on
 bspc rule -a Gimp desktop='^8' follow=on
 bspc rule -a Variety state=floating
 bspc rule -a mplayer2 state=floating
+bspc rule -a gnome-calculator state=floating
 # bspc rule -a yad state=floating follow=on
 # bspc rule -a Kupfer.py focus=on
 # bspc rule -a Screenkey manage=off
