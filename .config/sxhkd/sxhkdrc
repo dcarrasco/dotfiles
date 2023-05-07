@@ -16,7 +16,7 @@ super + Escape
 
 # My program Hotkeys
 super + b
-	firefox
+	brave-browser
 
 super + v
     virt-manager
