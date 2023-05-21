@@ -8,7 +8,7 @@ MAGIC=-4
 FONT="DejaVu Sans Mono Bold 14"
 
 # supported locales (en, ru, de, fr, hi, ja)
-declare -A LOC_ENABLE=(["en"]="enabled" ["ru"]="включен" ["de"]="aktiviert" ["fr"]="activé" ["hi"]="सक्षम" ["ja"]="有効")
+declare -A LOC_ENABLE=(["en"]="enabled" ["ru"]="включен" ["de"]="aktiviert" ["fr"]="activé" ["hi"]="सक्षम" ["ja"]="有効" ["es"]="activado")
 
 # get current locale
 CURRLOCALE=$(locale | grep 'LANG=[a-z]*' -o | sed 's/^LANG=//g')
@@ -30,7 +30,7 @@ function wifiactive () {
 
 function if_wifistate () {
   # return a expression based on wifi state
-  [[ "$(wifistate)" =~ $ENABLED ]] && rt=$1 || rt=$2
+  [[ "$(wifistate)" == "$ENABLED"* ]] && rt=$1 || rt=$2
   echo $rt
 }
 
@@ -73,7 +73,7 @@ function rwidth () {
 
 function menu () {
   wa=$(wifiactive); ws=$(wifistate);
-  if [[ $ws =~ $ENABLED ]]; then
+  if [[ "$ws" =~ "$ENABLED" ]]; then
     if [[ "$wa" != '' ]]; then
         echo "$1\n\n$2\n$3\nManual Connection"
     else

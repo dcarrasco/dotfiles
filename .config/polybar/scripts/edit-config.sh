@@ -24,6 +24,7 @@ done
 chosen=$(echo -e $listado | rofi -dmenu -p "Selecciona archivo")
 
 if [[ -n $chosen ]]; then
-    alacritty -e nvim $chosen
+    # alacritty -e nvim $chosen
+    kitty nvim $chosen
 fi
 

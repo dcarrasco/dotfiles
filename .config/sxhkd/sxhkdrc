@@ -1,6 +1,6 @@
-#
+# #######################################################
 # wm independent hotkeys
-#
+# #######################################################
 
 # terminal emulator
 super + {t,Return}
@@ -16,10 +16,14 @@ super + Escape
 
 # My program Hotkeys
 super + b
-	brave-browser
+	firefox
+	# brave-browser
 
 super + v
     virt-manager
+
+super + alt + v
+    /home/daniel/.config/polybar/scripts/start-vm.sh win10
 
 super + f
 	thunar
@@ -34,9 +38,10 @@ super + alt + e
 # super + shift + p
 	# flameshot gui -p /home/titus/SynologyDrive/Screenshots/
 
-#
+
+# #######################################################
 # bspwm hotkeys
-#
+# #######################################################
 
 # quit/restart bspwm
 super + alt + {q,r}
@@ -54,7 +59,8 @@ super + m
     bspc desktop -l next
 
 super + ctrl + m
-	synclient TouchpadOff=$(synclient -l | grep -q 'TouchpadOff.*1'; echo $?)
+    /home/daniel/.config/polybar/scripts/trackpad-toggle.sh
+	# synclient TouchpadOff=$(synclient -l | grep -q 'TouchpadOff.*1'; echo $?)
 
 # send the newest marked node to the newest preselected node
 super + y
@@ -62,11 +68,12 @@ super + y
 
 # swap the current node and the biggest window
 super + g
-	bspc node -s biggest.window
+	bspc node -s biggest.window.local
 
-#
+
+# #######################################################
 # state/flags
-#
+# #######################################################
 
 # set the window state
 # super + {t,shift + t,s,f}
@@ -78,9 +85,10 @@ super + {ctrl + t,shift + t,shift + f,ctrl + f}
 super + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
-#
+
+# #######################################################
 # focus/swap
-#
+# #######################################################
 
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
@@ -95,7 +103,7 @@ super + {_,shift + }c
 	bspc node -f {next,prev}.local.!hidden.window
 
 alt + {_,shift + }Tab
-	bspc node -f {next,prev}.local.!hidden.window
+	bspc node -f {last,next}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
@@ -118,9 +126,10 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
-#
+
+# #######################################################
 # preselect
-#
+# #######################################################
 
 # preselect the direction
 super + ctrl + {h,j,k,l}
@@ -138,9 +147,10 @@ super + ctrl + space
 super + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
-#
+
+# #######################################################
 # move/resize
-#
+# #######################################################
 
 # expand a window by moving one of its side outward
 super + alt + {h,j,k,l}
@@ -154,6 +164,11 @@ super + alt + shift + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
+
+# #######################################################
+# special keys
+# #######################################################
+#
 # volume control
 XF86AudioLowerVolume
 	amixer set Master 5%-
