@@ -5,6 +5,7 @@ arch=(\
     "$HOME/.config/bspwm/bspwmrc" \
     "$HOME/.config/bspwm/picom.conf" \
     "$HOME/.config/sxhkd/sxhkdrc" \
+    "$HOME/.config/rofi/config.rasi" \
     "$HOME/.config/alacritty/alacritty.yml" \
     "$HOME/.config/kitty/kitty.conf" \
     "$HOME/.config/polybar/scripts/edit-config.sh" \

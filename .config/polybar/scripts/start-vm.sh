@@ -2,13 +2,13 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 function main () {
-    state=$(virsh list --all | grep $1)
+    state=$(virsh --connect qemu:///system list --all | grep $1)
 
     if [[ "$state" =~ "shut off" ]]; then
-        virsh start win10 &
+        virsh --connect qemu:///system start win10 &
     fi
 
-    virt-viewer -a -f $1
+    virt-viewer --connect=qemu:///system --attach --full-screen $1
 }
 
 main $1
