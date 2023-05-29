@@ -215,3 +215,4 @@ function tmuxsession() {
     fi
 }
 
+eval "$(starship init zsh)"
