@@ -16,8 +16,8 @@ super + Escape
 
 # My program Hotkeys
 super + b
-	firefox
-	# brave-browser
+    brave-browser
+	# firefox
 
 super + v
     virt-manager
@@ -124,7 +124,7 @@ super + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+	bspc {desktop -f,node -d} '^{1-9,10}' {, --follow}
 
 
 # #######################################################
