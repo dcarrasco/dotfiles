@@ -30,13 +30,13 @@
 
     foreground:  @nord9;
     backlight:   #ccffeedd;
-    background-color:  transparent;
 
     /* highlight:     underline bold #eceff4; */
     highlight:     underline #ebcb8b;
 
     transparent: rgba(46,52,64,0);
-    width:22%;
+    background-color:  @transparent;
+    width:23%;
 }
 
 window {
@@ -45,10 +45,10 @@ window {
     location: west;
     anchor:   west;
     /* transparency: "screenshot"; */
-    /* padding: 10px; */
     border:  0px;
-    border-radius: 8px;
+    border-radius: 15px;
     height: 90%;
+    margin: 0 0 0 0.5em;
 
     background-color: @transparent;
     spacing: 0;
@@ -70,26 +70,41 @@ message {
 }
 
 inputbar {
-    color: @nord6;
-    padding: 11px;
-    background-color: #3b4252;
+    color: @nord4;
+    padding: 25px 15px 15px 15px;
+    /* background-color: #3b4252; */
+    /* background-color: @nord14; */
+    background-color: rgba(46,52,64,0.9);
     vertical-align: 0.5;
 
-    border: 1px;
-    border-radius:  6px 6px 0px 0px;
+    border: 0px;
     border-color: @nord10;
 }
 
-entry, prompt, case-indicator {
+entry {
     text-font: inherit;
     text-color: inherit;
     vertical-align: 0.5;
+    background-color: @nord3;
+    border-radius: 0px 15px 15px 0px;
+    padding: 0.5em 1em 0.5em 1em;
+    margin: 0 -10 0 0;
 }
 
 prompt {
-    margin: 0px 1em 0em 0.5em ;
+    font: "SF Mono Display 20";
+    text-color: @nord4;
+    vertical-align: 0.5;
+    padding: 0 0.5em 0 0.5em;
+    border-radius: 15px 0px 0px 15px;
+    background-color: @nord3;
+    margin: 0 -2 0 0;
+}
+
+case-indicator {
     font: "SF Mono Display 24";
-    text-color: @nord9;
+    text-color: @nord4;
+    vertical-align: 0.5;
 }
 
 listview {
@@ -99,6 +114,7 @@ listview {
     border: 0px 1px 1px 1px;
     background-color: rgba(46,52,64,0.9);
     dynamic: false;
+    border: 0px;
 }
 
 element {
@@ -110,7 +126,7 @@ element {
 }
 
 element selected.normal {
-	background-color: @nord7;
+	background-color: @nord9;
 	text-color: #2e3440;
 }
 
