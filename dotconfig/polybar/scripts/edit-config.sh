@@ -22,7 +22,7 @@ for a in ${arch[@]}; do
     listado+=$a"\n"
 done
 
-chosen=$(echo -e $listado | rofi -dmenu -p "Selecciona archivo")
+chosen=$(echo -e $listado | rofi -dmenu -p "Editar")
 
 if [[ -n $chosen ]]; then
     # alacritty -e nvim $chosen
