@@ -8,7 +8,8 @@ font:
         # family: CodeNewRoman Nerd Font Mono
         # family: MesloLGM Nerd Font Mono
         # family: FiraCode Nerd Font Mono
-        family: SF Mono
+        # family: SF Mono
+        family: MesloLGS NF
         style: Medium
     bold:
         style: Bold
