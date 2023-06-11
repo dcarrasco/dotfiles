@@ -7,8 +7,11 @@ super + Return
 	kitty
 
 # program launcher
-super + {a,space}
-	rofi -show drun -matching fuzzy
+super + space
+	rofi -show drun
+
+super + alt + space
+	~/.config/polybar/scripts/search-home.sh
 
 # make sxhkd reload its configuration files:
 super + Escape

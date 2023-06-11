@@ -32,23 +32,23 @@
     backlight:   #ccffeedd;
 
     /* highlight:     underline bold #eceff4; */
-    highlight:     underline #ebcb8b;
+    /* highlight:     underline #ebcb8b; */
 
     transparent: rgba(46,52,64,0);
     background-color:  @transparent;
-    width:23%;
+    width:50%;
 }
 
 window {
-    /* location: center; */
-    /* anchor:   center; */
-    location: west;
-    anchor:   west;
+    location: center;
+    anchor:   center;
+    /* location: west; */
+    /* anchor:   west; */
     /* transparency: "screenshot"; */
     border:  0px;
     border-radius: 15px;
-    height: 90%;
-    margin: 0 0 0 0.5em;
+    height: 50%;
+    margin: 0 0 0 0;
 
     background-color: @transparent;
     spacing: 0;
@@ -63,55 +63,59 @@ mainbox {
 
 message {
     color: @nord0;
-    padding: 5;
+    padding: 25;
     border-color: @foreground;
     border:  0px 2px 2px 2px;
     background-color: @nord7;
 }
 
 inputbar {
+    /* cuadro que incluye prompt y entry */
     color: @nord4;
-    padding: 25px 15px 15px 15px;
+    padding: 15px;
     /* background-color: #3b4252; */
     /* background-color: @nord14; */
     background-color: rgba(46,52,64,0.9);
-    vertical-align: 0.5;
+    /* vertical-align: 0.5; */
 
-    border: 0px;
-    border-color: @nord10;
+    border: 0 0 2px 0;
+    border-color: @nord3;
+}
+
+prompt {
+    /* simbolo de busqueda */
+    font: "SF Mono Display 28";
+    text-color: @nord9;
+    vertical-align: 0.5;
+    padding: 0 0.5em;
+    border-radius: 15px 0px 0px 15px;
+    /* background-color: @nord3; */
+    margin: 0 0 0 0;
 }
 
 entry {
-    text-font: inherit;
-    text-color: inherit;
+    /* cuadro de texto para escribir */
+    font: "SF Mono Display 28";
+    text-color: @nord4;
+    /* text-font: inherit; */
+    /* text-color: inherit; */
     vertical-align: 0.5;
-    background-color: @nord3;
+    /* background-color: @nord3; */
     border-radius: 0px 15px 15px 0px;
     padding: 0.5em 1em 0.5em 1em;
     margin: 0 -10 0 0;
 }
 
-prompt {
-    font: "SF Mono Display 20";
-    text-color: @nord4;
-    vertical-align: 0.5;
-    padding: 0 0.5em 0 0.5em;
-    border-radius: 15px 0px 0px 15px;
-    background-color: @nord3;
-    margin: 0 -2 0 0;
-}
-
 case-indicator {
     font: "SF Mono Display 24";
     text-color: @nord4;
-    vertical-align: 0.5;
+    /* vertical-align: 0.5; */
 }
 
 listview {
-    padding: 10px;
+    padding: 10px 0 0 0;
     border-radius: 0px 0px 6px 6px;
     border-color: @nord10;
-    border: 0px 1px 1px 1px;
     background-color: rgba(46,52,64,0.9);
     dynamic: false;
     border: 0px;
@@ -126,8 +130,9 @@ element {
 }
 
 element selected.normal {
-	background-color: @nord9;
-	text-color: #2e3440;
+	background-color: @nord3;
+	/* text-color: #2e3440; */
+	text-color: @nord6;
 }
 
 element-text, element-icon {
@@ -137,7 +142,7 @@ element-text, element-icon {
 }
 
 element-icon {
-    size: 3ch ;
+    size: 1.5em ;
     padding: 0 20 0 0;
 }
 
