@@ -110,7 +110,7 @@ bspc config pointer_action3 resize_corner
 sleep 0.50
 # urxvtc &
 lxpolkit &
-picom --experimental-backends --config "$HOME/.config/bspwm/picom.conf" &
+picom -b --experimental-backends --config "$HOME/.config/bspwm/picom.conf" &
 # [ $(ps -aux | grep psensor | wc -l) -eq 1 ] && psensor &
 dropbox start &
 # flameshot &
