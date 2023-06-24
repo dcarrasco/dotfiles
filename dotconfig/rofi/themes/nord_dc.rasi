@@ -8,21 +8,25 @@
 
 
 * {
+    /* polar night */
 	nord0: #2e3440;
 	nord1: #3b4252;
 	nord2: #434c5e;
 	nord3: #4c566a;
 
+    /* snow storm */
 	nord4: #d8dee9;
 	nord5: #e5e9f0;
 	nord6: #eceff4;
 
+    /* frost */
 	nord7: #8fbcbb;
 	nord8: #88c0d0;
 	nord9: #81a1c1;
 	nord10: #5e81ac;
-	nord11: #bf616a;
 
+    /* aurora */
+	nord11: #bf616a;
 	nord12: #d08770;
 	nord13: #ebcb8b;
 	nord14: #a3be8c;
@@ -36,6 +40,7 @@
 
     transparent: rgba(46,52,64,0);
     background-color:  @transparent;
+
     width:50%;
 }
 
@@ -44,13 +49,13 @@ window {
     anchor:   center;
     /* location: west; */
     /* anchor:   west; */
-    /* transparency: "screenshot"; */
+    transparency: "real";
     border:  0px;
     border-radius: 15px;
     height: 50%;
     margin: 0 0 0 0;
 
-    background-color: @transparent;
+    /* background-color: @transparent; */
     spacing: 0;
     children:  [mainbox];
     orientation: horizontal;
@@ -59,6 +64,7 @@ window {
 mainbox {
     spacing: 0;
     children: [ inputbar, message, listview ];
+    background-color: #2e3440EE;
 }
 
 message {
@@ -75,7 +81,7 @@ inputbar {
     padding: 15px;
     /* background-color: #3b4252; */
     /* background-color: @nord14; */
-    background-color: rgba(46,52,64,0.9);
+    /* background-color: rgba(46,52,64,0.9); */
     /* vertical-align: 0.5; */
 
     border: 0 0 2px 0;
@@ -104,6 +110,9 @@ entry {
     border-radius: 0px 15px 15px 0px;
     padding: 0.5em 1em 0.5em 1em;
     margin: 0 -10 0 0;
+    cursor: text;
+    placeholder: "Buscar...";
+    placeholder-color: @nord9;
 }
 
 case-indicator {
@@ -116,7 +125,7 @@ listview {
     padding: 10px 0 0 0;
     border-radius: 0px 0px 6px 6px;
     border-color: @nord10;
-    background-color: rgba(46,52,64,0.9);
+    /* background-color: rgba(46,52,64,0.9); */
     dynamic: false;
     border: 0px;
 }
@@ -125,18 +134,19 @@ element {
     padding: 8px;
     vertical-align: 0.5;
     border-radius: 4px;
-    background-color: transparent;
+    /* background-color: transparent; */
     text-color: @nord4;
 }
 
 element selected.normal {
-	background-color: @nord3;
+	/* background-color: @nord3; */
+	background-color: #4c566aBB;
 	/* text-color: #2e3440; */
 	text-color: @nord6;
 }
 
 element-text, element-icon {
-    background-color: inherit;
+    /* background-color: inherit; */
     text-color:       inherit;
     vertical-align: 0.5;
 }
