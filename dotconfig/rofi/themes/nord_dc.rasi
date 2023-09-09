@@ -64,7 +64,7 @@ window {
 mainbox {
     spacing: 0;
     children: [ inputbar, message, listview ];
-    background-color: #2e3440EE;
+    background-color: #2e3440DD;
 }
 
 message {
