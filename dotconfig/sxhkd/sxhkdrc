@@ -20,7 +20,7 @@ super + Escape
 # My program Hotkeys
 super + b
     brave-browser
-	# firefox
+    # firefox
 
 super + v
     virt-manager
