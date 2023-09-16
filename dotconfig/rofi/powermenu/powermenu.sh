@@ -68,6 +68,8 @@ case $chosen in
 				i3-msg exit
 			elif [[ "$DESKTOP_SESSION" == "sway" ]]; then
 				swaymsg exit
+			elif [[ "$DESKTOP_SESSION" == "hyprland" ]]; then
+				hyprctl dispatch exit
 			fi
         ;;
 esac

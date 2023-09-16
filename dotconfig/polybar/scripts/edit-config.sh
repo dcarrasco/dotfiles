@@ -4,6 +4,7 @@ arch=(\
     "$HOME/.config/polybar/config.ini" \
     "$HOME/.config/bspwm/bspwmrc" \
     "$HOME/.config/bspwm/picom.conf" \
+    "$HOME/.config/hypr/hyprland.conf" \
     "$HOME/.config/sxhkd/sxhkdrc" \
     "$HOME/.config/sway/config" \
     "$HOME/.config/waybar/config" \

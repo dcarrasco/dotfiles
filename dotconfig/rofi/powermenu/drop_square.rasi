@@ -65,10 +65,11 @@ listview {
     /* background-color:               @background; */
     background-color:               #00000000;
     margin:                         0% 0% 0% 0%;
-    spacing:                        3%;
+    spacing:                        6%;
     cycle:                          true;
     dynamic:                        true;
     layout:                         horizontal;
+    position:                       center;
 }
 
 mainbox {
