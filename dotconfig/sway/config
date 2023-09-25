@@ -30,7 +30,10 @@ set $browser brave-browser
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 # set $menu dmenu_path | dmenu | xargs swaymsg exec --
-set $menu rofi -show drun
+set $menu XDG_DATA_DIRS=/home/daniel/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share rofi -show drun
+
+default_orientation auto
+xwayland enable
 
 include /etc/sway/config-vars.d/*
 
@@ -111,6 +114,8 @@ input "1267:12668:MSFT0001:00_04F3:317C_Touchpad" {
     bindsym $mod+q kill
     bindsym $mod+Alt+q exec swaymsg exit
     bindsym $mod+control+q exec /home/daniel/.config/rofi/powermenu/powermenu.sh
+    bindsym $mod+f1 exec /home/daniel/.config/sway/keybinds
+    bindsym $mod+XF86AudioMute exec /home/daniel/.config/sway/keybinds
 
     # Start your launcher
     # bindsym $mod+d exec $menu
@@ -262,6 +267,7 @@ bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
 bindsym XF86AudioMute exec amixer set Master toggle
 bindsym XF86MonBrightnessDown exec light -U 10
 bindsym XF86MonBrightnessUp exec light -A 10
+bindsym XF86Calculator exec gnome-calculator
 
 set $color0 #2E3440
 set $color0_alpha #2E3440CC
@@ -282,10 +288,10 @@ set $color14 #A3BE8C
 set $color15 #B48EAD
 
 gaps inner 10
-smart_gaps on
+# smart_gaps on
 # gaps outer 10
 default_border pixel 5
-smart_borders on
+# smart_borders on
 default_floating_border pixel 0
 font pango:monospace 0
 titlebar_padding 1

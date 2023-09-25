@@ -48,18 +48,18 @@ super + alt + e
 
 # quit/restart bspwm
 super + alt + {q,r}
-	bspc {quit,wm -r}
+	bspc {quit,wm --restart}
 
 super + control + q
     $HOME/.config/rofi/powermenu/powermenu.sh
 
 # close and kill
 super + q
-	bspc node -{c,k}
+	bspc node {--close, --kill}
 
 # disable and enable
 super + m
-    bspc desktop -l next
+    bspc desktop --layout next
 
 super + ctrl + m
     /home/daniel/.config/polybar/scripts/trackpad-toggle.sh
@@ -67,11 +67,11 @@ super + ctrl + m
 
 # send the newest marked node to the newest preselected node
 super + y
-	bspc node newest.marked.local -n newest.!automatic.local
+	bspc node newest.marked.local --to-node newest.!automatic.local
 
 # swap the current node and the biggest window
 super + g
-	bspc node -s biggest.window.local
+	bspc node --swap biggest.window.local
 
 
 # #######################################################
@@ -82,52 +82,54 @@ super + g
 # super + {t,shift + t,s,f}
 	# bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 super + {ctrl + t,shift + t,shift + f,ctrl + f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+	bspc node --state {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-super + ctrl + {m,x,y,z}
-	bspc node -g {marked,locked,sticky,private}
+super + ctrl + {x,z}
+	bspc node --flag {sticky,private}
 
+super + alt + {x,z}
+	bspc node --flag {marked,locked}
 
 # #######################################################
 # focus/swap
 # #######################################################
 
-# focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
+# focus/move the node in the given direction
+super + {_, shift + }{h,j,k,l}
+	bspc node {--focus, --swap} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
+super + {shift + p,shift + b,comma,period}
+	bspc node --focus @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
-super + {_,shift + }c
-	bspc node -f {next,prev}.local.!hidden.window
+super + {_, shift + }c
+	bspc node --focus {next,prev}.local.!hidden.window
 
 alt + {_,shift + }Tab
-	bspc node -f {last,next}.local.!hidden.window
+	bspc node --focus {last,next}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
-	bspc desktop -f {prev,next}.local
+	bspc desktop --focus {prev,next}.local
 
 super + brace{left,right}
-	bspc desktop -f {prev,next}.local
+	bspc desktop --focus {prev,next}.local
 
 # focus the last node/desktop
 super + {grave,Tab}
-	bspc {node,desktop} -f last
+	bspc {node,desktop} --focus last
 
 # focus the older or newer node in the focus history
 super + {o,i}
-	bspc wm -h off; \
-	bspc node {older,newer} -f; \
-	bspc wm -h on
+	bspc wm --record-history off; \
+	bspc node {older,newer} --focus; \
+	bspc wm --record-history on
 
 # focus or send to the given desktop
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '{1-9,0}' {, --follow}
+super + {_, shift + }{1-9,0}
+	bspc {desktop --focus, node --to-desktop} '{1-9,0}' {, --follow}
 
 
 # #######################################################
@@ -136,19 +138,19 @@ super + {_,shift + }{1-9,0}
 
 # preselect the direction
 super + ctrl + {h,j,k,l}
-	bspc node -p {west,south,north,east}
+	bspc node --presel-dir {west,south,north,east}
 
 # preselect the ratio
 super + ctrl + {1-9}
-	bspc node -o 0.{1-9}
+	bspc node --presel-ratio 0.{1-9}
 
 # cancel the preselection for the focused node
 super + ctrl + space
-	bspc node -p cancel
+	bspc node --presel-dir cancel
 
 # cancel the preselection for the focused desktop
 super + ctrl + shift + space
-	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+	bspc query --nodes -d | xargs -I id -n 1 bspc node id -p cancel
 
 
 # #######################################################
@@ -157,15 +159,15 @@ super + ctrl + shift + space
 
 # expand a window by moving one of its side outward
 super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+	bspc node --resize {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
 super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+	bspc node --resize {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
 super + {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+	bspc node --move {-20 0,0 20,0 -20,20 0}
 
 
 # #######################################################
@@ -185,3 +187,21 @@ XF86MonBrightnessDown
     light -U 10
 XF86MonBrightnessUp
     light -A 10
+
+XF86Calculator
+    exec gnome-calculator
+
+Print
+    exec flameshot screen
+
+super + shift + s
+    exec flameshot gui
+
+super + p
+    exec ~/.config/polybar/scripts/switch-monitor.sh
+
+XF86Display
+    exec gnome-calculator
+
+XF86Favorites
+    exec firefox

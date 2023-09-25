@@ -1,0 +1,8 @@
+#!/bin/sh
+
+config_file=~/.config/sway/config
+
+keybinds=$(grep 'bindsym' $config_file | sed 's/bindsym//' | sed 's/exec //' | sed -E 's/^( )*//' | grep -v '#' | sed 's/ / = /')
+keybinds=$(echo "$keybinds" | sed 's/\$mod/SUPER/g' | sed -E 's/(SUPER|ALT|SHIFT|CTRL|TAB|RETURN)/[\1]/g')
+
+echo "$keybinds" | rofi -dmenu -i -p "Keybinds" -theme ~/.config/rofi/themes/catppuccin-mocha.rasi

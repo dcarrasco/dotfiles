@@ -3,10 +3,12 @@
 configuration {
   /* font: "FiraCode Nerd Font 16"; */
   font: "SF Mono Display 14";
+
   show-icons: true;
   /* icon-theme: "Papirus"; */
   /* icon-theme: "Tela nord"; */
   icon-theme: "Yaru-purple-dark";
+
   drun-display-format: "{name}";
   display-drun: "";
   display-window: "﩯";

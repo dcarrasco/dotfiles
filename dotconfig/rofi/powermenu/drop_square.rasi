@@ -18,77 +18,70 @@ configuration {
 
 @import "styles/colors.rasi"
 
+* {
+    background-color:               transparent;
+    margin:                         0px;
+    padding:                        0px;
+}
+
 window {
     transparency:                   "real";
     background-color:               @background;
     text-color:                     @foreground;
     border-radius:                  0px;
-    height:                         42%;
+    height:                         50%;
     width:                          100%;
     location:                       north;
-    x-offset:                       0;
-    y-offset:                       0;
 }
 
-prompt {
-    enabled: 						true;
-    padding:                        1% 1% 1% 0%;
-	/* background-color: 				@background-alt; */
-    background-color:               #00000000;
-	text-color: 					@foreground;
+mainbox {
+    children:                       [ listview, inputbar ];
+    spacing:                        0%;
+    padding:                        10% 12%;
+}
+
+
+inputbar {
+	children: 						[ textbox-prompt-colon, prompt ];
+    text-color:                     @foreground;
+    expand:                         false;
+    border:                  		0% 0% 0.1% 0%;
+    border-radius:                  0% 0% 0% 0%;
+    border-color:                  	@border;
+    margin:                         0% 21% 0% 23%;
 }
 
 textbox-prompt-colon {
 	expand: 						false;
 	str: 							"System |";
-	/* background-color: 				@background-alt; */
-    background-color:               #00000000;
 	text-color: 					@foreground;
     padding:                        1% 0.5% 1% 7%;
 }
 
-inputbar {
-	children: 						[ textbox-prompt-colon, prompt ];
-    /* background-color:               @background-alt; */
-    background-color:               #00000000;
-    text-color:                     @foreground;
-    expand:                         false;
-    border:                  		0% 0% 0.2% 0%;
-    border-radius:                  0% 0% 0% 0%;
-    border-color:                  	@border;
-    margin:                         0% 33.25% 0% 20%;
-    padding:                        0.5%;
-    position:                       center;
+prompt {
+    enabled: 						true;
+    padding:                        1% 1% 1% 0%;
+	text-color: 					@foreground;
 }
 
+
 listview {
-    /* background-color:               @background; */
-    background-color:               #00000000;
+    enabled: true;
     margin:                         0% 0% 0% 0%;
     spacing:                        6%;
     cycle:                          true;
     dynamic:                        true;
     layout:                         horizontal;
-    position:                       center;
-}
-
-mainbox {
-    background-color:               @background;
-    children:                       [ listview, inputbar ];
-    spacing:                        0%;
-    padding:                        5% 0% 5% 13.25%;
 }
 
 element {
-    /* background-color:               @background-alt; */
-    background-color:               #00000000;
     text-color:                     @foreground;
     orientation:                    horizontal;
     border-radius:                  0%;
+    expand: true;
 }
 
 element-text {
-    background-color: 				#00000000;
     text-color:       				inherit;
 	font:							"CodeNewRoman Nerd Font 64";
     expand:                         true;
@@ -113,7 +106,7 @@ element alternate.active {
 element selected {
     background-color:               @selected;
     text-color:                     @foreground;
-    border:                  		0% 0% 0.2% 0%;
+    border:                  		0% 0% 0.5% 0%;
     border-radius:                  0%;
     border-color:                  	@border;
 }
