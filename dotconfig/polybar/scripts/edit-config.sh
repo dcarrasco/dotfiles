@@ -2,6 +2,7 @@
 
 arch=(\
     "$HOME/.config/polybar/config.ini" \
+    "$HOME/.config/polybar/themes/nord/config.ini" \
     "$HOME/.config/bspwm/bspwmrc" \
     "$HOME/.config/bspwm/picom.conf" \
     "$HOME/.config/hypr/hyprland.conf" \

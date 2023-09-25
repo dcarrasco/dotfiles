@@ -13,13 +13,28 @@ opciones_dos_monitores() {
     echo "$OPTION_MONITOR_INT\n$OPTION_MONITOR_EXT\n$OPTION_MONITOR_BOTH\n\n$OPTION_SET_RESOLUTION\n"
 }
 
+primary_monitor_name() {
+    # xrandr -q | grep "primary" | cut -d " " -f 1
+    echo "eDP"
+}
+
 external_monitor_name() {
-    xrandr -q | grep " connected" | grep -v eDP | cut -d " " -f 1
+    xrandr -q | grep " connected" | grep -v $(primary_monitor_name) | cut -d " " -f 1
 }
 
 monitors_connected() {
     xrandr -q | grep " connected" | wc -l
 }
+
+is_wayland() {
+    xrandr -q | grep " connected" | grep "WAYLAND"| wc -l
+}
+
+if [ $(is_wayland) -gt 0 ]; then
+    IS_WAYLAND="YES"
+else
+    IS_WAYLAND="NO"
+fi
 
 if [ $(monitors_connected) -gt 1 ]; then
     OPCIONES=$(opciones_dos_monitores)
@@ -28,14 +43,16 @@ else
     OPCIONES=$(opciones_un_monitor)
 fi
 
-echo $OPCIONES
 MODO=$(printf "$OPCIONES" | rofi -dmenu -p "Monitor")
-echo $MODO
 
 case $MODO in
     $OPTION_MONITOR_INT)
-        xrandr --output eDP --primary --auto --rotate normal --output $EXTERNAL_MONITOR --off
-        bspc wm -r
+        if [ "$IS_WAYLAND" == "YES" ]; then
+            echo ""
+        else
+            xrandr --output eDP --primary --auto --rotate normal --output $EXTERNAL_MONITOR --off
+            bspc wm -r
+        fi
     ;;
     $OPTION_MONITOR_EXT)
         xrandr --output eDP --off --output $EXTERNAL_MONITOR --primary --auto --rotate normal
