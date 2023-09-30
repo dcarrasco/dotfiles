@@ -13,7 +13,7 @@
 
     // HYPRLAND
     "modules-left":   ["custom/windowname"],
-    "modules-center": ["wlr/workspaces"],
+    "modules-center": ["wlr/workspaces", "custom/windowstatus"],
     "modules-right":  ["idle_inhibitor", "pulseaudio", "bluetooth", "network", "cpu", "memory", "temperature", "backlight", "hyprland/language", "battery", "clock", "tray"],
 
     // Modules configuration
@@ -244,6 +244,11 @@
         "exec": "hyprctl activewindow | grep 'title:' | cut -d : -f 2",
         "restart-interval": 1,
         "max-length": 60
+    },
+    "custom/windowstatus": {
+        "format": "{}",
+        "exec": "~/.config/hypr/windowstatus.sh",
+        "restart-interval": 1
     }
 }
 # vi: ft=json

@@ -8,8 +8,8 @@ function main () {
         virsh --connect qemu:///system start win10 &
     fi
 
-    virt-viewer --connect=qemu:///system --attach --full-screen --hotkeys zoom-in=ctrl+alt+shift+f11,zoom-out=ctrl+alt+shift+f12 $1
-    # virt-viewer --connect=qemu:///system --attach --hotkeys zoom-in=ctrl+alt+shift+f11,zoom-out=ctrl+alt+shift+f12 $1
+    # virt-viewer --connect=qemu:///system --attach --full-screen --hotkeys zoom-in=ctrl+alt+shift+f11,zoom-out=ctrl+alt+shift+f12 $1
+    virt-viewer --connect=qemu:///system --attach --hotkeys zoom-in=ctrl+alt+shift+f11,zoom-out=ctrl+alt+shift+f12 $1
 }
 
 main $1
