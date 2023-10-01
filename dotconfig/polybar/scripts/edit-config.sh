@@ -9,6 +9,7 @@ arch=(\
     "$HOME/.config/sxhkd/sxhkdrc" \
     "$HOME/.config/sway/config" \
     "$HOME/.config/waybar/config" \
+    "$HOME/.config/waybar/style.css" \
     "$HOME/.config/rofi/config.rasi" \
     "$HOME/.config/alacritty/alacritty.yml" \
     "$HOME/.config/kitty/kitty.conf" \

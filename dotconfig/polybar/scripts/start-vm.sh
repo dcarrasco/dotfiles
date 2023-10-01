@@ -5,7 +5,7 @@ function main () {
     state=$(virsh --connect qemu:///system list --all | grep $1)
 
     if [[ "$state" =~ "shut off" ]]; then
-        virsh --connect qemu:///system start win10 &
+        virsh --connect qemu:///system start $1 &
     fi
 
     # virt-viewer --connect=qemu:///system --attach --full-screen --hotkeys zoom-in=ctrl+alt+shift+f11,zoom-out=ctrl+alt+shift+f12 $1

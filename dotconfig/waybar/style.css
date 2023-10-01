@@ -97,18 +97,28 @@ tooltip label {
     /* padding: 0 0 0 10px; */
     /* border-radius: 60px; */
     /* border: 2px solid red; */
+    padding: 6px 0px;
 }
 
 #workspaces button {
-    padding: 0 5px;
-    margin: 4px 0;
+    /* padding: 0 5px; */
+    /* margin: 4px 0; */
     /* background-color: transparent; */
     /* color: #ffffff; */
     /* color: #D8DEE9; */
+
+    padding: 0px 4px;
+    margin: 0px 8px;
+    border-radius: 100%;
+    background-color: @nord4;
+    transition: all 0.3s ease-in-out;
+    opacity: 0.8;
+    /* font-size: 2px; */
+
 }
 
 #workspaces label {
-    font-size: 24px;
+    /* font-size: 24px; */
 }
 
 
@@ -123,7 +133,7 @@ tooltip label {
     color: @nord6;
 }
 
-#workspaces button.focused {
+#workspaces button.active {
     /* background-color: #64727D; */
     /* background-color: #5E81AC; */
     /* background-color: #A3BE8C; */
@@ -131,6 +141,13 @@ tooltip label {
     /* color: #ECEFF4; */
     /* color: #FFFFFF; */
     /* box-shadow: inset 0 -2px #D8DEE9; */
+
+    background-color: @nord5;
+    border-radius: 30px;
+    min-width: 40px;
+    background-size: 400% 400%;
+    transition: all 0.3s ease-in-out;
+    opacity: 1.0;
 }
 
 #workspaces button.active label {

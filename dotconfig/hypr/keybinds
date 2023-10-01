@@ -2,7 +2,8 @@
 
 config_file=~/.config/hypr/hyprland.conf
 
-keybinds=$(grep -oP '(?<=^bind = ).*' $config_file | awk -F, '{print $1 $2 " =" $3 $4}' | sed 's/exec //')
+# keybinds=$(grep -oP '(?<=^bind = ).*' $config_file | awk -F, '{print $1 $2 " =" $3 $4}' | sed 's/exec //')
+keybinds=$(grep -E '^bind' $config_file | sed -r 's/bind.? = //g' | awk -F, '{print $1 $2 " =" $3 $4}' | sed 's/exec //')
 keybinds=$(echo "$keybinds" | sed 's/\$mainMod/SUPER/g' | sed -E 's/(SUPER|ALT|SHIFT|CTRL|TAB|RETURN)/[\1]/g')
 
 echo "$keybinds" | rofi -dmenu -i -p "Keybinds" -theme ~/.config/rofi/themes/catppuccin-mocha.rasi

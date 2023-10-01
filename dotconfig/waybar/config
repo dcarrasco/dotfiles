@@ -66,8 +66,10 @@
             /* "5": " ", */
             "urgent": " ",
             /* "focused": " ", */
-            "active": " ",
-            "default": " "
+            /* "active": " ",  */
+            "active": "",
+            /* "default": " " */
+            "default": ""
         }
     },
 
@@ -143,7 +145,8 @@
     "cpu": {
         /* "format": "{usage}% ", */
         "format": " {usage}%",
-        "tooltip": false
+        "tooltip": false,
+        "on-click": "GTK_THEME=Yaru-purple gnome-system-monitor"
     },
 
     "memory": {

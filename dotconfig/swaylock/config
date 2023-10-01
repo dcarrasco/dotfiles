@@ -1,0 +1,89 @@
+ignore-empty-password
+font="SF Mono"
+font-size=20px
+
+#clock
+#timestr=%R
+#datestr=%a, %e of %B
+
+# Add current screenshot as wallpaper
+# screenshots
+
+# Add an image as a background
+# In my setup the current wallpaper (requires wallpaper scripts in /scripts)
+image=~/Imágenes/BingWallpaper/20230123-SunriseMoai_ROW9943541524_UHD.jpg
+
+# Fade in time
+#fade-in=1
+
+# Effect for background
+# effect-blur=20x6
+# effect-greyscale
+#effect-pixelate=5
+
+# Show/Hide indicator circle
+#indicator
+
+# smaller indicator
+indicator-radius=200
+
+# bigger indicator
+# indicator-radius=300
+
+indicator-thickness=20
+indicator-caps-lock
+
+# Define all colors
+/* Polar Night */
+# define-color nord0  #2e3440;
+# define-color nord1  #3b4252;
+# define-color nord2  #434c5e;
+# define-color nord3  #4c566a;
+/* Snow Storm */
+# define-color nord4  #d8dee9;
+# define-color nord5  #e5e9f0;
+# define-color nord6  #eceff4;
+/* Frost */
+# define-color nord7  #8fbcbb;
+# define-color nord8  #88c0d0;
+# define-color nord9  #81a1c1;
+# define-color nord10 #5e81ac;
+/* Aurora */
+# define-color nord11 #bf616a;
+# define-color nord12 #d08770;
+# define-color nord13 #ebcb8b;
+# define-color nord14 #a3be8c;
+# define-color nord15 #b48ead;
+
+key-hl-color=b48ead
+separator-color=00000000
+
+inside-color=00000033
+inside-clear-color=ffffff00
+inside-caps-lock-color=ffffff00
+inside-ver-color=ffffff00
+inside-wrong-color=ffffff00
+
+ring-color=ffffff
+ring-clear-color=ffffff
+ring-caps-lock-color=ffffff
+ring-ver-color=ffffff
+ring-wrong-color=ffffff
+
+line-color=00000000
+line-clear-color=ffffffFF
+line-caps-lock-color=ffffffFF
+line-ver-color=ffffffFF
+line-wrong-color=ffffffFF
+
+text-color=d8dee9
+text-clear-color=ffffff
+text-ver-color=ffffff
+text-wrong-color=ffffff
+
+bs-hl-color=ffffff
+caps-lock-key-hl-color=ffffffFF
+caps-lock-bs-hl-color=ffffffFF
+disable-caps-lock-text
+text-caps-lock-color=ffffff
+
