@@ -1,5 +1,13 @@
 /** Basic config file **/
 
+/*
+ *   ____        __ _
+ *  |  _ \ ___  / _(_)
+ *  | |_) / _ \| |_| |
+ *  |  _ < (_) |  _| |
+ *  |_| \_\___/|_| |_|
+ */
+
 configuration {
   /* font: "FiraCode Nerd Font 16"; */
   font: "SF Mono Display 14";
