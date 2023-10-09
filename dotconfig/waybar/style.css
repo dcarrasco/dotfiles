@@ -42,7 +42,7 @@ window#waybar {
     /* background-color: @theme_base_color; */
     /* border-bottom: 2px solid @unfocused_borders; */
     /* color: @theme_text_color; */
-    background-color: alpha(@nord1, 0.6);
+    background-color: alpha(@nord1, 0.5);
     /* border-bottom: 2px solid @nord1; */
     /* color: #ffffff; */
     /* color: #D8DEE9; */
@@ -78,7 +78,6 @@ button {
     /* Avoid rounded borders under each button name */
     border: none;
     border-radius: 0;
-
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -121,7 +120,7 @@ tooltip label {
     border-radius: 100%;
     background-color: @nord4;
     transition: all 0.3s ease-in-out;
-    /* opacity: 0.8; */
+    /* opacity: 0.9; */
     /* font-size: 2px; */
 
 }
@@ -154,7 +153,7 @@ tooltip label {
     background-color: @nord15;
     border-radius: 30px;
     min-width: 40px;
-    background-size: 400% 400%;
+    /* background-size: 400% 400%; */
     transition: all 0.3s ease-in-out;
     /* opacity: 1.0; */
 }
@@ -246,9 +245,14 @@ tooltip label {
     }
 }
 
+#battery.warning {
+    background-color: @nord13;
+    color: @nord1;
+}
+
 #battery.critical:not(.charging) {
-    background-color: #f53c3c;
-    color: #ffffff;
+    background-color: @nord11;
+    color: @nord4;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
