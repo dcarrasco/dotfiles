@@ -53,7 +53,7 @@ window {
     border: 4px;
     border-color: @nord15;
     border-radius: 10px;
-    height: 50%;
+    height: 60%;
     margin: 0 0 0 0;
 
     /* background-color: @transparent; */
@@ -153,8 +153,8 @@ element-text, element-icon {
 }
 
 element-icon {
-    size: 1.5em ;
-    padding: 0 20 0 0;
+    size: 2.0em ;
+    padding: 0 0.5em;
 }
 
 button {
