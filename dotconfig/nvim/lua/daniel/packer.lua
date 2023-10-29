@@ -63,6 +63,10 @@ return require('packer').startup(function(use)
             vim.cmd.colorscheme('rose-pine')
         end
     })
+    use {
+        "catppuccin/nvim",
+        as = "catppuccin"
+    }
 
 
 

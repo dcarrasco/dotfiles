@@ -19,6 +19,15 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
 	vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 	vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+
+    vim.keymap.set("n", "<leader>vl", function() vim.cmd([[
+    let l:filename=@%
+    let l:python_output=system('mypy --strict '.l:filename)
+    let l:python_list=split(l:python_output, "\n")
+    unlet l:python_list[0]
+    cexpr l:python_list
+    copen 5
+    ]]) end, opts)
 end)
 
 lsp.setup()
