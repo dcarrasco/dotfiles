@@ -32,7 +32,7 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     font-family: SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     color: @nord4;
 }
 
@@ -115,7 +115,7 @@ tooltip label {
     /* color: #ffffff; */
     /* color: #D8DEE9; */
 
-    padding: 0px 4px;
+    padding: 0px 2px;
     margin: 0px 8px;
     border-radius: 100%;
     background-color: @nord4;
@@ -191,7 +191,7 @@ tooltip label {
 #scratchpad,
 #language,
 #mpd {
-    font-size: 16px;
+    font-size: 15px;
     padding: 0 5px;
     /* color: #D8DEE9; */
     /* color: #81A1C1; */
@@ -204,7 +204,7 @@ tooltip label {
 
 #window, #custom-windowname {
     font-family: SF UI Display;
-    font-size: 22px;
+    font-size: 18px;
     color: @nord4;
     padding: 0 1em;
 }

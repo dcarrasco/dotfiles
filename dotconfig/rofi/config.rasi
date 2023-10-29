@@ -10,7 +10,7 @@
 
 configuration {
   /* font: "FiraCode Nerd Font 16"; */
-  font: "SF Mono Display 15";
+  font: "SF Mono Display 12";
 
   show-icons: true;
   /* icon-theme: "Papirus"; */
