@@ -1,89 +1,137 @@
 #!/bin/sh
 
-OPTION_MONITOR_INT="󰌢  Solo monitor interno"
-OPTION_MONITOR_EXT="󰍹  Solo monitor externo"
-OPTION_MONITOR_BOTH="󰍺  Ambos monitores"
-OPTION_SET_RESOLUTION="󱋆  Cambiar resolucion"
-
-opciones_un_monitor() {
-    echo "$OPTION_MONITOR_INT\n\n$OPTION_SET_RESOLUTION\n"
+is_wayland() {
+    # xrandr -q | grep " connected" | grep "WAYLAND"| wc -l
+    wlr-randr | grep current | wc -l
 }
 
-opciones_dos_monitores() {
-    echo "$OPTION_MONITOR_INT\n$OPTION_MONITOR_EXT\n$OPTION_MONITOR_BOTH\n\n$OPTION_SET_RESOLUTION\n"
+IS_WAYLAND="NO"
+if [ $(is_wayland) -gt 0 ]; then
+    IS_WAYLAND="YES"
+fi
+
+
+primary_monitor_fullname() {
+    if [ "$IS_WAYLAND" = "NO" ]; then
+        xrandr -q | grep "primary"
+    else
+        wlr-randr | grep -e "^[^ ]" | grep -e "^e"
+    fi
 }
 
 primary_monitor_name() {
-    # xrandr -q | grep "primary" | cut -d " " -f 1
-    echo "eDP"
+    echo "$(primary_monitor_fullname)" | cut -d " " -f 1
+}
+
+external_monitor_fullname() {
+    if [ "$IS_WAYLAND" = "NO" ]; then
+        xrandr -q | grep " connected" | grep -v $(primary_monitor_name)
+    else
+        wlr-randr | grep -e "^[^ ]" | grep -v $(primary_monitor_name)
+    fi
 }
 
 external_monitor_name() {
-    xrandr -q | grep " connected" | grep -v $(primary_monitor_name) | cut -d " " -f 1
+    echo "$(external_monitor_fullname)" | cut -d " " -f 1
 }
 
-monitors_connected() {
-    xrandr -q | grep " connected" | wc -l
+OPT_MONITOR_INT="󰌢  Solo monitor interno $(primary_monitor_fullname)"
+OPT_MONITOR_EXT="󰍹  Solo monitor externo $(external_monitor_fullname)"
+OPT_MONITOR_BOTH="󰍺  Ambos monitores"
+OPT_SET_RESOL="󱋆  Cambiar resolucion"
+OPT_SCALE_100="󰛭  Escalar al 100"
+OPT_SCALE_125="󰛭  Escalar al 125"
+OPT_SCALE_150="󰛭  Escalar al 150"
+
+echo "WAYLAND: $IS_WAYLAND"
+echo "$OPT_MONITOR_EXT"
+
+opciones_un_monitor() {
+    echo "$OPT_MONITOR_INT\n$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n"
 }
 
-is_wayland() {
-    xrandr -q | grep " connected" | grep "WAYLAND"| wc -l
+opciones_dos_monitores() {
+    echo "$OPT_MONITOR_INT\n$OPT_MONITOR_EXT\n$OPT_MONITOR_BOTH\n$OPT_SET_RESOL\n"
 }
 
-if [ $(monitors_connected) -gt 1 ]; then
+current_monitor_name() {
+    hyprctl monitors | grep Monitor | cut -d " " -f 2
+}
+
+
+count_monitors() {
+    if [ "$IS_WAYLAND" = "NO" ]; then
+        xrandr -q | grep " connected" | wc -l
+    else
+        wlr-randr | grep current | wc -l
+    fi
+}
+
+if [ $(count_monitors) -gt 1 ]; then
+    echo "2 monitores"
+    echo "Primary  : $(primary_monitor_name)"
+    echo "Primary  : $(primary_monitor_fullname)"
+    echo "External : $(external_monitor_name)"
+    echo "External : $(external_monitor_fullname)"
     OPCIONES=$(opciones_dos_monitores)
     EXTERNAL_MONITOR=$(external_monitor_name)
 else
     OPCIONES=$(opciones_un_monitor)
 fi
 
-if [ $(is_wayland) -gt 0 ]; then
-    IS_WAYLAND="YES"
-    OPCIONES=$(opciones_dos_monitores)
-else
-    IS_WAYLAND="NO"
-fi
 
 MODO=$(printf "$OPCIONES" | rofi -dmenu -p "Monitor")
 
 
 # ******** WAYLAND
+echo "antes de ejecutar..."
 if [ "$IS_WAYLAND" = "YES" ]; then
-    echo "waylaaaand"
+    echo "tenemos wayland..."
+    echo "Modo : $MODO"
+    echo "OPT  : $OPT_MONITOR_EXT"
     case $MODO in
-        $OPTION_MONITOR_INT)
-            echo $OPTION_MONITOR_INT
-            wlr-randr --output eDP-1 --on --preferred --output DP-2 --off
+        $OPT_MONITOR_INT)
+            # echo $OPT_MONITOR_INT
+            wlr-randr --output $(primary_monitor_name) --on --preferred --output $EXTERNAL_MONITOR --off
         ;;
-        $OPTION_MONITOR_EXT)
-            echo $OPTION_MONITOR_EXT
-            wlr-randr --output eDP-1 --off --output DP-2 --on --preferred
+        $OPT_MONITOR_EXT)
+            # echo $OPT_MONITOR_EXT
+            echo "wlr-randr --output $(primary_monitor_name) --off --output $EXTERNAL_MONITOR --on --preferred"
+            wlr-randr --output $(primary_monitor_name) --off --output $EXTERNAL_MONITOR --on --preferred
         ;;
-        $OPTION_MONITOR_BOTH)
-            echo $OPTION_MONITOR_BOTH
-            wlr-randr --output eDP-1 --on --preferred --output DP-2 --on
+        $OPT_MONITOR_BOTH)
+            # echo $OPT_MONITOR_BOTH
+            wlr-randr --output $(primary_monitor_name) --on --preferred --output $EXTERNAL_MONITOR --on
         ;;
-        $OPTION_SET_RESOLUTION)
-            echo $OPTION_SET_RESOLUTION
+        $OPT_SET_RESOL)
+            echo $OPT_SET_RESOL
+        ;;
+        $OPT_SCALE_100)
+            wlr-randr --output $(current_monitor_name) --scale 1.0
+        ;;
+        $OPT_SCALE_125)
+            wlr-randr --output $(current_monitor_name) --scale 1.25
+        ;;
+        $OPT_SCALE_150)
+            wlr-randr --output $(current_monitor_name) --scale 1.5
         ;;
     esac
 # ******** X11
 else
-    echo "x111111111"
     case $MODO in
-        $OPTION_MONITOR_INT)
+        $OPT_MONITOR_INT)
             xrandr --output eDP --primary --auto --rotate normal --output $EXTERNAL_MONITOR --off
             bspc wm -r
         ;;
-        $OPTION_MONITOR_EXT)
+        $OPT_MONITOR_EXT)
             xrandr --output eDP --off --output $EXTERNAL_MONITOR --primary --auto --rotate normal
             bspc wm -r
         ;;
-        $OPTION_MONITOR_BOTH)
+        $OPT_MONITOR_BOTH)
             xrandr --output eDP --primary --auto --rotate normal --output $EXTERNAL_MONITOR --auto --rotate normal --right-of eDP
             bspc wm -r
         ;;
-        $OPTION_SET_RESOLUTION)
+        $OPT_SET_RESOL)
             arandr
             bspc wm -r
         ;;
