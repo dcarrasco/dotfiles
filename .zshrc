@@ -151,6 +151,7 @@ alias dstop='docker stop'
 alias drm='docker rm'
 alias dtop='docker stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}   {{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}\t{{.PIDs}}"'
 #alias alpine='docker run -it --rm -v /c/Users/Daniel/:/home/Daniel/ -v /c/Users/Daniel/Code/docker-gastos/profile:/root/.profile -w /home/Daniel/Code --env SERVICE_NAME=alpine alpine:latest /bin/sh -l'
+alias nasdocker='ssh -t qnap /share/CACHEDEV1_DATA/.qpkg/container-station/bin/docker $@'
 
 function dce { docker compose exec --env SERVICE_NAME=$1 $1 sh -l; }
 # export -f dce
