@@ -3,19 +3,37 @@
 rofi=$(hyprctl activewindow | grep class | grep Rofi | wc -l)
 
 floating_status=""
-if [ $(hyprctl activewindow | grep floating | cut -d : -f 2) = 1 ] && [ $rofi = 0 ]; then
-    floating_status=" "
-fi
-
+fakefullscreen_status=""
 fullscreen_status=""
-if [ $(hyprctl activewindow | grep -v fake | grep fullscreen: | cut -d : -f 2) = 1 ] && [ $rofi = 0 ]; then
-    # fullscreen_status=" "
-    fullscreen_status=" "
-fi
-
 pinned_status=""
-if [ $(hyprctl activewindow | grep pinned: | cut -d : -f 2) = 1 ] && [ $rofi = 0 ]; then
-    pinned_status=" "
+grouped_status=""
+
+if [ $rofi = 0 ]; then
+    if [ "$(hyprctl activewindow | grep floating | cut -d : -f 2)" = " 1" ]; then
+        floating_status=" "
+    fi
+
+    if [ "$(hyprctl activewindow | grep fakefullscreen: | cut -d : -f 2)" = " 1" ]; then
+        # fakefullscreen_status=" "
+        # fakefullscreen_status="      "
+        fakefullscreen_status=" "
+    fi
+
+    if [ "$(hyprctl activewindow | grep -v fake | grep fullscreen: | cut -d : -f 2)" = " 1" ]; then
+        # fullscreen_status=" "
+        fullscreen_status=" "
+    fi
+
+    if [ "$(hyprctl activewindow | grep pinned: | cut -d : -f 2)" = " 1" ]; then
+        # pinned_status=" "
+        # pinned_status=" 󰐃  󰤱   "
+        pinned_status=" "
+        floating_status=""
+    fi
+
+    if [ $(hyprctl activewindow | grep grouped: | wc -l) -gt 0 ] && [ "$(hyprctl activewindow | grep grouped: | cut -d : -f 2)" != " 0" ]; then
+        grouped_status=" "
+    fi
 fi
 
-echo "$floating_status$fullscreen_status$pinned_status"
+echo "$fakefullscreen_status$fullscreen_status$grouped_status$floating_status$pinned_status"
