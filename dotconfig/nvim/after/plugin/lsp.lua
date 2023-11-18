@@ -6,6 +6,10 @@ lsp.ensure_installed({
 	'pylsp',
 })
 
+require('lint').linters_by_ft = {
+    python = {'pylint', 'mypy'}
+}
+
 lsp.on_attach(function(client, bufnr)
 	local opts = {buffer = bufnr, remap = false}
 
@@ -20,14 +24,22 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 	vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
-    vim.keymap.set("n", "<leader>vl", function() vim.cmd([[
-    let l:filename=@%
-    let l:python_output=system('mypy --strict '.l:filename)
-    let l:python_list=split(l:python_output, "\n")
-    unlet l:python_list[0]
-    cexpr l:python_list
-    copen 5
-    ]]) end, opts)
+    vim.keymap.set("n", "<leader>vl", function() require('lint').try_lint() end, opts)
+    vim.keymap.set("n", "<leader>vll", function()
+        local file_name = vim.api.nvim_buf_get_name(0)
+        print(file_name)
+        -- local lint_command = 'mypy --strict ' .. file_name
+        -- local handle = io.popen(lint_command)
+        -- local result = handle:read("*a")
+        -- handle:close()
+        -- result:gsub("[\r\n]", " ")
+        -- print(result)
+        -- vim.cmd('cexpr ' .. result)
+        -- vim.cmd('copen 5')
+        -- print(os.execute('ls'))
+        -- print(vim.api.nvim_buf_get_name(0))
+    end, opts)
+
 end)
 
 lsp.setup()
