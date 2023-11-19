@@ -22,6 +22,7 @@ arch=(\
     "$HOME/.config/alacritty/alacritty.yml" \
     "$HOME/.config/kitty/kitty.conf" \
     "$HOME/.config/polybar/scripts/edit-config.sh" \
+    "$HOME/.config/dunst/dunstrc" \
     "$HOME/.config/nvim/init.lua" \
     "$HOME/.config/nvim/lua/daniel/init.lua" \
     "$HOME/.config/nvim/lua/daniel/set.lua" \
