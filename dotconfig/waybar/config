@@ -20,7 +20,7 @@
     // HYPRLAND
     "modules-left":   ["custom/windowname"],
     "modules-center": ["wlr/workspaces", "hyprland/workspaces", "custom/windowstatus"],
-    "modules-right":  ["idle_inhibitor", "pulseaudio", "bluetooth", "network", "cpu", "memory", "temperature", "backlight", "hyprland/language", "battery", "clock", "tray"],
+    "modules-right":  ["custom/updates", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "bluetooth", "network", "pulseaudio", "battery", "clock", "tray"],
 
     // Modules configuration
     "sway/workspaces": {
@@ -36,7 +36,8 @@
         "smooth-scrolling-threshold": 1.5,
         "all-outputs": true,
         /* "format": "{name}{icon}", */
-        "format": "{icon}",
+        // "format": "{icon}",
+        "format": "{name}",
         "format-icons": {
             /* "1": " ", */
             /* "2": " ", */
@@ -64,6 +65,7 @@
         /* "all-outputs": true, */
         /* "format": "{name}{icon}", */
         "format": "{icon}",
+        // "format": "{name}",
         "format-icons": {
             /* "1": " ", */
             /* "2": " ", */
@@ -131,8 +133,8 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": " ",
+            "deactivated": " "
         }
     },
 
@@ -143,20 +145,26 @@
 
     "clock": {
         // "timezone": "America/New_York",
-        // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip-format": "<tt>{calendar}</tt>",
         //"tooltip-format": "<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
+        "format-alt": "{:%a %d/%m/%Y}",
+        "interval": 30,
+        "calendar": {
+            "format": {
+                "today": "<span color='#BF616A'><b>{}</b></span>"
+            }
+        }
     },
 
     "cpu": {
         /* "format": "{usage}% ", */
-        "format": " {usage}%",
+        "format": "  {usage}%",
         "tooltip": false,
         "on-click": "GTK_THEME=Yaru-purple gnome-system-monitor"
     },
 
     "memory": {
-        "format": " {}%"
+        "format": "  {}%"
     },
 
     "temperature": {
@@ -182,8 +190,8 @@
         },
         "format": "{icon}    {capacity}%",
         "format-charging": "{icon}    {capacity}%",
-        "format-plugged": "{icon}   {capacity}% ",
-        "format-alt": "{time} {icon}",
+        "format-plugged": "{icon}    {capacity}% ",
+        "format-alt": "{icon}     {time}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
@@ -192,9 +200,9 @@
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         /* "format-wifi": "{essid} ({signalStrength}%) ", */
-        "format-wifi": "   {signalStrength}%",
+        "format-wifi": " ",
         "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ipaddr} / {ifname} via {gwaddr}",
+        "tooltip-format": "Strength: {signalStrength}%\n{ipaddr}\n{ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         /* "format-alt": "{ifname}: {ipaddr}/{cidr}", */
@@ -204,12 +212,16 @@
     "bluetooth": {
         "format": " ",
         "on-click": "blueman-manager",
+        "tooltip-format": "{status} ({num_connections})\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "* {device_alias}"
     },
 
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
+        "scroll-step": 5, // %, can be a float
         /* "format": "{volume}% {icon} {format_source}", */
-        "format": "{icon}  {volume}%",
+        // "format": "{icon}  {volume}%",
+        "tooltip-format": "Volume: {volume}%\n{desc}\n{format_source}",
+        "format": "{icon} ",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         /* "format-muted": " {format_source}", */
@@ -245,20 +257,33 @@
         "format": "   {}",
         "format-en": "us",
         "format-es": "es",
-        "tooltip": "xxxxx"
+        "keyboard-name": "at-translated-set-2-keyboard",
+        "tooltip": true,
+        "tooltip-format": "hola",
     },
 
     "custom/windowname": {
         "format": "{}",
         // "exec": "hyprctl activewindow | grep 'title:' | cut -d : -f 2",
         "exec": "$HOME/.config/hypr/windowname.sh",
+        "tooltip": false,
         "restart-interval": 1,
         "max-length": 60
     },
+
     "custom/windowstatus": {
         "format": "{}",
         "exec": "$HOME/.config/hypr/windowstatus.sh",
         "restart-interval": 1
+    },
+
+    "custom/updates": {
+        "return-type": "json",
+        "format": "{}",
+        "exec": "$HOME/.config/hypr/updates.sh",
+        "on-click": "kitty bash -c \"sudo nala update && sudo nala upgrade\"",
+        "restart-interval": 3600,
+        "tooltip": true
     }
 }
 # vi: ft=json

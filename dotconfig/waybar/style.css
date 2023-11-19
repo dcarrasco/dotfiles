@@ -33,26 +33,26 @@
     /* `otf-font-awesome` is required to be installed for icons */
     /* font-family: SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
     font-family: SF UI Display, Noto Sans, SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 18px;
     color: @nord4;
 }
 
+window {
+    /* background-color: alpha(#ffffff, 0.0); */
+    background-color: alpha(@nord0, 0.5);
+}
+
 window#waybar {
-    /* background-color: rgba(43, 48, 59, 0.8); */
     /* border-bottom: 3px solid rgba(100, 114, 125, 0.8); */
-    /* background-color: @theme_base_color; */
-    /* border-bottom: 2px solid @unfocused_borders; */
-    /* color: @theme_text_color; */
-    background-color: alpha(@nord1, 0.5);
+    /* background-color: alpha(@nord0, 0.5); */
     /* border-bottom: 2px solid @nord1; */
-    /* color: #ffffff; */
-    /* color: #D8DEE9; */
     transition-property: background-color;
     transition-duration: .5s;
+    border-radius: 0px;
 }
 
 window#waybar.hidden {
-    opacity: 0.2;
+    /* opacity: 0.2; */
 }
 
 /*
@@ -64,13 +64,12 @@ window#waybar.solo {
 }
 */
 
-window#waybar.termite {
-    /* background-color: #3F3F3F; */
-}
-
-window#waybar.chromium {
-    /* background-color: #000000; */
-    border: none;
+.modules-left, .modules-right, .modules-center {
+    /* border: 1px solid red; */
+    /* border-radius: 30px; */
+    /* padding: 0 20px; */
+    /* margin: 0 10px; */
+    /* background-color: alpha(@nord0, 0.6); */
 }
 
 button {
@@ -89,16 +88,16 @@ button:hover {
 }
 
 tooltip {
-    background-color: alpha(@nord10, 0.9);
+    background-color: alpha(@nord3, 0.9);
     color: @nord5;
-    font-size: 15px;
-    border: 2px solid @nord2;
+    border: 2px solid alpha(@nord4, 0.7);
     border-radius: 10px;
     /* box-shadow: 15px 15px 10px alpha(@nord0, 0.3); */
 }
 
 tooltip label {
     font-family: SF UI Display;
+    font-size: 16px;
 }
 
 #workspaces {
@@ -154,8 +153,8 @@ tooltip label {
     /* color: #FFFFFF; */
     /* box-shadow: inset 0 -2px #D8DEE9; */
 
-    background-color: @nord9;
-    border: 2px solid @nord9;
+    background-color: @nord15;
+    border: 2px solid @nord4;
     border-radius: 30px;
     min-width: 40px;
     /* background-size: 400% 400%; */
@@ -163,8 +162,13 @@ tooltip label {
     /* opacity: 1.0; */
 }
 
+#workspaces button label {
+    color: @nord1;
+    font-size: 12px;
+}
+
 #workspaces button.active label {
-    /* color: @nord9; */
+    color: @nord6;
 }
 
 #workspaces button.urgent {
@@ -176,6 +180,11 @@ tooltip label {
     background-color: alpha(@nord4, 0.0);
     border: 2px solid @nord4;
 }
+
+#workspaces button.persistent label {
+    color: alpha(@nord4, 0.6);
+}
+
 
 #mode {
     /* background-color: #64727D; */
@@ -202,10 +211,7 @@ tooltip label {
 #scratchpad,
 #language,
 #mpd {
-    font-size: 16px;
     padding: 0 5px;
-    /* color: #D8DEE9; */
-    /* color: #81A1C1; */
 }
 
 #window,
@@ -264,7 +270,7 @@ tooltip label {
 #battery.warning {
     background-color: @nord13;
     color: @nord1;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 #battery.critical:not(.charging) {
@@ -377,7 +383,7 @@ label:focus {
 }
 
 #idle_inhibitor {
-    padding: 0 10px;
+    /* padding: 0 5px; */
     /* background-color: #2d3436; */
 }
 
