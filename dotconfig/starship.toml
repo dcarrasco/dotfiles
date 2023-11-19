@@ -104,7 +104,7 @@ format = '[ $symbol ($version) ]($style)'
 
 [nodejs]
 symbol = ""
-style = "bg:#86BBD8"
+style = "bg:#86BBD8 fg:#3B4252"
 format = '[ $symbol ($version) ]($style)'
 
 [nim]
