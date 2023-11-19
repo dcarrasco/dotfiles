@@ -43,7 +43,7 @@
     origin = top-right
 
     # Offset from the origin
-    offset = 0x30
+    offset = 30x30
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -324,14 +324,16 @@
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#A3BE8C"
-    foreground = "#2E3440"
+    foreground = "#4C566A"
+    highlight = "#E5E9F0"
     timeout = 6
     # Icon for notifications with low urgency, uncomment to enable
     #default_icon = /path/to/icon
 
 [urgency_normal]
-    background = "#5E81ACAA"
+    background = "#5E81AC"
     foreground = "#E5E9F0"
+    highlight = "#E5E9F0"
     timeout = 6
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon
@@ -340,9 +342,16 @@
     background = "#BF616AAA"
     foreground = "#E5E9F0"
     frame_color = "#ffffff"
+    highlight = "#E5E9F0"
     timeout = 6
     # Icon for notifications with critical urgency, uncomment to enable
     #default_icon = /path/to/icon
+
+[OSD]
+    appname = "OSD"
+    background = "#2E3440"
+    foreground = "#E5E9F0"
+    timeout = 2
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
