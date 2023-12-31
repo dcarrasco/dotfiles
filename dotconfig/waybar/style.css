@@ -173,7 +173,7 @@ tooltip label {
 
 #workspaces button.urgent {
     background-color: @nord11;
-    border: 2px solid @nord11;
+    border: 2px solid @nord4;
 }
 
 #workspaces button.persistent {
@@ -232,13 +232,17 @@ tooltip label {
     font-size: 18px;
 }
 
+.modules-right {
+    margin-right: 10px;
+}
+
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
     margin-left: 0;
 }
 
 /* If workspaces is the rightmost module, omit right margin */
-.modules-right > widget:last-child > #workspaces {
+.modules-right > widget:last-child  {
     margin-right: 0;
 }
 
@@ -393,7 +397,8 @@ label:focus {
     /* color: @nord13; */
     margin: 7px 0px;
     border-radius: 7px;
-    background-color: @nord11;
+    color: @nord2;
+    background-color: @nord14;
 }
 
 #mpd {
@@ -446,5 +451,9 @@ label:focus {
 }
 
 #bluetooth.connected {
-    color: #0082FC;
+    /* color: #0082FC; */
+}
+
+#bluetooth.disabled, #bluetooth.off {
+    color: alpha(@nord4, 0.5);
 }
