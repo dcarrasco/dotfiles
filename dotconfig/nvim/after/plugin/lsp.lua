@@ -1,16 +1,21 @@
-local lsp = require('lsp-zero')
+local lsp_zero = require('lsp-zero')
 
-lsp.preset('recommended')
+lsp_zero.preset('recommended')
 
-lsp.ensure_installed({
-	'pylsp',
-})
+-- lsp.ensure_installed({
+-- 	'pylsp',
+-- })
 
 require('lint').linters_by_ft = {
     python = {'pylint', 'mypy'}
 }
 
-lsp.on_attach(function(client, bufnr)
+vim.diagnostic.config({
+    virtual_text = true,
+    underline = true,
+})
+
+lsp_zero.on_attach(function(client, bufnr)
 	local opts = {buffer = bufnr, remap = false}
 
 	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
@@ -42,4 +47,15 @@ lsp.on_attach(function(client, bufnr)
 
 end)
 
-lsp.setup()
+lsp_zero.setup()
+
+require('mason').setup({})
+
+require('mason-lspconfig').setup({
+    ensure_installed = { "lua_ls" },
+    handlers = {
+        lsp_zero.default_setup,
+    }
+})
+
+
