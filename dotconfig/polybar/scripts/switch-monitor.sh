@@ -25,9 +25,13 @@ primary_monitor_name() {
 
 external_monitor_fullname() {
     if [ "$IS_WAYLAND" = "NO" ]; then
-        xrandr -q | grep " connected" | grep -v $(primary_monitor_name)
+        xrandr -q | grep " connected" | grep -v "$(primary_monitor_name)"
     else
-        wlr-randr | grep -e "^[^ ]" | grep -v $(primary_monitor_name)
+        if [ "$(primary_monitor_name)" = "" ]; then
+            wlr-randr | grep -e "^[^ ]"
+        else
+            wlr-randr | grep -e "^[^ ]" | grep -v "$(primary_monitor_name)"
+        fi
     fi
 }
 
@@ -35,19 +39,29 @@ external_monitor_name() {
     echo "$(external_monitor_fullname)" | cut -d " " -f 1
 }
 
-OPT_MONITOR_INT="󰌢  Solo monitor interno $(primary_monitor_fullname)"
-OPT_MONITOR_EXT="󰍹  Solo monitor externo $(external_monitor_fullname)"
-OPT_MONITOR_BOTH="󰍺  Ambos monitores"
-OPT_SET_RESOL="󱋆  Cambiar resolucion"
-OPT_SCALE_100="󰛭  Escalar al 100"
-OPT_SCALE_125="󰛭  Escalar al 125"
-OPT_SCALE_150="󰛭  Escalar al 150"
+# echo "primary monitor name: $(primary_monitor_name)"
+# echo "primary monitor full name: $(primary_monitor_fullname)"
+# echo "external monitor name: $(external_monitor_name)"
+# echo "external monitor full name: $(external_monitor_fullname)"
 
-echo "WAYLAND: $IS_WAYLAND"
-echo "$OPT_MONITOR_EXT"
+
+OPT_MONITOR_INT="    Solo monitor interno $(primary_monitor_fullname)"
+OPT_MONITOR_EXT="    Solo monitor externo $(external_monitor_fullname)"
+OPT_MONITOR_BOTH="      Ambos monitores"
+OPT_SET_RESOL="    Cambiar resolucion"
+OPT_SCALE_100="    Escalar al 100"
+OPT_SCALE_125="    Escalar al 125"
+OPT_SCALE_150="    Escalar al 150"
+
+# echo "WAYLAND: $IS_WAYLAND"
+# echo "$OPT_MONITOR_EXT"
 
 opciones_un_monitor() {
     echo "$OPT_MONITOR_INT\n$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n"
+}
+
+opciones_un_monitor_externo() {
+    echo "$OPT_MONITOR_EXT\n$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n"
 }
 
 opciones_dos_monitores() {
@@ -68,15 +82,20 @@ count_monitors() {
 }
 
 if [ $(count_monitors) -gt 1 ]; then
-    echo "2 monitores"
-    echo "Primary  : $(primary_monitor_name)"
-    echo "Primary  : $(primary_monitor_fullname)"
-    echo "External : $(external_monitor_name)"
-    echo "External : $(external_monitor_fullname)"
+    # echo "2 monitores"
+    # echo "Primary  : $(primary_monitor_name)"
+    # echo "Primary  : $(primary_monitor_fullname)"
+    # echo "External : $(external_monitor_name)"
+    # echo "External : $(external_monitor_fullname)"
     OPCIONES=$(opciones_dos_monitores)
     EXTERNAL_MONITOR=$(external_monitor_name)
 else
-    OPCIONES=$(opciones_un_monitor)
+    if [ "$(primary_monitor_name)" = "" ]; then
+        OPCIONES=$(opciones_un_monitor_externo)
+    else
+        OPCIONES=$(opciones_un_monitor)
+        # OPCIONES=$(opciones_dos_monitores)
+    fi
 fi
 
 
@@ -84,11 +103,11 @@ MODO=$(printf "$OPCIONES" | rofi -dmenu -p "Monitor")
 
 
 # ******** WAYLAND
-echo "antes de ejecutar..."
+# echo "antes de ejecutar..."
 if [ "$IS_WAYLAND" = "YES" ]; then
-    echo "tenemos wayland..."
-    echo "Modo : $MODO"
-    echo "OPT  : $OPT_MONITOR_EXT"
+    # echo "tenemos wayland..."
+    # echo "Modo : $MODO"
+    # echo "OPT  : $OPT_MONITOR_EXT"
     case $MODO in
         $OPT_MONITOR_INT)
             # echo $OPT_MONITOR_INT
