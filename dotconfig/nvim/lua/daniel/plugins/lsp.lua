@@ -65,7 +65,6 @@ return {
             {'williamboman/mason-lspconfig.nvim'},
         },
         config = function()
-            print "aca from lsp "
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_lspconfig()
 
