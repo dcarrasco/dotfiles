@@ -4,6 +4,10 @@ return {
     'arcticicestudio/nord-vim',
     'navarasu/onedark.nvim',
     {
+        "catppuccin/nvim",
+        name = "catppuccin"
+    },
+    {
         'rose-pine/neovim',
         name = 'rose-pine',
         config = function()
@@ -24,10 +28,6 @@ return {
             -- ColorMyPencils("catppuccin")
             ColorMyPencils("catppuccin-frappe")
         end
-    },
-    {
-        "catppuccin/nvim",
-        name = "catppuccin"
     },
 
 }

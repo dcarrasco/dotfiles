@@ -13,6 +13,8 @@ return {
         event = 'InsertEnter',
         dependencies = {
             {'L3MON4D3/LuaSnip'},
+            {'hrsh7th/cmp-buffer'},
+            {'hrsh7th/cmp-nvim-lua'},
         },
         config = function()
             local lsp_zero = require('lsp-zero')
@@ -23,6 +25,11 @@ return {
             -- vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
             cmp.setup({
+                -- sources = {
+                --     { name = 'nvim_lsp' },
+                --     { name = 'nvim_lua' },
+                --     { name = 'buffer', keyword_length = 3 },
+                -- },
                 formatting = lsp_zero.cmp_format(),
                 mapping = cmp.mapping.preset.insert({
                     ['<C-Space>'] = cmp.mapping.complete,
@@ -30,11 +37,12 @@ return {
                     ['<C-e>'] = cmp_action.toggle_completion(),
                     ['<Tab>'] = cmp_action.tab_complete(),
                     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-                    ['<C-d>'] = cmp_action.luasnip_jump_forward(),
+                    ['<C-f>'] = cmp_action.luasnip_jump_forward(),
                     ['<C-b>'] = cmp_action.luasnip_jump_backward(),
                 }),
                 window = {
-                    documentation = cmp.config.window.bordered(),
+                    -- completion = cmp.config.window.bordered(),
+                    -- documentation = cmp.config.window.bordered(),
                 },
                 preselect = 'item',
                 completion = {
@@ -84,8 +92,8 @@ return {
                 vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
                 vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
                 vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-                vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
-                vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
+                vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() vim.fn.feedkeys("zz") end, opts)
+                vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() vim.fn.feedkeys("zz") end, opts)
                 vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
                 vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
                 vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
@@ -93,20 +101,6 @@ return {
                 vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
                 vim.keymap.set("n", "<leader>vl", function() require('lint').try_lint() end, opts)
-                vim.keymap.set("n", "<leader>vll", function()
-                    local file_name = vim.api.nvim_buf_get_name(0)
-                    print(file_name)
-                    -- local lint_command = 'mypy --strict ' .. file_name
-                    -- local handle = io.popen(lint_command)
-                    -- local result = handle:read("*a")
-                    -- handle:close()
-                    -- result:gsub("[\r\n]", " ")
-                    -- print(result)
-                    -- vim.cmd('cexpr ' .. result)
-                    -- vim.cmd('copen 5')
-                    -- print(os.execute('ls'))
-                    -- print(vim.api.nvim_buf_get_name(0))
-                end, opts)
             end)
 
             require('mason-lspconfig').setup({
@@ -136,10 +130,8 @@ return {
     }
 
     -- Autocompletion
-    -- {'hrsh7th/cmp-buffer'},
     -- {'hrsh7th/cmp-path'},
     -- {'saadparwaiz1/cmp_luasnip'},
-    -- {'hrsh7th/cmp-nvim-lua'},
 
     -- Snippets
     -- {'rafamadriz/friendly-snippets'},
