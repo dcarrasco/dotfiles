@@ -91,7 +91,7 @@ inputbar {
 
 prompt {
     /* simbolo de busqueda */
-    font: "SF Mono Display 28";
+    font: "SF UI Display 28";
     text-color: @nord9;
     vertical-align: 0.5;
     padding: 0 0.5em;
@@ -102,7 +102,7 @@ prompt {
 
 entry {
     /* cuadro de texto para escribir */
-    font: "SF Mono Display 28";
+    font: "SF UI Display 28";
     text-color: @nord4;
     /* text-font: inherit; */
     /* text-color: inherit; */

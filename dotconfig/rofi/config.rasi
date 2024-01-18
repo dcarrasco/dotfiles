@@ -9,8 +9,8 @@
  */
 
 configuration {
-  /* font: "FiraCode Nerd Font 16"; */
-  font: "SF Mono Display 15";
+  // font: "FiraCode Nerd Font 16"; 
+  font: "SF UI Display 15";
 
   show-icons: true;
   /* icon-theme: "Papirus"; */
