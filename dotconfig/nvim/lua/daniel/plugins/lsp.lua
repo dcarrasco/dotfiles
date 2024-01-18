@@ -26,9 +26,9 @@ return {
 
             cmp.setup({
                 -- sources = {
-                --     { name = 'nvim_lsp' },
-                --     { name = 'nvim_lua' },
-                --     { name = 'buffer', keyword_length = 3 },
+                    -- { name = 'nvim_lsp' },
+                    -- { name = 'nvim_lua' },
+                    -- { name = 'buffer' },
                 -- },
                 formatting = lsp_zero.cmp_format(),
                 mapping = cmp.mapping.preset.insert({
@@ -39,6 +39,12 @@ return {
                     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
                     ['<C-f>'] = cmp_action.luasnip_jump_forward(),
                     ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+                    -- ['<C-l'] = cmp.mapping(function(fallback)
+                    --     if cmp.visible() then
+                    --         return cmp.complete_common_string()
+                    --     end
+                    --     fallback()
+                    -- end, {'i', 'c'}),
                 }),
                 window = {
                     -- completion = cmp.config.window.bordered(),
@@ -48,18 +54,9 @@ return {
                 completion = {
                     completeopt = 'menu,menuone,noinsert',
                 },
-            })
-
-            vim.diagnostic.config({
-                virtual_text = true,
-                underline = true,
-                float = {
-                    style = 'minimal',
-                    border = 'rounded',
-                    source = 'always',
-                    header = '',
-                    prefix = '',
-                },
+                experimental = {
+                    ghost_text = true,
+                }
             })
         end
     },
@@ -101,6 +98,7 @@ return {
                 vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
                 vim.keymap.set("n", "<leader>vl", function() require('lint').try_lint() end, opts)
+                vim.keymap.set("n", "<leader>vqf", function() vim.diagnostic.setloclist() end, opts)
             end)
 
             require('mason-lspconfig').setup({
@@ -115,6 +113,18 @@ return {
             })
 
             -- lsp_zero.setup()
+
+            -- vim.diagnostic.config({
+            --     virtual_text = true,
+            --     underline = true,
+            --     float = {
+            --         style = 'minimal',
+            --         border = 'rounded',
+            --         source = 'always',
+            --         header = '',
+            --         prefix = '',
+            --     },
+            -- })
 
         end
     },

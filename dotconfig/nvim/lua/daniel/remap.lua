@@ -147,10 +147,10 @@ keymap.set("n", "<Leader>k", ":cprev<CR>zz")
 -- Salta entre tags
 keymap.set("n", "[t", ":tprevious<CR>")
 keymap.set("n", "]t", ":tnext<CR>")
-keymap.set("n", "[l", ":lp<CR>")
-keymap.set("n", "]l", ":lnext<CR>")
-keymap.set("n", "[L", ":lfirst<CR>")
-keymap.set("n", "]L", ":llast<CR>")
+keymap.set("n", "[l", ":lp<CR>zz")
+keymap.set("n", "]l", ":lnext<CR>zz")
+keymap.set("n", "[L", ":lfirst<CR>zz")
+keymap.set("n", "]L", ":llast<CR>zz")
 
 
 -- --------------- Config Status Line ------------------------------------------

@@ -27,6 +27,7 @@ return {
             -- ColorMyPencils("rose-pine")
             -- ColorMyPencils("catppuccin")
             ColorMyPencils("catppuccin-frappe")
+
         end
     },
 
