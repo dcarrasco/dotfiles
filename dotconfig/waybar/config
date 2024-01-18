@@ -153,7 +153,8 @@
         "interval": 30,
         "calendar": {
             "format": {
-                "today": "<span color='#BF616A'><b>{}</b></span>"
+                // "today": "<span color='#BF616A'><b>{}</b></span>"
+                "today": "<span color='#EBCB8B'><b>{}</b></span>"
             }
         }
     },
