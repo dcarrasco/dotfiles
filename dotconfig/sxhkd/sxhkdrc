@@ -29,17 +29,20 @@ super + b
     brave-browser
     # firefox
 
-super + v
-    virt-manager
+super + alt + b
+    firefox
 
 super + alt + v
+    virt-manager
+
+super + v
     /home/daniel/.config/polybar/scripts/start-vm.sh win10
 
 super + f
 	thunar
 
 # editor de configuraciones
-super + alt + e
+super + e
     /home/daniel/.config/polybar/scripts/edit-config.sh
 
 # super + p
@@ -183,17 +186,26 @@ super + {Left,Down,Up,Right}
 #
 # volume control
 XF86AudioLowerVolume
-	amixer set Master 5%-
+	amixer set Master 5%- && notify-send -a OSD -h int:value:$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1) "Volumen"
+
 XF86AudioRaiseVolume
-	amixer set Master 5%+
+	amixer set Master 5%+ && notify-send -a OSD -h int:value:$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1) "Volumen"
+
 XF86AudioMute
     amixer set Master toggle
 
 # brightness control
 XF86MonBrightnessDown
-    light -U 10
+    light -U 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) "Brillo pantalla"
+
 XF86MonBrightnessUp
-    light -A 10
+    light -A 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) "Brillo pantalla"
+
+super + XF86MonBrightnessDown
+    variety -p
+
+super + XF86MonBrightnessUp
+    variety -n
 
 XF86Calculator
     exec gnome-calculator
