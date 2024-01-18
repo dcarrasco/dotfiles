@@ -59,7 +59,7 @@ if [ $(xrandr --listmonitors | grep "Monitors:" | cut -d " " -f 2) -gt 1 ]; then
     bspc monitor $(xrandr -q | grep " connected" | grep -v eDP | cut -d " " -f 1) -d 1 2 3 4 5
     bspc monitor eDP -d 6 7 8 9 0
 else
-    bspc monitor $(xrandr --listmonitors | grep -v "Monitors:" | cut -d " " -f 6) -d 1 2 3 4 5 6
+    bspc monitor $(xrandr --listmonitors | grep -v "Monitors:" | cut -d " " -f 6) -d 1 2 3 4 5
 fi
 
 #BSPWM Config
@@ -118,7 +118,8 @@ bspc config pointer_action3 resize_corner
 sleep 0.50
 # urxvtc &
 lxpolkit &
-picom -b --experimental-backends --config "$HOME/.config/bspwm/picom.conf" &
+dunst &
+picom -b --config "$HOME/.config/bspwm/picom.conf" &
 # [ $(ps -aux | grep psensor | wc -l) -eq 1 ] && psensor &
 dropbox start &
 # flameshot &
