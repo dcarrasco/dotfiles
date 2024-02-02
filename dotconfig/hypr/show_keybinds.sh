@@ -1,6 +1,6 @@
 #!/bin/sh
 
-config_file=~/.config/hypr/hyprland.conf
+config_file=~/.config/hypr/keybinds.conf
 
 # keybinds=$(grep -oP '(?<=^bind = ).*' $config_file | awk -F, '{print $1 $2 " =" $3 $4}' | sed 's/exec //')
 keybinds=$(grep -E '^bind' $config_file | sed -r 's/bind.? = //g' | sed 's/, /,/g' | awk -F, '{gsub(" ", "+", $1); print $1 "+" $2 "=" $3 " " $4}' | sed 's/exec //')
