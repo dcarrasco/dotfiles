@@ -182,8 +182,8 @@ alias t='vendor/bin/phpunit'
 export FZF_DEFAULT_COMMAND="fdfind ."
 export FZF_ALT_C_COMMAND="fdfind --type d . $HOME"
 export FZF_CTRL_P_COMMAND="$FZF_DEFAULT_COMMAND"
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+source /usr/share/fzf/shell/key-bindings.zsh
+# source /usr/share/doc/fzf/examples/completion.zsh
 
 # CTRL-F para directorio y session en tmux
 bindkey -s ^f "_tmux_fzf_\n"
@@ -216,4 +216,5 @@ function tmuxsession() {
     fi
 }
 
+cd
 eval "$(starship init zsh)"
