@@ -12,72 +12,34 @@
     "spacing": 4, // Gaps between modules (4px)
 
     // Choose the order of the modules
-    // SWAY
-    // "modules-left": ["sway/window"],
-    // "modules-center": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
-    // "modules-right": ["idle_inhibitor", "pulseaudio", "bluetooth", "network", "cpu", "memory", "temperature", "backlight", "sway/language", "battery", "clock", "tray"],
-
-    // HYPRLAND
-    "modules-left":   ["custom/windowname"],
-    "modules-center": ["wlr/workspaces", "hyprland/workspaces", "custom/windowstatus"],
-    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "hyprland/language", "bluetooth", "network", "pulseaudio", "battery", "clock"],
+    // "modules-left":   ["custom/windowname"],
+    // "modules-center": ["hyprland/workspaces", "custom/windowstatus"],
+    "modules-left": ["hyprland/workspaces", "custom/windowstatus", "custom/windowname"],
+    "modules-center":   [],
+    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "bluetooth", "network", "pulseaudio", "battery", "clock"],
 
     // Modules configuration
-    "sway/workspaces": {
-        "persistent_workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": []
-        },
-        "disable-scroll": false,
-        "smooth-scrolling-threshold": 1.5,
-        "all-outputs": true,
-        /* "format": "{name}{icon}", */
-        // "format": "{icon}",
-        "format": "{name}",
-        "format-icons": {
-            /* "1": " ", */
-            /* "2": " ", */
-            /* "3": " ", */
-            /* "4": " ", */
-            /* "5": " ", */
-            "urgent": " ",
-            /* "focused": " ", */
-            "focused": " ",
-            "default": " "
-        }
-    },
-
-    "wlr/workspaces": {
+    "hyprland/workspaces": {
         "persistent-workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": []
+            "*": 5
         },
         "on-click": "activate",
         "disable-scroll": false,
         "smooth-scrolling-threshold": 1.5,
+        // "on-scroll-up": "hyprctl dispatch workspace e+1",
+        // "on-scroll-down": "hyprctl dispatch workspace e-1",
         /* "all-outputs": true, */
-        /* "format": "{name}{icon}", */
-        "format": "{icon}",
-        // "format": "{name}",
+        "format": "{name}",
+        //"format": "{icon}",
         "format-icons": {
+            "urgent": " ",
+            "active": "",
+            "default": ""
             /* "1": " ", */
             /* "2": " ", */
             /* "3": " ", */
             /* "4": " ", */
             /* "5": " ", */
-            "urgent": " ",
-            /* "focused": " ", */
-            /* "active": " ",  */
-            "active": "",
-            /* "default": " " */
-            "default": ""
         }
     },
 
@@ -220,7 +182,8 @@
     "bluetooth": {
         "format": "",
         "format-connected": " ",
-        "on-click": "blueman-manager",
+        "on-click": "~/.config/polybar/scripts/bluetooth.sh --toggle",
+        "on-click-right": "blueman-manager",
         "tooltip-format": "{status} ({num_connections})\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "* {device_alias}"
     },
