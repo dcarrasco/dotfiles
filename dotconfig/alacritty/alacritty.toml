@@ -1,0 +1,59 @@
+#      _    _                 _ _   _
+#     / \  | | __ _  ___ _ __(_) |_| |_ _   _
+#    / _ \ | |/ _` |/ __| '__| | __| __| | | |
+#   / ___ \| | (_| | (__| |  | | |_| |_| |_| |
+#  /_/   \_\_|\__,_|\___|_|  |_|\__|\__|\__, |
+#                                       |___/
+
+live_config_reload = true
+import = ["~/.config/alacritty/themes/TomorrowNight.toml"]
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[font]
+size = 14
+
+[font.bold]
+style = "Bold"
+
+[font.bold_italic]
+style = "Bold ItaliBold Italic"
+
+[font.glyph_offset]
+y = 3
+
+[font.italic]
+style = "Italic"
+
+[font.normal]
+# family = "Noto Sans Mono"
+# family = "Monospace"
+# family = "Jetbrains Mono"
+# family = "CodeNewRoman Nerd Font Mono"
+# family = "MesloLGM Nerd Font Mono"
+# family = "FiraCode Nerd Font Mono"
+# family = "SF Mono"
+family = "MesloLGS NF"
+# family = "Monaspace Radon"
+style = "Medium"
+
+[font.offset]
+y = 6
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F11"
+mods = "None"
+
+[window]
+decorations = "full"
+opacity = 0.95
+
+[window.dimensions]
+columns = 110
+lines = 30
+
+[window.padding]
+x = 10
+y = 10

@@ -16,7 +16,8 @@ font:
         # family: MesloLGM Nerd Font Mono
         # family: FiraCode Nerd Font Mono
         # family: SF Mono
-        family: MesloLGS NF
+        # family: MesloLGS NF
+        family: Monaspace Radon
         style: Medium
     bold:
         style: Bold
