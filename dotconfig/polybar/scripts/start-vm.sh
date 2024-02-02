@@ -4,7 +4,7 @@
 function main () {
     state=$(virsh --connect qemu:///system list --all | grep $1)
 
-    if [[ "$state" =~ "shut off" ]]; then
+    if [[ "$state" =~ "apagado" ]]; then
         virsh --connect qemu:///system start $1 &
     fi
 
