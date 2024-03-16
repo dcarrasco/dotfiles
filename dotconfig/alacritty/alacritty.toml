@@ -12,7 +12,7 @@ import = ["~/.config/alacritty/themes/TomorrowNight.toml"]
 draw_bold_text_with_bright_colors = true
 
 [font]
-size = 14
+size = 17
 
 [font.bold]
 style = "Bold"
@@ -21,7 +21,7 @@ style = "Bold"
 style = "Bold ItaliBold Italic"
 
 [font.glyph_offset]
-y = 3
+y = 4
 
 [font.italic]
 style = "Italic"
@@ -33,13 +33,13 @@ style = "Italic"
 # family = "CodeNewRoman Nerd Font Mono"
 # family = "MesloLGM Nerd Font Mono"
 # family = "FiraCode Nerd Font Mono"
-# family = "SF Mono"
-family = "MesloLGS NF"
+family = "SF Mono"
+# family = "MesloLGS NF"
 # family = "Monaspace Radon"
 style = "Medium"
 
 [font.offset]
-y = 6
+y = 8
 
 [[keyboard.bindings]]
 action = "ToggleFullscreen"

@@ -114,7 +114,6 @@ alias ls='ls --color=auto -F'
 alias l.="ls -a --color | grep --color=never '^\.'"
 
 alias diff='diff --color'
-alias fd='fdfind'
 
 alias ..="cd .."
 alias ...="cd ../.."
@@ -138,25 +137,25 @@ alias python=python3
 alias web='cd /mnt/c/Users/Daniel/Code'
 alias lara='cd /mnt/c/Users/Daniel/Code/gastos-alpine/app/'
 
-# Docker ====================================================================
+# Docker / podman =================================================================
 # alias dmstart=docker-machine start
 # alias dmstop=docker-machine stop
-alias dc='docker compose $@'
-alias dcu='docker compose up -d'
-alias dcd='docker compose down'
-alias dclsa='docker container ls --all'
-alias dcbuild='docker compose build --force-rm --pull'
-alias dps='docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}"'
-alias dstop='docker stop'
-alias drm='docker rm'
-alias dtop='docker stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}   {{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}\t{{.PIDs}}"'
+alias dc='podman compose $@'
+alias dcu='podman compose up -d'
+alias dcd='podman compose down'
+alias dclsa='podman container ls --all'
+alias dcbuild='podman compose build --force-rm --pull'
+alias dps='podman ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}"'
+alias dstop='podman stop'
+alias drm='podman rm'
+alias dtop='podman stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}   {{.MemUsage}}\t{{.NetIO}}\t{{.BlockIO}}\t{{.PIDs}}"'
 #alias alpine='docker run -it --rm -v /c/Users/Daniel/:/home/Daniel/ -v /c/Users/Daniel/Code/docker-gastos/profile:/root/.profile -w /home/Daniel/Code --env SERVICE_NAME=alpine alpine:latest /bin/sh -l'
 alias nasdocker='ssh -t qnap /share/CACHEDEV1_DATA/.qpkg/container-station/bin/docker $@'
 
-function dce { docker compose exec --env SERVICE_NAME=$1 $1 sh -l; }
+function dce { podman compose exec --env SERVICE_NAME=$1 $1 sh -l; }
 # export -f dce
 
-function drun { docker run --rm -it -v /home/daniel/:/home/daniel/ -w /home/daniel/ $1 $2; }
+function drun { podman run --rm -it -v /home/daniel/:/home/daniel/ -w /home/daniel/ $1 $2; }
 # export -f drun
 
 
@@ -172,15 +171,15 @@ alias gd='git diff $@'
 
 # Laravel specific shortcuts ============================================================
 alias artisan='php artisan'
-alias dart='docker-compose exec app php artisan $@'
+alias dart='podman compose exec app php artisan $@'
 alias migrate='php artisan migrate'
 alias fresh='php artisan migrate:fresh --seed'
 alias tinker='php artisan tinker'
 alias t='vendor/bin/phpunit'
 
 # FZF options ===========================================================================
-export FZF_DEFAULT_COMMAND="fdfind ."
-export FZF_ALT_C_COMMAND="fdfind --type d . $HOME"
+export FZF_DEFAULT_COMMAND="fd ."
+export FZF_ALT_C_COMMAND="fd --type d . $HOME"
 export FZF_CTRL_P_COMMAND="$FZF_DEFAULT_COMMAND"
 source /usr/share/fzf/shell/key-bindings.zsh
 # source /usr/share/doc/fzf/examples/completion.zsh
@@ -191,7 +190,7 @@ bindkey -s ^f "_tmux_fzf_\n"
 
 function _tmux_fzf_() {
     # local dir=$(find ~ -type d | fzf)
-    local dir=$(fdfind --type d . ~ ~/code --max-depth=2 | fzf)
+    local dir=$(fd --type d . ~ ~/code --max-depth=2 | fzf)
 
     if [[ -n $dir ]]; then
         local sess=$(basename $dir)

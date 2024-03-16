@@ -23,11 +23,7 @@ arch=(\
     "$HOME/.config/kitty/kitty.conf" \
     "$HOME/.config/polybar/scripts/edit-config.sh" \
     "$HOME/.config/dunst/dunstrc" \
-    "$HOME/.config/nvim/init.lua" \
-    "$HOME/.config/nvim/lua/daniel/init.lua" \
-    "$HOME/.config/nvim/lua/daniel/set.lua" \
-    "$HOME/.config/nvim/lua/daniel/remap.lua" \
-    "$HOME/.config/nvim/lua/daniel/packer.lua" \
+    "$HOME/.config/nvim/lua/daniel/" \
     "$HOME/.tmux.conf" \
 )
 
