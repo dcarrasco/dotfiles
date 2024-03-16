@@ -25,8 +25,10 @@ return {
 
             -- ColorMyPencils("nord")
             -- ColorMyPencils("rose-pine")
-            -- ColorMyPencils("catppuccin")
-            ColorMyPencils("catppuccin-frappe")
+            ColorMyPencils("catppuccin")
+            -- ColorMyPencils("catppuccin-frappe")
+            -- ColorMyPencils("catppuccin-macchiato")
+            -- ColorMyPencils("catppuccin-mocha")
 
         end
     },
