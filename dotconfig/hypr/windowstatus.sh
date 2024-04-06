@@ -7,17 +7,21 @@ fakefullscreen_status=""
 fullscreen_status=""
 pinned_status=""
 grouped_status=""
+# tiled_status=" "
+tiled_status=""
 
 if [ $rofi = 0 ]; then
     if [ "$(hyprctl activewindow | grep floating | cut -d : -f 2)" = " 1" ]; then
         # floating_status=" "
         floating_status=" "
+        tiled_status=""
     fi
 
     if [ "$(hyprctl activewindow | grep fakefullscreen: | cut -d : -f 2)" = " 1" ]; then
         # fakefullscreen_status=" "
-        # fakefullscreen_status="         "
-        fakefullscreen_status=" "
+        # fakefullscreen_status="           "
+        # fakefullscreen_status=" "
+        fakefullscreen_status=" "
     fi
 
     if [ "$(hyprctl activewindow | grep -v fake | grep fullscreen: | cut -d : -f 2)" = " 1" ]; then
@@ -25,6 +29,7 @@ if [ $rofi = 0 ]; then
         # fullscreen_status="  "
         # fullscreen_status="  "
         fullscreen_status=" "
+        tiled_status=""
     fi
 
     if [ "$(hyprctl activewindow | grep pinned: | cut -d : -f 2)" = " 1" ]; then
@@ -40,4 +45,4 @@ if [ $rofi = 0 ]; then
     fi
 fi
 
-echo "$fakefullscreen_status$fullscreen_status$grouped_status$floating_status$pinned_status"
+echo "$tiled_status$fakefullscreen_status$fullscreen_status$grouped_status$floating_status$pinned_status"
