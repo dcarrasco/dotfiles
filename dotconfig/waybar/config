@@ -30,13 +30,27 @@
         "disable-scroll": false,
         "smooth-scrolling-threshold": 1.5,
         "all-outputs": true,
-        "format": "{name}",
+        "window-rewrite": {},
+        "format": "{icon}",
         "format-icons": {
+            "1": " ",
+            "2": " ",
+            "3": " ",
+            "4": " ",
+            "5": " ",
             "urgent": " ",
-            "active": "*",
-            "default": ""
-            // symbols:        
+            //"active": "*",
+            "default": " "
+            // symbols:                    󰈙     
         }
+    },
+
+    "hyprland/window": {
+        // "format": "  {title}",
+        "format": "{title}",
+        "rewrite": {
+            "(.*) — Mozilla Firefox": "$1",
+        },
     },
 
     "keyboard-state": {
@@ -232,13 +246,6 @@
         "keyboard-name": "at-translated-set-2-keyboard",
     },
 
-    "hyprland/window": {
-        "format": "{title}",
-        "rewrite": {
-            "(.*) — Mozilla Firefox": "$1",
-        },
-    },
-
     "custom/windowname": {
         "format": "{}",
         // "exec": "hyprctl activewindow | grep 'title:' | cut -d : -f 2",
@@ -258,7 +265,8 @@
         "return-type": "json",
         "format": "{}",
         "exec": "$HOME/.config/hypr/updates.sh",
-        "on-click": "kitty bash -c \"sudo apt update && sudo apt upgrade\"",
+        // "on-click": "kitty bash -c \"sudo apt update && sudo apt upgrade\"",
+        "on-click": "kitty bash -c \"sudo dnf upgrade\"",
         "restart-interval": 3600,
         "tooltip": true
     }

@@ -39,30 +39,20 @@
 
 window {
     /* background-color: alpha(#ffffff, 0.0); */
-    background-color: alpha(@nord0, 0.5);
+    /* background-color: alpha(@nord0, 0.5); */
+    /* background: linear-gradient(0deg, alpha(@nord0, 0.6), alpha(@nord2, 0.5)); */
 }
 
 window#waybar {
     /* border-bottom: 3px solid rgba(100, 114, 125, 0.8); */
     /* background-color: alpha(@nord0, 0.5); */
-    /* border-bottom: 2px solid @nord1; */
+    background: linear-gradient(0deg, alpha(@nord0, 0.6), alpha(@nord2, 0.5));
+    border-bottom: 1px solid alpha(@nord2, 0.7);
     transition-property: background-color;
     transition-duration: .5s;
-    border-radius: 0px;
+    /* border-radius: 100%; */
+    /* border: 1px solid red; */
 }
-
-window#waybar.hidden {
-    /* opacity: 0.2; */
-}
-
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
 
 .modules-left, .modules-right, .modules-center {
     /* border: 1px solid red; */
@@ -78,6 +68,7 @@ button {
     /* Avoid rounded borders under each button name */
     border: none;
     border-radius: 0;
+    /* border: 1px solid red; */
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -106,7 +97,6 @@ tooltip label {
     /* border-radius: 60px; */
     /* border: 2px solid red; */
     padding: 0px 0px;
-    padding-left: 1em;
 }
 
 #workspaces button {
@@ -127,15 +117,18 @@ tooltip label {
     /* Botones cuadrados */
     padding: 0px 0px;
     margin: 0px 0px;
+    transition-property: background-color;
+    transition-duration: .5s;
+    /* border: 1px solid red; */
 
 }
 
 #workspaces button label {
     /* Botones cuadrados */
     /* color: alpha(@nord4, 0.6); */
-    color: @nord4;
+    color: @nord6;
     /* background: @nord10; */
-    padding: 0px 0.6em;
+    padding: 0px 0.6em 0px 0.9em;
     margin: 0px 1px;
     font-size: 20px;
     /* border-bottom: 3px solid alpha(@nord4, 0.0); */
@@ -164,33 +157,34 @@ tooltip label {
     /* box-shadow: inset 0 -2px #D8DEE9; */
 
     /* Botones Circulares */
-    /* background-color: @nord15; */
+    /* background-color: alpha(@nord10, 0.7); */
     /* border: 2px solid @nord4; */
     /* border-radius: 30px; */
     /* min-width: 40px; */
     /* transition: all 0.3s ease-in-out; */
-    box-shadow: inset 0 -3px @nord6;
 }
 
 #workspaces button.active label {
     color: @nord6;
     /* border-bottom: 3px solid @nord4; */
     font-weight: 700;
+    background-color: alpha(@nord10, 0.7);
+    box-shadow: inset 0 -3px @nord4;
 }
 
-#workspaces button.urgent {
+#workspaces button.urgent label {
     background-color: @nord11;
     border: 2px solid @nord4;
 }
 
-#workspaces button:hover label{
+#workspaces button:hover label {
     /* background-color: red; */
     /* border: 1px solid @nord4; */
-    background: alpha(@nord2, 1.0);
-    color: @nord4;
+    background: alpha(@nord3, 0.9);
+    color: @nord6;
+    box-shadow: inset 0 -0px @nord4;
+    transition-duration: .0s;
 }
-
-
 
 #mode {
     /* background-color: #64727D; */
@@ -198,6 +192,17 @@ tooltip label {
     color: @nord1;
     font-weight: bold;
     border-bottom: 2px solid #ffffff;
+}
+
+#window, #custom-windowname {
+    font-family: SF UI Display;
+    /* font-family: Droid Sans; */
+    /* font-family: Open Sans; */
+    font-weight: 500;
+    font-size: 22px;
+    color: alpha(@nord5, 0.8);
+    padding: 0 1em;
+    /* border: 1px solid red; */
 }
 
 #clock,
@@ -220,22 +225,11 @@ tooltip label {
     padding: 0 5px;
 }
 
-#window,
-#workspaces {
-    margin: 0 4px;
-}
-
-#window, #custom-windowname {
-    font-family: SF UI Display;
-    font-size: 22px;
-    color: @nord4;
-    padding: 0 1em;
-}
-
 #custom-windowstatus {
     color: @nord8;
     font-family: SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
     font-size: 18px;
+    padding-left: 0.5em;
 }
 
 .modules-right {
@@ -244,12 +238,12 @@ tooltip label {
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left > widget:first-child > #workspaces {
-    margin-left: 0;
+    /* margin-left: 0; */
 }
 
 /* If workspaces is the rightmost module, omit right margin */
 .modules-right > widget:last-child  {
-    margin-right: 0;
+    /* margin-right: 0; */
 }
 
 #clock {
@@ -259,7 +253,7 @@ tooltip label {
 #battery {
     /* background-color: #ffffff; */
     /* color: #000000; */
-    margin: 7px 0px;
+    margin: 6px 0px;
     border-radius: 7px;
     /* border: 1px solid white; */
 }
@@ -335,7 +329,7 @@ label:focus {
 
 #pulseaudio.muted {
     font-weight: bold;
-    margin: 7px 0px;
+    margin: 6px 0px;
     border-radius: 7px;
     background-color: @nord11;
     /* color: @nord4; */
@@ -377,7 +371,7 @@ label:focus {
 
 #tray {
     /* background-color: #2980b9; */
-    /* color: @nord4; */
+    /* color: @nord14; */
     /* background-color: red; */
 }
 
@@ -401,7 +395,7 @@ label:focus {
     /* background-color: #ecf0f1; */
     font-weight: bold;
     /* color: @nord13; */
-    margin: 7px 0px;
+    margin: 6px 0px;
     border-radius: 7px;
     color: @nord2;
     background-color: @nord14;
