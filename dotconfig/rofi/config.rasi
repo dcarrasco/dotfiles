@@ -9,17 +9,14 @@
  */
 
 configuration {
-  // font: "FiraCode Nerd Font 16"; 
-  font: "SF UI Display 15";
+  font: "SF UI Display 18";
 
   show-icons: true;
-  /* icon-theme: "Papirus"; */
-  /* icon-theme: "Tela nord"; */
-  icon-theme: "Yaru-purple-dark";
+  icon-theme: "ePapirus";
 
   drun-display-format: "{name}";
   display-drun: "";
-  display-window: "﩯";
+  display-window: " ";
   display-combi: " ";
 }
 

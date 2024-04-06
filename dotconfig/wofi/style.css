@@ -28,26 +28,27 @@
 @define-color nord13 #ebcb8b;
 @define-color nord14 #a3be8c;
 @define-color nord15 #b48ead;
-@define-color bg rgba(46,52,64,0.3);
+@define-color transparent rgba(59, 66, 82, 0.0);
+@define-color bg-alpha rgba(46, 52, 64, 0.85);
+/* @define-color bg-alpha rgba(59, 66, 82, 0.8); */
 
 
 * {
-    font-family: "SF Mono Display";
-    font-size: 14pt;
-    /* background-color: @bg; */
+    border: none;
+    /* background-color: @transparent; */
 }
 
 #outer-box {
 }
 
 
-window {
+#window {
     margin: 0px;
     /* border: 4px solid @nord13; */
     border-radius: 10px;
-    background-color: @nord0;
     /* margin: 0 0 0 0; */
     animation: slindeIn 0.5s ease-in-out both;
+    background-color: alpha(@nord0, 0.8);
 }
 
  /* Slide In */
@@ -74,49 +75,55 @@ window {
 
 #input {
     /* cuadro que incluye prompt y entry */
-    padding: 15px 50px;
-    border-color: @nord3;
-    font-family: "SF Mono Display";
-    font-size: 36pt;
-    color: @nord6;
-    background-color: @nord0;
+    padding: 0.5em 0.5em;
+    font-family: "SF UI Display";
+    font-size: 30pt;
+    color: alpha(@nord4, 0.8);
+    border-bottom: 2px solid @nord3;
+    border-top: 1px solid @transparent;
+    border-left: 1px solid @transparent;
+    border-right: 1px solid @transparent;
+    background-color: @transparent;
 }
 
-#prompt {
-    color: @nord15;
+#input > image {
+    /* color: @transparent; */
+    /* background-color: @transparent; */
+    padding: 0 0.8em;
+    -gtk-icon-transform: scale(2);
+    color: @nord9;
 }
 
 #inner-box {
     /* margin: 10px; */
-    padding: 10px;
-    /* background-color: @nord0; */
+    padding: 1em;
+    /* background-color: @nord14; */
     animation: fadeIn 0.5s ease-in-out both;
 }
 
 #entry {
-    padding: 18px;
-    color: @nord4;
-}
-
-#text {
-    color: @nord4;
-    animation: fadeIn 0.5s ease-in-out both;
-}
-
-#scroll {
-    /* background-color: @nord0; */
+    font-family: "SF UI Display";
+    font-size: 16pt;
+    padding: 0.8em;
+    color: alpha(@nord4, 0.8);
+    /* background-color: @nord14; */
 }
 
 #text:selected, #entry:selected, #img:selected {
 	background-color: @nord3;
-	color: @nord6;
+    color: @nord6;
 }
 
 #entry:selected {
-    border: none;
+    /* border: 1px solid @nord15; */
+    /* border-radius: 20px; */
 }
 
-#img {
+image {
     padding: 0 0.5em;
+    /* background-color: @nord12; */
+    /* size: 4.0em; */
+    width: 100%;
+    height: 100px;
 }
 

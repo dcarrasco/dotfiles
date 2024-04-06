@@ -1,6 +1,6 @@
 show=drun
 width=50%
-height=60%
+height=55%
 always_parse_args=true
 show_all=false
 insensitive=true
@@ -8,3 +8,7 @@ allow_images=true
 normal_window=true
 allow_markup=true
 prompt=Buscar...
+style=/home/daniel/.config/wofi/style.css
+matching=fuzzy
+image_size=42
+drun-display_generic=false

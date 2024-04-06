@@ -24,6 +24,7 @@ window {
     border: 3px;
     /* border-color: #89b4fa; */
     border-color: #f38ba8;
+    border-radius: 15px;
     background-color: @bg-col;
     transparency: "real";
 }

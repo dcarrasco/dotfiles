@@ -6,7 +6,6 @@
  *
  */
 
-
 * {
     /* polar night */
 	nord0: #2e3440;
@@ -39,6 +38,9 @@
     /* highlight:     underline #ebcb8b; */
 
     transparent: rgba(46,52,64,0);
+    bg-color: #2e3440CC;
+    selected-color: #4c566aCC;
+
     background-color:  @transparent;
 
     width:50%;
@@ -52,7 +54,7 @@ window {
     transparency: "real";
     border: 4px;
     border-color: @nord15;
-    border-radius: 10px;
+    border-radius: 15px;
     height: 60%;
     margin: 0 0 0 0;
 
@@ -65,7 +67,7 @@ window {
 mainbox {
     spacing: 0;
     children: [ inputbar, message, listview ];
-    background-color: #2e3440DD;
+    background-color: @bg-color;
 }
 
 message {
@@ -80,9 +82,6 @@ inputbar {
     /* cuadro que incluye prompt y entry */
     color: @nord4;
     padding: 15px;
-    /* background-color: #3b4252; */
-    /* background-color: @nord14; */
-    /* background-color: rgba(46,52,64,0.9); */
     /* vertical-align: 0.5; */
 
     border: 0 0 2px 0;
@@ -96,7 +95,6 @@ prompt {
     vertical-align: 0.5;
     padding: 0 0.5em;
     border-radius: 15px 0px 0px 15px;
-    /* background-color: @nord3; */
     margin: 0 0 0 0;
 }
 
@@ -104,8 +102,6 @@ entry {
     /* cuadro de texto para escribir */
     font: "SF UI Display 28";
     text-color: @nord4;
-    /* text-font: inherit; */
-    /* text-color: inherit; */
     vertical-align: 0.5;
     /* background-color: @nord3; */
     border-radius: 0px 15px 15px 0px;
@@ -126,34 +122,30 @@ listview {
     padding: 10px 0 0 0;
     border-radius: 0px 0px 6px 6px;
     border-color: @nord10;
-    /* background-color: rgba(46,52,64,0.9); */
     dynamic: false;
     border: 0px;
 }
 
 element {
-    padding: 8px;
+    padding: 0.5em 1em;
     vertical-align: 0.5;
     border-radius: 4px;
-    /* background-color: transparent; */
     text-color: @nord4;
 }
 
 element selected.normal {
-	/* background-color: @nord3; */
-	background-color: #4c566aBB;
-	/* text-color: #2e3440; */
+    background-color: @selected-color;
+    opacity: 0;
 	text-color: @nord6;
 }
 
 element-text, element-icon {
-    /* background-color: inherit; */
-    text-color:       inherit;
+    text-color: inherit;
     vertical-align: 0.5;
 }
 
 element-icon {
-    size: 2.0em ;
+    size: 1.6em ;
     padding: 0 0.5em;
 }
 
