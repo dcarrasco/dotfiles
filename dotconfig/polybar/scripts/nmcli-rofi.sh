@@ -40,7 +40,8 @@ function toggle_wifi () {
 }
 
 function current_connection () {
-  currssid=$(iwgetid -r)
+  # currssid=$(iwgetid -r)
+  currssid=$(nmcli connection show --active | grep wifi | awk '{print $1}')
   [[ "$currssid" != '' ]] && currcon="Disconnect from $currssid" || currcon=""
   echo $currcon
 }
@@ -155,7 +156,7 @@ function main () {
         -lines 0 -font "$FONT")
 
       # manual entry of the PASSWORD
-      MPASS=$(echo -en "" | rofi -dmenu -password -p "PASSWORD" -mesg \
+      MPASS=$(echo -en "" | rofi -dmenu --password -p "PASSWORD" -mesg \
         "Enter the PASSWORD of the network" -lines 0 -font "$FONT")
 
       # If the user entered a manual password, then use the password nmcli command
