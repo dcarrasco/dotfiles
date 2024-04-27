@@ -21,6 +21,7 @@ configuration {
 }
 
 @theme "themes/nord_dc.rasi"
+// @theme "themes/column_rounded_DC.rasi"
 
 /* @theme "/dev/null" */
 

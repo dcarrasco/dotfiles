@@ -1,0 +1,78 @@
+/**
+ * ROFI Color theme
+ * User: Qball
+ * Copyright: Dave Davenport
+ */
+
+* {
+    /* polar night */
+	nord0: #2e3440;
+	nord1: #3b4252;
+	nord2: #434c5e;
+	nord3: #4c566a;
+
+    /* snow storm */
+	nord4: #d8dee9;
+	nord5: #e5e9f0;
+	nord6: #eceff4;
+
+    /* frost */
+	nord7: #8fbcbb;
+	nord8: #88c0d0;
+	nord9: #81a1c1;
+	nord10: #5e81ac;
+
+    /* aurora */
+	nord11: #bf616a;
+	nord12: #d08770;
+	nord13: #ebcb8b;
+	nord14: #a3be8c;
+	nord15: #b48ead;
+
+    background-color:      @nord0;
+    border-color:          @nord0;
+    text-color:           @nord4;
+    font:            "SF Mono 14";
+}
+window {
+    background-color: @inherit;
+    anchor:     north;
+    location:   north;
+    width:      100%;
+    padding:    5px;
+    children:   [ horibox ];
+}
+horibox {
+    orientation: horizontal;
+    children:   [ prompt, entry, listview ];
+}
+prompt {
+    color: @nord9;
+    padding: 0 0.5em;
+}
+entry {
+    expand:     false;
+    width:      10em;
+    color: @nord4;
+}
+listview {
+    layout:     horizontal;
+    // spacing:    0px 20px;
+    lines:      100;
+}
+element {
+    padding: 0px 0px;
+}
+element selected {
+    background-color: @nord14;
+}
+
+element-text, element-icon {
+  background-color: @nord0;
+  padding: 0 10px;
+  text-color: @inherit;
+}
+element-text selected {
+    background-color: @nord4;
+    text-color: @nord0;
+}
