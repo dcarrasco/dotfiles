@@ -32,15 +32,16 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
     /* font-family: SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
-    font-family: SF UI Display, Noto Sans, SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    color: alpha(@nord4, 0.8);
+    /* font-family: SF UI Display, Noto Sans, SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
+    font-family: Noto Sans, SF Mono, FontAwesome, Helvetica, Arial, sans-serif;
 }
 
 window {
     /* background-color: alpha(#ffffff, 0.0); */
     /* background-color: alpha(@nord0, 0.5); */
     /* background: linear-gradient(0deg, alpha(@nord0, 0.6), alpha(@nord2, 0.5)); */
+    font-size: 14pt;
+    color: alpha(@nord4, 0.8);
 }
 
 window#waybar {
@@ -48,8 +49,8 @@ window#waybar {
     /* background-color: alpha(@nord0, 0.5); */
     background: linear-gradient(0deg, alpha(@nord0, 0.6), alpha(@nord2, 0.5));
     border-bottom: 1px solid alpha(@nord2, 0.7);
-    transition-property: background-color;
-    transition-duration: .5s;
+    /* transition-property: background-color; */
+    /* transition-duration: .5s; */
     /* border-radius: 100%; */
     /* border: 1px solid red; */
 }
@@ -80,15 +81,16 @@ button:hover {
 
 tooltip {
     background-color: alpha(@nord3, 0.9);
-    color: @nord5;
+    color: @nord4;
     border: 2px solid alpha(@nord4, 0.7);
     border-radius: 10px;
     /* box-shadow: 15px 15px 10px alpha(@nord0, 0.3); */
 }
 
 tooltip label {
-    font-family: SF UI Display;
-    font-size: 16px;
+    /* font-family: SF UI Display; */
+    font-weight: bold;
+    font-size: 12pt;
 }
 
 #workspaces {
@@ -128,7 +130,7 @@ tooltip label {
     /* color: alpha(@nord4, 0.6); */
     color: @nord6;
     /* background: @nord10; */
-    padding: 0px 0.6em 0px 0.9em;
+    padding: 0px 0.4em 0px 0.7em;
     margin: 0px 1px;
     font-size: 20px;
     /* border-bottom: 3px solid alpha(@nord4, 0.0); */
@@ -174,7 +176,7 @@ tooltip label {
 
 #workspaces button.urgent label {
     background-color: @nord11;
-    border: 2px solid @nord4;
+    /* border: 2px solid @nord4; */
 }
 
 #workspaces button:hover label {
@@ -194,16 +196,17 @@ tooltip label {
     border-bottom: 2px solid #ffffff;
 }
 
-#window, #custom-windowname {
-    font-family: SF UI Display;
+#window {
+    /* font-family: SF UI Display; */
     /* font-family: Droid Sans; */
-    /* font-family: Open Sans; */
+    /* font-family: DejaVu Sans; */
     font-weight: 500;
-    font-size: 22px;
-    color: alpha(@nord5, 0.8);
+    font-size: 16pt;
+    color: alpha(@nord6, 0.8);
     padding: 0 1em;
     /* border: 1px solid red; */
 }
+
 
 #clock,
 #battery,
@@ -222,7 +225,7 @@ tooltip label {
 #scratchpad,
 #language,
 #mpd {
-    padding: 0 5px;
+    padding: 0 6px;
 }
 
 #custom-windowstatus {
@@ -280,7 +283,7 @@ tooltip label {
 #battery.critical:not(.charging) {
     background-color: @nord11;
     color: @nord4;
-    font-weight: bold;
+    /* font-weight: bold; */
     /* animation-name: blink; */
     /* animation-duration: 0.5s; */
     /* animation-timing-function: linear; */
@@ -398,7 +401,7 @@ label:focus {
     margin: 6px 0px;
     border-radius: 7px;
     color: @nord2;
-    background-color: @nord14;
+    background-color: alpha(@nord4, 0.8);
 }
 
 #mpd {
@@ -455,5 +458,5 @@ label:focus {
 }
 
 #bluetooth.disabled, #bluetooth.off {
-    color: alpha(@nord4, 0.5);
+    color: alpha(@nord0, 0.8);
 }

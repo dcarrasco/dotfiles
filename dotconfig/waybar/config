@@ -122,12 +122,10 @@
     "clock": {
         // "timezone": "America/New_York",
         "tooltip-format": "<tt>{calendar}</tt>",
-        //"tooltip-format": "<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%a %d/%m/%Y}",
         "interval": 30,
         "calendar": {
             "format": {
-                // "today": "<span color='#BF616A'><b>{}</b></span>"
                 "today": "<span color='#EBCB8B'><b>{}</b></span>"
             }
         }
@@ -137,7 +135,7 @@
         /* "format": "{usage}% ", */
         // 
         "format": "  {usage}%",
-        "tooltip": false,
+        "tooltip": true,
         "on-click": "GTK_THEME=Yaru-purple gnome-system-monitor"
     },
 
@@ -168,8 +166,8 @@
     "battery": {
         "states": {
             // "good": 95,
-            "warning": 30,
-            "critical": 15
+            "warning": 25,
+            "critical": 10
         },
         "format": "{icon}  {capacity}%",
         "format-charging": "{icon}  {capacity}%",
