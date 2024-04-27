@@ -133,6 +133,7 @@ alias j='jobs'
 #alias st='/mnt/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 #alias subl='/mnt/c/Program\ Files/Sublime\ Text\ 3/sublime_text.exe'
 alias vim=nvim
+alias ssh='TERM=xterm-256color ssh'
 alias python=python3
 alias web='cd /mnt/c/Users/Daniel/Code'
 alias lara='cd /mnt/c/Users/Daniel/Code/gastos-alpine/app/'
@@ -190,7 +191,7 @@ bindkey -s ^f "_tmux_fzf_\n"
 
 function _tmux_fzf_() {
     # local dir=$(find ~ -type d | fzf)
-    local dir=$(fd --type d . ~ ~/code --max-depth=2 | fzf)
+    local dir=$(fd --type d . ~ ~/Code --max-depth=2 | fzf)
 
     if [[ -n $dir ]]; then
         local sess=$(basename $dir)
@@ -215,5 +216,4 @@ function tmuxsession() {
     fi
 }
 
-cd
 eval "$(starship init zsh)"
