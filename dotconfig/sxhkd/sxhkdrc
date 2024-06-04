@@ -11,7 +11,7 @@
 
 # terminal emulator
 super + Return
-	kitty
+	kitty -d ~
 
 # program launcher
 super + space
@@ -26,7 +26,8 @@ super + Escape
 
 # My program Hotkeys
 super + b
-    brave-browser
+    /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=brave --file-forwarding com.brave.Browser
+    # brave
     # firefox
 
 super + alt + b
@@ -38,12 +39,18 @@ super + alt + v
 super + v
     /home/daniel/.config/polybar/scripts/start-vm.sh win10
 
+super + control + v
+    /home/daniel/.config/polybar/scripts/list-vm.sh win10
+
 super + f
-	thunar
+	thunar ~
 
 # editor de configuraciones
-super + e
+super + comma
     /home/daniel/.config/polybar/scripts/edit-config.sh
+
+# super + alt + comma
+    # /home/daniel/.config/polybar/scripts/edit-config.sh
 
 # super + p
 	# flameshot full -p /home/titus/SynologyDrive/Screenshots/
@@ -71,8 +78,8 @@ super + q
 super + m
     bspc desktop --layout next
 
-super + ctrl + m
-    /home/daniel/.config/polybar/scripts/trackpad-toggle.sh
+# super + ctrl + m
+    # /home/daniel/.config/polybar/scripts/trackpad-toggle.sh
 	# synclient TouchpadOff=$(synclient -l | grep -q 'TouchpadOff.*1'; echo $?)
 
 # send the newest marked node to the newest preselected node
@@ -91,7 +98,7 @@ super + g
 # set the window state
 # super + {t,shift + t,s,f}
 	# bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
-super + {ctrl + t,shift + t,shift + f,ctrl + f}
+super + {ctrl + t,alt + t,ctrl + f,alt + f}
 	bspc node --state {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
@@ -110,8 +117,8 @@ super + {_, shift + }{h,j,k,l}
 	bspc node {--focus, --swap} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {shift + p,shift + b,comma,period}
-	bspc node --focus @{parent,brother,first,second}
+# super + {shift + p,shift + b,comma,period}
+	# bspc node --focus @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
 super + {_, shift + }c
@@ -186,20 +193,20 @@ super + {Left,Down,Up,Right}
 #
 # volume control
 XF86AudioLowerVolume
-	amixer set Master 5%- && notify-send -a OSD -h int:value:$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1) "Volumen"
+	amixer set Master 5%- && notify-send -a OSD -h int:value:$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1) -i none "Volumen"
 
 XF86AudioRaiseVolume
-	amixer set Master 5%+ && notify-send -a OSD -h int:value:$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1) "Volumen"
+	amixer set Master 5%+ && notify-send -a OSD -h int:value:$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1) -i none "Volumen"
 
 XF86AudioMute
     amixer set Master toggle
 
 # brightness control
 XF86MonBrightnessDown
-    light -U 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) "Brillo pantalla"
+    light -U 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) -i none "Brillo pantalla"
 
 XF86MonBrightnessUp
-    light -A 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) "Brillo pantalla"
+    light -A 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) -i none "Brillo pantalla"
 
 super + XF86MonBrightnessDown
     variety -p
