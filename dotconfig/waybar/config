@@ -7,7 +7,7 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 28, // Waybar height (to be removed for auto height)
+    "height": 36, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
 
@@ -33,11 +33,16 @@
         "window-rewrite": {},
         "format": "{icon}",
         "format-icons": {
-            "1": " ",
-            "2": " ",
-            "3": " ",
-            "4": " ",
-            "5": " ",
+            // "1": " ",
+            // "2": " ",
+            // "3": " ",
+            // "4": " ",
+            // "5": " ",
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
             "urgent": " ",
             //"active": "*",
             "default": " "
@@ -50,6 +55,7 @@
         "format": "{title}",
         "rewrite": {
             "(.*) — Mozilla Firefox": "$1",
+            "(.*) - Brave": "$1",
         },
     },
 
@@ -121,12 +127,17 @@
 
     "clock": {
         // "timezone": "America/New_York",
+        // "format": "{:%a %d/%m %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "format-alt": "{:%a %d/%m/%Y}",
         "interval": 30,
+        // "locale": "es_CL",
         "calendar": {
             "format": {
-                "today": "<span color='#EBCB8B'><b>{}</b></span>"
+                "today": "<span color='#EBCB8B'><b>{}</b></span>",
+                "days": "<span color='#D8DEE9'>{}</span>",
+                "weekdays": "<span color='#88c0d0'>{}</span>",
+                "months": "<span color='#88c0d0'>{}</span>",
             }
         }
     },
@@ -134,15 +145,16 @@
     "cpu": {
         /* "format": "{usage}% ", */
         // 
-        "format": "  {usage}%",
+        "format": "   {usage}%",
         "tooltip": true,
         "on-click": "GTK_THEME=Yaru-purple gnome-system-monitor"
     },
 
     "memory": {
-        "format": "  {}%",
+        "format": "  {used:0.1f}G/{total:0.1f}G",
+        // "format": "  {}%",
         "tooltip": true,
-        "tooltip-format": "RAM {used:0.1f} / {total:0.1f} G used\nSWAP {swapUsed:0.1f} / {swapTotal:0.1f} G used"
+        "tooltip-format": "RAM {used:0.1f}G / {total:0.1f} G used ({percentage}%)\nSWAP {swapUsed:0.1f} / {swapTotal:0.1f} G used"
     },
 
     "temperature": {
@@ -169,14 +181,18 @@
             "warning": 25,
             "critical": 10
         },
-        "format": "{icon}  {capacity}%",
-        "format-charging": "{icon}  {capacity}%",
+        "format": "{icon} ",
+        "format-warning": "{icon} {}%",
+        "format-critical": "{icon} {}%",
+        "format-charging": "{icon}",
         "format-plugged": "{icon}   {capacity}% ",
-        "format-alt": "{icon}   {time}",
+        "format-alt": "{icon}  {capacity}%",
+        "tooltip-format": "Capacity: {capacity}%\n{timeTo}",
+        // "format-alt": "{icon}   {time}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        // "format-icons": ["", "", "", "", ""],
-        "format-icons": ["", "", "", "", "", "", "", "", "", ""]
+        "format-icons": ["", "", "", "", ""],
+        // "format-icons": ["", "", "", "", "", "", "", "", "", ""]
     },
 
     "network": {
@@ -205,11 +221,11 @@
         /* "format": "{volume}% {icon} {format_source}", */
         // "format": "{icon}  {volume}%",
         "tooltip-format": "Volume: {volume}%\n{desc}\n{format_source}",
-        "format": "{icon} ",
+        "format": "{icon}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         /* "format-muted": " {format_source}", */
-        "format-muted": "    muted",
+        "format-muted": "   muted",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
@@ -219,7 +235,7 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": [" ", " ", " "]
         },
         "on-click": "pavucontrol"
     },
@@ -264,7 +280,7 @@
         "format": "{}",
         "exec": "$HOME/.config/hypr/updates.sh",
         // "on-click": "kitty bash -c \"sudo apt update && sudo apt upgrade\"",
-        "on-click": "kitty bash -c \"sudo dnf upgrade\"",
+        "on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade\"",
         "restart-interval": 3600,
         "tooltip": true
     }

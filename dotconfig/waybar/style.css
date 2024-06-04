@@ -47,7 +47,7 @@ window {
 window#waybar {
     /* border-bottom: 3px solid rgba(100, 114, 125, 0.8); */
     /* background-color: alpha(@nord0, 0.5); */
-    background: linear-gradient(0deg, alpha(@nord0, 0.6), alpha(@nord2, 0.5));
+    background: linear-gradient(0deg, alpha(@nord0, 0.6), alpha(@nord2, 0.8));
     border-bottom: 1px solid alpha(@nord2, 0.7);
     /* transition-property: background-color; */
     /* transition-duration: .5s; */
@@ -130,7 +130,8 @@ tooltip label {
     /* color: alpha(@nord4, 0.6); */
     color: @nord6;
     /* background: @nord10; */
-    padding: 0px 0.4em 0px 0.7em;
+    /* padding: 0px 0.4em 0px 0.7em; when using fontawesome */
+    padding: 0px 0.7em 0px 0.7em;
     margin: 0px 1px;
     font-size: 20px;
     /* border-bottom: 3px solid alpha(@nord4, 0.0); */
@@ -200,8 +201,9 @@ tooltip label {
     /* font-family: SF UI Display; */
     /* font-family: Droid Sans; */
     /* font-family: DejaVu Sans; */
-    font-weight: 500;
-    font-size: 16pt;
+    font-family: Cantarell;
+    font-weight: 700;
+    font-size: 14pt;
     color: alpha(@nord6, 0.8);
     padding: 0 1em;
     /* border: 1px solid red; */
@@ -331,12 +333,11 @@ label:focus {
 }
 
 #pulseaudio.muted {
-    font-weight: bold;
     margin: 6px 0px;
-    border-radius: 7px;
+    border-radius: 6px;
     background-color: @nord11;
     /* color: @nord4; */
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 #wireplumber {
