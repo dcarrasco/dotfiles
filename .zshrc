@@ -71,7 +71,9 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode z zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git fzf vi-mode z zsh-autosuggestions zsh-syntax-highlighting)
+
+export FZF_BASE=/usr/share/fzf
 
 source $ZSH/oh-my-zsh.sh
 
@@ -113,9 +115,13 @@ alias lsd="ls -lFh --color | grep '^d'"
 alias ls='ls --color=auto -F'
 alias l.="ls -a --color | grep --color=never '^\.'"
 
+alias cp='cp -i'
+alias mv='mv -i'
 alias diff='diff --color'
+alias ps='ps -auf'
 
 alias ..="cd .."
+alias cd..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
@@ -191,7 +197,7 @@ bindkey -s ^f "_tmux_fzf_\n"
 
 function _tmux_fzf_() {
     # local dir=$(find ~ -type d | fzf)
-    local dir=$(fd --type d . ~ ~/Code --max-depth=2 | fzf)
+    local dir=$(fd --type d . ~ ~/Code --max-depth=2 | fzf --border --height=15 --prompt='Init tmux: ')
 
     if [[ -n $dir ]]; then
         local sess=$(basename $dir)
