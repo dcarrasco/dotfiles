@@ -7,16 +7,17 @@
  *
  */
 
+@import "styles/colors.rasi"
+
 configuration {
-	font:							"FantasqueSansMono Nerd Font 14";
+	// font:							"FantasqueSansMono Nerd Font 14";
+	font:							"DejaVu Sans Mono 16";
     show-icons:                     false;
 	icon-theme: 					"Papirus";
     drun-display-format:            "{name}";
     disable-history:                false;
 	sidebar-mode: 					false;
 }
-
-@import "styles/colors.rasi"
 
 * {
     background-color:               transparent;
@@ -26,18 +27,19 @@ configuration {
 
 window {
     transparency:                   "real";
-    background-color:               @background;
     text-color:                     @foreground;
+    background-color:               @background;
     border-radius:                  0px;
-    height:                         50%;
+    height:                         100%;
     width:                          100%;
     location:                       north;
+    padding:                        30% 10% 15% 10%;
 }
 
 mainbox {
-    children:                       [ listview, inputbar ];
+    children:                       [ listview, inputbar, message ];
     spacing:                        0%;
-    padding:                        10% 12%;
+    padding:                        3em 0;
 }
 
 
@@ -45,30 +47,30 @@ inputbar {
 	children: 						[ textbox-prompt-colon, prompt ];
     text-color:                     @foreground;
     expand:                         false;
-    border:                  		0% 0% 0.1% 0%;
-    border-radius:                  0% 0% 0% 0%;
+    border:                  		0 0 0.1% 0;
+    border-radius:                  0 0 0 0;
     border-color:                  	@border;
-    margin:                         0% 21% 0% 23%;
+    margin:                         0 25%;
+    padding:                        1em;
+    // border: 1px; border-color:red;
 }
 
 textbox-prompt-colon {
 	expand: 						false;
 	str: 							"System |";
 	text-color: 					@foreground;
-    padding:                        1% 0.5% 1% 7%;
+    padding:                        0 0 0 2.5em;
 }
 
 prompt {
     enabled: 						true;
-    padding:                        1% 1% 1% 0%;
 	text-color: 					@foreground;
 }
 
 
 listview {
     enabled: true;
-    margin:                         0% 0% 0% 0%;
-    spacing:                        6%;
+    spacing:                        2%;
     cycle:                          true;
     dynamic:                        true;
     layout:                         horizontal;
@@ -83,11 +85,12 @@ element {
 
 element-text {
     text-color:       				inherit;
-	font:							"CodeNewRoman Nerd Font 64";
+	font:							"CodeNewRoman Nerd Font 96";
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
-    margin:                         6.5% 4% 6.5% 4%;
+    margin:                         2em 2em;
+    padding:                        0.2em 0.5em 0.2em 1.5em;
 }
 
 element normal.urgent,
@@ -101,14 +104,16 @@ element normal.active,
 element alternate.active {
     background-color:               @background-alt;
     text-color:                     @foreground;
+    border-color:                   @border;
 }
 
 element selected {
     background-color:               @selected;
-    text-color:                     @foreground;
-    border:                  		0% 0% 0.5% 0%;
-    border-radius:                  0%;
-    border-color:                  	@border;
+    text-color:                     @foreground-alt;
+    border:                  		0% 0% 0% 0%;
+    border-radius:                  30px;
+    border-color:                  	@foreground-alt;
+    border:                         0.2em;
 }
 
 element selected.urgent {

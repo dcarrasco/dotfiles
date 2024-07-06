@@ -26,12 +26,11 @@ super + Escape
 
 # My program Hotkeys
 super + b
-    /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=brave --file-forwarding com.brave.Browser
+    firefox
     # brave
-    # firefox
 
 super + alt + b
-    firefox
+    /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=brave --file-forwarding com.brave.Browser
 
 super + alt + v
     virt-manager

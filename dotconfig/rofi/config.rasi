@@ -12,7 +12,8 @@ configuration {
   font: "SF UI Display 18";
 
   show-icons: true;
-  icon-theme: "ePapirus";
+  // icon-theme: "ePapirus";
+  icon-theme: "Reversal-blue-dark";
 
   drun-display-format: "{name}";
   display-drun: "";

@@ -29,10 +29,10 @@
 	nord14: #a3be8c;
 	nord15: #b48ead;
 
-    background-color:      @nord0;
-    border-color:          @nord0;
-    text-color:           @nord4;
-    font:            "SF Mono 14";
+    background-color: @nord3;
+    border-color:     @nord0;
+    text-color:       @nord4;
+    font:             "Noto Sans Mono 14";
 }
 window {
     background-color: @inherit;
@@ -47,32 +47,38 @@ horibox {
     children:   [ prompt, entry, listview ];
 }
 prompt {
-    color: @nord9;
+    color: @nord6;
     padding: 0 0.5em;
 }
 entry {
-    expand:     false;
-    width:      10em;
-    color: @nord4;
+    expand: false;
+    width:  8em;
+    color:  @nord4;
+    placeholder: "Buscar comando...";
 }
 listview {
     layout:     horizontal;
     // spacing:    0px 20px;
-    lines:      100;
+    lines:      200;
+    border: 0;
 }
 element {
     padding: 0px 0px;
 }
 element selected {
-    background-color: @nord14;
+    background-color: @nord15;
 }
 
 element-text, element-icon {
-  background-color: @nord0;
-  padding: 0 10px;
+  background-color: @nord3;
+  padding: 0 12px;
   text-color: @inherit;
 }
 element-text selected {
     background-color: @nord4;
     text-color: @nord0;
+    font-weight: bold;
+    border: 1px;
+    border-color: @nord4;
+    border-radius: 0.3em;
 }

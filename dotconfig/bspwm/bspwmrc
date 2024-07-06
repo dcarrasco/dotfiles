@@ -50,8 +50,10 @@ done &
 
 #Fix Mouse curoor on startup
 xsetroot -cursor_name left_ptr
-xinput set-prop 10 303 1
-xinput set-prop 10 330 1
+# Natural scrolling
+xinput set-prop 10 302 1
+#tap to click
+xinput set-prop 10 329 1
 
 
 #Monitor Config
@@ -86,7 +88,7 @@ bspc config single_monocle        false
 bspc config borderless_monocle    true
 bspc config gapless_monocle       true
 bspc config focus_follows_pointer true
-bspc config pointer_follows_focus true
+# bspc config pointer_follows_focus true
 bspc config external_rules_command "$HOME/.config/bspwm/external_rules.sh"
 
 #Application Rules
