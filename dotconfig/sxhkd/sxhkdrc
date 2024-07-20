@@ -20,6 +20,9 @@ super + space
 super + alt + space
 	~/.config/polybar/scripts/search-home.sh
 
+super + shift + space
+	rofi -show run -config ~/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
@@ -185,6 +188,8 @@ super + alt + shift + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	bspc node --move {-20 0,0 20,0 -20,20 0}
 
+super + alt + s
+    $HOME/.config/bspwm/master_max.sh
 
 # #######################################################
 # special keys
@@ -220,7 +225,9 @@ Print
     exec flameshot screen
 
 super + shift + s
-    exec flameshot gui
+    exec maim -s | xclip -selection clipboard -t image/png && notify-send "Screenshot creado (area) a clipboard"
+    # exec flameshot gui
+
 
 super + p
     exec ~/.config/polybar/scripts/switch-monitor.sh
