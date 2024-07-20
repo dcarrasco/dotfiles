@@ -25,7 +25,7 @@ style = "Bold"
 style = "Bold ItaliBold Italic"
 
 [font.glyph_offset]
-y = 2
+y = 0
 
 [font.italic]
 style = "Italic"
@@ -38,12 +38,12 @@ style = "Italic"
 # family = "MesloLGM Nerd Font Mono"
 # family = "FiraCode Nerd Font Mono"
 # family = "SF Mono"
-family = "MesloLGS NF"
+family = "MesloLGL Nerd Font"
 # family = "Monaspace Radon"
 style = "Medium"
 
 [font.offset]
-y = 4
+y = 0
 
 [[keyboard.bindings]]
 action = "ToggleFullscreen"
@@ -51,9 +51,9 @@ key = "F11"
 mods = "None"
 
 [window]
-decorations = "full"
+decorations = "Full"
 opacity = 0.9
-blur = true
+blur = false
 
 [window.dimensions]
 columns = 110
