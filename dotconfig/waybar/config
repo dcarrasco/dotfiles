@@ -14,7 +14,7 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "custom/windowstatus", "hyprland/window"],
     "modules-center": [],
-    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "bluetooth", "network", "pulseaudio", "battery", "clock"],
+    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "bluetooth", "network", "pulseaudio", "battery", "clock", "custom/poweroff"],
 
     // Modules configuration
     "hyprland/workspaces": {
@@ -128,10 +128,10 @@
     "clock": {
         // "timezone": "America/New_York",
         // "format": "{:%a %d/%m %H:%M}",
+        "locale": "es_CL.utf8",
         "tooltip-format": "<tt>{calendar}</tt>",
         "format-alt": "{:%a %d/%m/%Y}",
         "interval": 30,
-        // "locale": "es_CL",
         "calendar": {
             "format": {
                 "today": "<span color='#EBCB8B'><b>{}</b></span>",
@@ -151,7 +151,8 @@
     },
 
     "memory": {
-        "format": "  {used:0.1f}G/{total:0.1f}G",
+        // "format": "  {used:0.1f}G/{total:0.1f}G",
+        "format": "  {used:0.1f}G",
         // "format": "  {}%",
         "tooltip": true,
         "tooltip-format": "RAM {used:0.1f}G / {total:0.1f} G used ({percentage}%)\nSWAP {swapUsed:0.1f} / {swapTotal:0.1f} G used"
@@ -160,9 +161,11 @@
     "temperature": {
         // "thermal-zone": 2,
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        "critical-threshold": 80,
+        "critical-threshold": 60,
         // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{icon} {temperatureC}°C",
+        // "format": "{icon} {temperatureC}°C",
+        "format": "",
+        "format-critical": "{icon} {temperatureC}°C",
         // "format-icons": ["", "", ""],
         // "format-icons": [" ", ""],
         "format-icons": ["", "", "", "", ""],
@@ -184,9 +187,9 @@
         "format": "{icon} ",
         "format-warning": "{icon} {}%",
         "format-critical": "{icon} {}%",
-        "format-charging": "{icon}",
+        "format-charging": "{icon} ",
         "format-plugged": "{icon}   {capacity}% ",
-        "format-alt": "{icon}  {capacity}%",
+        "format-alt": "{icon}   {capacity}%",
         "tooltip-format": "Capacity: {capacity}%\n{timeTo}",
         // "format-alt": "{icon}   {time}",
         // "format-good": "", // An empty format will hide the module
@@ -210,8 +213,8 @@
     "bluetooth": {
         "format": "",
         "format-connected": " ",
-        "on-click": "~/.config/polybar/scripts/bluetooth.sh --toggle",
-        "on-click-right": "blueman-manager",
+        "on-click": "blueman-manager",
+        "on-click-right": "~/.config/polybar/scripts/bluetooth.sh --toggle",
         "tooltip-format": "{status} ({num_connections})\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "* {device_alias}"
     },
@@ -283,6 +286,13 @@
         "on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade\"",
         "restart-interval": 3600,
         "tooltip": true
+    },
+
+    "custom/poweroff": {
+        "format": "  ",
+        "on-click": "wlogout -b 5",
+        "tooltip": true,
+        "tooltip-format": "Power off",
     }
 }
 # vi: ft=json

@@ -53,8 +53,8 @@ button:focus {
 }
 
 button:hover {
+    background-color: @nord3;
     border-color: @nord4;
-	background-color: @nord0;
 }
 
 #lock {

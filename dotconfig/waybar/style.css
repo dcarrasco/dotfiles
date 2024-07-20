@@ -151,7 +151,7 @@ tooltip label {
 
 #workspaces button.empty label {
     /* Botones Circulares */
-    color: alpha(@nord4, 0.4);
+    color: alpha(@nord4, 0.5);
     /* border-bottom: 3px solid alpha(@nord4, 0.0); */
     /* Botones cuadrados */
 }
@@ -227,7 +227,7 @@ tooltip label {
 #scratchpad,
 #language,
 #mpd {
-    padding: 0 6px;
+    padding: 0 5px;
 }
 
 #custom-windowstatus {
@@ -258,7 +258,7 @@ tooltip label {
 #battery {
     /* background-color: #ffffff; */
     /* color: #000000; */
-    margin: 6px 0px;
+    margin: 5px 0px;
     border-radius: 7px;
     /* border: 1px solid white; */
 }
@@ -333,8 +333,9 @@ label:focus {
 }
 
 #pulseaudio.muted {
-    margin: 6px 0px;
-    border-radius: 6px;
+    margin: 5px 0px;
+    padding: 0 0.5em;
+    border-radius: 5px;
     background-color: @nord11;
     /* color: @nord4; */
     /* font-weight: bold; */
@@ -369,8 +370,8 @@ label:focus {
 
 #temperature.critical {
     background-color: @nord11;
-    margin: 7px 0px;
-    border-radius: 7px;
+    margin: 5px 0px;
+    border-radius: 5px;
 }
 
 #tray {
@@ -399,7 +400,7 @@ label:focus {
     /* background-color: #ecf0f1; */
     font-weight: bold;
     /* color: @nord13; */
-    margin: 6px 0px;
+    margin: 5px 0px;
     border-radius: 7px;
     color: @nord2;
     background-color: alpha(@nord4, 0.8);
@@ -459,5 +460,5 @@ label:focus {
 }
 
 #bluetooth.disabled, #bluetooth.off {
-    color: alpha(@nord0, 0.8);
+    color: alpha(@nord12, 0.8);
 }
