@@ -185,8 +185,8 @@
             "critical": 10
         },
         "format": "{icon} ",
-        "format-warning": "{icon} {}%",
-        "format-critical": "{icon} {}%",
+        "format-warning": "{icon}   {}%",
+        "format-critical": "{icon}   {}%",
         "format-charging": "{icon} ",
         "format-plugged": "{icon}   {capacity}% ",
         "format-alt": "{icon}   {capacity}%",
