@@ -95,10 +95,10 @@ return {
                 vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
                 vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
                 vim.keymap.set("n", "<leader>vf", function() vim.lsp.buf.format({async = false, timeout_ms = 10000 }) end, opts)
-                vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+                vim.keymap.set("i", "<C-k>", function() vim.lsp.buf.signature_help() end, opts)
 
                 vim.keymap.set("n", "<leader>vl", function() require('lint').try_lint() end, opts)
-                vim.keymap.set("n", "<leader>vqf", function() vim.diagnostic.setloclist() end, opts)
+                vim.keymap.set("n", "<leader>vlq", function() vim.diagnostic.setqflist() end, opts)
             end)
 
             require('mason-lspconfig').setup({

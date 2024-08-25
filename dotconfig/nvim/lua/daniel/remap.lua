@@ -135,14 +135,25 @@ keymap.set("v", "K", ":move '<-2<CR>gv=gv")
 
 --
 -- Jump mgmt ----------------------------------------------------------------
+keymap.set("n", "qf", ":copen<CR>")
 keymap.set("n", "[q", ":cp<CR>zz")
 keymap.set("n", "]q", ":cn<CR>zz")
 keymap.set("n", "[Q", ":cfirst<CR>zz")
 keymap.set("n", "]Q", ":clast<CR>zz")
 keymap.set("n", "<Leader>j", ":cnext<CR>zz")
+keymap.set("n", "[m", "[mzz")
+keymap.set("n", "]m", "]mzz")
+keymap.set("n", "[M", "[Mzz")
+keymap.set("n", "]M", "]Mzz")
 keymap.set("n", "<Leader>k", ":cprev<CR>zz")
 -- Cierra ventana quickfix con ESC
---autocmd FileType qf nnoremap <buffer> <Esc> :cclose <bar> :lclose<CR>
+-- autocmd FileType qf nnoremap <buffer> <Esc> :cclose <bar> :lclose<CR>
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "qf",
+--     callback = function()
+--         vim.keymap.set('n', '<esc>', ":cclose<CR>", { silent = true })
+--     end
+-- })
 --
 -- Salta entre tags
 keymap.set("n", "[t", ":tprevious<CR>")
