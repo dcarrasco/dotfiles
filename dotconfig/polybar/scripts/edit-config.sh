@@ -19,7 +19,7 @@ arch=(\
     "wlogout/layout" \
     "wlogout/style.css" \
     "kitty/kitty.conf" \
-    "alacritty/alacritty.yml" \
+    "alacritty/alacritty.toml" \
     "bspwm/bspwmrc" \
     "bspwm/picom.conf" \
     "sxhkd/sxhkdrc" \

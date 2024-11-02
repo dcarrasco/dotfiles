@@ -151,7 +151,7 @@ else
             bspc wm -r
         ;;
         $OPT_SET_RESOL)
-            arandr
+            # arandr
             bspc wm -r
         ;;
     esac
