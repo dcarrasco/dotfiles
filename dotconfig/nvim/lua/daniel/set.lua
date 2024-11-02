@@ -23,7 +23,7 @@ vim.opt.hlsearch = true
 -- --------------- Visuals ---------------
 vim.opt.termguicolors = true
 vim.opt.scrolloff = 6
-vim.opt.colorcolumn = "100"
+vim.opt.colorcolumn = "120"
 vim.opt.errorbells = false
 vim.opt.showbreak = ".."
 vim.opt.wrap = true
@@ -68,5 +68,4 @@ vim.opt.title = false
 vim.opt.laststatus = 2
 -- vim.opt.splitbelow = true
 -- vim.opt.splitright = true
-
 

@@ -45,10 +45,10 @@ keymap.set("n", "<Leader>m", ":only<CR>")
 -- Close the window
 keymap.set("n", "<Leader>c", ":close<CR>")
 -- Move to window
-keymap.set("n", "<c-j>", "<c-w>j")
-keymap.set("n", "<c-k>", "<c-w>k")
-keymap.set("n", "<c-h>", "<c-w>h")
-keymap.set("n", "<c-l>", "<c-w>l")
+keymap.set("n", "<c-j>", "<c-w>j", { silent=true })
+keymap.set("n", "<c-k>", "<c-w>k", { silent=true })
+keymap.set("n", "<c-h>", "<c-w>h", { silent=true })
+keymap.set("n", "<c-l>", "<c-w>l", { silent=true })
 -- Resize window
 keymap.set("n", "<M-Up>", ":resize +5<CR>")
 keymap.set("n", "<M-Down>", ":resize -5<CR>")
@@ -66,7 +66,7 @@ keymap.set("n", "<Leader><s-tab>", ":bp<CR>")
 keymap.set("n", "<Leader><tab>", ":bn<CR>")
 keymap.set("n", "<S-l>", ":bn<CR>")
 keymap.set("n", "<S-h>", ":bp<CR>")
-keymap.set("n", "<tab>", ":b<space>")
+-- keymap.set("n", "<tab>", ":b<space>")
 keymap.set("n", "<Leader>q", ":bd<CR>")
 -- open previous buffer
 keymap.set("n", "<Leader>bn", ":bn<CR>")
@@ -83,6 +83,7 @@ keymap.set("n", "j", "gj")
 keymap.set("n", "k", "gk")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
+keymap.set("n", "*", "*zzzv")
 keymap.set("n", "{", "{zz")
 keymap.set("n", "}", "}zz")
 keymap.set("n", "0", "^")
@@ -100,10 +101,10 @@ keymap.set("n", "<C-u>", "<C-u>zz")
 -- Terminal mgmt --------------------------------------------------------------
 -- keymap.set("t", "<expr>", "<Esc> (&filetype == "fzf") ? "<Esc>-- : "<C-\><C-n>"")
 -- Move to window
-keymap.set("t", "<c-j>", "<c-w>j")
-keymap.set("t", "<c-k>", "<c-w>k")
-keymap.set("t", "<c-h>", "<c-w>h")
-keymap.set("t", "<c-l>", "<c-w>l")
+-- keymap.set("t", "<c-j>", "<c-w>j")
+-- keymap.set("t", "<c-k>", "<c-w>k")
+-- keymap.set("t", "<c-h>", "<c-w>h")
+-- keymap.set("t", "<c-l>", "<c-w>l")
 
 
 -- Text mgmt ------------------------------------------------------------------
@@ -135,6 +136,8 @@ keymap.set("v", "K", ":move '<-2<CR>gv=gv")
 
 --
 -- Jump mgmt ----------------------------------------------------------------
+keymap.set("n", "[[", "[[zz")
+keymap.set("n", "]]", "]]zz")
 keymap.set("n", "qf", ":copen<CR>")
 keymap.set("n", "[q", ":cp<CR>zz")
 keymap.set("n", "]q", ":cn<CR>zz")

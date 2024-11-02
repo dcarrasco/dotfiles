@@ -11,7 +11,13 @@ return {
     'tpope/vim-surround',
     'tpope/vim-commentary',
 
-    -- use('airblade/vim-gitgutter')
+    {
+        'airblade/vim-gitgutter',
+        config = function ()
+            vim.keymap.set("n", "[g", function () vim.cmd('GitGutterPrevHunk') end)
+            vim.keymap.set("n", "]g", function () vim.cmd('GitGutterNextHunk') end)
+        end
+    },
     'jiangmiao/auto-pairs',
 
     -- Indent guides
@@ -34,4 +40,17 @@ return {
     -- Editor config properties
     'editorconfig/editorconfig-vim',
 
+    -- nvimtree
+    {
+        "nvim-tree/nvim-tree.lua",
+        version = "*",
+        lazy = false,
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+        config = function()
+            require("nvim-tree").setup {}
+            vim.keymap.set("n", "<leader>d", function () vim.cmd('NvimTreeFindFileToggle') end)
+        end,
+    }
 }
