@@ -382,7 +382,8 @@ label:focus {
 
 #tray > .passive {
     /* -gtk-icon-effect: dim; */
-    /* background-color: red; */
+    background-color: red;
+    /* color: @nord14; */
 }
 
 #tray > .needs-attention {

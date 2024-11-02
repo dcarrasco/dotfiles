@@ -203,7 +203,7 @@
         /* "format-wifi": "{essid} ({signalStrength}%) ", */
         "format-wifi": " ",
         "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "Strength: {signalStrength}%\n{ipaddr}\n{ifname} via {gwaddr}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}\n{ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
         /* "format-alt": "{ifname}: {ipaddr}/{cidr}", */

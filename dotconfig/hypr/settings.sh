@@ -10,13 +10,13 @@ else
 fi
 
 keyboard_option="Toggle keyboard lang"
-
 swapcontrol_option="Swap keyboard control-caps"
+wifi_option="Toggle WIFI"
 
 options="$bluetooth_option
 $keyboard_option
 $swapcontrol_option
-Toggle WIFI"
+$wifi_option"
 
 selected=$(echo "$options" | rofi -dmenu -i -p "Settings")
 
@@ -39,7 +39,12 @@ case $selected in
         fi
     ;;
     "Toggle WIFI")
-        echo "wifi"
+        wifi_state=$(nmcli radio wifi)
+        if [ "$wifi_state" == "enabled" ]; then
+            nmcli radio wifi off
+        else
+            nmcli radio wifi on
+        fi
     ;;
 esac
 
