@@ -11,7 +11,8 @@
 
 # terminal emulator
 super + Return
-	kitty -d ~
+    alacritty --working-directory ~
+	# kitty -d ~
 
 # program launcher
 super + space
@@ -29,11 +30,13 @@ super + Escape
 
 # My program Hotkeys
 super + b
-    firefox
-    # brave
+    brave-browser
+    # /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=brave --file-forwarding com.brave.Browser
+    # firefox
 
 super + alt + b
-    /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=brave --file-forwarding com.brave.Browser
+    firefox
+    # /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=brave --file-forwarding com.brave.Browser
 
 super + alt + v
     virt-manager
@@ -51,8 +54,8 @@ super + f
 super + comma
     /home/daniel/.config/polybar/scripts/edit-config.sh
 
-# super + alt + comma
-    # /home/daniel/.config/polybar/scripts/edit-config.sh
+super + alt + comma
+    /home/daniel/.config/polybar/scripts/settings.sh
 
 # super + p
 	# flameshot full -p /home/titus/SynologyDrive/Screenshots/
@@ -89,7 +92,7 @@ super + y
 	bspc node newest.marked.local --to-node newest.!automatic.local
 
 # swap the current node and the biggest window
-super + g
+super + s
 	bspc node --swap biggest.window.local
 
 
@@ -222,7 +225,8 @@ XF86Calculator
     exec gnome-calculator
 
 Print
-    exec flameshot screen
+    maim ~/Imágenes/Screenshots/$(date +%Y%m%d_%H%M%S).png && notify-send "Screenshot creado (pantalla) a archivo"
+    # exec flameshot screen
 
 super + shift + s
     exec maim -s | xclip -selection clipboard -t image/png && notify-send "Screenshot creado (area) a clipboard"

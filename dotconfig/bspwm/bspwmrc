@@ -15,6 +15,11 @@
 bash ~/.config/polybar/launch.sh &
 # feh --bg-max ~/Pictures/background.jpg &
 
+export GTK_THEME=Yaru-purple
+export GDK_SCALE=1.2
+export XCURSOR_THEME=macOS-BigSur
+export XCURSOR_SIZE=36
+
 # Variable Defines
 color0=#2E3440
 color1=#3B4252
@@ -34,7 +39,7 @@ color14=#A3BE8C
 color15=#B48EAD
 #
 #Set Keyboard Layout
-setxkbmap -layout latam,us
+setxkbmap -layout latam,us -option grp:alt_caps_toggle
 # setxkbmap -layout en
 
 
@@ -51,9 +56,9 @@ done &
 #Fix Mouse curoor on startup
 xsetroot -cursor_name left_ptr
 # Natural scrolling
-xinput set-prop 10 302 1
+xinput set-prop "MSFT0001:00 04F3:317C Touchpad" 303 1
 #tap to click
-xinput set-prop 10 329 1
+xinput set-prop "MSFT0001:00 04F3:317C Touchpad" 330 1
 
 
 #Monitor Config
@@ -84,7 +89,7 @@ bspc config normal_border_color   "$color3"
 bspc config active_border_color   "$color2"
 bspc config presel_feedback_color "$color4"
 bspc config split_ratio           0.55
-bspc config single_monocle        true
+bspc config single_monocle        false
 bspc config borderless_monocle    true
 bspc config gapless_monocle       true
 bspc config focus_follows_pointer true
