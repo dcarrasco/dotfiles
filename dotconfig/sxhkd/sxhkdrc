@@ -12,7 +12,9 @@
 # terminal emulator
 super + Return
     alacritty --working-directory ~
-	# kitty -d ~
+
+super + alt + Return
+	kitty -d ~
 
 # program launcher
 super + space
@@ -21,7 +23,7 @@ super + space
 super + alt + space
 	~/.config/polybar/scripts/search-home.sh
 
-super + shift + space
+super + control + space
 	rofi -show run -config ~/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'
 
 # make sxhkd reload its configuration files:
@@ -30,13 +32,10 @@ super + Escape
 
 # My program Hotkeys
 super + b
-    brave-browser
-    # /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=brave --file-forwarding com.brave.Browser
-    # firefox
+    firefox
 
 super + alt + b
-    firefox
-    # /usr/bin/flatpak run --branch=stable --arch=x86_64 --command=brave --file-forwarding com.brave.Browser
+    brave-browser
 
 super + alt + v
     virt-manager
