@@ -277,14 +277,14 @@ tooltip label {
 }
 
 #battery.warning {
-    background-color: @nord13;
     color: @nord1;
+    background-color: @nord13;
     /* font-weight: bold; */
 }
 
 #battery.critical:not(.charging) {
-    background-color: @nord11;
     color: @nord4;
+    background-color: @nord11;
     /* font-weight: bold; */
     /* animation-name: blink; */
     /* animation-duration: 0.5s; */

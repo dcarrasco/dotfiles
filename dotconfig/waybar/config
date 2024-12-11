@@ -164,7 +164,6 @@
         "critical-threshold": 60,
         // "format-critical": "{temperatureC}°C {icon}",
         // "format": "{icon} {temperatureC}°C",
-        "format": "",
         "format-critical": "{icon} {temperatureC}°C",
         // "format-icons": ["", "", ""],
         // "format-icons": [" ", ""],
@@ -181,7 +180,7 @@
     "battery": {
         "states": {
             // "good": 95,
-            "warning": 25,
+            "warning": 20,
             "critical": 10
         },
         "format": "{icon} ",
