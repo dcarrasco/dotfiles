@@ -8,7 +8,7 @@ keymap.set("x", "<leader>p", "\"_dP")
 -- ############################################################################
 
 keymap.set("n", "<leader>pv", vim.cmd.Ex)
-keymap.set("n", "<Leader>ev", ":e ~/.config/nvim/<CR>")
+-- keymap.set("n", "<Leader>ev", ":e ~/.config/nvim/<CR>")
 keymap.set("n", "<Leader>ep", ":e ~/.vim/plugins.vim<CR>")
 keymap.set("n", "<Leader>et", ":e ~/.tmux.conf<CR>")
 keymap.set("n", "<esc>", ":noh<CR>", { silent = true })
