@@ -1,6 +1,7 @@
 #!/bin/sh
 
 bluetooth_status=$(bluetoothctl show | grep -q "Powered: no")
+wifi_status=$(nmcli device wifi | grep '*' | wc -l)
 
 # if $bluetooth_status; then
 if bluetoothctl show | grep -q "Powered: no"; then
@@ -9,9 +10,14 @@ else
     bluetooth_option="Apagar bluetooth"
 fi
 
+if [ $wifi_status -eq 1 ]; then
+    wifi_option="Apagar WIFI"
+else
+    wifi_option="Encender WIFI"
+fi
+
 keyboard_option="Toggle keyboard lang"
 swapcontrol_option="Swap keyboard control-caps"
-wifi_option="Toggle WIFI"
 
 options="$bluetooth_option
 $keyboard_option
@@ -38,7 +44,7 @@ case $selected in
             hyprctl keyword input:kb_options ctrl:swapcaps
         fi
     ;;
-    "Toggle WIFI")
+    $wifi_option)
         wifi_state=$(nmcli radio wifi)
         if [ "$wifi_state" == "enabled" ]; then
             nmcli radio wifi off
