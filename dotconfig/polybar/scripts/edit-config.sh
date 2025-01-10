@@ -33,6 +33,7 @@ arch=(\
     "dunst/dunstrc" \
     "nvim/lua/daniel/" \
     "../.tmux.conf" \
+    "../.zshrc" \
 )
 
 listado=""
