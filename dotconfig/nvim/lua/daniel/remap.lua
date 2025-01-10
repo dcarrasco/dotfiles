@@ -1,6 +1,7 @@
 local keymap = vim.keymap
 
 keymap.set("x", "<leader>p", "\"_dP")
+keymap.set("n", "<C-z>", "")
 
 
 -- ############################################################################
@@ -99,6 +100,14 @@ keymap.set("n", "<C-u>", "<C-u>zz")
 
 
 -- Terminal mgmt --------------------------------------------------------------
+keymap.set("n", "<Leader>tt", function()
+  vim.cmd.new()
+  vim.cmd.term()
+  vim.cmd.wincmd("J")
+  vim.api.nvim_win_set_height(0,8)
+  vim.cmd.startinsert()
+end)
+keymap.set("t", "<Esc>", "<C-\\><C-N>")
 -- keymap.set("t", "<expr>", "<Esc> (&filetype == "fzf") ? "<Esc>-- : "<C-\><C-n>"")
 -- Move to window
 -- keymap.set("t", "<c-j>", "<c-w>j")
@@ -106,6 +115,10 @@ keymap.set("n", "<C-u>", "<C-u>zz")
 -- keymap.set("t", "<c-h>", "<c-w>h")
 -- keymap.set("t", "<c-l>", "<c-w>l")
 
+-- Execute lua ----------------------------------------------------------------
+keymap.set('n', '<Leader>x', ':.lua<CR>')
+keymap.set('v', '<Leader>x', ':lua<CR>')
+keymap.set('n', '<Leader><C-x>', ':source %<CR>')
 
 -- Text mgmt ------------------------------------------------------------------
 keymap.set({"o", "v"}, "q", "i\"")
@@ -121,7 +134,7 @@ keymap.set("n", "J", "mzJ`z")
 -- paste from yank
 -- nnoremap <C-S-p> "0P
 -- Inserta espacio y enter
-keymap.set("n", "<C-space>", "i <esc>")
+-- keymap.set("n", "<C-enter>", "i <esc>")
 keymap.set("n", "x", '"_x')
 
 
