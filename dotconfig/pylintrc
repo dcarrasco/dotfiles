@@ -1,4 +1,9 @@
 [MESSAGES CONTROL]
+enable=
+    bad-inline-option
+
+include-naming-hints = yes
+
 disable=
     missing-class-docstring,
     missing-function-docstring,
@@ -6,3 +11,6 @@ disable=
 
 [FORMAT]
 max-line-length=120
+
+[VARIABLES]
+allow-global-unused-variables = no
