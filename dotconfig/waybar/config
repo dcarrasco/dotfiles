@@ -13,7 +13,7 @@
 
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "custom/windowstatus", "hyprland/window"],
-    "modules-center": [],
+    // "modules-center": ["hyprland/workspaces", "custom/windowstatus"],
     "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "bluetooth", "network", "pulseaudio", "battery", "clock", "custom/poweroff"],
 
     // Modules configuration
@@ -184,8 +184,8 @@
             "critical": 10
         },
         "format": "{icon} ",
-        "format-warning": "{icon}   {}%",
-        "format-critical": "{icon}   {}%",
+        "format-warning": "{icon}   {capacity}%",
+        "format-critical": "{icon}   {capacity}%",
         "format-charging": "{icon} ",
         "format-plugged": "{icon}   {capacity}% ",
         "format-alt": "{icon}   {capacity}%",
