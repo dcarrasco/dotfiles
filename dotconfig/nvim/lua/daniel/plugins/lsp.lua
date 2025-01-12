@@ -1,12 +1,9 @@
 return {
-    -- LSP ZERO
     {
         'williamboman/mason.nvim',
         lazy = false,
         config = true,
     },
-    { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
-
     {
         'L3MON4D3/LuaSnip',
         config = function()
@@ -17,12 +14,22 @@ return {
 
             ls.add_snippets("python", {
                 s("defini", {
-                    t"def __init__(self", i(1), t") -> None:",
-                    t({"", "\tpass"}), i(0)
+                    t("def __init__(self"),
+                    i(1, ", parameters"),
+                    t({") -> None:", "\t"}),
+                    i(2, "pass"),
+                    t({"", ""})
                 }),
                 s("def", {
-                    t"def ", i(1, "function_name"), t"(self, ", i(2, "parameters"), t") -> ", i(3, "return_type"),
-                    t({":", "\t"}), i(0, "pass")
+                    t("def "),
+                    i(1, "function_name"),
+                    t("(self, "),
+                    i(2, "parameters"),
+                    t(") -> "),
+                    i(3, "return_type"),
+                    t({":", "\t"}),
+                    i(4, "pass"),
+                    t({"", ""})
                 }),
             })
 
@@ -39,36 +46,45 @@ return {
             {'saadparwaiz1/cmp_luasnip'},
         },
         config = function()
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_cmp()
-
             local cmp = require('cmp')
-            local cmp_action = lsp_zero.cmp_action()
+            local luasnip = require('luasnip')
+
             vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
             cmp.setup({
-                snippet = {
-                    expand = function(args)
-                        require('luasnip').lsp_expand(args.body)
-                    end
-                },
                 sources = {
                     { name = 'nvim_lsp' },
                     { name = 'nvim_lua' },
                     { name = 'luasnip' },
                     { name = 'buffer', keyword_length = 3 },
                 },
-                formatting = lsp_zero.cmp_format(),
+                snippet = {
+                    expand = function(args)
+                        luasnip.lsp_expand(args.body)
+                    end
+                },
                 mapping = cmp.mapping.preset.insert({
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<CR>'] = cmp.mapping.confirm({select = false, behavior = cmp.ConfirmBehavior.Replace }),
-                    ['<C-e>'] = cmp_action.toggle_completion(),
-                    ['<Tab>'] = cmp_action.tab_complete(),
+                    -- ['<C-e>'] = cmp_action.toggle_completion(),
+                    ['<Tab>'] = cmp.mapping.select_next_item(),
                     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-                    ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-                    ['<C-b>'] = cmp_action.luasnip_jump_backward(),
                     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-f>'] = cmp.mapping(function(fallback)
+                        if luasnip.jumpable(1) then
+                            luasnip.jump(1)
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
+                    ['<C-r>'] = cmp.mapping(function(fallback)
+                        if luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
                     ['<C-g>'] = function()
                         if cmp.visible_docs() then
                             cmp.close_docs()
@@ -100,76 +116,82 @@ return {
                     ghost_text = true,
                 }
             })
+
+            vim.opt.signcolumn = 'yes'
+            vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+                vim.lsp.handlers.hover, { border = 'rounded' }
+            )
+            vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+                vim.lsp.handlers.signature_help, { border = 'rounded' }
+            )
+            vim.diagnostic.config({
+                float = { border = 'rounded' },
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = '',
+                        [vim.diagnostic.severity.WARN] = '',
+                        [vim.diagnostic.severity.HINT] = '⚑',
+                        [vim.diagnostic.severity.INFO] = '',
+                    },
+                },
+            })
         end
     },
     -- LSP Support
     {
         'neovim/nvim-lspconfig',
-        cmd = {'LspInfo', 'LspInstall', 'LspStart'},
-        event = {'BufReadPre', 'BufNewFile'},
         dependencies = {
             {'hrsh7th/cmp-nvim-lsp'},
             {'williamboman/mason-lspconfig.nvim'},
         },
         config = function()
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
-
-            lsp_zero.preset('recommended')
-
             vim.opt.signcolumn = 'yes'
 
-            lsp_zero.set_sign_icons({
-                error = '✘',
-                warn = '▲',
-                hint = '⚑',
-                info = '»'
+            local lspconfig = require('lspconfig')
+            local lspconfig_defaults = lspconfig.util.default_config
+            lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+                'force',
+                lspconfig_defaults.capabilities,
+                require('cmp_nvim_lsp').default_capabilities()
+            )
+
+            vim.api.nvim_create_autocmd('LspAttach', {
+                callback = function(event)
+                    local opts = { buffer = event.buf }
+                    vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+                    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+                    vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
+                    vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
+                    vim.keymap.set("n", "go", function() vim.lsp.buf.type_definition() end, opts)
+                    vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
+                    vim.keymap.set("n", "gs", function() vim.lsp.buf.signature_help() end, opts)
+
+                    vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+                    vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+                    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() vim.fn.feedkeys("zz") end, opts)
+                    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() vim.fn.feedkeys("zz") end, opts)
+                    vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+                    vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+                    vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
+                    vim.keymap.set("n", "<leader>vf", function() vim.lsp.buf.format({async = false, timeout_ms = 10000 }) end, opts)
+                    vim.keymap.set("i", "<C-k>", function() vim.lsp.buf.signature_help() end, opts)
+
+                    vim.keymap.set("n", "<leader>vl", function() require('lint').try_lint() end, opts)
+                    vim.keymap.set("n", "<leader>vlq", function() vim.diagnostic.setqflist() end, opts)
+                end
             })
 
-            lsp_zero.on_attach(function(client, bufnr)
-                local opts = {buffer = bufnr, remap = false}
-
-                vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-                vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-                vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-                vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-                vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() vim.fn.feedkeys("zz") end, opts)
-                vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() vim.fn.feedkeys("zz") end, opts)
-                vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-                vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-                vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-                vim.keymap.set("n", "<leader>vf", function() vim.lsp.buf.format({async = false, timeout_ms = 10000 }) end, opts)
-                vim.keymap.set("i", "<C-k>", function() vim.lsp.buf.signature_help() end, opts)
-
-                vim.keymap.set("n", "<leader>vl", function() require('lint').try_lint() end, opts)
-                vim.keymap.set("n", "<leader>vlq", function() vim.diagnostic.setqflist() end, opts)
-            end)
+            lspconfig.pylsp.setup({})
+            lspconfig.lua_ls.setup({})
+            lspconfig.phpactor.setup({})
 
             require('mason-lspconfig').setup({
                 ensure_installed = {},
                 handlers = {
-                    lsp_zero.default_setup,
                     lua_ls = function()
-                        local lua_opts = lsp_zero.nvim_lua_ls()
-                        require('lspconfig').lua_ls.setup(lua_opts)
                     end,
                 },
             })
-
-            -- lsp_zero.setup()
-
-            -- vim.diagnostic.config({
-            --     virtual_text = true,
-            --     underline = true,
-            --     float = {
-            --         style = 'minimal',
-            --         border = 'rounded',
-            --         source = 'always',
-            --         header = '',
-            --         prefix = '',
-            --     },
-            -- })
-
         end
     },
 
@@ -180,7 +202,7 @@ return {
             local lint = require('lint')
 
             lint.linters_by_ft = {
-                python = {'mypy'},
+                python = {'pylint'},
                 php = {'phpstan'},
                 rust = {'bacon-ls'}
             }
@@ -190,7 +212,6 @@ return {
     -- Autocompletion
     -- {'hrsh7th/cmp-path'},
     -- {'saadparwaiz1/cmp_luasnip'},
-
     -- Snippets
     -- {'rafamadriz/friendly-snippets'},
 }

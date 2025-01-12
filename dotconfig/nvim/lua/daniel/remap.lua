@@ -162,15 +162,7 @@ keymap.set("n", "]m", "]mzz")
 keymap.set("n", "[M", "[Mzz")
 keymap.set("n", "]M", "]Mzz")
 keymap.set("n", "<Leader>k", ":cprev<CR>zz")
--- Cierra ventana quickfix con ESC
--- autocmd FileType qf nnoremap <buffer> <Esc> :cclose <bar> :lclose<CR>
--- vim.api.nvim_create_autocmd("FileType", {
---     pattern = "qf",
---     callback = function()
---         vim.keymap.set('n', '<esc>', ":cclose<CR>", { silent = true })
---     end
--- })
---
+
 -- Salta entre tags
 keymap.set("n", "[t", ":tprevious<CR>")
 keymap.set("n", "]t", ":tnext<CR>")

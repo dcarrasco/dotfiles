@@ -34,6 +34,14 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup('close-quickfix-list', { clear = true }),
+  pattern = "qf",
+  callback = function()
+    vim.keymap.set("n", "<esc>", ":cclose<CR>", { silent = true })
+  end,
+})
+
 -- vim.api.nvim_create_autocmd("BufWritePre", {
   -- pattern = "*",
   -- command = ":%s/\s\+$//e"
