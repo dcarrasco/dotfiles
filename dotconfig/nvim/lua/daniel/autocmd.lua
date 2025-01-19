@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "php",
   -- command = ":set commentstring=//\ %s"
   callback = function()
-        vim.opt.commentstring = '// %s'
+    vim.opt.commentstring = '// %s'
   end
 })
 
@@ -38,7 +38,7 @@ vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup('close-quickfix-list', { clear = true }),
   pattern = "qf",
   callback = function()
-    vim.keymap.set("n", "<esc>", ":cclose<CR>", { silent = true })
+    vim.keymap.set("n", "<C-esc>", ":cclose<CR>", { silent = true })
   end,
 })
 

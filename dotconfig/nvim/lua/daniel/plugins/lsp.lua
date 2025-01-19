@@ -1,217 +1,82 @@
 return {
-    {
-        'williamboman/mason.nvim',
-        lazy = false,
-        config = true,
+  {
+    'williamboman/mason.nvim',
+    lazy = false,
+    config = true,
+  },
+  -- LSP Support
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+        {'williamboman/mason-lspconfig.nvim'},
+        {'sbdchd/neoformat'},
     },
-    {
-        'L3MON4D3/LuaSnip',
-        config = function()
-            local ls = require('luasnip')
-            local s = ls.snippet
-            local i = ls.insert_node
-            local t = ls.text_node
+    config = function()
+      vim.opt.signcolumn = 'yes'
 
-            ls.add_snippets("python", {
-                s("defini", {
-                    t("def __init__(self"),
-                    i(1, ", parameters"),
-                    t({") -> None:", "\t"}),
-                    i(2, "pass"),
-                    t({"", ""})
-                }),
-                s("def", {
-                    t("def "),
-                    i(1, "function_name"),
-                    t("(self, "),
-                    i(2, "parameters"),
-                    t(") -> "),
-                    i(3, "return_type"),
-                    t({":", "\t"}),
-                    i(4, "pass"),
-                    t({"", ""})
-                }),
-            })
+      local lspconfig = require('lspconfig')
+      local lspconfig_defaults = lspconfig.util.default_config
+      lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+        'force',
+        lspconfig_defaults.capabilities,
+        require('cmp_nvim_lsp').default_capabilities()
+      )
 
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(event)
+          local opts = { buffer = event.buf }
+          vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+          vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+          vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
+          vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
+          vim.keymap.set("n", "go", function() vim.lsp.buf.type_definition() end, opts)
+          vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
+          vim.keymap.set("n", "gs", function() vim.lsp.buf.signature_help() end, opts)
+
+          vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+          vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+          vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() vim.fn.feedkeys("zz") end, opts)
+          vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() vim.fn.feedkeys("zz") end, opts)
+          vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+          vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+          vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
+          vim.keymap.set("n", "<leader>vf", function() vim.lsp.buf.format({async = false, timeout_ms = 10000 }) end, opts)
+          vim.keymap.set("i", "<C-k>", function() vim.lsp.buf.signature_help() end, opts)
+
+          vim.keymap.set("n", "<leader>vl", function() require('lint').try_lint() end, opts)
+          vim.keymap.set("n", "<leader>vlq", function() vim.diagnostic.setqflist() end, opts)
         end
-    },
+      })
 
-    -- Autocompletion
-    {
-        'hrsh7th/nvim-cmp',
-        -- event = 'InsertEnter',
-        dependencies = {
-            {'hrsh7th/cmp-buffer'},
-            {'hrsh7th/cmp-nvim-lua'},
-            {'saadparwaiz1/cmp_luasnip'},
+      lspconfig.pylsp.setup({})
+      lspconfig.lua_ls.setup({})
+      lspconfig.phpactor.setup({})
+      lspconfig.ts_ls.setup({})
+
+      require('mason-lspconfig').setup({
+        ensure_installed = {},
+        handlers = {
+          lua_ls = function()
+          end,
         },
-        config = function()
-            local cmp = require('cmp')
-            local luasnip = require('luasnip')
+      })
+    end
+  },
 
-            vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+  -- LINTER
+  {
+    'mfussenegger/nvim-lint',
+    config = function()
+      local lint = require('lint')
 
-            cmp.setup({
-                sources = {
-                    { name = 'nvim_lsp' },
-                    { name = 'nvim_lua' },
-                    { name = 'luasnip' },
-                    { name = 'buffer', keyword_length = 3 },
-                },
-                snippet = {
-                    expand = function(args)
-                        luasnip.lsp_expand(args.body)
-                    end
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<CR>'] = cmp.mapping.confirm({select = false, behavior = cmp.ConfirmBehavior.Replace }),
-                    -- ['<C-e>'] = cmp_action.toggle_completion(),
-                    ['<Tab>'] = cmp.mapping.select_next_item(),
-                    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-f>'] = cmp.mapping(function(fallback)
-                        if luasnip.jumpable(1) then
-                            luasnip.jump(1)
-                        else
-                            fallback()
-                        end
-                    end, { 'i', 's' }),
-                    ['<C-r>'] = cmp.mapping(function(fallback)
-                        if luasnip.jumpable(-1) then
-                            luasnip.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { 'i', 's' }),
-                    ['<C-g>'] = function()
-                        if cmp.visible_docs() then
-                            cmp.close_docs()
-                        else
-                            cmp.open_docs()
-                        end
-                    end,
-                    -- ['<C-l'] = cmp.mapping(function(fallback)
-                    --     if cmp.visible() then
-                    --         return cmp.complete_common_string()
-                    --     end
-                    --     fallback()
-                    -- end, {'i', 'c'}),
-                }),
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
-                },
-                view = {
-                    docs = {
-                        auto_open = false
-                    }
-                },
-                preselect = 'item',
-                completion = {
-                    completeopt = 'menu,menuone,noinsert',
-                },
-                experimental = {
-                    ghost_text = true,
-                }
-            })
+      lint.linters_by_ft = {
+        python = {'pylint'},
+        php = {'phpstan'},
+        rust = {'bacon-ls'}
+      }
+    end
+  }
 
-            vim.opt.signcolumn = 'yes'
-            vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-                vim.lsp.handlers.hover, { border = 'rounded' }
-            )
-            vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-                vim.lsp.handlers.signature_help, { border = 'rounded' }
-            )
-            vim.diagnostic.config({
-                float = { border = 'rounded' },
-                signs = {
-                    text = {
-                        [vim.diagnostic.severity.ERROR] = '',
-                        [vim.diagnostic.severity.WARN] = '',
-                        [vim.diagnostic.severity.HINT] = '⚑',
-                        [vim.diagnostic.severity.INFO] = '',
-                    },
-                },
-            })
-        end
-    },
-    -- LSP Support
-    {
-        'neovim/nvim-lspconfig',
-        dependencies = {
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'williamboman/mason-lspconfig.nvim'},
-        },
-        config = function()
-            vim.opt.signcolumn = 'yes'
-
-            local lspconfig = require('lspconfig')
-            local lspconfig_defaults = lspconfig.util.default_config
-            lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-                'force',
-                lspconfig_defaults.capabilities,
-                require('cmp_nvim_lsp').default_capabilities()
-            )
-
-            vim.api.nvim_create_autocmd('LspAttach', {
-                callback = function(event)
-                    local opts = { buffer = event.buf }
-                    vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-                    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-                    vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
-                    vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
-                    vim.keymap.set("n", "go", function() vim.lsp.buf.type_definition() end, opts)
-                    vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
-                    vim.keymap.set("n", "gs", function() vim.lsp.buf.signature_help() end, opts)
-
-                    vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-                    vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-                    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() vim.fn.feedkeys("zz") end, opts)
-                    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() vim.fn.feedkeys("zz") end, opts)
-                    vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-                    vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-                    vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-                    vim.keymap.set("n", "<leader>vf", function() vim.lsp.buf.format({async = false, timeout_ms = 10000 }) end, opts)
-                    vim.keymap.set("i", "<C-k>", function() vim.lsp.buf.signature_help() end, opts)
-
-                    vim.keymap.set("n", "<leader>vl", function() require('lint').try_lint() end, opts)
-                    vim.keymap.set("n", "<leader>vlq", function() vim.diagnostic.setqflist() end, opts)
-                end
-            })
-
-            lspconfig.pylsp.setup({})
-            lspconfig.lua_ls.setup({})
-            lspconfig.phpactor.setup({})
-
-            require('mason-lspconfig').setup({
-                ensure_installed = {},
-                handlers = {
-                    lua_ls = function()
-                    end,
-                },
-            })
-        end
-    },
-
-    -- LINTER
-    {
-        'mfussenegger/nvim-lint',
-        config = function()
-            local lint = require('lint')
-
-            lint.linters_by_ft = {
-                python = {'pylint'},
-                php = {'phpstan'},
-                rust = {'bacon-ls'}
-            }
-        end
-    }
-
-    -- Autocompletion
-    -- {'hrsh7th/cmp-path'},
-    -- {'saadparwaiz1/cmp_luasnip'},
-    -- Snippets
-    -- {'rafamadriz/friendly-snippets'},
+  -- Snippets
+  -- {'rafamadriz/friendly-snippets'},
 }
