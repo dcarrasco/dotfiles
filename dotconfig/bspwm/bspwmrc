@@ -17,6 +17,7 @@ bash ~/.config/polybar/launch.sh &
 
 export GTK_THEME=Yaru-purple
 export GDK_SCALE=1.2
+# export GDK_DPI_SCALE=1.2
 export XCURSOR_THEME=macOS-BigSur
 export XCURSOR_SIZE=36
 
@@ -73,7 +74,7 @@ else
 fi
 
 #BSPWM Config
-bspc config border_width           4
+bspc config border_width           3
 bspc config top_padding            36
 bspc config right_padding          0
 bspc config left_padding           0
@@ -89,7 +90,7 @@ bspc config normal_border_color   "$color3"
 bspc config active_border_color   "$color2"
 bspc config presel_feedback_color "$color4"
 bspc config split_ratio           0.5
-bspc config single_monocle        false
+bspc config single_monocle        true
 bspc config borderless_monocle    true
 bspc config gapless_monocle       true
 bspc config focus_follows_pointer true
