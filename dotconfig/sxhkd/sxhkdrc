@@ -11,10 +11,10 @@
 
 # terminal emulator
 super + Return
-    alacritty --working-directory ~
+	kitty -d ~
 
 super + alt + Return
-	kitty -d ~
+    alacritty --working-directory ~
 
 # program launcher
 super + space
@@ -41,7 +41,7 @@ super + alt + v
     virt-manager
 
 super + v
-    /home/daniel/.config/polybar/scripts/start-vm.sh win10
+    /home/daniel/.config/polybar/scripts/start-vm.sh windows
 
 super + control + v
     /home/daniel/.config/polybar/scripts/list-vm.sh win10
