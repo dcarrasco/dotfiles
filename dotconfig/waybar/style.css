@@ -33,7 +33,7 @@ window#waybar {
     border-bottom: 1px solid alpha(@nord2, 0.7);
     /* transition-property: background-color; */
     /* transition-duration: .5s; */
-    /* border-radius: 100%; */
+    border-radius: 0%;
     /* border: 1px solid red; */
 }
 
@@ -181,15 +181,18 @@ tooltip label {
 }
 
 #window {
+    padding: 0 1em;
+}
+
+#window label {
     /* font-family: SF UI Display; */
     /* font-family: Droid Sans; */
     /* font-family: DejaVu Sans; */
-    font-family: Cantarell;
-    font-weight: 700;
+    /* font-family: Cantarell; */
+    font-family: Adwaita Sans;
+    font-weight: 600;
     font-size: 14pt;
     color: alpha(@nord6, 0.8);
-    padding: 0 1em;
-    /* border: 1px solid red; */
 }
 
 

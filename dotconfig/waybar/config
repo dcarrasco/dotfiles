@@ -13,8 +13,9 @@
 
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "custom/windowstatus", "hyprland/window"],
+    "modules-center": ["clock"],
     // "modules-center": ["hyprland/workspaces", "custom/windowstatus"],
-    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "bluetooth", "network", "pulseaudio", "battery", "clock", "custom/poweroff"],
+    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "bluetooth", "network", "pulseaudio", "battery", "custom/poweroff"],
 
     // Modules configuration
     "hyprland/workspaces": {
@@ -161,7 +162,7 @@
     "temperature": {
         // "thermal-zone": 2,
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        "critical-threshold": 60,
+        "critical-threshold": 70,
         // "format-critical": "{temperatureC}°C {icon}",
         // "format": "{icon} {temperatureC}°C",
         "format-critical": "{icon} {temperatureC}°C",
