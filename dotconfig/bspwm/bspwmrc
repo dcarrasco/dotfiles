@@ -57,9 +57,9 @@ done &
 #Fix Mouse curoor on startup
 xsetroot -cursor_name left_ptr
 # Natural scrolling
-xinput set-prop "MSFT0001:00 04F3:317C Touchpad" 303 1
+xinput set-prop "MSFT0001:00 04F3:317C Touchpad" 306 1
 #tap to click
-xinput set-prop "MSFT0001:00 04F3:317C Touchpad" 330 1
+xinput set-prop "MSFT0001:00 04F3:317C Touchpad" 333 1
 
 
 #Monitor Config
