@@ -2,7 +2,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # default config
-FIELDS=SSID,SECURITY,BARS
+FIELDS=SSID,SECURITY,BARS,SIGNAL,RATE
 POSITION=0; XOFF=0; YOFF=0
 MAGIC=-4
 FONT="DejaVu Sans Mono Bold 14"
