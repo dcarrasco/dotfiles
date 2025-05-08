@@ -239,6 +239,7 @@ tooltip label {
 
 #clock {
     /* background-color: #64727D; */
+    font-family: Adwaita Sans;
 }
 
 #battery {
@@ -323,8 +324,8 @@ label:focus {
     margin: 5px 0px;
     padding: 0 0.5em;
     border-radius: 5px;
-    /* background-color: @nord11; */
-    background-color: @red;
+    background-color: @nord11;
+    /* background-color: @red; */
     color: @nord6;
     /* font-weight: bold; */
 }

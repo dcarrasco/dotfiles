@@ -53,6 +53,7 @@
 
     "hyprland/window": {
         // "format": "  {title}",
+        "icon": false,
         "format": "{title}",
         "rewrite": {
             "(.*) — Mozilla Firefox": "$1",
@@ -128,10 +129,10 @@
 
     "clock": {
         // "timezone": "America/New_York",
-        // "format": "{:%a %d/%m %H:%M}",
-        "locale": "es_CL.utf8",
+        "format": "{:L%A %d %B, %H:%M}",
+        "locale": "es_CL.UTF-8",
         "tooltip-format": "<tt>{calendar}</tt>",
-        "format-alt": "{:%a %d/%m/%Y}",
+        "format-alt": "{:L%a %d/%m/%Y}",
         "interval": 30,
         "calendar": {
             "format": {
@@ -184,6 +185,7 @@
             "warning": 20,
             "critical": 10
         },
+        "full-at": 98,
         "format": "{icon} ",
         "format-warning": "{icon}   {capacity}%",
         "format-critical": "{icon}   {capacity}%",
