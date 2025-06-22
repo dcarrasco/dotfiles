@@ -128,6 +128,11 @@ alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
+alias mountedinfo='df -hT'
+alias folders='du -h --max-depth=1'
+alias rmd='rm --recursive --verbose'
+alias dnff="dnf list | fzf --multi --preview 'dnf info -q {1}' --preview-window=down:70%"
+
 # Folders ====================================================================
 alias d='cd ~/Dropbox'
 alias dl='cd ~/Descargas'
