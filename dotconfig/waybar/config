@@ -20,12 +20,13 @@
     // Modules configuration
     "hyprland/workspaces": {
         "persistent-workspaces": {
-            // "*": 5
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
+            "*": 5,
+            // "eDP-1": [1, 2, 3, 4, 5],
+            // "1": [],
+            // "2": [],
+            // "3": [],
+            // "4": [],
+            // "5": [],
         },
         "on-click": "activate",
         "disable-scroll": false,
@@ -129,7 +130,7 @@
 
     "clock": {
         // "timezone": "America/New_York",
-        "format": "{:L%A %d %B, %H:%M}",
+        "format": "{:L%a %d %B, %H:%M}",
         "locale": "es_CL.UTF-8",
         "tooltip-format": "<tt>{calendar}</tt>",
         "format-alt": "{:L%a %d/%m/%Y}",
@@ -285,6 +286,7 @@
         "format": "{}",
         "exec": "$HOME/.config/hypr/updates.sh",
         // "on-click": "kitty bash -c \"sudo apt update && sudo apt upgrade\"",
+        //"on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade && killall waybar && GTK_THEME=Nordic waybar&\"",
         "on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade\"",
         "restart-interval": 3600,
         "tooltip": true

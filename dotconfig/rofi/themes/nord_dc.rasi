@@ -38,7 +38,7 @@
     /* highlight:     underline #ebcb8b; */
 
     transparent: rgba(46,52,64,0);
-    bg-color: #2e3440CC;
+    bg-color: #2e3440AA;
     selected-color: #4c566aCC;
 
     background-color:  @transparent;

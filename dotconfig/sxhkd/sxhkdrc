@@ -138,6 +138,9 @@ super + bracket{left,right}
 super + brace{left,right}
 	bspc desktop --focus {prev,next}.local
 
+@button{10, 11}
+	bspc desktop --focus {prev,next}.local
+
 # focus the last node/desktop
 super + {grave,Tab}
 	bspc {node,desktop} --focus last

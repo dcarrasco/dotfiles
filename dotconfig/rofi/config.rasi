@@ -10,10 +10,12 @@
 
 configuration {
   font: "SF UI Display 18";
+  // font: "Adwaita Sans 18";
 
   show-icons: true;
   // icon-theme: "ePapirus";
-  icon-theme: "Reversal-blue-dark";
+  // icon-theme: "Reversal-blue-dark";
+  icon-theme: "Kora grey Light";
 
   drun-display-format: "{name}";
   display-drun: "";
