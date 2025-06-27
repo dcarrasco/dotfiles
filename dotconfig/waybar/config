@@ -147,10 +147,10 @@
 
     "cpu": {
         /* "format": "{usage}% ", */
-        // 
-        "format": "   {usage}%",
+        //       
+        "format": "  {usage}%",
         "tooltip": true,
-        "on-click": "GTK_THEME=Yaru-purple gnome-system-monitor"
+        "on-click": "GTK_THEME=Yaru-purple flatpak run net.nokyan.Resources"
     },
 
     "memory": {
@@ -165,8 +165,7 @@
         // "thermal-zone": 2,
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 70,
-        // "format-critical": "{temperatureC}°C {icon}",
-        // "format": "{icon} {temperatureC}°C",
+        "format": "",
         "format-critical": "{icon} {temperatureC}°C",
         // "format-icons": ["", "", ""],
         // "format-icons": [" ", ""],
@@ -192,13 +191,21 @@
         "format-critical": "{icon}   {capacity}%",
         "format-charging": "{icon} ",
         "format-plugged": "{icon}   {capacity}% ",
-        "format-alt": "{icon}   {capacity}%",
-        "tooltip-format": "Capacity: {capacity}%\n{timeTo}",
+        "tooltip-format": "Capacity: {capacity}% / {power:>1.1f}W\n{timeTo}",
+        // "format-alt": "{icon}   {capacity}%",
         // "format-alt": "{icon}   {time}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""],
-        // "format-icons": ["", "", "", "", "", "", "", "", "", ""]
+        //"format-icons": ["", "", "", "", "", "", "", "", "", ""]
+        //"format-icons": {
+        //    "charging": [
+        //        "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"
+        //      ],
+        //      "default": [
+        //        "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
+        //      ]
+        //}
     },
 
     "network": {
@@ -296,7 +303,7 @@
         "format": "  ",
         "on-click": "wlogout -b 5",
         "tooltip": true,
-        "tooltip-format": "Power off",
+        "tooltip-format": "Apagar",
     }
 }
 # vi: ft=json
