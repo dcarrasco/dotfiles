@@ -119,6 +119,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias diff='diff --color'
 alias ps='ps -auf'
+alias rm='trash -v'
 
 alias ..="cd .."
 alias cd..="cd .."
