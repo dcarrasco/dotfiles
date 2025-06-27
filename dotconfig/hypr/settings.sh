@@ -2,6 +2,7 @@
 
 bluetooth_status=$(bluetoothctl show | grep -q "Powered: no")
 wifi_status=$(nmcli device wifi | grep '*' | wc -l)
+power_profile=$(tuned-adm active | cut -d " " -f 4)
 
 # if $bluetooth_status; then
 if bluetoothctl show | grep -q "Powered: no"; then
@@ -16,13 +17,16 @@ else
     wifi_option="Encender WIFI"
 fi
 
+power_status="Power management (Fn+Q): $power_profile"
+
 keyboard_option="Toggle keyboard lang"
 swapcontrol_option="Swap keyboard control-caps"
 
 options="$bluetooth_option
 $keyboard_option
 $swapcontrol_option
-$wifi_option"
+$wifi_option
+$power_status"
 
 selected=$(echo "$options" | rofi -dmenu -i -p "Settings")
 
@@ -51,6 +55,15 @@ case $selected in
         else
             nmcli radio wifi on
         fi
+    ;;
+    $power_status)
+        next_profile="balanced"
+        if [ "$power_profile" == "balanced" ]; then
+            next_profile="throughput-performance"
+        elif [ "$power_profile" == "throughput-performance" ]; then
+            next_profile="powersave"
+        fi
+        tuned-adm profile $next_profile
     ;;
 esac
 
