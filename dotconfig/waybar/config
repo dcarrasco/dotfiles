@@ -54,10 +54,12 @@
 
     "hyprland/window": {
         // "format": "  {title}",
-        "icon": false,
         "format": "{title}",
+        "icon": false,
+        "tooltip": false,
         "rewrite": {
             "(.*) — Mozilla Firefox": "$1",
+            "(.*) - Youtube — Mozilla Firefox": "$1",
             "(.*) - Brave": "$1",
         },
     },
@@ -267,7 +269,7 @@
     },
 
     "hyprland/language": {
-        "format": "   {}",
+        "format": "  {} ",
         "format-en": "us",
         "format-es": "es",
         "keyboard-name": "at-translated-set-2-keyboard",
@@ -276,7 +278,7 @@
     "custom/windowname": {
         "format": "{}",
         // "exec": "hyprctl activewindow | grep 'title:' | cut -d : -f 2",
-        "exec": "$HOME/.config/hypr/windowname.sh",
+        "exec": "$HOME/.config/hypr/scripts/windowname.sh",
         "tooltip": false,
         "restart-interval": 1,
         "max-length": 60
@@ -284,14 +286,14 @@
 
     "custom/windowstatus": {
         "format": "{}",
-        "exec": "$HOME/.config/hypr/windowstatus.sh",
+        "exec": "$HOME/.config/hypr/scripts/windowstatus.sh",
         "restart-interval": 1
     },
 
     "custom/updates": {
         "return-type": "json",
         "format": "{}",
-        "exec": "$HOME/.config/hypr/updates.sh",
+        "exec": "$HOME/.config/hypr/scripts/updates.sh",
         // "on-click": "kitty bash -c \"sudo apt update && sudo apt upgrade\"",
         //"on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade && killall waybar && GTK_THEME=Nordic waybar&\"",
         "on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade\"",
