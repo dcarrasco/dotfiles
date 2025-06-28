@@ -4,6 +4,6 @@ ROFI_CMD="rofi -dmenu -i -p Archivos..."
 filename=$(fd . "/home/daniel/" -t f | sed 's/\/home\/daniel\///g' | $ROFI_CMD)
 
 if [[ ! -z "$filename" ]]; then
-    open "$filename"
+    xdg-open "/home/daniel/$filename"
 fi
 

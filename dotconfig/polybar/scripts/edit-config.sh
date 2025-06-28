@@ -14,8 +14,13 @@ arch=(\
     "waybar/config" \
     "waybar/style.css" \
     "hypr/hyprland.conf" \
+    "hypr/envs.conf" \
+    "hypr/autostart.conf" \
     "hypr/keybinds.conf" \
     "hypr/colors.conf" \
+    "hypr/input.conf" \
+    "hypr/looknfeel.conf" \
+    "hypr/rules.conf" \
     "wlogout/layout" \
     "wlogout/style.css" \
     "kitty/kitty.conf" \
