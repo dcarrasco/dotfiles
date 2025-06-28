@@ -1,5 +1,9 @@
 #!/bin/sh
 
+window_status() {
+    echo "$(hyprctl activewindow | grep $1 | cut -d : -f 2)" | xargs
+}
+
 rofi=$(hyprctl activewindow | grep class | grep Rofi | wc -l)
 
 floating_status=""
@@ -7,42 +11,45 @@ fakefullscreen_status=""
 fullscreen_status=""
 pinned_status=""
 grouped_status=""
-# tiled_status=" "
-tiled_status=""
+client_status=""
+extra_status=""
 
 if [ $rofi = 0 ]; then
-    if [ "$(hyprctl activewindow | grep floating | cut -d : -f 2)" = " 1" ]; then
-        # floating_status=" "
-        floating_status=" "
-        tiled_status=""
+    if [ "$(hyprctl activewindow)" != "Invalid" ]; then
+        client_status=" "
+        # client_status=""
     fi
 
-    if [ "$(hyprctl activewindow | grep fakefullscreen: | cut -d : -f 2)" = " 1" ]; then
-        # fakefullscreen_status=" "
-        # fakefullscreen_status="           "
-        # fakefullscreen_status=" "
-        fakefullscreen_status=" "
+    if [ "$(window_status floating)" = "1" ]; then
+        client_status=" "
+        # client_status=" "
     fi
 
-    if [ "$(hyprctl activewindow | grep -v fake | grep fullscreen: | cut -d : -f 2)" = " 1" ]; then
-        # fullscreen_status=" "
-        # fullscreen_status="  "
-        # fullscreen_status="  "
-        fullscreen_status=" "
-        tiled_status=""
+    if [ "$(window_status fullscreen:)" = "1" ]; then
+        # client_status=" "
+        # client_status="  "
+        # client_status="  "
+        client_status=" "
     fi
 
-    if [ "$(hyprctl activewindow | grep pinned: | cut -d : -f 2)" = " 1" ]; then
+    if [ "$(window_status fullscreenClient)" = "2" ]; then
+        # extra_status=" "
+        # extra_status="           "
+        # extra_status=" "
+        extra_status=" "
+    fi
+
+    if [ "$(window_status pinned)" = "1" ]; then
         # pinned_status=" "
         # pinned_status=" 󰐃  󰤱   "
-        pinned_status=" "
-        floating_status=""
+        client_status=" "
     fi
 
-    if [ $(hyprctl activewindow | grep grouped: | wc -l) -gt 0 ] && [ "$(hyprctl activewindow | grep grouped: | cut -d : -f 2)" != " 0" ]; then
-        # grouped_status=" "
-        grouped_status=" "
+    if [ $(window_status grouped) != "0" ]; then
+        # extra_status=" "
+        extra_status=" "
     fi
 fi
 
-echo "$tiled_status$fakefullscreen_status$fullscreen_status$grouped_status$floating_status$pinned_status"
+# echo "$tiled_status$fakefullscreen_status$fullscreen_status$grouped_status$floating_status$pinned_status"
+echo "$client_status$extra_status"
