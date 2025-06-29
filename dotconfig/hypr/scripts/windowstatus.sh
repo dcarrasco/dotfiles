@@ -6,18 +6,13 @@ window_status() {
 
 rofi=$(hyprctl activewindow | grep class | grep Rofi | wc -l)
 
-floating_status=""
-fakefullscreen_status=""
-fullscreen_status=""
-pinned_status=""
-grouped_status=""
 client_status=""
 extra_status=""
 
 if [ $rofi = 0 ]; then
     if [ "$(hyprctl activewindow)" != "Invalid" ]; then
-        client_status=" "
-        # client_status=""
+        # client_status=" "
+        client_status=""
     fi
 
     if [ "$(window_status floating)" = "1" ]; then
@@ -51,5 +46,4 @@ if [ $rofi = 0 ]; then
     fi
 fi
 
-# echo "$tiled_status$fakefullscreen_status$fullscreen_status$grouped_status$floating_status$pinned_status"
 echo "$client_status$extra_status"
