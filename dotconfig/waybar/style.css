@@ -154,8 +154,7 @@ tooltip label {
     color: @nord6;
     /* border-bottom: 3px solid @nord4; */
     font-weight: 700;
-    /* background-color: alpha(@nord10, 0.7); */
-    background-color: alpha(@blue, 0.6);
+    background-color: alpha(@nord9, 0.7);
     box-shadow: inset 0 -3px @nord4;
 }
 
@@ -254,8 +253,7 @@ tooltip label {
 }
 
 #battery.charging, #battery.plugged {
-    /* color: @nord14; */
-    color: @green;
+    color: @nord14;
     font-weight: bold;
     /* background-color: #26A65B; */
 }
@@ -362,7 +360,7 @@ label:focus {
 
 #temperature.critical {
     /* background-color: @nord11; */
-    background-color: @red;
+    background-color: @nord11;
     color: @nord6;
     margin: 5px 0px;
     border-radius: 5px;
