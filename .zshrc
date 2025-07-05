@@ -121,8 +121,8 @@ alias diff='diff --color'
 alias ps='ps -auf'
 alias rm='trash -v'
 
-alias ..="cd .."
 alias cd..="cd .."
+alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
@@ -204,7 +204,7 @@ bindkey -s ^f "_tmux_fzf_\n"
 
 function _tmux_fzf_() {
     # local dir=$(find ~ -type d | fzf)
-    local dir=$(fd --type d . ~ ~/code --max-depth=2 | fzf --border --height=15 --prompt='Init tmux: ')
+    local dir=$(fd --type d . ~ --max-depth=4 | fzf --border --height=15 --prompt='Init tmux: ')
 
     if [[ -n $dir ]]; then
         local sess=$(basename $dir)
