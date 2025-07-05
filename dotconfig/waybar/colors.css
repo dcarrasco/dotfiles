@@ -29,6 +29,15 @@
 @define-color nord14 #a3be8c;
 @define-color nord15 #b48ead;
 
+@define-color fg-normal   @nord4;
+@define-color fg-high     @nord6;
+@define-color fg-success  @nord14;
+@define-color fg-status   @nord7;
+@define-color bg-normal   @nord0;
+@define-color bg-warning  @nord13;
+@define-color bg-critical @nord11;
+@define-color bg-selected @nord10;
+
 
 /* ------ Catpuccin Mocha  -------------------------------- */
 @define-color base   #1e1e2e;

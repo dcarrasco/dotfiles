@@ -12,189 +12,105 @@
 
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    /* font-family: SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
-    /* font-family: SF UI Display, Noto Sans, SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif; */
-    font-family: Noto Sans, SF Mono, FontAwesome, Helvetica, Arial, sans-serif;
+    font-family: Noto Sans, SF Mono, "Font Awesome 5 Free", Helvetica, Arial, sans-serif;
 }
 
 window {
-    /* background-color: alpha(#ffffff, 0.0); */
-    /* background-color: alpha(@nord0, 0.5); */
-    /* background: linear-gradient(0deg, alpha(@nord0, 0.6), alpha(@nord2, 0.5)); */
     font-size: 14pt;
-    /* color: alpha(@nord4, 0.8); */
-    /* color: alpha(@subtext1, 0.9); */
-    color: @nord4;
+    color: alpha(@fg-normal, 0.8);
 }
 
 window#waybar {
-    /* border-bottom: 3px solid rgba(100, 114, 125, 0.8); */
-    /* background-color: alpha(@nord0, 0.5); */
-    background: linear-gradient(0deg, alpha(@nord0, 0.6), alpha(@nord0, 0.7));
-    border-bottom: 2px solid alpha(@nord0, 0.8);
-    /* transition-property: background-color; */
-    /* transition-duration: .5s; */
+    background: linear-gradient(0deg, alpha(@bg-normal, 0.6), alpha(@bg-normal, 0.7));
+    border-bottom: 2px solid alpha(@bg-normal, 0.8);
     border-radius: 0%;
     /* border: 1px solid red; */
 }
 
 .modules-left, .modules-right, .modules-center {
-    /* border: 1px solid red; */
-    /* border-radius: 30px; */
-    /* padding: 0 20px; */
-    /* margin: 0 10px; */
-    /* background-color: alpha(@nord0, 0.6); */
 }
 
-button {
-    /* Use box-shadow instead of border so the text isn't offset */
-    /* box-shadow: inset 0 -3px transparent; */
-    /* Avoid rounded borders under each button name */
-    border: none;
-    border-radius: 0;
-    /* border: 1px solid red; */
-}
-
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-button:hover {
-    /* background-color: red; */
-    background: inherit;
-    /* box-shadow: inset 0 -3px #ffffff; */
+.modules-right {
+    margin-right: 10px;
 }
 
 tooltip {
-    background-color: alpha(@nord3, 0.9);
-    color: @nord4;
-    border: 2px solid alpha(@nord4, 0.7);
+    background-color: alpha(@bg-normal, 0.8);
+    border: 2px solid alpha(@fg-normal, 0.7);
     border-radius: 10px;
-    /* box-shadow: 15px 15px 10px alpha(@nord0, 0.3); */
 }
 
 tooltip label {
+    color: @fg-normal;
     font-family: Adwaita Sans;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 12pt;
 }
 
 #workspaces {
-    /* background-color: alpha(@nord1, 0.8); */
-    /* padding: 0 0 0 10px; */
-    /* border-radius: 60px; */
-    /* border: 2px solid red; */
-    padding: 0px 0px;
+    padding: 0;
+    padding-right: 0.5em;
 }
 
-#workspaces button {
-    /* padding: 0 5px; */
-    /* margin: 4px 0; */
-    /* background-color: transparent; */
-    /* color: #ffffff; */
-    /* color: #D8DEE9; */
-
+button {
     /* Botones Circulares */
     /* padding: 0px 2px; */
     /* margin: 0px 8px; */
     /* border-radius: 100%; */
-    /* background-color: @nord4; */
-    /* border: 2px solid @nord4; */
+    /* background-color: @bg-normal; */
+    /* border: 2px solid @bg-normal; */
     /* transition: all 0.3s ease-in-out; */
 
     /* Botones cuadrados */
-    padding: 0px 0px;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+}
+
+button label {
+    color: @fg-normal;
+    padding: 0px 0.7em;
     margin: 0px 0px;
-    transition-property: background-color;
-    transition-duration: .5s;
-    /* border: 1px solid red; */
-
 }
 
-#workspaces button label {
-    /* Botones cuadrados */
-    /* color: alpha(@nord4, 0.6); */
-    color: @nord6;
-    /* background: @nord10; */
-    /* padding: 0px 0.4em 0px 0.7em; when using fontawesome */
-    padding: 0px 0.6em 0px 0.6em;
-    margin: 0px 1px;
-    font-size: 20px;
-    /* border-bottom: 3px solid alpha(@nord4, 0.0); */
+button.empty label {
+    color: alpha(@fg-normal, 0.5);
 }
 
-
-#workspaces label.focused {
-    /* color: #FFFFFF; */
-    /* color: #ECEFF4; */
-}
-
-#workspaces button.empty {
-    /* Botones Circulares */
-    /* background-color: alpha(@nord4, 0.0); */
-    /* border: 2px solid @nord4; */
-}
-
-#workspaces button.empty label {
-    /* Botones Circulares */
-    color: alpha(@nord4, 0.5);
-    /* border-bottom: 3px solid alpha(@nord4, 0.0); */
-    /* Botones cuadrados */
-}
-
-#workspaces button.active {
-    /* box-shadow: inset 0 -2px #D8DEE9; */
-
-    /* Botones Circulares */
-    /* background-color: alpha(@nord10, 0.7); */
-    /* border: 2px solid @nord4; */
-    /* border-radius: 30px; */
-    /* min-width: 40px; */
-    /* transition: all 0.3s ease-in-out; */
-}
-
-#workspaces button.active label {
-    color: @nord6;
-    /* border-bottom: 3px solid @nord4; */
+button.active label {
+    background-color: alpha(@bg-selected, 0.7);
+    box-shadow: inset 0 -3px @fg-high;
+    color: @fg-high;
     font-weight: 700;
-    background-color: alpha(@nord9, 0.7);
-    box-shadow: inset 0 -3px @nord4;
 }
 
-#workspaces button.urgent label {
-    background-color: @nord11;
-    /* border: 2px solid @nord4; */
+button.urgent label {
+    background-color: @bg-critical;
 }
 
-#workspaces button:hover label {
-    /* background-color: red; */
-    /* border: 1px solid @nord4; */
-    background: alpha(@nord10, 0.5);
-    color: @nord6;
-    box-shadow: inset 0 -0px @nord4;
-    transition-duration: .0s;
+button:hover {
+    background-color: alpha(@bg-selected, 0.3);
+    transition: none;
 }
 
-#mode {
-    /* background-color: #64727D; */
-    background-color: @nord14;
-    color: @nord1;
-    font-weight: bold;
-    border-bottom: 2px solid #ffffff;
+button:hover label {
+    color: @fg-high;
 }
 
-#window {
-    padding: 0 1em;
-    /* border: 1px solid red; */
+#custom-windowstatus {
+    font-family: SF Mono, FontAwesome;
+    font-size: 16px;
+    color: @fg-status;
+    padding-right: 0.2em;
 }
 
 #window label {
-    /* font-family: SF UI Display; */
-    /* font-family: Droid Sans; */
-    /* font-family: DejaVu Sans; */
-    /* font-family: Cantarell; */
     font-family: Adwaita Sans;
+    font-size: 15pt;
     font-weight: 600;
-    font-size: 14pt;
-    /* color: alpha(@nord6, 0.8); */
-    color: @nord5;
+    color: @fg-normal;
+    padding: 0;
 }
 
 
@@ -216,84 +132,40 @@ tooltip label {
 #language,
 #mpd {
     padding: 0 5px;
-}
-
-#custom-windowstatus {
-    color: @nord8;
-    font-family: SF Mono, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    padding-left: 0.5em;
-}
-
-.modules-right {
-    margin-right: 10px;
-}
-
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left > widget:first-child > #workspaces {
-    /* margin-left: 0; */
-}
-
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right > widget:last-child  {
-    /* margin-right: 0; */
+    margin: 5px 0px;
+    border-radius: 7px;
 }
 
 #clock {
     font-family: Adwaita Sans;
-    color: @nord5;
+    color: @fg-normal;
 }
 
 #battery {
-    /* background-color: #ffffff; */
-    /* color: #000000; */
-    margin: 5px 0px;
-    border-radius: 7px;
-    /* border: 1px solid white; */
 }
 
 #battery.charging, #battery.plugged {
-    color: @nord14;
-    font-weight: bold;
-    /* background-color: #26A65B; */
-}
-
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: #000000;
-    }
+    color: @fg-success;
 }
 
 #battery.warning {
-    color: @nord1;
-    background-color: @nord13;
-    /* font-weight: bold; */
+    color: @bg-normal;
+    background-color: @bg-warning;
 }
 
 #battery.critical:not(.charging) {
-    color: @nord4;
-    background-color: @nord11;
-    /* font-weight: bold; */
-    /* animation-name: blink; */
-    /* animation-duration: 0.5s; */
-    /* animation-timing-function: linear; */
-    /* animation-iteration-count: infinite; */
-    /* animation-direction: alternate; */
+    background-color: @bg-critical;
+    color: @fg-high;
 }
 
-label {
-    /* font-family: SF UI Display; */
-    /* font-size: 16px; */
+#cpu.warning {
+    color: @bg-normal;
+    background-color: @bg-warning;
 }
 
-label:focus {
-    background-color: #000000;
-}
-
-#cpu {
-    /* background-color: #2ecc71; */
-    /* color: #000000; */
+#cpu.critical {
+    background-color: @bg-critical;
+    color: @fg-high;
 }
 
 #memory {
@@ -312,23 +184,19 @@ label:focus {
     /* background-color: #2980b9; */
 }
 
-#network.disconnected {
+#network.disconnected, #network.disabled {
+    color: alpha(@fg-normal, 0.4);
     /* background-color: #f53c3c; */
 }
 
 #pulseaudio {
-    /* background-color: #f1c40f; */
-    /* color: #000000; */
 }
 
 #pulseaudio.muted {
-    margin: 5px 0px;
     padding: 0 0.5em;
-    border-radius: 5px;
-    background-color: @nord11;
-    /* background-color: @red; */
-    color: @nord6;
-    /* font-weight: bold; */
+    background-color: @bg-warning;
+    color: @bg-normal;
+    font-family: Adwaita Sans;
 }
 
 #wireplumber {
@@ -359,44 +227,30 @@ label:focus {
 }
 
 #temperature.critical {
-    /* background-color: @nord11; */
-    background-color: @nord11;
-    color: @nord6;
-    margin: 5px 0px;
-    border-radius: 5px;
+    background-color: @bg-critical;
+    color: @fg-high;
 }
 
 #tray {
-    /* background-color: #2980b9; */
-    /* color: @nord14; */
-    /* background-color: red; */
 }
 
 #tray > .passive {
     /* -gtk-icon-effect: dim; */
-    background-color: red;
-    /* color: @nord14; */
+    background-color: @bg-critical;
 }
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: @nord11;
-    color:red;
+    background-color: @bg-critical;
+    color:@fg-high;
 }
 
 #idle_inhibitor {
-    /* padding: 0 5px; */
-    /* background-color: #2d3436; */
 }
 
 #idle_inhibitor.activated {
-    /* background-color: #ecf0f1; */
-    font-weight: bold;
-    /* color: @nord13; */
-    margin: 5px 0px;
-    border-radius: 7px;
-    color: @nord2;
-    background-color: alpha(@nord4, 0.8);
+    color: @bg-normal;
+    background-color: alpha(@fg-normal, 0.8);
 }
 
 #mpd {
@@ -417,11 +271,6 @@ label:focus {
 }
 
 #language {
-    /* background: #00b093; */
-    /* color: #740864; */
-    padding: 0 5px;
-    /* margin: 0 5px; */
-    min-width: 16px;
 }
 
 #keyboard-state {
@@ -450,8 +299,9 @@ label:focus {
 
 #bluetooth.connected {
     /* color: #0082FC; */
+    /* color: @fg-status; */
 }
 
 #bluetooth.disabled, #bluetooth.off {
-    color: alpha(@nord12, 0.8);
+    color: alpha(@fg-normal, 0.4);
 }
