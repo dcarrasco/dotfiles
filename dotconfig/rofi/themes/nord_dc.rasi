@@ -33,17 +33,10 @@
 
     foreground:  @nord9;
     backlight:   #ccffeedd;
-
-    /* highlight:     underline bold #eceff4; */
-    /* highlight:     underline #ebcb8b; */
-
-    transparent: rgba(46,52,64,0);
-    bg-color: #2e3440AA;
+    bg-color:    #2e3440AA;
     selected-color: #4c566aCC;
-
-    background-color:  @transparent;
-
-    width:50%;
+    placeholder-color: #d8dee988;
+    background-color: transparent;
 }
 
 window {
@@ -56,18 +49,28 @@ window {
     border-color: @nord8;
     border-radius: 15px;
     height: 60%;
+    width:50%;
     margin: 0 0 0 0;
+    // fullscreen: true;
 
     /* background-color: @transparent; */
     spacing: 0;
     children:  [mainbox];
     orientation: horizontal;
+    // background-color: rgba(0, 0, 0, 0.7);
+    background-color: @bg-color;
 }
 
 mainbox {
+    // margin: 300 500;
+    // border: 4px;
+    // border-color: @nord8;
+    // border-radius: 15px;
+    height: 60%;
+    width:50%;
     spacing: 0;
     children: [ inputbar, message, listview ];
-    background-color: @bg-color;
+    // background-color: @bg-color;
 }
 
 message {
@@ -83,9 +86,8 @@ inputbar {
     color: @nord4;
     padding: 15px;
     /* vertical-align: 0.5; */
-
     border: 0 0 2px 0;
-    border-color: @nord3;
+    border-color: @placeholder-color;
 }
 
 prompt {
@@ -109,7 +111,7 @@ entry {
     margin: 0 -10 0 0;
     cursor: text;
     placeholder: "Buscar...";
-    placeholder-color: @nord3;
+    placeholder-color: @placeholder-color;
 }
 
 case-indicator {
@@ -119,7 +121,7 @@ case-indicator {
 }
 
 listview {
-    padding: 10px 0 0 0;
+    padding: 1em 0;
     border-radius: 0px 0px 6px 6px;
     border-color: @nord10;
     dynamic: false;
@@ -127,16 +129,15 @@ listview {
 }
 
 element {
-    padding: 0.5em 1em;
+    padding: 0.5em 2em;
     vertical-align: 0.5;
-    border-radius: 4px;
     text-color: @nord4;
 }
 
 element selected.normal {
-    background-color: @selected-color;
+    // background-color: @selected-color;
     opacity: 0;
-	text-color: @nord6;
+	text-color: @nord8;
 }
 
 element-text, element-icon {
@@ -145,7 +146,7 @@ element-text, element-icon {
 }
 
 element-icon {
-    size: 1.6em ;
+    size: 1.5em ;
     padding: 0 0.5em;
 }
 
