@@ -33,7 +33,7 @@
 
     foreground:  @nord9;
     backlight:   #ccffeedd;
-    bg-color:    #2e3440AA;
+    bg-color:    #2e344033;
     selected-color: #4c566aCC;
     placeholder-color: #d8dee988;
     background-color: transparent;
@@ -42,27 +42,23 @@
 window {
     location: center;
     anchor:   center;
-    /* location: west; */
-    /* anchor:   west; */
     transparency: "real";
-    border: 4px;
-    border-color: @nord8;
-    border-radius: 15px;
+    // border: 4px;
+    // border-color: @nord8;
+    // border-radius: 15px;
     height: 60%;
     width:50%;
     margin: 0 0 0 0;
-    // fullscreen: true;
-
-    /* background-color: @transparent; */
+    fullscreen: true;
     spacing: 0;
     children:  [mainbox];
     orientation: horizontal;
-    // background-color: rgba(0, 0, 0, 0.7);
+    // background-color: transparent;
     background-color: @bg-color;
 }
 
 mainbox {
-    // margin: 300 500;
+    margin: 300 500;
     // border: 4px;
     // border-color: @nord8;
     // border-radius: 15px;
@@ -70,7 +66,6 @@ mainbox {
     width:50%;
     spacing: 0;
     children: [ inputbar, message, listview ];
-    // background-color: @bg-color;
 }
 
 message {
