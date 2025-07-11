@@ -30,10 +30,6 @@ window#waybar {
 .modules-left, .modules-right, .modules-center {
 }
 
-.modules-right {
-    margin-right: 10px;
-}
-
 tooltip {
     background-color: alpha(@bg-normal, 0.8);
     border: 2px solid alpha(@fg-normal, 0.7);
@@ -98,19 +94,23 @@ button:hover label {
     color: @fg-high;
 }
 
+#custom-leftsep {
+    padding-right: 0.5em;
+    color: @nord9;
+}
+
 #custom-windowstatus {
     font-family: SF Mono, FontAwesome;
     font-size: 16px;
     color: @fg-status;
-    padding-right: 0.2em;
 }
 
 #window label {
     font-family: Adwaita Sans;
-    font-size: 15pt;
     font-weight: 600;
     color: @fg-normal;
-    padding: 0;
+    padding-left: 0.2em;
+    padding-right: 2em;
 }
 
 
@@ -130,6 +130,7 @@ button:hover label {
 #idle_inhibitor,
 #scratchpad,
 #language,
+#power-profiles-daemon,
 #mpd {
     padding: 0 5px;
     margin: 5px 0px;
@@ -304,4 +305,13 @@ button:hover label {
 
 #bluetooth.disabled, #bluetooth.off {
     color: alpha(@fg-normal, 0.4);
+}
+
+#power-profiles-daemon.power-saver {
+    color: @bg-normal;
+    background-color: @bg-success;
+}
+
+#power-profiles-daemon.performance {
+    background-color: @bg-critical;
 }

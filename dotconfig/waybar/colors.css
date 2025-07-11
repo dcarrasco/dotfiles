@@ -37,6 +37,7 @@
 @define-color bg-warning  @nord13;
 @define-color bg-critical @nord11;
 @define-color bg-selected @nord10;
+@define-color bg-success  @nord14;
 
 
 /* ------ Catpuccin Mocha  -------------------------------- */

@@ -14,8 +14,7 @@
     // Choose the order of the modules
     "modules-left": ["hyprland/workspaces", "custom/windowstatus", "hyprland/window"],
     "modules-center": ["clock"],
-    // "modules-center": ["hyprland/workspaces", "custom/windowstatus"],
-    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "bluetooth", "network", "pulseaudio", "battery", "custom/poweroff"],
+    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "power-profiles-daemon", "bluetooth", "network", "pulseaudio", "battery", "custom/poweroff"],
 
     // Modules configuration
     "hyprland/workspaces": {
@@ -182,8 +181,8 @@
     "battery": {
         "states": {
             // "good": 95,
-            "warning": 15,
-            "critical": 5
+            "warning": 20,
+            "critical": 10,
         },
         "full-at": 98,
         "format": "{icon} ",
@@ -226,7 +225,8 @@
         "on-click": "blueman-manager",
         "on-click-right": "$HOME/.config/hypr/scripts/bluetooth.sh --toggle",
         "tooltip-format": "{status} ({num_connections})\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "* {device_alias}"
+        "tooltip-format-enumerate-connected": "* {device_alias}",
+        "tooltip-format-enumerate-connected-battery": "* {device_alias} ({device_battery_percentage}%)",
     },
 
     "pulseaudio": {
@@ -235,15 +235,15 @@
         // "format": "{icon}  {volume}%",
         "tooltip-format": "Volume: {volume}%\n{desc}\n{format_source}",
         "format": "{icon}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": "   muted",
-        "format-source": "{volume}% ",
+        "format-bluetooth": "{icon} {volume}%  {format_source}",
+        "format-bluetooth-muted": "{icon} muted  {format_source}",
+        "format-source": " {volume}%",
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
-            "headset": "",
+            "headset": " ",
             "phone": "",
             "portable": "",
             "car": "",
@@ -284,7 +284,8 @@
     "custom/windowstatus": {
         "format": "{}",
         "exec": "$HOME/.config/hypr/scripts/windowstatus.sh",
-        "restart-interval": 1
+        "restart-interval": 1,
+        "tooltip": false
     },
 
     "custom/updates": {
@@ -298,11 +299,29 @@
         "tooltip": true
     },
 
+    "custom/leftsep": {
+        "format": "",
+        "tooltip": ""
+    },
+
     "custom/poweroff": {
         "format": "  ",
         "on-click": "wlogout -b 5",
         "tooltip": true,
         "tooltip-format": "Apagar",
+    },
+
+    "power-profiles-daemon": {
+        "format": "{icon} ",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            // "default": "",
+            "performance": "",
+            // "balanced": "  󰊚  ",
+            "balanced": "",
+            "power-saver": " "
+        }
     }
 }
 # vi: ft=json
