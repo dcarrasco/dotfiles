@@ -22,6 +22,7 @@ arch=(\
     "hypr/input.conf" \
     "hypr/looknfeel.conf" \
     "hypr/rules.conf" \
+    "hypr/scripts/edit-config.sh" \
     "wlogout/layout" \
     "wlogout/style.css" \
     "kitty/kitty.conf" \
@@ -35,7 +36,6 @@ arch=(\
     "rofi/config.rasi" \
     "wofi/config" \
     "wofi/style.css" \
-    "polybar/scripts/edit-config.sh" \
     "dunst/dunstrc" \
     "nvim/lua/daniel/" \
     "../.tmux.conf" \
@@ -48,12 +48,11 @@ for a in ${arch[@]}; do
     listado+=$a"\n"
 done
 
-echo "$listado"
-
 chosen=$(echo -e $listado | rofi -dmenu -p "Configuración")
 
 if [[ -n $chosen ]]; then
     # alacritty -e nvim $chosen
+    cd "$(dirname $config_dir$chosen)"
     kitty nvim "$config_dir$chosen"
 fi
 
