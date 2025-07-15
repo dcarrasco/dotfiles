@@ -1,8 +1,15 @@
 #!/bin/sh
 
 bluetooth_status=$(bluetoothctl show | grep -q "Powered: no")
-wifi_status=$(nmcli device wifi | grep '*' | wc -l)
+# wifi_status=$(nmcli device wifi | grep '*' | wc -l)
+wifi_status=$(nmcli | grep ^wlp2s0: | grep conectado | wc -l)
 power_profile=$(tuned-adm active | cut -d " " -f 4)
+on_battery=$(upower -d | grep on-battery | cut -d : -f 2 | xargs)
+if [ "$on_battery" = "yes" ]; then
+    balanced_profile="balanced-battery"
+else
+    balanced_profile="balanced"
+fi
 
 # if $bluetooth_status; then
 if bluetoothctl show | grep -q "Powered: no"; then
@@ -57,10 +64,10 @@ case $selected in
         fi
     ;;
     $power_status)
-        next_profile="balanced"
-        if [ "$power_profile" == "balanced" ]; then
+        next_profile=$balanced_profile
+        if [ "$power_profile" = "$balanced_profile" ]; then
             next_profile="throughput-performance"
-        elif [ "$power_profile" == "throughput-performance" ]; then
+        elif [ "$power_profile" = "throughput-performance" ]; then
             next_profile="powersave"
         fi
         tuned-adm profile $next_profile
