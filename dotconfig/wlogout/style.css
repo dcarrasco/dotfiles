@@ -22,7 +22,6 @@
 * {
 	background-image: none;
     box-shadow: none;
-	/* background-color: rgba(46, 52, 64, 0.7); */
 }
 
 window {
@@ -31,11 +30,12 @@ window {
 
 button {
 	/* background-color: @nord0; */
-	border-style: solid;
-	border-width: 5px;
-    border-color: @nord3;
+    /* border: none; */
+    border-style: solid;
+	border-width: 4px;
+    border-color: rgba(46, 52, 64, 0.0);
     border-radius: 2em;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
     outline-style: none;
 
 	background-repeat: no-repeat;
@@ -43,25 +43,28 @@ button {
 	background-size: 30%;
     margin: 13em 0.5em;
 
-    font-family: SF UI Display;
+    font-family: Adwaita Sans;
     font-size: 18pt;
     color: @nord4;
 }
 
 /* button:focus, button:active, button:hover { */
 button:focus {
-    color: @nord4;
-	background-color: @nord10;
+	border-style: solid;
+	border-width: 4px;
+    border-color: @nord3;
+    border-radius: 2em;
+    color: @nord6;
+	/* background-color: @nord2; */
+	background-color: rgba(67, 76, 94, 0.5);
     border-color: @nord4;
     background-size: 40%;
-	/* border-width: 5px; */
 }
 
 button:hover {
     color: @nord6;
-    border-color: @nord4;
+    border-color: @nord3;
     background-size: 40%;
-	/* background-color: @nord9; */
 }
 
 #lock {

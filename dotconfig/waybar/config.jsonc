@@ -12,9 +12,9 @@
     "spacing": 4, // Gaps between modules (4px)
 
     // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces", "custom/windowstatus", "hyprland/window"],
-    "modules-center": ["clock"],
-    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "power-profiles-daemon", "bluetooth", "network", "pulseaudio", "battery", "custom/poweroff"],
+    "modules-left": ["hyprland/window"],
+    "modules-center": ["hyprland/workspaces", "custom/windowstatus"],
+    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "custom/power-profiles", "bluetooth", "network", "pulseaudio", "battery", "clock", "custom/poweroff"],
 
     // Modules configuration
     "hyprland/workspaces": {
@@ -125,10 +125,11 @@
 
     "clock": {
         // "timezone": "America/New_York",
-        "format": "{:L%a %d %B, %H:%M}",
-        "locale": "es_CL.UTF-8",
+        // "format": "{:L%a %d %B, %H:%M}",
+        "format": "{:%H:%M}",
+        "format-alt": "{:L%a, %d %B}",
         "tooltip-format": "<tt>{calendar}</tt>",
-        "format-alt": "{:L%a %d/%m/%Y}",
+        "locale": "es_CL.UTF-8",
         "interval": 30,
         "calendar": {
             "format": {
@@ -294,7 +295,7 @@
         "exec": "$HOME/.config/hypr/scripts/updates.sh",
         // "on-click": "kitty bash -c \"sudo apt update && sudo apt upgrade\"",
         //"on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade && killall waybar && GTK_THEME=Nordic waybar&\"",
-        "on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade\"",
+        "on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade\" && $HOME/.config/hypr/scripts/restore-waybar.sh",
         "restart-interval": 3600,
         "tooltip": true
     },
@@ -305,23 +306,17 @@
     },
 
     "custom/poweroff": {
-        "format": "  ",
+        "format": " ",
         "on-click": "wlogout -b 5",
         "tooltip": true,
         "tooltip-format": "Apagar",
     },
 
-    "power-profiles-daemon": {
-        "format": "{icon} ",
-        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "custom/power-profiles": {
+        "format": "{text}",
+        "exec": "$HOME/.config/hypr/scripts/show-power-mgmt.sh",
+        "interval": 1,
         "tooltip": true,
-        "format-icons": {
-            // "default": "",
-            "performance": "",
-            // "balanced": "  󰊚  ",
-            "balanced": "",
-            "power-saver": " "
-        }
     }
 }
 # vi: ft=json

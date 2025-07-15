@@ -22,7 +22,7 @@ window {
 
 window#waybar {
     background: linear-gradient(0deg, alpha(@bg-normal, 0.6), alpha(@bg-normal, 0.7));
-    border-bottom: 2px solid alpha(@bg-normal, 0.8);
+    border-bottom: 1px solid alpha(@bg-normal, 0.8);
     border-radius: 0%;
     /* border: 1px solid red; */
 }
@@ -45,7 +45,6 @@ tooltip label {
 
 #workspaces {
     padding: 0;
-    padding-right: 0.5em;
 }
 
 button {
@@ -76,9 +75,14 @@ button.empty label {
 
 button.active label {
     background-color: alpha(@bg-selected, 0.7);
-    box-shadow: inset 0 -3px @fg-high;
+    /* box-shadow: inset 0 -2px @fg-high; */
+    padding: 0px 9px;
+    margin: 2px 0px;
+    border-radius: 100%;
+    border: 2px solid @bg-selected;
+    /* transition: all 0.2s ease-in-out; */
     color: @fg-high;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 button.urgent label {
@@ -109,8 +113,7 @@ button:hover label {
     font-family: Adwaita Sans;
     font-weight: 600;
     color: @fg-normal;
-    padding-left: 0.2em;
-    padding-right: 2em;
+    padding: 0 1.5em;
 }
 
 
@@ -130,7 +133,7 @@ button:hover label {
 #idle_inhibitor,
 #scratchpad,
 #language,
-#power-profiles-daemon,
+#custom-power-profiles,
 #mpd {
     padding: 0 5px;
     margin: 5px 0px;
@@ -307,11 +310,21 @@ button:hover label {
     color: alpha(@fg-normal, 0.4);
 }
 
-#power-profiles-daemon.power-saver {
+#custom-power-profiles {
     color: @bg-normal;
     background-color: @bg-success;
 }
 
-#power-profiles-daemon.performance {
+#custom-power-profiles.power-saver {
+    color: @bg-normal;
+    background-color: @bg-success;
+}
+
+#custom-power-profiles.performance {
+    color: @fg-normal;
     background-color: @bg-critical;
+}
+
+#custom-poweroff {
+    padding-right: 0.5em;
 }

@@ -33,7 +33,7 @@
 
     foreground:  @nord9;
     backlight:   #ccffeedd;
-    bg-color:    #2e344033;
+    bg-color:    #2e344077;
     selected-color: #4c566aCC;
     placeholder-color: #d8dee988;
     background-color: transparent;
