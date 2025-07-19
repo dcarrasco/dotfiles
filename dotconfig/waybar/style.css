@@ -76,10 +76,10 @@ button.empty label {
 button.active label {
     background-color: alpha(@bg-selected, 0.7);
     /* box-shadow: inset 0 -2px @fg-high; */
-    padding: 0px 9px;
-    margin: 2px 0px;
-    border-radius: 100%;
-    border: 2px solid @bg-selected;
+    /* padding: 0px 8px; */
+    /* margin: 4px 0px; */
+    /* border-radius: 100%; */
+    /* border: 2px solid @bg-selected; */
     /* transition: all 0.2s ease-in-out; */
     color: @fg-high;
     font-weight: 800;
@@ -90,16 +90,18 @@ button.urgent label {
 }
 
 button:hover {
-    background-color: alpha(@bg-selected, 0.3);
+    /* background-color: alpha(@bg-selected, 0.3); */
+    background-color: transparent;
     transition: none;
 }
 
 button:hover label {
     color: @fg-high;
+    font-weight: 600;
 }
 
 #custom-leftsep {
-    padding-right: 0.5em;
+    padding-right: 0.7em;
     color: @nord9;
 }
 
@@ -107,6 +109,7 @@ button:hover label {
     font-family: SF Mono, FontAwesome;
     font-size: 16px;
     color: @fg-status;
+    padding: 0 0.5em;
 }
 
 #window label {

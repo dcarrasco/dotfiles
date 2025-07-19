@@ -13,11 +13,11 @@
 #Start polybar first
 # bash ~/.config/polybar/launch.sh 2> ~/polybar_error.log &
 bash ~/.config/polybar/launch.sh &
-feh --bg-fill "/home/daniel/Imágenes/fondos pantalla/abstract/26-Tahoe-Light-6K.png"
+feh --bg-fill "/home/daniel/Imágenes/fondos pantalla/abstract/liquid/26-Tahoe-Light-6K.png"
 
-export GTK_THEME=Nordic-Polar
+export GTK_THEME=Nordic
 export GDK_SCALE=1
-export GDK_DPI_SCALE=1.2
+# export GDK_DPI_SCALE=1.2
 export XCURSOR_THEME=macOS-BigSur
 export XCURSOR_SIZE=36
 

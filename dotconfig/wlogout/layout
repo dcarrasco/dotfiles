@@ -1,15 +1,15 @@
 {
-    "label" : "logout",
-    "action" : "hyprctl dispatch exit",
-    "text" : "Logout",
-    "keybind" : "e"
-}
-
-{
     "label" : "lock",
     "action" : "/home/daniel/.local/bin/hyprlock",
     "text" : "Bloquear",
     "keybind" : "l"
+}
+
+{
+    "label" : "logout",
+    "action" : "hyprctl dispatch exit",
+    "text" : "Logout",
+    "keybind" : "e"
 }
 
 {

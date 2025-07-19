@@ -1,8 +1,9 @@
 -- --------------- Interface ---------------
-vim.opt.nu = true
+vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.numberwidth = 4
 vim.opt.signcolumn = "yes"
+
 
 -- --------------- Tab stop ---------------
 vim.opt.tabstop = 4
@@ -30,6 +31,8 @@ vim.opt.wrap = true
 vim.opt.showmode= false
 vim.opt.showtabline = 1
 vim.opt.cursorline = false
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = "␣" }
 
 
 -- --------------- File format ---------------

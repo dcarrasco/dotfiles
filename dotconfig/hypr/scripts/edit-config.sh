@@ -22,6 +22,7 @@ arch=(\
     "hypr/input.conf" \
     "hypr/looknfeel.conf" \
     "hypr/rules.conf" \
+    "hypr/hyprlock.conf" \
     "hypr/scripts/edit-config.sh" \
     "wlogout/layout" \
     "wlogout/style.css" \

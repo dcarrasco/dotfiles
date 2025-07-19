@@ -12,9 +12,9 @@
     "spacing": 4, // Gaps between modules (4px)
 
     // Choose the order of the modules
-    "modules-left": ["hyprland/window"],
-    "modules-center": ["hyprland/workspaces", "custom/windowstatus"],
-    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "custom/power-profiles", "bluetooth", "network", "pulseaudio", "battery", "clock", "custom/poweroff"],
+    "modules-left": ["hyprland/workspaces", "custom/windowstatus"],
+    "modules-center": ["hyprland/window"],
+    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "custom/power-profiles", "bluetooth", "network", "network#ethernet", "pulseaudio", "battery", "clock", "custom/poweroff"],
 
     // Modules configuration
     "hyprland/workspaces": {
@@ -202,20 +202,26 @@
     },
 
     "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        /* "format-wifi": "{essid} ({signalStrength}%) ", */
+        "interface": "wlp2*", // (Optional) To force the use of this interface
         "family": "ipv4",
         //  󰤯 󰤨 󰤥 󰤥 󰤭 󰤠
         // "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
         // "format-wifi": "{icon} ",
+        "format-wifi": " ",
         "format-disabled": "󰤭   off",
         "format-disconnected": "󰤭   Disconn",
-        "format-wifi": " ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "format-linked": "{ipaddr} (No IP) ",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%, {frequency}GHz)\nIP: {ipaddr}\n{ifname} via {gwaddr}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%, {frequency}GHz)\nWIFI IP: {ipaddr}/{cidr}\n{ifname} via {gwaddr}",
         /* "format-alt": "{ifname}: {ipaddr}/{cidr}", */
         "on-click": "$HOME/.config/hypr/scripts/nmcli-rofi.sh &",
+    },
+
+    "network#ethernet": {
+        "interface": "enp53s0*", // (Optional) To force the use of this interface
+        "family": "ipv4",
+        "format-ethernet": "󰈀 ",
+        "format-disabled": "󰈀   off",
+        "format-disconnected": "",
+        "tooltip-format-ethernet": "ETH IP: {ipaddr}/{cidr}\n{ifname}",
     },
 
     "bluetooth": {
@@ -295,7 +301,7 @@
         "exec": "$HOME/.config/hypr/scripts/updates.sh",
         // "on-click": "kitty bash -c \"sudo apt update && sudo apt upgrade\"",
         //"on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade && killall waybar && GTK_THEME=Nordic waybar&\"",
-        "on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade\" && $HOME/.config/hypr/scripts/restore-waybar.sh",
+        "on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade && flatpak update && echo 'Presiona [ENTER]...' && read\" && $HOME/.config/hypr/scripts/restore-waybar.sh",
         "restart-interval": 3600,
         "tooltip": true
     },
