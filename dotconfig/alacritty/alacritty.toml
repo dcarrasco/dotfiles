@@ -44,7 +44,7 @@ y = 3
 # family = "SF Mono"
 # family = "Monaspace Radon"
 # family = "Monaspace Neon"
-family = "CaskaydiaCove NFM"
+family = "CaskaydiaCove Nerd Font Mono"
 style = "Regular"
 
 [font.offset]
@@ -61,7 +61,7 @@ mods = "None"
 [window]
 decorations = "Full"
 # decorations = "None"
-opacity = 0.8
+opacity = 0.7
 blur = false
 
 [window.dimensions]

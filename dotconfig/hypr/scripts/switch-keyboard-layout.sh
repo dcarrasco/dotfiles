@@ -3,9 +3,21 @@
 internal=at-translated-set-2-keyboard
 external=keychron
 
-keybs=$(hyprctl devices | grep "$internal\|$external" | cut -f 3)
+hyprctl switchxkblayout $internal next
+newlayout=$(hyprctl devices -j | jq -r --arg k $internal '.keyboards[] | select(.name==$k).active_keymap')
+echo "new layout: $newlayout"
+
+keybs=$(hyprctl devices -j | jq -r '.keyboards[].name' | grep $external)
+echo "keyboards: $keybs"
 
 for i in $keybs; do
-    hyprctl switchxkblayout $i next
+    echo "external: $i"
+    currlayout="xxx"
+    echo "current layout0: $currlayout"
+    while [[ "$newlayout" != "$currlayout" ]]; do
+        hyprctl switchxkblayout $i next
+        currlayout=$(hyprctl devices -j | jq -r --arg k $i '.keyboards[] | select(.name==$k).active_keymap')
+        echo "current layout: $currlayout"
+    done
 done
 

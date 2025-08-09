@@ -43,13 +43,13 @@ window {
     location: center;
     anchor:   center;
     transparency: "real";
-    // border: 4px;
-    // border-color: @nord8;
-    // border-radius: 15px;
+    border: 4px;
+    border-color: @nord8;
+    border-radius: 15px;
     height: 60%;
-    width:50%;
-    margin: 0 0 0 0;
-    fullscreen: true;
+    width: 50%;
+    // margin: 0 0 0 0;
+    // fullscreen: true;
     spacing: 0;
     children:  [mainbox];
     orientation: horizontal;
@@ -58,10 +58,7 @@ window {
 }
 
 mainbox {
-    margin: 300 500;
-    // border: 4px;
-    // border-color: @nord8;
-    // border-radius: 15px;
+    // margin: 300 500;
     height: 60%;
     width:50%;
     spacing: 0;
@@ -79,44 +76,47 @@ message {
 inputbar {
     /* cuadro que incluye prompt y entry */
     color: @nord4;
-    padding: 15px;
+    padding: 0.5em;
     /* vertical-align: 0.5; */
-    border: 0 0 2px 0;
+    border: 0 0 0 0;
     border-color: @placeholder-color;
 }
 
 prompt {
     /* simbolo de busqueda */
-    font: "SF UI Display 28";
+    font: "SF UI Display 24";
     text-color: @nord9;
     vertical-align: 0.5;
-    padding: 0 0.5em;
-    border-radius: 15px 0px 0px 15px;
+    padding: 0 0;
+    // border-radius: 15px 0px 0px 15px;
     margin: 0 0 0 0;
 }
 
 entry {
     /* cuadro de texto para escribir */
-    font: "SF UI Display 28";
+    font: "SF UI Display 24";
     text-color: @nord4;
     vertical-align: 0.5;
-    /* background-color: @nord3; */
-    border-radius: 0px 15px 15px 0px;
+    background-color: @nord0;
+    border-radius: 15px;
     padding: 0.5em 1em 0.5em 1em;
-    margin: 0 -10 0 0;
+    margin: 0 0.5em;
     cursor: text;
     placeholder: "Buscar...";
     placeholder-color: @placeholder-color;
 }
 
 case-indicator {
+    /* Cuadro para incluir case-indicator */
     font: "SF Mono Display 24";
     text-color: @nord4;
+    margin: 0;
+    padding: 0;
     /* vertical-align: 0.5; */
 }
 
 listview {
-    padding: 1em 0;
+    padding: 0.5em 0;
     border-radius: 0px 0px 6px 6px;
     border-color: @nord10;
     dynamic: false;
@@ -142,7 +142,7 @@ element-text, element-icon {
 
 element-icon {
     size: 1.5em ;
-    padding: 0 0.5em;
+    padding: 0 0.5em 0 0;
 }
 
 button {

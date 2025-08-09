@@ -42,11 +42,7 @@ case $selected in
         ~/.config/polybar/scripts/bluetooth.sh --toggle
     ;;
     $keyboard_option)
-        hyprctl switchxkblayout at-translated-set-2-keyboard next
-        hyprctl switchxkblayout keychron-k7 next
-        hyprctl switchxkblayout keychron-keychron-k7 next
-        hyprctl switchxkblayout keychron-keychron-k7-1 next
-        hyprctl switchxkblayout keychron-keychron-k7-2 next
+        ~/.config/hypr/scripts/switch-keyboard-layout.sh
     ;;
     $swapcontrol_option)
         if hyprctl getoption input:kb_options | grep swapcaps; then

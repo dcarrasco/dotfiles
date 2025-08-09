@@ -12,13 +12,11 @@ configuration {
   font: "Adwaita Sans 18";
 
   show-icons: false;
-  // icon-theme: "ePapirus";
-  // icon-theme: "Reversal-blue-dark";
-  // icon-theme: "Kora grey Light";
+  icon-theme: "Kora grey Light";
 
   drun-display-format: "{name}";
   // display-drun: "";
-  display-drun: "App";
+  display-drun: "";
   display-window: " ";
   display-combi: " ";
 }

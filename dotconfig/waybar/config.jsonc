@@ -298,10 +298,8 @@
     "custom/updates": {
         "return-type": "json",
         "format": "{}",
-        "exec": "$HOME/.config/hypr/scripts/updates.sh",
-        // "on-click": "kitty bash -c \"sudo apt update && sudo apt upgrade\"",
-        //"on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade && killall waybar && GTK_THEME=Nordic waybar&\"",
-        "on-click": "kitty --class fedora_update bash -c \"sudo dnf upgrade && flatpak update && echo 'Presiona [ENTER]...' && read\" && $HOME/.config/hypr/scripts/restore-waybar.sh",
+        "exec": "$HOME/.config/hypr/scripts/show-updates.sh",
+        "on-click": "kitty --class hypr-sys-menu bash -c $HOME/.config/hypr/scripts/do-update.sh",
         "restart-interval": 3600,
         "tooltip": true
     },

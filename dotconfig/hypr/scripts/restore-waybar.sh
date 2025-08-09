@@ -1,2 +1,3 @@
-#! /usr/bin/sh
-killall waybar && GTK_THEME=Nordic waybar &
+#! /bin/sh
+killall waybar
+GTK_THEME=Nordic setsid waybar &

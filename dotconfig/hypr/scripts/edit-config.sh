@@ -7,9 +7,6 @@
 #   \___|\__,_|_|\__|     \___\___/|_| |_|_| |_|\__, |
 #                                               |___/
 
-
-config_dir=$HOME/.config/
-
 arch=(\
     "waybar/config.jsonc" \
     "waybar/style.css" \
@@ -43,17 +40,34 @@ arch=(\
     "../.zshrc" \
 )
 
-listado=""
+config_dir=$HOME/.config
 
-for a in ${arch[@]}; do
-    listado+=$a"\n"
+listado=""
+for file in ${arch[@]}; do
+    case $(echo $file | cut -d "/" -f 1) in
+        *waybar*) icon="   " ;;
+        *polybar*) icon="   " ;;
+        *hypr*) icon="   " ;;
+        *wlogout*) icon="󰍃  " ;;
+        *kitty*) icon="  " ;;
+        *alacritty*) icon="  " ;;
+        *bspwm*) icon="  " ;;
+        *sway*) icon="  " ;;
+        *rofi*) icon="  " ;;
+        *wofi*) icon="  " ;;
+        *sxhkd*) icon="  " ;;
+        *dunst*) icon="  " ;;
+        *nvim*) icon="  " ;;
+        *) icon="  " ;;
+    esac
+    listado+="$icon$file\n"
 done
 
-chosen=$(echo -e $listado | rofi -dmenu -p "Configuración")
+file=$(echo -e "$listado" | rofi -dmenu -i -theme-str 'entry{placeholder:"Edit config files...";}' -p "")
 
-if [[ -n $chosen ]]; then
-    # alacritty -e nvim $chosen
-    cd "$(dirname $config_dir$chosen)"
-    kitty nvim "$config_dir$chosen"
+if [[ -n $file ]]; then
+    file=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 2)
+    cd "$(dirname $config_dir/$file)"
+    kitty nvim "$config_dir/$file"
 fi
 
