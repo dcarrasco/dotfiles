@@ -26,25 +26,7 @@ size = 17
 y = 3
 
 [font.normal]
-# family = "Noto Sans Mono"
-# family = "Cousine Nerd Font Mono"
-# family = "GeistMono Nerd Font"
-# family = "Inconsolata Nerd Font"
-# family = "DejaVuSansM Nerd Font"
-# family = "Hasklug Nerd Font"
-# family = "Hack Nerd Font"
-# family = "Monospace"
-# family = "JetBrainsMono Nerd Font"
-# family = "CodeNewRoman Nerd Font"
-# family = "DejaVu Sans Mono"
-# family = "RobotoMono Nerd Font"
-# family = "MesloLGL Nerd Font"
-# family = "MesloLGM Nerd Font"
-# family = "FiraCode Nerd Font"
-# family = "SF Mono"
-# family = "Monaspace Radon"
-# family = "Monaspace Neon"
-family = "CaskaydiaCove Nerd Font Mono"
+family = "CaskaydiaCove Nerd Font"
 style = "Regular"
 
 [font.offset]
