@@ -76,7 +76,7 @@ message {
 inputbar {
     /* cuadro que incluye prompt y entry */
     color: @nord4;
-    padding: 0.5em;
+    padding: 1em;
     /* vertical-align: 0.5; */
     border: 0 0 0 0;
     border-color: @placeholder-color;
@@ -90,6 +90,7 @@ prompt {
     padding: 0 0;
     // border-radius: 15px 0px 0px 15px;
     margin: 0 0 0 0;
+    enabled: false;
 }
 
 entry {
@@ -97,13 +98,14 @@ entry {
     font: "SF UI Display 24";
     text-color: @nord4;
     vertical-align: 0.5;
-    background-color: @nord0;
     border-radius: 15px;
     padding: 0.5em 1em 0.5em 1em;
-    margin: 0 0.5em;
+    margin: 0;
     cursor: text;
+    hide-cursor-on-empty: true;
     placeholder: "Buscar...";
     placeholder-color: @placeholder-color;
+    background-color: @bg-color;
 }
 
 case-indicator {
@@ -113,10 +115,11 @@ case-indicator {
     margin: 0;
     padding: 0;
     /* vertical-align: 0.5; */
+    enabled: false;
 }
 
 listview {
-    padding: 0.5em 0;
+    padding: 0 0 0.5em 0;
     border-radius: 0px 0px 6px 6px;
     border-color: @nord10;
     dynamic: false;
@@ -129,19 +132,19 @@ element {
     text-color: @nord4;
 }
 
-element selected.normal {
+element selected {
     // background-color: @selected-color;
-    opacity: 0;
 	text-color: @nord8;
 }
 
-element-text, element-icon {
+element-text {
     text-color: inherit;
     vertical-align: 0.5;
 }
 
 element-icon {
-    size: 1.5em ;
+    vertical-align: 0.5;
+    size: 1.3em ;
     padding: 0 0.5em 0 0;
 }
 

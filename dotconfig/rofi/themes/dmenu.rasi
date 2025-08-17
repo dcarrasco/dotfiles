@@ -66,7 +66,7 @@ element {
     padding: 0px 0px;
 }
 element selected {
-    background-color: @nord15;
+    // background-color: @nord15;
 }
 
 element-text, element-icon {
@@ -75,10 +75,10 @@ element-text, element-icon {
   text-color: @inherit;
 }
 element-text selected {
-    background-color: @nord4;
+    background-color: @nord8;
     text-color: @nord0;
     font-weight: bold;
-    border: 1px;
-    border-color: @nord4;
-    border-radius: 0.3em;
+    // border: 1px;
+    // border-color: @nord4;
+    border-radius: 0.5em;
 }

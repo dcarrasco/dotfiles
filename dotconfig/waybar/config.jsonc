@@ -12,9 +12,9 @@
     "spacing": 4, // Gaps between modules (4px)
 
     // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces", "custom/windowstatus"],
-    "modules-center": ["hyprland/window"],
-    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "custom/power-profiles", "bluetooth", "network", "network#ethernet", "pulseaudio", "battery", "clock", "custom/poweroff"],
+    "modules-left": ["hyprland/workspaces", "custom/windowstatus", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "custom/power-profiles", "bluetooth", "network", "network#ethernet", "pulseaudio", "battery", "custom/poweroff"],
 
     // Modules configuration
     "hyprland/workspaces": {
@@ -125,9 +125,8 @@
 
     "clock": {
         // "timezone": "America/New_York",
-        // "format": "{:L%a %d %B, %H:%M}",
-        "format": "{:%H:%M}",
-        "format-alt": "{:L%a, %d %B}",
+        "format": "{:L%a %d %b  %H:%M}",
+        "format-alt": "{:L%A %d de %B %Y}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "locale": "es_CL.UTF-8",
         "interval": 30,
