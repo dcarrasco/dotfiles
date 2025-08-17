@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 echo -e "\e[32mUpdate system packages\e[0m"
 figlet -c "Update"

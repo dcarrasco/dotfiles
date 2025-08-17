@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 power_profile=$(tuned-adm active | cut -d " " -f 4)
 echo Current profile: $power_profile

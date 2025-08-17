@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 SCRIPT_PATH=$HOME/.config/hypr/scripts
 webapp="flatpak run org.chromium.Chromium --new-window --app"
@@ -17,10 +17,11 @@ present_terminal() {
 }
 
 show_learn_menu() {
-    case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
+    case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n󰍜  Waybar\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
         *Keybindings*) $SCRIPT_PATH/show-keybinds.sh ;;
         *Omarchy*) $webapp="https://manuals.omamix.org/2/the-omarchy-manual" & ;;
         *Hyprland*) $webapp="https://wiki.hypr.land/" & ;;
+        *Waybar*) $webapp="https://github.com/Alexays/Waybar/wiki" & ;;
         *Arch*) $webapp="https://wiki.archlinux.org/title/Main_page" & ;;
         *Bash*) $webapp="https://devhints.io/bash" & ;;
         *Neovim*) $webapp="https://www.lazyvim.org/keymaps" & ;;
@@ -127,7 +128,7 @@ show_main_menu() {
 
 go_to_menu() {
     case "${1,,}" in
-        *apps*) rofi -show drun ;;
+        *apps*) rofi -i -theme-str "configuration{show-icons:true;}" -show drun ;;
         *search*) $SCRIPT_PATH/search-home.sh ;;
         *learn*) show_learn_menu ;;
         *capture*) show_capture_menu ;;

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #            _ _ _                         __ _
 #    ___  __| (_) |_       ___ ___  _ __  / _(_) __ _
@@ -21,6 +21,7 @@ arch=(\
     "hypr/rules.conf" \
     "hypr/hyprlock.conf" \
     "hypr/scripts/edit-config.sh" \
+    "hypr/scripts/sys-menu.sh" \
     "wlogout/layout" \
     "wlogout/style.css" \
     "kitty/kitty.conf" \
@@ -66,7 +67,9 @@ done
 file=$(echo -e "$listado" | rofi -dmenu -i -theme-str 'entry{placeholder:"Edit config files...";}' -p "")
 
 if [[ -n $file ]]; then
+    icon=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 1)
     file=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 2)
+    notify-send "Editing config file" "$icon   $file..."
     cd "$(dirname $config_dir/$file)"
     kitty nvim "$config_dir/$file"
 fi
