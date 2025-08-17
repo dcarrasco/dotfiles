@@ -49,6 +49,7 @@ alias lara='cd /mnt/c/Users/Daniel/Code/gastos-alpine/app/'
 # Docker / podman =================================================================
 # alias dmstart=docker-machine start
 # alias dmstop=docker-machine stop
+alias docker=podman
 alias dc='podman-compose $@'
 alias dcu='podman-compose up -d'
 alias dcd='podman-compose down'
