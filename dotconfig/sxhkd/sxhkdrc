@@ -18,7 +18,7 @@ super + alt + Return
 
 # program launcher
 super + space
-	rofi -show drun
+    rofi -i -show drun
 
 super + alt + space
 	~/.config/polybar/scripts/search-home.sh
@@ -102,7 +102,7 @@ super + s
 # set the window state
 # super + {t,shift + t,s,f}
 	# bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
-super + {ctrl + t,alt + t,ctrl + f,alt + f}
+super + {ctrl + t,alt + t,ctrl + f,alt + m}
 	bspc node --state {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
@@ -218,10 +218,11 @@ XF86MonBrightnessUp
     light -A 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) -i none "Brillo pantalla"
 
 super + XF86MonBrightnessDown
-    variety -p
+    variety -p && notify-send "Fondo de pantalla" "Nuevo fondo: $(variety --current 2> /dev/null | xargs -0 -- basename)"
 
 super + XF86MonBrightnessUp
-    variety -n
+    variety -n && notify-send "Fondo de pantalla" "Nuevo fondo: $(variety --current 2> /dev/null | xargs -0 -- basename)"
+
 
 XF86Calculator
     exec gnome-calculator

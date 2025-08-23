@@ -11,7 +11,7 @@
 config_dir=$HOME/.config/
 
 arch=(\
-    "waybar/config" \
+    "waybar/config.jsonc" \
     "waybar/style.css" \
     "hypr/hyprland.conf" \
     "hypr/envs.conf" \

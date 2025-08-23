@@ -13,13 +13,14 @@
 #Start polybar first
 # bash ~/.config/polybar/launch.sh 2> ~/polybar_error.log &
 bash ~/.config/polybar/launch.sh &
-feh --bg-fill "/home/daniel/Imágenes/fondos pantalla/abstract/liquid/26-Tahoe-Light-6K.png"
+# feh --bg-fill "/home/daniel/Imágenes/fondos pantalla/abstract/liquid/26-Tahoe-Light-6K.png"
 
-export GTK_THEME=Nordic
+export GTK_THEME=Adwaita
 export GDK_SCALE=1
 # export GDK_DPI_SCALE=1.2
 export XCURSOR_THEME=macOS-BigSur
 export XCURSOR_SIZE=36
+export XDG_CURRENT_DESKTOP=bspwm
 
 # Variable Defines
 color0=#2E3440
@@ -74,7 +75,7 @@ else
 fi
 
 #BSPWM Config
-bspc config border_width           3
+bspc config border_width           4
 bspc config top_padding            36
 bspc config right_padding          0
 bspc config left_padding           0
@@ -127,7 +128,7 @@ bspc config pointer_action3 resize_corner
 #Auto-Start
 # bspc desktop -f ^9
 [ $(ps -aux | grep variety | wc -l) -eq 1 ] && variety &
-sleep 0.50
+# sleep 0.50
 # urxvtc &
 lxpolkit &
 dunst &
