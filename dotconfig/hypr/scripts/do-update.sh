@@ -12,4 +12,8 @@ esac
 
 bash -c "$HOME/.config/hypr/scripts/restore-waybar.sh >/dev/null 2>/dev/null &"
 
+dnf list --installed | sort > ~/installed_pkg.txt
+echo -e "\n\nFlatpak" >> ~/installed_pkg.txt
+flatpak list >> ~/installed_pkg.txt
+
 echo -e "\e[32mPress [ENTER]...\e[0m" && read
