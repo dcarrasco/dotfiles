@@ -351,7 +351,7 @@
 
 [OSD]
     category = "OSD"
-    background = "#2E3440DD"
+    background = "#2E3440EE"
     foreground = "#E5E9F0"
     frame_color = "#E5E9F088"
     timeout = 3
