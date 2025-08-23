@@ -11,7 +11,7 @@
 configuration {
   font: "Adwaita Sans 18";
 
-  show-icons: false;
+  show-icons: true;
   icon-theme: "Kora grey Light";
 
   drun-display-format: "{name}";

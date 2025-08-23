@@ -5,7 +5,7 @@ webapp="flatpak run org.chromium.Chromium --new-window --app"
 echo "$WEBAPP"
 
 menu() {
-    echo -e "$2" | rofi -dmenu -i -theme-str "entry{placeholder:\"$1...\";} window{width:20%;}" -p ""
+    echo -e "$2" | rofi -dmenu -i -theme-str "configuration{show-icons:false;} entry{placeholder:\"$1...\";} window{width:20%;}" -p ""
 }
 
 terminal() {
@@ -128,7 +128,7 @@ show_main_menu() {
 
 go_to_menu() {
     case "${1,,}" in
-        *apps*) rofi -i -theme-str "configuration{show-icons:true;}" -show drun ;;
+        *apps*) rofi -i -show drun ;;
         *search*) $SCRIPT_PATH/search-home.sh ;;
         *learn*) show_learn_menu ;;
         *capture*) show_capture_menu ;;
