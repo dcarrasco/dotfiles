@@ -21,7 +21,7 @@ super + space
     rofi -i -show drun
 
 super + alt + space
-	~/.config/polybar/scripts/search-home.sh
+	rofi -show menu -modes "menu:~/.config/polybar/scripts/sys-menu.sh"
 
 super + control + space
 	rofi -show run -config ~/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'
