@@ -5,7 +5,7 @@ webapp="flatpak run org.chromium.Chromium --new-window --app"
 echo "$WEBAPP"
 
 menu() {
-    echo -e "$2" | rofi -dmenu -i -theme-str "configuration{show-icons:false;} entry{placeholder:\"$1...\";} window{width:20%;}" -p ""
+    echo -e "$2" | rofi -dmenu -i -theme-str "prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:20%;}" -p ""
 }
 
 terminal() {
@@ -71,8 +71,8 @@ show_toggle_menu() {
 
 show_style_menu() {
     case $(menu "Style" "󰸌  Theme\n  Font\n  Prev Background\n  Next Background") in
-        *Theme*) show_theme_menu ;;
-        *Font*) terminal $SCRIPT_PATH/font-menu.sh ;;
+        *Theme*) $SCRIPT_PATH/switch-theme.sh ;;
+        *Font*) $SCRIPT_PATH/font-menu.sh ;;
         *Prev\ Background*) variety -p ;;
         *Next\ Background*) variety -n ;;
         *) show_main_menu ;;
@@ -128,7 +128,7 @@ show_main_menu() {
 
 go_to_menu() {
     case "${1,,}" in
-        *apps*) rofi -i -show drun ;;
+        *apps*) rofi -i -show drun -show-icons ;;
         *search*) $SCRIPT_PATH/search-home.sh ;;
         *learn*) show_learn_menu ;;
         *capture*) show_capture_menu ;;

@@ -1,0 +1,316 @@
+/*
+__        __          _                      _         _
+\ \      / /_ _ _   _| |__   __ _ _ __   ___| |_ _   _| | ___
+ \ \ /\ / / _` | | | | '_ \ / _` | '__| / __| __| | | | |/ _ \
+  \ V  V / (_| | |_| | |_) | (_| | |    \__ \ |_| |_| | |  __/
+   \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |___/\__|\__, |_|\___|
+                |___/                            |___/
+*/
+
+* {
+    font-family: Noto Sans, SF Mono, Helvetica, Arial, sans-serif;
+}
+
+window {
+    font-size: 14pt;
+    color: alpha(@fg-normal, 0.8);
+}
+
+window#waybar {
+    /* background: linear-gradient(0deg, alpha(@bg-normal, 0.1), alpha(@bg-normal, 0.7)); */
+    background: alpha(@bg-normal, 0.7);
+    border-bottom: 1px solid alpha(@bg-normal, 0.8);
+    border-radius: 10;
+    /* border: 1px solid red; */
+}
+
+.modules-left, .modules-right, .modules-center {
+    padding: 0 0.5em;
+}
+
+tooltip {
+    background-color: alpha(@bg-normal, 0.8);
+    border: 2px solid alpha(@fg-normal, 0.7);
+    border-radius: 10px;
+}
+
+tooltip label {
+    color: @fg-normal;
+    font-family: Adwaita Sans;
+    font-weight: 500;
+    font-size: 12pt;
+}
+
+#workspaces {
+    padding: 0;
+}
+
+button {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+}
+
+button label {
+    color: @fg-normal;
+    padding: 0px 0.7em;
+    margin: 0px 0px;
+}
+
+button.empty label {
+    color: alpha(@fg-normal, 0.5);
+}
+
+button.active label {
+    box-shadow: inset 0 -3px @fg-selected;
+    color: @fg-high;
+    font-weight: 800;
+
+    padding: 0 0.5em;
+    margin: 2px 0;
+}
+
+button.urgent label {
+    background-color: @bg-critical;
+}
+
+button:hover {
+    background-color: alpha(@bg-selected, 0.3);
+    /* background-color: transparent; */
+    transition: none;
+}
+
+button:hover label {
+    color: @fg-high;
+    font-weight: 600;
+}
+
+#custom-leftsep {
+    padding-right: 0.7em;
+}
+
+#custom-windowstatus {
+    font-family: SF Mono, FontAwesome;
+    font-size: 16px;
+    color: @fg-status;
+    padding: 0 0.5em;
+}
+
+#window label {
+    font-family: Adwaita Sans;
+    font-weight: 600;
+    color: @fg-normal;
+    padding: 0 0.5em;
+}
+
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#language,
+#custom-power-profiles,
+#mpd {
+    padding: 0 5px;
+    margin: 5px 0px;
+    border-radius: 7px;
+}
+
+#clock {
+    font-family: Adwaita Sans;
+    color: alpha(@fg-normal, 0.8);
+}
+
+#battery {
+}
+
+#battery.charging, #battery.plugged {
+    color: @fg-success;
+}
+
+#battery.warning {
+    color: @bg-normal;
+    background-color: @bg-warning;
+}
+
+#battery.critical:not(.charging) {
+    background-color: @bg-critical;
+    color: @fg-high;
+}
+
+#cpu.warning {
+    color: @bg-normal;
+    background-color: @bg-warning;
+}
+
+#cpu.critical {
+    background-color: @bg-critical;
+    color: @fg-high;
+}
+
+#memory {
+    /* background-color: #9b59b6; */
+}
+
+#disk {
+    /* background-color: #964B00; */
+}
+
+#backlight {
+    /* background-color: #90b1b1; */
+}
+
+#network {
+    /* background-color: #2980b9; */
+}
+
+#network.disconnected, #network.disabled {
+    color: alpha(@fg-normal, 0.4);
+    /* background-color: #f53c3c; */
+}
+
+#pulseaudio {
+}
+
+#pulseaudio.muted {
+    padding: 0 0.5em;
+    background-color: @bg-warning;
+    color: @bg-normal;
+    font-family: Adwaita Sans;
+}
+
+#wireplumber {
+    background-color: #fff0f5;
+    color: #000000;
+}
+
+#wireplumber.muted {
+    background-color: #f53c3c;
+}
+
+#custom-media {
+    background-color: #66cc99;
+    color: #2a5c45;
+    min-width: 100px;
+}
+
+#custom-media.custom-spotify {
+    background-color: #66cc99;
+}
+
+#custom-media.custom-vlc {
+    background-color: #ffa000;
+}
+
+#temperature {
+    /* background-color: #f0932b; */
+}
+
+#temperature.critical {
+    background-color: @bg-critical;
+    color: @fg-critical;
+}
+
+#tray {
+}
+
+#tray > .passive {
+    /* -gtk-icon-effect: dim; */
+    background-color: @bg-critical;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @bg-critical;
+    color:@fg-high;
+}
+
+#idle_inhibitor {
+}
+
+#idle_inhibitor.activated {
+    color: @bg-normal;
+    background-color: alpha(@bg-warning, 0.8);
+}
+
+#mpd {
+    /* background-color: #66cc99; */
+    /* color: #2a5c45; */
+}
+
+#mpd.disconnected {
+    /* background-color: #f53c3c; */
+}
+
+#mpd.stopped {
+    /* background-color: #90b1b1; */
+}
+
+#mpd.paused {
+    /* background-color: #51a37a; */
+}
+
+#language {
+}
+
+#keyboard-state {
+    background: #97e1ad;
+    color: #000000;
+    padding: 0 0px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state > label {
+    padding: 0 5px;
+}
+
+#keyboard-state > label.locked {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#scratchpad {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#scratchpad.empty {
+	background-color: transparent;
+}
+
+#bluetooth.connected {
+    /* color: #0082FC; */
+    /* color: @fg-status; */
+}
+
+#bluetooth.disabled, #bluetooth.off {
+    color: alpha(@fg-normal, 0.4);
+}
+
+#custom-power-profiles {
+    color: @bg-normal;
+    /* background-color: @bg-success; */
+}
+
+#custom-power-profiles.power-saver {
+    color: @bg-success;
+}
+
+#custom-power-profiles.performance {
+    color: @bg-critical;
+}
+
+#custom-poweroff {
+    padding-left: 0.5em;
+}

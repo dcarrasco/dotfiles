@@ -64,7 +64,7 @@ for file in ${arch[@]}; do
     listado+="$icon$file\n"
 done
 
-file=$(echo -e "$listado" | rofi -dmenu -i -theme-str 'entry{placeholder:"Edit config files...";}' -p "")
+file=$(echo -e "$listado" | rofi -dmenu -i -p "Edit config")
 
 if [[ -n $file ]]; then
     icon=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 1)

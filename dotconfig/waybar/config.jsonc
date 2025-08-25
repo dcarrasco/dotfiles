@@ -5,16 +5,9 @@
 //      \_/\_/ \__,_|\__, |_.__/ \__,_|_|
 //                   |___/
 {
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 36, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
-
-    // Choose the order of the modules
-    "modules-left": ["hyprland/workspaces", "custom/windowstatus", "hyprland/window"],
-    "modules-center": ["clock"],
-    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "hyprland/language", "custom/power-profiles", "bluetooth", "network", "network#ethernet", "pulseaudio", "battery", "custom/poweroff"],
+    "include": [
+        "$HOME/.config/waybar/catppuccin/layout.jsonc"
+    ],
 
     // Modules configuration
     "hyprland/workspaces": {
@@ -27,21 +20,15 @@
         "all-outputs": true,
         "window-rewrite": {},
         "format": "{icon}",
+        // symbols:                    󰈙                      ,
         "format-icons": {
-            // "1": " ",
-            // "2": " ",
-            // "3": " ",
-            // "4": " ",
-            // "5": " ",
             "1": 1,
             "2": 2,
             "3": 3,
             "4": 4,
             "5": 5,
             "urgent": " ",
-            //"active": "*",
             "default": " "
-            // symbols:                    󰈙     
         }
     },
 
@@ -321,5 +308,6 @@
         "interval": 1,
         "tooltip": true,
     }
+}
 }
 # vi: ft=json

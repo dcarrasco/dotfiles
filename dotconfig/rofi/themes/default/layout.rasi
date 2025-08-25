@@ -1,50 +1,14 @@
 /**
- * Nordic rofi theme
- * Adapted by undiabler <undiabler@gmail.com>
- *
- * Nord Color palette imported from https://www.nordtheme.com/
+ * Deafault rofi theme
  *
  */
-
-* {
-    /* polar night */
-	nord0: #2e3440;
-	nord1: #3b4252;
-	nord2: #434c5e;
-	nord3: #4c566a;
-
-    /* snow storm */
-	nord4: #d8dee9;
-	nord5: #e5e9f0;
-	nord6: #eceff4;
-
-    /* frost */
-	nord7: #8fbcbb;
-	nord8: #88c0d0;
-	nord9: #81a1c1;
-	nord10: #5e81ac;
-
-    /* aurora */
-	nord11: #bf616a;
-	nord12: #d08770;
-	nord13: #ebcb8b;
-	nord14: #a3be8c;
-	nord15: #b48ead;
-
-    foreground:  @nord9;
-    backlight:   #ccffeedd;
-    bg-color:    #2e344077;
-    selected-color: #4c566aCC;
-    placeholder-color: #d8dee988;
-    background-color: transparent;
-}
 
 window {
     location: center;
     anchor:   center;
     transparency: "real";
     border: 4px;
-    border-color: @nord8;
+    border-color: @window-border;
     border-radius: 15px;
     height: 60%;
     width: 50%;
@@ -62,41 +26,30 @@ mainbox {
     height: 60%;
     width:50%;
     spacing: 0;
+    padding: 1em;
     children: [ inputbar, message, listview ];
 }
 
-message {
-    color: @nord0;
-    padding: 25;
-    border-color: @foreground;
-    border:  0px 2px 2px 2px;
-    background-color: @nord7;
-}
-
+// inputbar ------------------------------------------------------------------------------
 inputbar {
-    /* cuadro que incluye prompt y entry */
-    color: @nord4;
-    padding: 1em;
-    /* vertical-align: 0.5; */
-    border: 0 0 0 0;
-    border-color: @placeholder-color;
+    padding: 0 0 1em 0;
+    children: [ prompt, entry ];
+    // children: [ prompt, entry, case-indicator, num-filtered-rows, num-rows ];
 }
 
 prompt {
     /* simbolo de busqueda */
     font: "SF UI Display 24";
-    text-color: @nord9;
+    text-color: @fg-prompt;
     vertical-align: 0.5;
-    padding: 0 0;
-    // border-radius: 15px 0px 0px 15px;
-    margin: 0 0 0 0;
-    enabled: false;
+    padding: 0 1em 0 0;
+    enabled: true;
 }
 
 entry {
     /* cuadro de texto para escribir */
     font: "SF UI Display 24";
-    text-color: @nord4;
+    text-color: @foreground;
     vertical-align: 0.5;
     border-radius: 15px;
     padding: 0.5em 1em 0.5em 1em;
@@ -104,37 +57,50 @@ entry {
     cursor: text;
     hide-cursor-on-empty: true;
     placeholder: "Buscar...";
-    placeholder-color: @placeholder-color;
+    placeholder-color: @fg-placeholder;
     background-color: @bg-color;
 }
 
-case-indicator {
+case-indicator, num-rows, num-filtered-rows {
     /* Cuadro para incluir case-indicator */
-    font: "SF Mono Display 24";
-    text-color: @nord4;
+    font: "SF Mono Display 16";
+    text-color: @foreground;
     margin: 0;
     padding: 0;
-    /* vertical-align: 0.5; */
-    enabled: false;
+    vertical-align: 0.5;
+    enabled: true;
 }
 
+// message  ------------------------------------------------------------------------------
+message {
+    padding: 0.5em 1em;
+}
+
+textbox {
+    padding: 1em 1em;
+    border-radius: 15px;
+    text-color: @foreground;
+    background-color: @bg-textbox;
+}
+
+// listview  ------------------------------------------------------------------------------
 listview {
     padding: 0 0 0.5em 0;
     border-radius: 0px 0px 6px 6px;
-    border-color: @nord10;
     dynamic: false;
-    border: 0px;
+    border: 0;
+    scrollbar: true;
+    scrollbar-width: 10px;
 }
 
 element {
-    padding: 0.5em 2em;
+    padding: 0.5em 1em;
     vertical-align: 0.5;
-    text-color: @nord4;
+    text-color: @foreground;
 }
 
 element selected {
-    // background-color: @selected-color;
-	text-color: @nord8;
+	text-color: @fg-selected;
 }
 
 element-text {
@@ -148,6 +114,13 @@ element-icon {
     padding: 0 0.5em 0 0;
 }
 
+scrollbar {
+    handle-color: @fg-scrollbar;
+    handle-rounded-corners: true;
+    handle-width: 0.3em;
+}
+
+// buttons  ------------------------------------------------------------------------------
 button {
     padding: 6px;
     color: @foreground;

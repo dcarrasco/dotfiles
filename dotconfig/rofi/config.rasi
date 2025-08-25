@@ -11,16 +11,14 @@
 configuration {
   font: "Adwaita Sans 18";
 
-  show-icons: true;
   icon-theme: "Kora grey Light";
 
   drun-display-format: "{name}";
   // display-drun: "";
-  display-drun: "";
+  display-drun: "Apps";
   display-window: " ";
   display-combi: " ";
 }
 
-@theme "themes/nord_dc.rasi"
-// @theme "themes/column_rounded_DC.rasi"
-/* @theme "/dev/null" */
+@theme "themes/default/catppuccin.rasi"
+@import "themes/default/layout.rasi"

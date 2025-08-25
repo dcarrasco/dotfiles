@@ -1,0 +1,44 @@
+/*
+__        __          _                  _                         _
+\ \      / /_ _ _   _| |__   __ _ _ __  | | __ _ _   _  ___  _   _| |_
+ \ \ /\ / / _` | | | | '_ \ / _` | '__| | |/ _` | | | |/ _ \| | | | __|
+  \ V  V / (_| | |_| | |_) | (_| | |    | | (_| | |_| | (_) | |_| | |_
+   \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |_|\__,_|\__, |\___/ \__,_|\__|
+                |___/                            |___/
+*/
+{
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "spacing": 4,
+    "margin-top": 7,
+    "margin-left": 7,
+    "margin-right": 7,
+
+    // Choose the order of the modules
+    "modules-left": [
+        "hyprland/workspaces",
+        "custom/windowstatus",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right":  [
+        "custom/updates",
+        "tray",
+        "idle_inhibitor",
+        "cpu",
+        "memory",
+        "temperature",
+        "hyprland/language",
+        "custom/power-profiles",
+        "bluetooth",
+        "network",
+        "network#ethernet",
+        "pulseaudio",
+        "battery",
+        "custom/poweroff"
+    ],
+}
+# vi: ft=json
