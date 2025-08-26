@@ -20,8 +20,9 @@
 @define-color nord15 #b48ead;
 
 * {
-	background-image: none;
+    background-image: none;
     box-shadow: none;
+    background-color: transparent;
 }
 
 window {

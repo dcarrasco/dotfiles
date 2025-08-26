@@ -11,7 +11,7 @@ extra_status=""
 
 if [ $rofi = 0 ]; then
     if [ "$(hyprctl activewindow)" != "Invalid" ]; then
-        # client_status=" "
+        # client_status="     "
         client_status=""
     fi
 

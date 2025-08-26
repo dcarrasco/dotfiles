@@ -10,11 +10,11 @@ case $power_profile in
         icon=""
         ;;
     "throughput-performance")
-        icon=" ."
+        icon=" "
         class="performance"
         ;;
     "powersave")
-        icon="  ."
+        icon="  "
         class="power-saver"
         ;;
     *)
