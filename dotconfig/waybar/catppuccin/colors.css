@@ -39,14 +39,13 @@ __        __          _                            _
 @define-color flamingo  #f2cdcd;
 @define-color rosewater #f5e0dc;
 
-@define-color fg-normal   @text;
+@define-color bg-normal   @mantle;
+@define-color fg-normal   alpha(@text, 0.8);
 @define-color fg-high     @text;
-@define-color fg-success  @green;
+@define-color fg-disabled alpha(@text, 0.4);
 @define-color fg-status   @subtext1;
-@define-color fg-selected @yellow;
-@define-color bg-normal   @surface0;
+@define-color ws-selected @yellow;
+@define-color selected    @blue;
 @define-color warning     @yellow;
 @define-color critical    @red;
-@define-color fg-critical @surface1;
-@define-color bg-selected @blue;
 @define-color success     @green;

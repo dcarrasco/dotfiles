@@ -13,15 +13,13 @@ __        __          _                      _         _
 
 window {
     font-size: 13pt;
-    color: alpha(@fg-normal, 0.8);
+    color: @fg-normal;
 }
 
 window#waybar {
-    /* background: linear-gradient(0deg, alpha(@bg-normal, 0.1), alpha(@bg-normal, 0.7)); */
     background: alpha(@bg-normal, 0.7);
-    border-bottom: 1px solid alpha(@bg-normal, 0.8);
-    border-radius: 10;
-    /* border: 1px solid red; */
+    border-bottom: 1px solid alpha(@bg-normal, 0.9);
+    border-radius: 10px;
 }
 
 .modules-left, .modules-right, .modules-center {
@@ -30,7 +28,7 @@ window#waybar {
 
 tooltip {
     background-color: alpha(@bg-normal, 0.8);
-    border: 2px solid alpha(@fg-normal, 0.7);
+    border: 2px solid @fg-normal;
     border-radius: 10px;
 }
 
@@ -53,20 +51,20 @@ button {
 }
 
 button label {
-    color: @fg-normal;
+    color: @fg-high;
     font-size: 14pt;
     padding: 0px 0.4em;
     margin: 2px 0;
 }
 
+button.empty label {
+    color: @fg-disabled;
+}
+
 button.active label {
     color: @fg-high;
     font-weight: 800;
-    box-shadow: inset 0 -3px @fg-selected;
-}
-
-button.empty label {
-    color: alpha(@fg-normal, 0.5);
+    box-shadow: inset 0 -3px @ws-selected;
 }
 
 button.urgent label {
@@ -75,7 +73,7 @@ button.urgent label {
 
 button:hover {
     /* background-color: transparent; */
-    background-color: alpha(@bg-selected, 0.3);
+    background-color: alpha(@ws-selected, 0.6);
     transition: none;
 }
 
@@ -84,23 +82,24 @@ button:hover label {
     font-weight: 600;
 }
 
-#custom-leftsep {
-    padding-right: 0.7em;
+#custom-windowstatus {
+    color: @fg-status;
+    font-size: 11pt;
+    padding:0 0.3em;
 }
 
-#custom-windowstatus {
-    font-family: SF Mono, FontAwesome;
+#custom-leftsep {
+    color: @selected;
     font-size: 15pt;
-    color: @fg-status;
-    padding: 0 0 0 0.5em;
+    padding:0 0.5em;
 }
 
 #window label {
+    color: @fg-high;
     font-family: Adwaita Sans;
     font-size: 15pt;
     font-weight: 600;
-    color: @fg-normal;
-    padding: 0 0.5em;
+    padding: 0 0.3em;
 }
 
 
@@ -128,40 +127,9 @@ button:hover label {
 
 #clock {
     font-family: Adwaita Sans;
-    color: alpha(@fg-normal, 0.8);
 }
 
 #battery {
-}
-
-#battery.charging, #battery.plugged {
-    color: @success;
-    box-shadow: inset 0 -3px @success;
-    background-color: transparent;
-}
-
-#battery.warning {
-    color: @warning;
-    box-shadow: inset 0 -3px @warning;
-    background-color: transparent;
-}
-
-#battery.critical:not(.charging) {
-    color: @critical;
-    box-shadow: inset 0 -3px @critical;
-    background-color: transparent;
-}
-
-#cpu.warning {
-    color: @warning;
-    box-shadow: inset 0 -3px @warning;
-    background-color: transparent;
-}
-
-#cpu.critical {
-    color: @critical;
-    box-shadow: inset 0 -3px @critical;
-    background-color: transparent;
 }
 
 #memory {
@@ -170,24 +138,76 @@ button:hover label {
 #temperature {
 }
 
-#temperature.critical {
-    color: @critical;
-    box-shadow: inset 0 -3px @critical;
-    background-color: transparent;
-}
-
-#network.disconnected, #network.disabled {
-    color: alpha(@fg-normal, 0.5);
-}
-
 #pulseaudio {
 }
 
+#tray {
+}
+
+#custom-power-profiles {
+}
+
+#bluetooth.connected {
+    /* color: #0082FC; */
+    /* color: @fg-status; */
+}
+
+#custom-poweroff {
+    padding-left: 0.5em;
+}
+
+/* ------------------------------------------------------
+ * Disabled state
+ * ------------------------------------------------------ */
+#network.disconnected,
+#network.disabled,
+#bluetooth.disabled,
+#bluetooth.off {
+    color: @fg-disabled;
+}
+
+/* ------------------------------------------------------
+ * Success state
+ * ------------------------------------------------------ */
+#battery.charging,
+#battery.plugged
+#custom-power-profiles.power-saver {
+    color: @success;
+    box-shadow: inset 0 -3px @success;
+    background-color: transparent;
+}
+
+/* ------------------------------------------------------
+ * Warning state
+ * ------------------------------------------------------ */
+#battery.warning,
+#cpu.warning,
+#idle_inhibitor.activated,
 #pulseaudio.muted {
     color: @warning;
     box-shadow: inset 0 -3px @warning;
     background-color: transparent;
 }
+
+/* ------------------------------------------------------
+ * Critical state
+ * ------------------------------------------------------ */
+#battery.critical:not(.charging),
+#cpu.critical,
+#temperature.critical,
+#custom-power-profiles.performance,
+#tray > .needs-attention {
+    color: @critical;
+    box-shadow: inset 0 -3px @critical;
+    background-color: transparent;
+}
+
+#tray > .passive {
+    /* -gtk-icon-effect: dim; */
+    background-color: @critical;
+}
+
+
 
 #wireplumber {
     background-color: #fff0f5;
@@ -212,27 +232,7 @@ button:hover label {
     background-color: #ffa000;
 }
 
-#tray {
-}
-
-#tray > .passive {
-    /* -gtk-icon-effect: dim; */
-    background-color: @critical;
-}
-
-#tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-    background-color: @critical;
-    color:@fg-high;
-}
-
 #idle_inhibitor {
-}
-
-#idle_inhibitor.activated {
-    color: @warning;
-    box-shadow: inset 0 -3px @warning;
-    background-color: transparent;
 }
 
 #language {
@@ -262,31 +262,3 @@ button:hover label {
 	background-color: transparent;
 }
 
-#bluetooth.connected {
-    /* color: #0082FC; */
-    /* color: @fg-status; */
-}
-
-#bluetooth.disabled, #bluetooth.off {
-    color: alpha(@fg-normal, 0.5);
-}
-
-#custom-power-profiles {
-    color: @bg-normal;
-}
-
-#custom-power-profiles.power-saver {
-    color: @success;
-    box-shadow: inset 0 -3px @success;
-    background-color: transparent;
-}
-
-#custom-power-profiles.performance {
-    color: @critical;
-    box-shadow: inset 0 -3px @critical;
-    background-color: transparent;
-}
-
-#custom-poweroff {
-    padding-left: 0.5em;
-}

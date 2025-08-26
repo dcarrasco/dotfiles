@@ -19,6 +19,7 @@ __        __          _                  _                         _
     "modules-left": [
         "hyprland/workspaces",
         "custom/windowstatus",
+        "custom/leftsep",
         "hyprland/window"
     ],
     "modules-center": [
