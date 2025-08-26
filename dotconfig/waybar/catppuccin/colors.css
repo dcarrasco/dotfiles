@@ -42,11 +42,11 @@ __        __          _                            _
 @define-color fg-normal   @text;
 @define-color fg-high     @text;
 @define-color fg-success  @green;
-@define-color fg-status   @lavender;
+@define-color fg-status   @subtext1;
 @define-color fg-selected @yellow;
 @define-color bg-normal   @surface0;
-@define-color bg-warning  @yellow;
-@define-color bg-critical @red;
+@define-color warning     @yellow;
+@define-color critical    @red;
 @define-color fg-critical @surface1;
-@define-color bg-selected @sky;
-@define-color bg-success  @green;
+@define-color bg-selected @blue;
+@define-color success     @green;

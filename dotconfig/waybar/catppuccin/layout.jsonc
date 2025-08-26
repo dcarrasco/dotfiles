@@ -11,9 +11,9 @@ __        __          _                  _                         _
     "position": "top",
     "height": 36,
     "spacing": 4,
-    "margin-top": 7,
-    "margin-left": 7,
-    "margin-right": 7,
+    "margin-top": 5,
+    "margin-left": 5,
+    "margin-right": 5,
 
     // Choose the order of the modules
     "modules-left": [
