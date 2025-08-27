@@ -118,6 +118,7 @@ scrollbar {
     handle-color: @fg-scrollbar;
     handle-rounded-corners: true;
     handle-width: 0.3em;
+    padding: 0 0 0 0.5em;
 }
 
 // buttons  ------------------------------------------------------------------------------
