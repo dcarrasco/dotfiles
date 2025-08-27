@@ -120,8 +120,9 @@ button:hover label {
 #scratchpad,
 #language,
 #custom-power-profiles,
+#custom-poweroff,
 #mpd {
-    padding: 0 5px;
+    padding: 0 0.3em;
     margin: 2px 0;
 }
 
@@ -152,10 +153,6 @@ button:hover label {
     /* color: @fg-status; */
 }
 
-#custom-poweroff {
-    padding-left: 0.5em;
-}
-
 /* ------------------------------------------------------
  * Disabled state
  * ------------------------------------------------------ */
@@ -180,7 +177,7 @@ button:hover label {
 /* ------------------------------------------------------
  * Warning state
  * ------------------------------------------------------ */
-#battery.warning,
+#battery.warning:not(.charging),
 #cpu.warning,
 #idle_inhibitor.activated,
 #pulseaudio.muted {
