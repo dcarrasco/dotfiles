@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 OPCIONES=$(virsh --connect qemu:///system list --all | cut -c 7- | sed -E 's/[ ]+/ /g' | grep -v Nombre | grep -v "\-\-" | grep -E -v "^$" | awk -F " " '{ print $1 " (" $2 $3 ")" }')
 
-VM=$(printf "$OPCIONES" | rofi -dmenu --markup -theme-str "entry{placeholder:'Start VM...';}" -p "" | cut -d " " -f 1)
+VM=$(printf "$OPCIONES" | rofi -dmenu -p "Start VM" | cut -d " " -f 1)
 
 echo $VM
 

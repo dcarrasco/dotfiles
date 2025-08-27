@@ -14,7 +14,6 @@ configuration {
   icon-theme: "Kora grey Light";
 
   drun-display-format: "{name}";
-  // display-drun: "";
   display-drun: "Apps";
   display-window: " ";
   display-combi: " ";

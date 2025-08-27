@@ -123,7 +123,7 @@ show_system_menu() {
 }
 
 show_main_menu() {
-    go_to_menu "$(menu "Start" "󰀻  Apps\n󰥨  Search\n󰧑  Learning\n  Capture\n󰔎  Toggle\n  Style\n  Setup\n  Update\n  About\n  System")"
+    go_to_menu "$(menu "Start" "󰀻  Apps\n󰥨  Search\n󰧑  Learn\n  Capture\n󰔎  Toggle\n  Style\n  Setup\n  Update\n  About\n  System")"
 }
 
 go_to_menu() {

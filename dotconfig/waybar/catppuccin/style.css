@@ -73,7 +73,7 @@ button.urgent label {
 
 button:hover {
     /* background-color: transparent; */
-    background-color: alpha(@ws-selected, 0.6);
+    background-color: alpha(@ws-selected, 0.3);
     transition: none;
 }
 
