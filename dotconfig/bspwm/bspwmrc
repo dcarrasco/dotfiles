@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 #   _
 #  | |__  ___ _ ____      ___ __ ___
@@ -12,7 +12,7 @@
 
 #Start polybar first
 # bash ~/.config/polybar/launch.sh 2> ~/polybar_error.log &
-bash ~/.config/polybar/launch.sh &
+bash $HOME/.config/polybar/launch.sh &
 # feh --bg-fill "/home/daniel/Imágenes/fondos pantalla/abstract/liquid/26-Tahoe-Light-6K.png"
 
 export GTK_THEME=Adwaita
@@ -22,24 +22,8 @@ export XCURSOR_THEME=macOS-BigSur
 export XCURSOR_SIZE=36
 export XDG_CURRENT_DESKTOP=bspwm
 
-# Variable Defines
-color0=#2E3440
-color1=#3B4252
-color2=#434C5E
-color3=#4C566A
-color4=#D8DEE9
-color5=#E5E9F0
-color6=#ECEFF4
-color7=#8FBCBB
-color8=#88C0D0
-color9=#81A1C1
-color10=#5E81AC
-color11=#BF616A
-color12=#D08770
-color13=#EBCB8B
-color14=#A3BE8C
-color15=#B48EAD
-#
+source $HOME/.config/bspwm/catppuccin
+
 #Set Keyboard Layout
 setxkbmap -layout latam,us -option grp:alt_caps_toggle
 # setxkbmap -layout en
@@ -86,10 +70,10 @@ bspc config right_monocle_padding  0
 bspc config left_monocle_padding   0
 bspc config bottom_monocle_padding 0
 
-bspc config focused_border_color  "$color8"
-bspc config normal_border_color   "$color3"
-bspc config active_border_color   "$color2"
-bspc config presel_feedback_color "$color4"
+bspc config focused_border_color  "$focused_border"
+bspc config normal_border_color   "$normal_border"
+bspc config active_border_color   "$active_border"
+bspc config presel_feedback_color "$presel_feedback"
 bspc config split_ratio           0.5
 bspc config single_monocle        false
 bspc config borderless_monocle    false
@@ -113,12 +97,6 @@ bspc rule -a Variety state=floating
 bspc rule -a mplayer2 state=floating
 bspc rule -a gnome-calculator state=floating
 bspc rule -a Rofi state=floating
-# bspc rule -a yad state=floating follow=on
-# bspc rule -a Kupfer.py focus=on
-# bspc rule -a Screenkey manage=off
-# bspc rule -a wine desktop='^7' state=floating follow=on
-# bspc rule -a Discord desktop='^6'
-# bspc rule -a synergy desktop='^9'
 #
 bspc config pointer_modifier mod4
 bspc config pointer_action1 move

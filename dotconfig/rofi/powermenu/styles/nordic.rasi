@@ -2,10 +2,10 @@
     background:                     #2E3440aa;
     background-alt:                 #2E3440ff;
     // foreground:                     #8FBCBBff;
-    foreground:                     #D8DEE9bb;
+    foreground:                     #D8DEE9aa;
     foreground-alt:                 #ECEFF4ff;
     border:               			#D8DEE955;
     border-alt:               		#ccccccff;
-    selected:               		#5E81ACff;
+    selected:               		#5E81AC66;
     urgent:                         #777777FF;
 }

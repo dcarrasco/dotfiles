@@ -57,7 +57,7 @@ inputbar {
 
 textbox-prompt-colon {
 	expand: 						false;
-	str: 							"System |";
+	str: 							"System ";
 	text-color: 					@foreground;
     padding:                        0 0 0 2.5em;
 }
@@ -90,11 +90,11 @@ element-text {
     horizontal-align:               0.5;
     vertical-align:                 0.5;
     margin:                         2em 2em;
-    padding:                        0.2em 0.5em 0.2em 1.5em;
+    padding:                        0.2em 0.5em 0.5em 1.5em;
 }
 
 element normal.urgent,
-element alternate.urgent {
+element Inflternate.urgent {
     background-color:               @urgent;
     text-color:                     @foreground;
     border-radius:                  0.2%;

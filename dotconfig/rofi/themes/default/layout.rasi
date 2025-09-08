@@ -77,7 +77,6 @@ message {
 }
 
 textbox {
-    font: "SF Mono Display 20";
     padding: 1em 1em;
     border-radius: 15px;
     text-color: @foreground;

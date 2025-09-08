@@ -3,7 +3,7 @@
 SCRIPT_PATH=$HOME/.config/hypr/scripts
 
 menu() {
-    echo -e "$2" | rofi -dmenu -i -theme-str "configuration{show-icons:false;} entry{placeholder:\"$1...\";} window{width:20%;}" -p ""
+    echo -e "$2" | rofi -dmenu -i -theme-str "entry{placeholder:\"$1...\";} window{width:20%;}" -p ""
 }
 
 webapp() {
