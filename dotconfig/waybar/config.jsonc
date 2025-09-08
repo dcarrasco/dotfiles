@@ -20,15 +20,9 @@
         "all-outputs": true,
         "window-rewrite": {},
         "format": "{icon}",
-        // symbols:                    󰈙                      ,
+        // symbols:                      󰈙                      ,
         "format-icons": {
-            "1": 1,
-            "2": 2,
-            "3": 3,
-            "4": 4,
-            "5": 5,
-            "urgent": " ",
-            "default": " "
+            "urgent": "",
         }
     },
 
@@ -41,6 +35,7 @@
             "(.*) — Mozilla Firefox": "$1",
             "(.*) - Youtube — Mozilla Firefox": "$1",
             "(.*) - Brave": "$1",
+            "(.*) - Chromium": "$1",
         },
     },
 
@@ -228,15 +223,15 @@
         "tooltip-format": "Volume: {volume}%\n{desc}\nInput: {format_source}",
         "format": "{icon}",
         "format-muted": "   muted",
-        "format-bluetooth": "{icon} {volume}%  {format_source}",
-        "format-bluetooth-muted": "{icon} muted  {format_source}",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-bluetooth-muted": "{icon} muted",
         "format-source": " {volume}%",
         "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
+            "headphone": " ",
             "hands-free": "",
             "headset": " ",
-            "phone": "",
+            "phone": " ",
             "portable": "",
             "car": "",
             "default": ["", "", ""]
@@ -306,7 +301,13 @@
         "exec": "$HOME/.config/hypr/scripts/show-power-mgmt.sh",
         "interval": 1,
         "tooltip": true,
+    },
+
+    "custom/nightlight": {
+        "format": "󱩌 ",
+        "on-click": "$HOME/.config/hypr/scripts/switch-nightlight.sh",
+        "tooltip": true,
+        "tooltip-format": "Switch nightlight",
     }
-}
 }
 # vi: ft=json

@@ -23,3 +23,4 @@ for i in $keybs; do
     done
 done
 
+notify-send "Keyboard" "New layout: $newlayout"

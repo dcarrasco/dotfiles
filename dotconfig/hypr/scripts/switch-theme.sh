@@ -17,5 +17,6 @@ change_theme() {
 theme=$(echo -e "Catppuccin\nNord" | rofi -dmenu -i -p "")
 if [ -n "$theme" ]; then
     change_theme ${theme,,}
+    notify-send "Theme" "Change theme to $theme"
 fi
 

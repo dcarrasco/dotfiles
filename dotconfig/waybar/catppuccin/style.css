@@ -9,6 +9,8 @@ __        __          _                      _         _
 
 * {
     font-family: Noto Sans, SF Mono, Helvetica, Arial, sans-serif;
+    /* background-color: transparent; */
+    transition: none;
 }
 
 window {
@@ -68,13 +70,11 @@ button.active label {
 }
 
 button.urgent label {
-    background-color: @critical;
+    color: @critical;
 }
 
 button:hover {
-    /* background-color: transparent; */
     background-color: alpha(@ws-selected, 0.3);
-    transition: none;
 }
 
 button:hover label {
@@ -167,7 +167,7 @@ button:hover label {
  * Success state
  * ------------------------------------------------------ */
 #battery.charging,
-#battery.plugged
+#battery.plugged,
 #custom-power-profiles.power-saver {
     color: @success;
     box-shadow: inset 0 -3px @success;

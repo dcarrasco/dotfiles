@@ -55,14 +55,15 @@ show_screenrecord_menu() {
 }
 
 show_toggle_menu() {
-    case $(menu "Toggle" "󰂯  Bluetooth\n   Keyboard Layout\n󰪛  Keyboard ControlCaps\n   Wifi\n  Power Management\n󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar") in
+    local nightlight_state=$([ -n "$(pidof wlsunset)" ] && echo 'turn off' || echo 'turn on')
+    case $(menu "Toggle" "󰂯  Bluetooth\n   Keyboard Layout\n󰪛  Keyboard ControlCaps\n   Wifi\n  Power Management\n󱄄  Screensaver\n󰔎  Nightlight ($nightlight_state)\n󱫖  Idle Lock\n󰍜  Top Bar") in
         *Bluetooth*) $SCRIPT_PATH/bluetooth.sh --toggle ;;
         *Keyboard\ Layout*) $SCRIPT_PATH/switch-keyboard-layout.sh ;;
         *Keyboard\ ControlCaps*) $SCRIPT_PATH/switch-controlcaps.sh ;;
         *Wifi*) $SCRIPT_PATH/switch-wifi.sh ;;
         *Power*) $SCRIPT_PATH/switch-power-mgmt.sh ;;
         *Screensaver*) $OMARCHY_BIN_PATH/omarchy-launch-screensaver ;;
-        *Nightlight*) $OMARCHY_BIN_PATH/omarchy-toggle-nightlight ;;
+        *Nightlight*) $SCRIPT_PATH/switch-nightlight.sh ;;
         *Idle*) $OMARCHY_BIN_PATH/omarchy-toggle-idle ;;
         *Bar*) pkill -SIGUSR1 waybar ;;
         *) show_main_menu ;;

@@ -29,6 +29,7 @@ __        __          _                  _                         _
         "custom/updates",
         "tray",
         "idle_inhibitor",
+        // "custom/nightlight",
         "cpu",
         "memory",
         "temperature",

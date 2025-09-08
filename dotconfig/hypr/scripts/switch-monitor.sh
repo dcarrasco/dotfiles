@@ -1,160 +1,138 @@
 #!/bin/sh
 
 is_wayland() {
-    # xrandr -q | grep " connected" | grep "WAYLAND"| wc -l
     wlr-randr | grep current | wc -l
 }
 
-IS_WAYLAND="NO"
-if [ $(is_wayland) -gt 0 ]; then
-    IS_WAYLAND="YES"
-fi
-
-
-primary_monitor_fullname() {
-    if [ "$IS_WAYLAND" = "NO" ]; then
-        xrandr -q | grep "primary"
+menu() {
+    if [ -z "$3" ]; then
+        echo -e "$1" | rofi -dmenu -p "$2"
     else
-        wlr-randr | grep -e "^[^ ]" | grep -e "^e"
+        echo -e "$1" | rofi -a 0:2 -dmenu -p "$2" -mesg "$3"
     fi
 }
 
-primary_monitor_name() {
-    echo "$(primary_monitor_fullname)" | cut -d " " -f 1
+count_monitors() {
+    if [ "$BACKEND" = "x11" ]; then
+        xrandr -q | grep " connected" | wc -l
+    else
+        hyprctl monitors all | grep ^Monitor | wc -l
+    fi
 }
 
-external_monitor_fullname() {
-    if [ "$IS_WAYLAND" = "NO" ]; then
-        xrandr -q | grep " connected" | grep -v "$(primary_monitor_name)"
-    else
-        if [ "$(primary_monitor_name)" = "" ]; then
-            wlr-randr | grep -e "^[^ ]"
+get_monitor_list() {
+    local monitors=$(hyprctl monitors all | grep ^Monitor | cut -d " " -f 2)
+    for m in $monitors; do
+        echo "$m $(get_monitor_property $m 2)" ;
+    done
+}
+
+get_monitor_property() {
+    local monitor=$1
+    local line=$2
+    hyprctl monitors all | grep -A $line $monitor | tail -1 | cut -d ":" -f 2 | xargs --
+}
+
+get_monitor_data() {
+    local monitor=$1
+
+    if [ "$BACKEND" = "wayland" ]; then
+        MON_RES=$(get_monitor_property $monitor 1 | cut -d "@" -f 1)
+        MON_DESC=$(get_monitor_property $monitor 2)
+        MON_SCALE=$(get_monitor_property $monitor 9)
+        MON_DISABLED=$(get_monitor_property $monitor 16)
+        MON_MODES=$(get_monitor_property $monitor 19)
+        MON_RES_LIST=$(echo -e $MON_MODES | sed 's/ /\n/g' | cut -d "@" -f 1)
+    fi
+}
+
+set_monitor_on() {
+    case $BACKEND in
+        *wayland*) hyprctl keyword monitor $1, $2, auto, $3 ;;
+    esac
+}
+
+set_monitor_off() {
+    case $BACKEND in
+        *wayland*) hyprctl keyword monitor $1, disable ;;
+    esac
+}
+
+set_resolution() {
+    set_monitor_on $1 $2 $MON_SCALE
+    notify-send "Pantalla" "Resolucion $2"
+}
+
+set_scale() {
+    escala=$2
+    [ "$MON" = "$MON_INT" ] && [ "$2" = "1.5" ] && escala=1.458333
+    set_monitor_on $1 $MON_RES $escala
+    notify-send "Pantalla" "Escala $escala"
+}
+
+switch_monitor() {
+    if [ $(count_monitors) -gt 1 ]; then
+        if [ "$MON_DISABLED" = "false" ]; then
+            set_monitor_off $1
         else
-            wlr-randr | grep -e "^[^ ]" | grep -v "$(primary_monitor_name)"
+            set_monitor_on $1 $MON_RES $MON_SCALE
         fi
     fi
 }
 
-external_monitor_name() {
-    echo "$(external_monitor_fullname)" | cut -d " " -f 1
+switch_monitor_opt() {
+    if [ $(count_monitors) -gt 1 ]; then
+        if [ "$MON_DISABLED" = "false" ]; then
+            echo "    Apagar monitor"
+        else
+            echo "    Activar monitor"
+        fi
+    else
+        echo ""
+    fi
 }
 
-# echo "primary monitor name: $(primary_monitor_name)"
-# echo "primary monitor full name: $(primary_monitor_fullname)"
-# echo "external monitor name: $(external_monitor_name)"
-# echo "external monitor full name: $(external_monitor_fullname)"
+select_monitor() {
+    local monitor
+    monitor="$(get_monitor_list)"
+    [ $(count_monitors) -gt 1 ] && monitor=$(menu "$monitor" "Seleccione monitor")
+    echo $monitor | cut -d " " -f 1
+}
 
+MON_INT="eDP-1"
+BACKEND="x11"
+[ $(is_wayland) -gt 0 ] && BACKEND="wayland"
+echo "Backend: $BACKEND"
 
-OPT_MONITOR_INT="    Solo monitor interno $(primary_monitor_fullname)"
-OPT_MONITOR_EXT="    Solo monitor externo $(external_monitor_fullname)"
-OPT_MONITOR_BOTH="      Ambos monitores"
-OPT_SET_RESOL="    Cambiar resolucion"
+MON=$(select_monitor)
+[ -z "$MON" ] && exit 0
+get_monitor_data $MON
+
+OPT_SWITCH_MON="$(switch_monitor_opt)"
+OPT_SET_RESOL="󰹑    Cambiar resolucion"
 OPT_SCALE_100="    Escalar al 100"
 OPT_SCALE_125="    Escalar al 125"
 OPT_SCALE_150="    Escalar al 150"
+OPT_SCALE_200="    Escalar al 200"
 
-# echo "WAYLAND: $IS_WAYLAND"
-# echo "$OPT_MONITOR_EXT"
+OPCIONES=""
+[ -n "$OPT_SWITCH_MON" ] && OPCIONES="$OPT_SWITCH_MON\n"
+OPCIONES="$OPCIONES$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n$OPT_SCALE_200"
 
-opciones_un_monitor() {
-    echo "$OPT_MONITOR_INT\n$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n"
-}
+OPC=$(menu "$OPCIONES" "Monitor $MON" "$MON_DESC (set at $MON_RES, $MON_SCALE scale)")
 
-opciones_un_monitor_externo() {
-    echo "$OPT_MONITOR_EXT\n$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n"
-}
-
-opciones_dos_monitores() {
-    echo "$OPT_MONITOR_INT\n$OPT_MONITOR_EXT\n$OPT_MONITOR_BOTH\n$OPT_SET_RESOL\n"
-}
-
-current_monitor_name() {
-    hyprctl monitors | grep Monitor | cut -d " " -f 2
-}
-
-
-count_monitors() {
-    if [ "$IS_WAYLAND" = "NO" ]; then
-        xrandr -q | grep " connected" | wc -l
-    else
-        wlr-randr | grep current | wc -l
-    fi
-}
-
-if [ $(count_monitors) -gt 1 ]; then
-    # echo "2 monitores"
-    # echo "Primary  : $(primary_monitor_name)"
-    # echo "Primary  : $(primary_monitor_fullname)"
-    # echo "External : $(external_monitor_name)"
-    # echo "External : $(external_monitor_fullname)"
-    OPCIONES=$(opciones_dos_monitores)
-    EXTERNAL_MONITOR=$(external_monitor_name)
-else
-    if [ "$(primary_monitor_name)" = "" ]; then
-        OPCIONES=$(opciones_un_monitor_externo)
-    else
-        OPCIONES=$(opciones_un_monitor)
-        # OPCIONES=$(opciones_dos_monitores)
-    fi
-fi
-
-
-MODO=$(printf "$OPCIONES" | rofi -dmenu -p "Monitor")
-
-
-# ******** WAYLAND
-# echo "antes de ejecutar..."
-if [ "$IS_WAYLAND" = "YES" ]; then
-    # echo "tenemos wayland..."
-    # echo "Modo : $MODO"
-    # echo "OPT  : $OPT_MONITOR_EXT"
-    case $MODO in
-        $OPT_MONITOR_INT)
-            # echo $OPT_MONITOR_INT
-            wlr-randr --output $(primary_monitor_name) --on --preferred --output $EXTERNAL_MONITOR --off
+case $OPC in
+    $OPT_SWITCH_MON) switch_monitor $MON ;;
+    $OPT_SET_RESOL)
+        RES=$(menu "$MON_RES_LIST" "Resolucion $MON")
+        if [ -n "$RES" ]; then
+            set_resolution $MON $RES
+        fi
         ;;
-        $OPT_MONITOR_EXT)
-            # echo $OPT_MONITOR_EXT
-            echo "wlr-randr --output $(primary_monitor_name) --off --output $EXTERNAL_MONITOR --on --preferred"
-            wlr-randr --output $(primary_monitor_name) --off --output $EXTERNAL_MONITOR --on --preferred
-        ;;
-        $OPT_MONITOR_BOTH)
-            # echo $OPT_MONITOR_BOTH
-            wlr-randr --output $(primary_monitor_name) --on --preferred --output $EXTERNAL_MONITOR --on
-        ;;
-        $OPT_SET_RESOL)
-            echo $OPT_SET_RESOL
-        ;;
-        $OPT_SCALE_100)
-            wlr-randr --output $(current_monitor_name) --scale 1.0
-        ;;
-        $OPT_SCALE_125)
-            wlr-randr --output $(current_monitor_name) --scale 1.25
-        ;;
-        $OPT_SCALE_150)
-            wlr-randr --output $(current_monitor_name) --scale 1.5
-        ;;
-    esac
-# ******** X11
-else
-    case $MODO in
-        $OPT_MONITOR_INT)
-            xrandr --output eDP --primary --auto --rotate normal --output $EXTERNAL_MONITOR --off
-            bspc wm -r
-        ;;
-        $OPT_MONITOR_EXT)
-            xrandr --output eDP --off --output $EXTERNAL_MONITOR --primary --auto --rotate normal
-            bspc wm -r
-        ;;
-        $OPT_MONITOR_BOTH)
-            xrandr --output eDP --primary --auto --rotate normal --output $EXTERNAL_MONITOR --auto --rotate normal --right-of eDP
-            bspc wm -r
-        ;;
-        $OPT_SET_RESOL)
-            # arandr
-            bspc wm -r
-        ;;
-    esac
-fi
-
+    $OPT_SCALE_100) set_scale $MON 1.0 ;;
+    $OPT_SCALE_125) set_scale $MON 1.25 ;;
+    $OPT_SCALE_150) set_scale $MON 1.5 ;;
+    $OPT_SCALE_200) set_scale $MON 2.0 ;;
+    *) exit 0;;
+esac
 
