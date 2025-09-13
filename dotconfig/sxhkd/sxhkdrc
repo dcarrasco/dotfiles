@@ -5,6 +5,10 @@
 # |___/_/\_\_| |_|_|\_\__,_|
 
 
+# -----------------------------------------------------------
+# Programs
+# -----------------------------------------------------------
+
 # Open terminal
 super + Return
 	kitty -d $HOME
@@ -12,22 +16,6 @@ super + Return
 # Open alternate terminal
 super + alt + Return
     alacritty --working-directory $HOME
-
-# Open launcher
-super + space
-    rofi -i -show-icons -show drun
-
-# Open system menu
-super + alt + space
-	rofi -show menu -modes "menu:$HOME/.config/polybar/scripts/sys-menu.sh"
-
-# Open run menu
-super + control + space
-	rofi -show run -config $HOME/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'
-
-# Reload sxhkd configuration
-super + Escape
-	pkill -USR1 -x sxhkd && notify-send "sxhkd" "Reload sxhkd configuration"
 
 # Open browser
 super + b
@@ -37,50 +25,111 @@ super + b
 super + alt + b
     brave-browser
 
-# Open virt-manager
-super + alt + v
-    virt-manager
-
-# Open Windows 11
-super + v
-    $HOME/.config/polybar/scripts/start-vm.sh windows
-
-# Show virtual machines
-super + control + v
-    $HOME/.config/polybar/scripts/list-vm.sh win10
-
 # Open file manager
 super + f
 	thunar ~
 
+# Open Windows 11
+super + v
+    $HOME/.config/hypr/scripts/start-vm.sh windows
+
+# Open virt-manager
+super + alt + v
+    virt-manager
+
+# Open calculator
+XF86Calculator
+    exec gnome-calculator
+
+# Open favorites (Firefox)
+XF86Favorites
+    exec firefox
+
+
+# -----------------------------------------------------------
+# Utilities
+# -----------------------------------------------------------
+
+# Open launcher
+super + space
+    rofi -i -show-icons -show drun
+
+# Open system menu
+super + alt + space
+    $HOME/.config/hypr/scripts/sys-menu.sh
+
+# Open run menu
+super + control + space
+    rofi -show run -config $HOME/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'
+
+# Switch keyboard layout
+super + shift + space
+    $HOME/.config/hypr/scripts/switch-keyboard-layout.sh
+
+# Reload sxhkd configuration
+super + Escape
+	pkill -USR1 -x sxhkd && notify-send "sxhkd" "Reload sxhkd configuration"
+
+# Show virtual machines
+super + control + v
+    $HOME/.config/hypr/scripts/list-vm.sh win10
+
 # Editor de configuraciones
 super + comma
-    $HOME/.config/polybar/scripts/edit-config.sh
+    $HOME/.config/hypr/scripts/edit-config.sh
 
-# Configuraciones
-super + alt + comma
-    $HOME/.config/polybar/scripts/settings.sh
+# Show keybindings
+super + XF86AudioMute
+    $HOME/.config/hypr/scripts/show-keybinds.sh
 
+# Show keybindings
+super + F1
+    $HOME/.config/hypr/scripts/show-keybinds.sh
 
-# #######################################################
-# bspwm hotkeys
-# #######################################################
+# Previous wallpaper
+super + XF86MonBrightnessDown
+    variety -p && sleep 1.5 && notify-send "Fondo de pantalla" "Nuevo fondo: $(variety --current 2> /dev/null | xargs -0 -- basename)"
 
-# Quit bspwm
-super + alt + q
-	bspc quit
+# Next wallpaper
+super + XF86MonBrightnessUp
+    variety -n && sleep 1.5 && notify-send "Fondo de pantalla" "Nuevo fondo: $(variety --current 2> /dev/null | xargs -0 -- basename)"
+
+# Get screenshot to file
+Print
+    maim $HOME/Imágenes/Screenshots/$(date +%Y%m%d_%H%M%S).png && notify-send "Screenshot creado (pantalla) a archivo"
+
+# Get area screenshot to clipboard
+super + shift + s
+    exec maim -s | xclip -selection clipboard -t image/png && notify-send "Screenshot creado (area) a clipboard"
+
+# Show monitor menu
+super + p
+    $HOME/.config/hypr/scripts/switch-monitor.sh
 
 # Restart bspwm
 super + alt + r
-	bspc wm --restart && notify-send "bspwm" "Reload bspwm"
+    bspc wm --restart && notify-send "bspwm" "Reload bspwm"
 
 # Show powermenu
 super + control + q
     $HOME/.config/rofi/powermenu/powermenu.sh
 
-# Close and kill window
+# Quit bspwm
+super + alt + q
+	bspc quit
+
+
+# -----------------------------------------------------------
+# Tiling
+# -----------------------------------------------------------
+
+# Close window
 super + q
-	bspc node {--close, --kill}
+	bspc node --close
+
+# Kill window
+super + shift + q
+	bspc node --kill
 
 # Send the newest marked node to the newest preselected node
 super + y
@@ -89,11 +138,6 @@ super + y
 # Swap the current node and the biggest window
 super + s
 	bspc node --swap biggest.window.local
-
-
-# #######################################################
-# state/flags
-# #######################################################
 
 # Switch desktop layput
 super + m
@@ -118,11 +162,6 @@ super + control + {x,z}
 # Set the node flags: marked, locked
 super + alt + {x,z}
     bspc node --flag {marked,locked}
-
-
-# #######################################################
-# focus/swap
-# #######################################################
 
 # Focus the node in the given direction: west, south, north, east
 super + {h,j,k,l}
@@ -200,11 +239,6 @@ super + {1-9,0}
 super + shift + {1-9,0}
     bspc node --to-desktop '{1-9,0}' --follow
 
-
-# #######################################################
-# preselect
-# #######################################################
-
 # Preselect the direction: west, south, north, east
 super + control + {h,j,k,l}
     bspc node --presel-dir {west,south,north,east}
@@ -220,11 +254,6 @@ super + control + space
 # Cancel the preselection for the focused desktop
 super + control + shift + space
 	bspc query --nodes -d | xargs -I id -n 1 bspc node id -p cancel
-
-
-# #######################################################
-# move/resize
-# #######################################################
 
 # Expand a window by moving one of its side outward
 super + alt + {h,j,k,l}
@@ -243,9 +272,9 @@ super + alt + s
     $HOME/.config/bspwm/master_max.sh && notify-send "bspwm" "Single window as monocle ($(bspc config single_monocle))"
 
 
-# #######################################################
-# special keys
-# #######################################################
+# -----------------------------------------------------------
+# Media
+# -----------------------------------------------------------
 
 # Decrease volume
 XF86AudioLowerVolume
@@ -259,14 +288,6 @@ XF86AudioRaiseVolume
 XF86AudioMute
     amixer set Master toggle
 
-# Show keybindings
-super + XF86AudioMute
-    $HOME/.config/polybar/scripts/show-keybinds.sh
-
-# Show keybindings
-super + F1
-    $HOME/.config/polybar/scripts/show-keybinds.sh
-
 # Decrease brightness
 XF86MonBrightnessDown
     light -U 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) -i none "Brillo pantalla"
@@ -275,34 +296,7 @@ XF86MonBrightnessDown
 XF86MonBrightnessUp
     light -A 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) -i none "Brillo pantalla"
 
-# Previous wallpaper
-super + XF86MonBrightnessDown
-    variety -p && sleep 1.5 && notify-send "Fondo de pantalla" "Nuevo fondo: $(variety --current 2> /dev/null | xargs -0 -- basename)"
-
-# Next wallpaper
-super + XF86MonBrightnessUp
-    variety -n && sleep 1.5 && notify-send "Fondo de pantalla" "Nuevo fondo: $(variety --current 2> /dev/null | xargs -0 -- basename)"
-
-# Open calculator
-XF86Calculator
-    exec gnome-calculator
-
-# Get screenshot to file
-Print
-    maim $HOME/Imágenes/Screenshots/$(date +%Y%m%d_%H%M%S).png && notify-send "Screenshot creado (pantalla) a archivo"
-
-# Get area screenshot to clipboard
-super + shift + s
-    exec maim -s | xclip -selection clipboard -t image/png && notify-send "Screenshot creado (area) a clipboard"
-
-# Show monitor menu
-super + p
-    $HOME/.config/polybar/scripts/switch-monitor.sh
-
 # Display??
-XF86Display
+    XF86Display
     exec gnome-calculator
 
-# Open favorites (Firefox)
-XF86Favorites
-    exec firefox

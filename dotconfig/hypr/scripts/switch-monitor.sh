@@ -13,18 +13,22 @@ menu() {
 }
 
 count_monitors() {
-    if [ "$BACKEND" = "x11" ]; then
-        xrandr -q | grep " connected" | wc -l
-    else
-        hyprctl monitors all | grep ^Monitor | wc -l
-    fi
+    case $BACKEND in
+        *wayland*) hyprctl monitors all | grep ^Monitor | wc -l ;;
+        *x11*)     xrandr -q | grep " connected" | wc -l ;;
+    esac
 }
 
 get_monitor_list() {
-    local monitors=$(hyprctl monitors all | grep ^Monitor | cut -d " " -f 2)
-    for m in $monitors; do
-        echo "$m $(get_monitor_property $m 2)" ;
-    done
+    case $BACKEND in
+        *wayland*)
+            local monitors=$(hyprctl monitors all | grep ^Monitor | cut -d " " -f 2)
+            for m in $monitors; do
+                echo "$m $(get_monitor_property $m 2)" ;
+            done
+            ;;
+        *x11*) xrandr -q | grep " connected" | cut -d " " -f 1 ;;
+    esac
 }
 
 get_monitor_property() {
@@ -36,57 +40,70 @@ get_monitor_property() {
 get_monitor_data() {
     local monitor=$1
 
-    if [ "$BACKEND" = "wayland" ]; then
-        MON_RES=$(get_monitor_property $monitor 1 | cut -d "@" -f 1)
-        MON_DESC=$(get_monitor_property $monitor 2)
-        MON_SCALE=$(get_monitor_property $monitor 9)
-        MON_DISABLED=$(get_monitor_property $monitor 16)
-        MON_MODES=$(get_monitor_property $monitor 19)
-        MON_RES_LIST=$(echo -e $MON_MODES | sed 's/ /\n/g' | cut -d "@" -f 1)
-    fi
+    case $BACKEND in
+        *wayland*)
+            MON_RES=$(get_monitor_property $monitor 1 | cut -d "@" -f 1)
+            MON_DESC=$(get_monitor_property $monitor 2)
+            MON_SCALE=$(get_monitor_property $monitor 9)
+            MON_DISABLED=$(get_monitor_property $monitor 16)
+            MON_MODES=$(get_monitor_property $monitor 19)
+            MON_RES_LIST=$(echo -e $MON_MODES | sed 's/ /\n/g' | cut -d "@" -f 1)
+            ;;
+        *x11*)
+            MON_RES="$(xrandr -q | grep $monitor | sed 's/primary //' | cut -d " " -f 3 | cut -d "+" -f 1)"
+            MON_DESC="$monitor"
+            MON_SCALE=1.0
+            MON_DISABLED="false"
+            MON_MODES=""
+            MON_RES_LIST="$(xrandr -q | awk -v monitor="$monitor" '{if ($1 ~ monitor) {print_now = 1} if (print_now==1 && $1 ~ /^[1-9]/) {print $1}}')"
+            ;;
+    esac
 }
 
 set_monitor_on() {
     case $BACKEND in
         *wayland*) hyprctl keyword monitor $1, $2, auto, $3 ;;
+        *x11*) xrandr --output $1 --right-of $MON_INT --auto;;
     esac
+    notify-send "Pantalla" "Set pantalla $1 on"
 }
 
 set_monitor_off() {
     case $BACKEND in
         *wayland*) hyprctl keyword monitor $1, disable ;;
+        *x11*)     xrandr --output $1 --off ;;
     esac
+    notify-send "Pantalla" "Set pantalla $1 off"
 }
 
 set_resolution() {
-    set_monitor_on $1 $2 $MON_SCALE
+    case $BACKEND in
+        *wayland*) set_monitor_on $1 $2 $MON_SCALE ;;
+        *x11*)     xrandr --output $1 --mode $2 ;;
+    esac
     notify-send "Pantalla" "Resolucion $2"
 }
 
 set_scale() {
     escala=$2
-    [ "$MON" = "$MON_INT" ] && [ "$2" = "1.5" ] && escala=1.458333
-    set_monitor_on $1 $MON_RES $escala
-    notify-send "Pantalla" "Escala $escala"
-}
-
-switch_monitor() {
-    if [ $(count_monitors) -gt 1 ]; then
-        if [ "$MON_DISABLED" = "false" ]; then
-            set_monitor_off $1
-        else
-            set_monitor_on $1 $MON_RES $MON_SCALE
-        fi
-    fi
+    case $BACKEND in
+        *wayland*)
+            [ "$1" = "$MON_INT" ] && [ "$2" = "1.5" ] && escala=1.458333
+            set_monitor_on $1 $MON_RES $escala
+            ;;
+        *x11*)
+            [ "$2" == "1.0" ]  && xrandr --output $1 --scale 1.0
+            [ "$2" == "1.25" ] && xrandr --output $1 --scale 0.8
+            [ "$2" == "1.5" ]  && xrandr --output $1 --scale 0.666
+            [ "$2" == "2.0" ]  && xrandr --output $1 --scale 0.5
+            ;;
+    esac
+    notify-send "Pantalla" "Escala $2"
 }
 
 switch_monitor_opt() {
-    if [ $(count_monitors) -gt 1 ]; then
-        if [ "$MON_DISABLED" = "false" ]; then
-            echo "    Apagar monitor"
-        else
-            echo "    Activar monitor"
-        fi
+    if [ $(count_monitors) -gt 1 ] && [ "$MON_DISABLED" = "false" ]; then
+        echo -e "$OPT_SET_MON_OFF\n$OPT_SET_MON_ON\n"
     else
         echo ""
     fi
@@ -99,40 +116,47 @@ select_monitor() {
     echo $monitor | cut -d " " -f 1
 }
 
-MON_INT="eDP-1"
-BACKEND="x11"
-[ $(is_wayland) -gt 0 ] && BACKEND="wayland"
-echo "Backend: $BACKEND"
+menu_options() {
+    local option_switch = ""
+    OPT_SWITCH_MON="$(switch_monitor_opt)"
+    [ -n OPT_SWITCH_MON ] && option_switch="$OPT_SWITCH_MON\n"
+    echo -e "$OPT_SWITCH_MON$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n$OPT_SCALE_200"
+}
 
+get_backend() {
+    MON_INT="eDP"
+    BACKEND="x11"
+    [ $(is_wayland) -gt 0 ] && BACKEND="wayland" && MON_INT="eDP-1"
+    echo "Backend: $BACKEND / Internal Monitor: $MON_INT"
+}
+
+get_backend
 MON=$(select_monitor)
 [ -z "$MON" ] && exit 0
+
 get_monitor_data $MON
 
-OPT_SWITCH_MON="$(switch_monitor_opt)"
+OPT_SET_MON_OFF="    Desactivar monitor"
+OPT_SET_MON_ON="    Activar monitor"
 OPT_SET_RESOL="󰹑    Cambiar resolucion"
 OPT_SCALE_100="    Escalar al 100"
 OPT_SCALE_125="    Escalar al 125"
 OPT_SCALE_150="    Escalar al 150"
 OPT_SCALE_200="    Escalar al 200"
 
-OPCIONES=""
-[ -n "$OPT_SWITCH_MON" ] && OPCIONES="$OPT_SWITCH_MON\n"
-OPCIONES="$OPCIONES$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n$OPT_SCALE_200"
-
-OPC=$(menu "$OPCIONES" "Monitor $MON" "$MON_DESC (set at $MON_RES, $MON_SCALE scale)")
+OPC=$(menu "$(menu_options)" "Monitor $MON" "Monitor: $MON_DESC ($MON_RES)")
+[ -z "$OPC" ] && exit 0
 
 case $OPC in
-    $OPT_SWITCH_MON) switch_monitor $MON ;;
+    $OPT_SET_MON_OFF) set_monitor_off $MON ;;
+    $OPT_SET_MON_ON) set_monitor_on $MON $MON_RES $MON_SCALE;;
     $OPT_SET_RESOL)
         RES=$(menu "$MON_RES_LIST" "Resolucion $MON")
-        if [ -n "$RES" ]; then
-            set_resolution $MON $RES
-        fi
+        [ -n "$RES" ] && set_resolution $MON $RES
         ;;
     $OPT_SCALE_100) set_scale $MON 1.0 ;;
     $OPT_SCALE_125) set_scale $MON 1.25 ;;
     $OPT_SCALE_150) set_scale $MON 1.5 ;;
     $OPT_SCALE_200) set_scale $MON 2.0 ;;
-    *) exit 0;;
 esac
 

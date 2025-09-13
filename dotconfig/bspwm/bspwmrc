@@ -16,17 +16,17 @@ bash $HOME/.config/polybar/launch.sh &
 # feh --bg-fill "/home/daniel/Imágenes/fondos pantalla/abstract/liquid/26-Tahoe-Light-6K.png"
 
 export GTK_THEME=Adwaita
-export GDK_SCALE=1
+export GDK_SCALE=1.25
 # export GDK_DPI_SCALE=1.2
-export XCURSOR_THEME=macOS-BigSur
-export XCURSOR_SIZE=36
+# Cursor tambien configurar ~/.Xresources, ~/.config/gtk-3.0/settings.ini y ~/.config/gtk4.0/settings.ini
+export XCURSOR_THEME=MacOS-BigSur
+export XCURSOR_SIZE=42
 export XDG_CURRENT_DESKTOP=bspwm
 
 source $HOME/.config/bspwm/catppuccin
 
 #Set Keyboard Layout
 setxkbmap -layout latam,us -option grp:alt_caps_toggle
-# setxkbmap -layout en
 
 
 # Make sure sxhkd is always running
@@ -104,15 +104,13 @@ bspc config pointer_action2 resize_side
 bspc config pointer_action3 resize_corner
 
 #Auto-Start
-# bspc desktop -f ^9
 [ $(ps -aux | grep variety | wc -l) -eq 1 ] && variety &
-# sleep 0.50
-# urxvtc &
+[ $(pgrep -x redshift) ] || redshift -l -33:-70 &
 lxpolkit &
 dunst &
-picom -b --config "$HOME/.config/bspwm/picom.conf" &
-# [ $(ps -aux | grep psensor | wc -l) -eq 1 ] && psensor &
+picom -b --config $HOME/.config/bspwm/picom.conf &
 dropbox start &
+# [ $(ps -aux | grep psensor | wc -l) -eq 1 ] && psensor &
 # flameshot &
 # synology-drive &
 

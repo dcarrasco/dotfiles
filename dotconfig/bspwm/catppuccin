@@ -27,7 +27,7 @@ base=#1e1e2e
 mantle=#181825
 crust=#11111b
 
-focused_border=$sky
+focused_border=$sapphire
 normal_border=$overlay0
-active_border=$red
+active_border=$lavender
 presel_feedback=$yellow
