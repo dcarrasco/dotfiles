@@ -10,9 +10,17 @@ case ${os,,} in
     *) echo No linux distro detected ;;
 esac
 
-bash -c "$HOME/.config/hypr/scripts/restore-waybar.sh >/dev/null 2>/dev/null &"
+if [ "$DESKTOP_SESSION" == "bspwm" ]; then
+    echo ""
+else
+    bash -c "$HOME/.config/hypr/scripts/restore-waybar.sh >/dev/null 2>/dev/null &"
+fi
 
-dnf list --installed | sort > ~/installed_pkg.txt
+case ${os,,} in
+    *fedora*) dnf list --installed | sort > ~/installed_pkg.txt
+    *) echo No linux distro detected ;;
+esac
+
 echo -e "\n\nFlatpak" >> ~/installed_pkg.txt
 flatpak list >> ~/installed_pkg.txt
 

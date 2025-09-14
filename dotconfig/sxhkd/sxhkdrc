@@ -96,11 +96,11 @@ super + XF86MonBrightnessUp
 
 # Get screenshot to file
 Print
-    maim $HOME/Imágenes/Screenshots/$(date +%Y%m%d_%H%M%S).png && notify-send "Screenshot creado (pantalla) a archivo"
+    $HOME/.config/hypr/scripts/cmd-screenshot.sh
 
 # Get area screenshot to clipboard
 super + shift + s
-    exec maim -s | xclip -selection clipboard -t image/png && notify-send "Screenshot creado (area) a clipboard"
+    $HOME/.config/hypr/scripts/cmd-screenshot.sh clipboard
 
 # Show monitor menu
 super + p

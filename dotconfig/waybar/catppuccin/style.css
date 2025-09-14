@@ -119,10 +119,11 @@ button:hover label {
 #idle_inhibitor,
 #scratchpad,
 #language,
+#bluetooth,
 #custom-power-profiles,
 #custom-poweroff,
 #mpd {
-    padding: 0 0.3em;
+    padding: 0 0.5em;
     margin: 2px 0;
 }
 

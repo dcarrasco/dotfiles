@@ -97,6 +97,9 @@ bspc rule -a Variety state=floating
 bspc rule -a mplayer2 state=floating
 bspc rule -a gnome-calculator state=floating
 bspc rule -a Rofi state=floating
+
+bspc rule -a hypr-sys-menu state=floating
+bspc rule -a hypr-sys-menu rectangle=1400x900+0+0 center=true
 #
 bspc config pointer_modifier mod4
 bspc config pointer_action1 move

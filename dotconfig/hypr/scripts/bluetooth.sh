@@ -50,13 +50,19 @@ bluetooth_toggle() {
 
         bluetoothctl power off >> /dev/null
     fi
+    notify-send "Bluetooth" "Set bluetooth $(bluetooth_state)"
+}
+
+bluetooth_state() {
+    if bluetoothctl show | grep -q "Powered: no"; then
+        echo "off"
+    else
+        echo "on"
+    fi
 }
 
 case "$1" in
-    --toggle)
-        bluetooth_toggle
-        ;;
-    *)
-        bluetooth_print
-        ;;
+    --toggle) bluetooth_toggle ;;
+    --state)  bluetooth_state ;;
+    *)        bluetooth_print ;;
 esac

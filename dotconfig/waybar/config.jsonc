@@ -208,7 +208,7 @@
         // 󰂲
         "format": "",
         // "format-off": "󰂲",
-        // "format-connected": " ",
+        "format-connected": "",
         "on-click": "blueman-manager",
         "on-click-right": "$HOME/.config/hypr/scripts/bluetooth.sh --toggle",
         "tooltip-format": "{status} ({num_connections})\n{device_enumerate}",
@@ -253,7 +253,7 @@
     },
 
     "hyprland/language": {
-        "format": "  {} ",
+        "format": "  {}",
         "format-en": "us",
         "format-es": "es",
         "keyboard-name": "at-translated-set-2-keyboard",
