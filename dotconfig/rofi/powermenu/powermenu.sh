@@ -1,65 +1,49 @@
 #!/usr/bin/env bash
 
-## Author  : Aditya Shakya
-## Mail    : adi1090x@gmail.com
-## Github  : @adi1090x
-## Twitter : @adi1090x
-
-# Available Styles
-# >> Created and tested on : rofi 1.6.0-1
-#
-# column_circle     column_square     column_rounded     column_alt
-# card_circle     card_square     card_rounded     card_alt
-# dock_circle     dock_square     dock_rounded     dock_alt
-# drop_circle     drop_square     drop_rounded     drop_alt
-# full_circle     full_square     full_rounded     full_alt
-# row_circle      row_square      row_rounded      row_alt
-
-# theme="drop_square"
-theme="drop_square"
-dir="$HOME/.config/rofi/powermenu"
-
+theme="powermenu"
+DIR="$HOME/.config/rofi/powermenu"
 
 uptime=$(uptime -p | sed -e 's/up //g')
 
-rofi_command="rofi -theme $dir/$theme"
+rofi_command="rofi -dmenu -theme $DIR/$theme -hover-select"
 
 # Options
-shutdown=" "
-reboot=" "
-lock=" "
-suspend=" "
-logout=" "
+# icons         
+shutdown="Apagar\0icon\x1f$DIR/icons/shutdown-white.png"
+reboot="Reiniciar\0icon\x1f$DIR/icons/reboot-white.png"
+lock="Bloquear\0icon\x1f$DIR/icons/lock-white.png"
+suspend="Suspender\0icon\x1f$DIR/icons/suspend-white.png"
+logout="Logout\0icon\x1f$DIR/icons/logout-white.png"
 
 # Message
 msg() {
-	rofi -theme "$dir/message.rasi" -e "Available Options  -  yes / y / no / n"
+	rofi -theme "$DIR/message.rasi" -e "Available Options  -  yes / y / no / n"
 }
 
 # Variable passed to rofi
 options="$lock\n$logout\n$shutdown\n$suspend\n$reboot"
 
-chosen="$(echo -e "$options" | $rofi_command -p "Uptime: $uptime" -dmenu -selected-row 0)"
-case $chosen in
-    $shutdown)
+chosen="$(echo -e "$options" | $rofi_command -mesg "System Uptime: $uptime")"
+case ${chosen,,} in
+    apagar)
 			systemctl poweroff
         ;;
-    $reboot)
+    reiniciar)
 			systemctl reboot
         ;;
-    $lock)
+    bloquear)
 		if [[ -f /usr/bin/i3lock ]]; then
 			i3lock
 		elif [[ -f /usr/bin/betterlockscreen ]]; then
 			betterlockscreen -l
 		fi
         ;;
-    $suspend)
+    suspender)
 			mpc -q pause
 			amixer set Master mute
 			systemctl suspend
         ;;
-    $logout)
+    logout)
 			if [[ "$DESKTOP_SESSION" == "Openbox" ]]; then
 				openbox --exit
 			elif [[ "$DESKTOP_SESSION" == "bspwm" ]]; then

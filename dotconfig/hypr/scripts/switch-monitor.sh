@@ -120,7 +120,7 @@ menu_options() {
     local option_switch = ""
     OPT_SWITCH_MON="$(switch_monitor_opt)"
     [ -n OPT_SWITCH_MON ] && option_switch="$OPT_SWITCH_MON\n"
-    echo -e "$OPT_SWITCH_MON$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n$OPT_SCALE_200"
+    echo -e "${option_switch}$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n$OPT_SCALE_200"
 }
 
 get_backend() {

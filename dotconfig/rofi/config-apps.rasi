@@ -10,10 +10,10 @@ configuration {
   font: "Adwaita Sans 18";
   icon-theme: "Kora grey Light";
   drun-display-format: "{name}";
-  display-drun: "Apps";
+  display-drun: "󰀻";
   display-window: " ";
   display-combi: " ";
 }
 
 @theme "themes/colors/catppuccin-latte.rasi"
-@import "themes/layout.rasi"
+@import "themes/layout-apps.rasi"

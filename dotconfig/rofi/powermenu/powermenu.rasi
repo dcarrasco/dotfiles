@@ -1,0 +1,92 @@
+@import "styles/colors.rasi"
+
+configuration {
+    font: "SF UI Display 18";
+    show-icons: true;
+    icon-theme: "Papirus";
+}
+
+* {
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px;
+}
+
+window {
+    transparency: "real";
+    text-color: @foreground;
+    background-color: @background;
+    border-radius: 0px;
+    height: 100%;
+    width: 100%;
+    location: north;
+    padding: 30% 10% 15% 10%;
+}
+
+mainbox {
+    children: [ listview, message ];
+    spacing: 0%;
+    padding: 3em 0;
+    width: 100%;
+}
+
+
+listview {
+    enabled: true;
+    spacing: 2em;
+    cycle: true;
+    dynamic: true;
+    layout: horizontal;
+    flow: horizontal;
+    horizontal-align: 0.5;
+}
+
+element {
+    children: [ element-icon, dummy, element-text, dummy ];
+    text-color: @foreground;
+    orientation: vertical;
+    border-radius: 0%;
+    expand: true;
+    padding: 2em 3.2em;
+}
+
+element-icon {
+    vertical-align: 0.5;
+    size: 4em ;
+    padding: 0 0 1em 0;
+}
+
+dummy {
+    expand: true;
+}
+
+element-text {
+    text-color: inherit;
+    font: "SF UI Display 22";
+    expand: true;
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    padding: 0 0;
+}
+
+
+element selected {
+    border-radius: 30px;
+    text-color: @foreground-alt;
+    background-color: @selected;
+    border: 0% 0% 0% 0%;
+    border-color: @foreground-alt;
+    border: 0.2em;
+}
+
+message {
+    border: 0 0 2px 0;
+    border-color: @foreground;
+    margin: 0 25%;
+}
+textbox {
+    text-color: @foreground;
+    horizontal-align: 0.5;
+    padding: 2em 0;
+    align: center;
+}

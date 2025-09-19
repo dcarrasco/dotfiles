@@ -8,7 +8,7 @@
 #            |_|
 
 #Clean lingering programs when reloaded
-"$HOME/.config/bspwm/clean" &
+$HOME/.config/bspwm/clean &
 
 #Start polybar first
 # bash ~/.config/polybar/launch.sh 2> ~/polybar_error.log &
@@ -23,21 +23,24 @@ export XCURSOR_THEME=MacOS-BigSur
 export XCURSOR_SIZE=42
 export XDG_CURRENT_DESKTOP=bspwm
 
-source $HOME/.config/bspwm/catppuccin
+source $HOME/.config/bspwm/themes/catppuccin-latte
 
 #Set Keyboard Layout
 setxkbmap -layout latam,us -option grp:alt_caps_toggle
 
+# Set screenoff timeout
+xset dpms 180 180 180
 
 # Make sure sxhkd is always running
-while :; do
-    if pgrep -x sxhkd > /dev/null; then
-        true
-    else
-        sxhkd &
-    fi
-    sleep 5
-done &
+# while :; do
+#     if pgrep -x sxhkd > /dev/null; then
+#         true
+#     else
+#         sxhkd &
+#     fi
+#     sleep 5
+# done &
+sxhkd &
 
 #Fix Mouse curoor on startup
 xsetroot -cursor_name left_ptr
@@ -108,7 +111,7 @@ bspc config pointer_action3 resize_corner
 
 #Auto-Start
 [ $(ps -aux | grep variety | wc -l) -eq 1 ] && variety &
-[ $(pgrep -x redshift) ] || redshift -l -33:-70 &
+[ $(pgrep -x redshift) ] || redshift -l -33.3:-70.5 &
 lxpolkit &
 dunst &
 picom -b --config $HOME/.config/bspwm/picom.conf &

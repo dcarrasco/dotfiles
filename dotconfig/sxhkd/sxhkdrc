@@ -52,7 +52,7 @@ XF86Favorites
 
 # Open launcher
 super + space
-    rofi -i -show-icons -show drun
+    rofi -i -show-icons -config config-apps.rasi -show drun
 
 # Open system menu
 super + alt + space
@@ -278,23 +278,23 @@ super + alt + s
 
 # Decrease volume
 XF86AudioLowerVolume
-	amixer set Master 5%- && notify-send -a OSD -h int:value:$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1) -i none "Volumen"
+	$HOME/.config/hypr/scripts/set-volume.sh down
 
 # Increase volume
 XF86AudioRaiseVolume
-	amixer set Master 5%+ && notify-send -a OSD -h int:value:$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1) -i none "Volumen"
+	$HOME/.config/hypr/scripts/set-volume.sh up
 
 # Mute
 XF86AudioMute
-    amixer set Master toggle
+   $HOME/.config/hypr/scripts/set-volume.sh toggle
 
 # Decrease brightness
 XF86MonBrightnessDown
-    light -U 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) -i none "Brillo pantalla"
+    $HOME/.config/hypr/scripts/set-brightness.sh down
 
 # Increase brightness
 XF86MonBrightnessUp
-    light -A 10 && notify-send -a OSD -h int:value:$(light -G | cut -d . -f 1) -i none "Brillo pantalla"
+    $HOME/.config/hypr/scripts/set-brightness.sh up
 
 # Display??
     XF86Display

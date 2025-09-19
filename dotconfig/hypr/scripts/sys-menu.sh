@@ -24,7 +24,7 @@ webapp() {
 }
 
 show_learn_menu() {
-    case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n  Bspwm\n󰍜  Waybar\n󰍜  Polybar\n  NerdFonts\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
+    case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n  Bspwm\n  Waybar\n  Polybar\n  NerdFonts\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
         *Keybindings*) $SCRIPT_PATH/show-keybinds.sh ;;
         *Omarchy*)     webapp "https://manuals.omamix.org/2/the-omarchy-manual" & ;;
         *Hyprland*)    webapp "https://wiki.hypr.land/" & ;;
@@ -66,6 +66,10 @@ show_screenrecord_menu() {
 }
 
 show_toggle_menu() {
+    # wifi_status=$(nmcli radio wifi)
+    # bt_status=$(if $(bluetoothctl show | grep -q "Powered: no" > /dev/null ); then echo "disabled"; else echo "enabled"; fi)
+    # power_status=$(tuned-adm active | cut -d " " -f 4)
+    # keyb_status=$(setxkbmap -query | grep layout | awk '{print $2}')
     case $(menu "Toggle" "   Wifi\n󰂯  Bluetooth\n  Power Management\n   Keyboard Layout\n󰪛  Keyboard ControlCaps\n󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar") in
         *Wifi*)              $SCRIPT_PATH/switch-wifi.sh ;;
         *Bluetooth*)         $SCRIPT_PATH/bluetooth.sh --toggle ;;
@@ -83,7 +87,7 @@ show_toggle_menu() {
 show_style_menu() {
     case $(menu "Style" "󰸌  Theme\n  Font\n  Prev Background\n  Next Background") in
         *Theme*) $SCRIPT_PATH/switch-theme.sh ;;
-        *Font*) $SCRIPT_PATH/font-menu.sh ;;
+        *Font*)  $SCRIPT_PATH/font-menu.sh ;;
         *Prev\ Background*) variety -p ;;
         *Next\ Background*) variety -n ;;
         *) show_main_menu ;;
@@ -91,7 +95,6 @@ show_style_menu() {
 }
 
 show_setup_menu() {
-
     case $(menu "Setup" "  Configs\n  Audio\n  Wifi\n󰂯  Bluetooth\n󰍹  Monitors\n  Keybindings\n  Input\n󰈷  Fingerprint\n  Fido2") in
         *Configs*)     $SCRIPT_PATH/edit-config.sh ;;
         *Audio*)       terminal alsamixer ;;

@@ -6,7 +6,7 @@
 //                   |___/
 {
     "include": [
-        "$HOME/.config/waybar/catppuccin/layout.jsonc"
+        "$HOME/.config/waybar/catppuccin-latte/layout.jsonc"
     ],
 
     // Modules configuration
@@ -102,7 +102,10 @@
 
     "tray": {
         "icon-size": 20,
-        "spacing": 12
+        "spacing": 12,
+        "icons": {
+            // "variety": "variety",
+        }
     },
 
     "clock": {
@@ -138,6 +141,10 @@
     "memory": {
         "format": "  {used:0.1f}G",
         // "format": "    {}%",
+        "states": {
+            "warning": 80,
+            "critical": 90,
+        },
         "tooltip": true,
         "tooltip-format": "RAM {used:0.1f}G / {total:0.1f}G used ({percentage}%)\nSWAP {swapUsed:0.1f}G / {swapTotal:0.1f}G used"
     },

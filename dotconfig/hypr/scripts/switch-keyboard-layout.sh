@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$DESKTOP_SESSION" == "bspwm" ]; then
+if [ "$DESKTOP_SESSION" = "bspwm" ]; then
     [ $(setxkbmap -query | grep layout | awk '{print $2}') = "us" ] && setxkbmap latam || setxkbmap us
     newlayout=$(setxkbmap -query | grep layout | awk '{print $2}')
 else
