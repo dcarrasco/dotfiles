@@ -10,8 +10,7 @@ change_theme() {
     sed -i "s/themes\/.*\.conf/themes\/$1.conf/" $HOME/.config/hypr/hyprland.conf
 
     # rofi
-    sed -i "s/^@theme \"themes\/colors\/.*\.rasi\"/@theme \"themes\/colors\/$1.rasi\"/" $HOME/.config/rofi/config.rasi
-    sed -i "s/^@theme \"themes\/colors\/.*\.rasi\"/@theme \"themes\/colors\/$1.rasi\"/" $HOME/.config/rofi/config-apps.rasi
+    sed -i "s/^@import \"themes\/colors\/.*\.rasi\"/@import \"themes\/colors\/$1.rasi\"/" $HOME/.config/rofi/themes/colors.rasi
 
     # bspwm
     sed -i "s/^source \$HOME\/\.config\/bspwm\/themes\/.*/source \$HOME\/.config\/bspwm\/themes\/$1/" $HOME/.config/bspwm/bspwmrc

@@ -52,7 +52,7 @@ XF86Favorites
 
 # Open launcher
 super + space
-    rofi -i -show-icons -config config-apps.rasi -show drun
+    rofi -show drun -show-icons -theme layout-apps
 
 # Open system menu
 super + alt + space

@@ -48,6 +48,7 @@
     fg-prompt:       @blue;
     fg-placeholder:  @text-alpha;
     fg-selected:     @sapphire;
+    bg-selected:     none;
     fg-scrollbar:    @surface1;
 
     background-color: transparent;

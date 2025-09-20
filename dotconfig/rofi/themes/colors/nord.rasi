@@ -40,6 +40,7 @@
     fg-prompt:       @nord9;
     fg-placeholder:  @nord4alpha;
     fg-selected:     @nord8;
+    bg-selected:     none;
     fg-scrollbar:    @nord3;
 
     background-color: transparent;

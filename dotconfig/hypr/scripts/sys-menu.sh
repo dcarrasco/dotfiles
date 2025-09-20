@@ -143,7 +143,7 @@ go_to_menu() {
     esac
 }
 
-if [[ -n "$1" ]]; then
+if [ -n "$1" ]; then
     go_to_menu "$1"
 else
     show_main_menu

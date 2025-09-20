@@ -7,13 +7,16 @@
  */
 
 configuration {
-  font: "Adwaita Sans 18";
-  icon-theme: "Kora grey Light";
-  drun-display-format: "{name}";
-  display-drun: "Apps";
-  display-window: " ";
-  display-combi: " ";
+    font: "Adwaita Sans 18";
+    icon-theme: "Kora grey Light";
+    drun-display-format: "{name}";
+    display-drun: "󰀻";
+    display-window: " ";
+    display-combi: " ";
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
 }
 
-@theme "themes/colors/catppuccin-latte.rasi"
-@import "themes/layout.rasi"
+@theme "themes/default.rasi"
+
