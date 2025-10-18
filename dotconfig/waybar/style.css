@@ -7,5 +7,5 @@
 *                 |___/
 */
 
-@import "catppuccin-latte/colors.css";
-@import "catppuccin-latte/style.css";
+@import "colors/catppuccin.css";
+@import "themes/circle/style.css";

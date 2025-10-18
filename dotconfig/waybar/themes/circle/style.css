@@ -18,14 +18,14 @@ window {
 }
 
 window#waybar {
-    background: linear-gradient(0deg, alpha(@bg-normal, 0.6), alpha(@bg-normal, 0.7));
+    background: linear-gradient(0deg, alpha(@bg-normal, 0.7), alpha(@bg-normal, 0.8));
     border-bottom: 1px solid alpha(@bg-normal, 0.8);
-    border-radius: 0%;
+    border-radius: 20px;
     /* border: 1px solid red; */
 }
 
 .modules-left, .modules-right, .modules-center {
-    padding: 0 0.5em;
+    padding: 0 1em;
 }
 
 tooltip {
@@ -43,49 +43,36 @@ tooltip label {
 
 #workspaces {
     padding: 0;
+    /* border-radius: 20px; */
+    /* background-color: alpha(@bg-normal, 0.2); */
 }
 
 button {
-    /* Botones Circulares */
-    /* padding: 0px 2px; */
-    /* margin: 0px 8px; */
-    /* border-radius: 100%; */
-    /* background-color: @bg-normal; */
-    /* border: 2px solid @bg-normal; */
-    /* transition: all 0.3s ease-in-out; */
-
-    /* Botones cuadrados */
-    border: none;
-    border-radius: 0;
-    padding: 0;
-    margin: 0;
+    padding: 0px 2px;
+    margin: 0px 0px;
 }
 
 button label {
-    color: @fg-normal;
-    padding: 0px 0.7em;
-    margin: 0px 0px;
+    color: @bg-selected;
+    padding: 0px 0.6em;
+    font-weight: 700;
+    margin: 0;
 }
 
 button.empty label {
     color: alpha(@fg-normal, 0.5);
+    font-weight: 400;
 }
 
 button.active label {
-    background-color: alpha(@bg-selected, 0.7);
-    /* box-shadow: inset 0 -2px @fg-high; */
-    /* padding: 0px 8px; */
-    /* margin: 4px 0px; */
-    /* border-radius: 100%; */
-    /* border: 2px solid @bg-selected; */
-    /* transition: all 0.2s ease-in-out; */
+    background-color: alpha(@bg-selected, 0.8);
     color: @fg-high;
     font-weight: 800;
-
-    padding: 0 0.5em;
-    margin: 3px 0;
-    border-radius: 7px;
-    border: 3px solid alpha(@bg-selected, 0.8);
+    text-shadow: 1px 1px 2px alpha(@bg-normal, 0.7);
+    padding: 1px 0.5em;
+    margin: 5px 0.1em;
+    border-radius: 100%;
+    /* border: 2px solid @bg-selected; */
 }
 
 button.urgent label {
@@ -103,12 +90,13 @@ button:hover label {
 }
 
 #custom-leftsep {
-    padding-right: 0.7em;
+    padding: 0 0.5em;
+    color: @bg-selected;
 }
 
 #custom-windowstatus {
     font-family: SF Mono, FontAwesome;
-    font-size: 16px;
+    font-size: 18px;
     color: @fg-status;
     padding: 0 0.5em;
 }
@@ -117,11 +105,12 @@ button:hover label {
     font-family: Adwaita Sans;
     font-weight: 600;
     color: @fg-normal;
-    padding: 0 0.5em;
+    padding: 0 0em;
 }
 
 
 #clock,
+#bluetooth,
 #battery,
 #cpu,
 #memory,
@@ -140,43 +129,44 @@ button:hover label {
 #custom-power-profiles,
 #custom-poweroff,
 #mpd {
-    padding: 0 0.3em;
+    padding: 0px 0.4em;
     margin: 5px 0px;
-    border-radius: 7px;
+    border-radius: 15px;
+    font-size: 16pt;
 }
 
 #clock {
     font-family: Adwaita Sans;
+    font-size: 14pt;
     color: @fg-normal;
-}
-
-#battery {
 }
 
 /* Success state ----------------------------------------------------------------------------- */
 #custom-power-profiles.power-saver,
-#battery.charging, #battery.plugged {
+#battery.charging {
     color: @bg-normal;
-    background-color: @bg-success;
+    background-color: @success;
 }
 
 /* Warning state ----------------------------------------------------------------------------- */
 #battery.warning:not(.charging),
 #cpu.warning,
+#memory.warning,
 #pulseaudio.muted,
 #idle_inhibitor.activated {
     color: @bg-normal;
-    background-color: @bg-warning;
+    background-color: @warning;
 }
 
 /* Critical state ----------------------------------------------------------------------------- */
 #battery.critical:not(.charging),
 #cpu.critical,
+#memory.critical,
 #temperature.critical,
 #tray > .needs-attention,
 #custom-power-profiles.performance {
-    background-color: @bg-critical;
-    color: @fg-high;
+    color: @bg-normal;
+    background-color: @critical;
 }
 
 #tray > .needs-attention {
@@ -190,6 +180,14 @@ button:hover label {
     color: alpha(@fg-normal, 0.4);
 }
 
+#battery.charging {
+    padding: 0 0.6em 0 0.4em;
+}
+
+#idle_inhibitor.activated {
+    padding: 0 0.1em 0 0.3em;
+    font-size: 14pt;
+}
 
 #wireplumber {
     background-color: #fff0f5;

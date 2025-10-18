@@ -39,7 +39,7 @@ __        __          _                  _                         _
         "custom/power-profiles",
         "bluetooth",
         "network",
-        "network#ethernet",
+        "network#eth",
         "pulseaudio",
         "battery",
         "custom/poweroff"

@@ -14,7 +14,7 @@ arch=(\
     "hypr/envs.conf" \
     "hypr/autostart.conf" \
     "hypr/keybinds.conf" \
-    "hypr/colors.conf" \
+    "hypr/monitors.conf" \
     "hypr/input.conf" \
     "hypr/looknfeel.conf" \
     "hypr/rules.conf" \

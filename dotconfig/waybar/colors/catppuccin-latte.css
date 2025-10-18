@@ -52,3 +52,4 @@ __        __          _                            _
 @define-color warning     @yellow;
 @define-color critical    @red;
 @define-color success     @green;
+@define-color bg-selected @yellow;

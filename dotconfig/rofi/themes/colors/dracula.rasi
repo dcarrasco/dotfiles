@@ -1,0 +1,41 @@
+/**
+ * Catppuccin rofi theme
+ * Adapted by undiabler <undiabler@gmail.com>
+ *
+ * Nord Color palette imported from https://www.nordtheme.com/
+ *
+ */
+
+* {
+    /* ------ Catpuccin Mocha  -------------------------------- */
+    background: #282A36;
+    background-alpha: #282A3699;
+    foreground: #F8F8F2;
+    foreground-alpha: #F8F8F299;
+    selection:  #44475A;
+    comment:    #6272A4;
+    red:        #FF5555;
+    orange:     #FFB86C;
+    yellow:     #F1FA8C;
+    green:      #50FA7B;
+    purple:     #BD93F9;
+    cyan:       #8BE9FD;
+    pink:       #FF79C6;
+
+
+    base:   #1e1e2e;
+    base-alpha:   #1e1e2e99;
+
+    window-border:   @purple;
+    bg-color:        @background-alpha;
+    // foreground:      @foreground;
+    bg-textbox:      @comment;
+    fg-prompt:       @cyan;
+    fg-placeholder:  @foreground-alpha;
+    fg-selected:     @purple;
+    bg-selected:     none;
+    fg-scrollbar:    @selection;
+
+    background-color: transparent;
+}
+

@@ -85,9 +85,10 @@ show_toggle_menu() {
 }
 
 show_style_menu() {
-    case $(menu "Style" "󰸌  Theme\n  Font\n  Prev Background\n  Next Background") in
-        *Theme*) $SCRIPT_PATH/switch-theme.sh ;;
-        *Font*)  $SCRIPT_PATH/font-menu.sh ;;
+    case $(menu "Style" "  Theme\n󰸌  Colors\n  Font\n  Prev Background\n  Next Background") in
+        *Theme*)  $SCRIPT_PATH/switch-theme.sh ;;
+        *Colors*) $SCRIPT_PATH/switch-colors.sh ;;
+        *Font*)   $SCRIPT_PATH/font-menu.sh ;;
         *Prev\ Background*) variety -p ;;
         *Next\ Background*) variety -n ;;
         *) show_main_menu ;;
@@ -95,12 +96,13 @@ show_style_menu() {
 }
 
 show_setup_menu() {
-    case $(menu "Setup" "  Configs\n  Audio\n  Wifi\n󰂯  Bluetooth\n󰍹  Monitors\n  Keybindings\n  Input\n󰈷  Fingerprint\n  Fido2") in
+    case $(menu "Setup" "  Configs\n  Audio\n  Wifi\n󰂯  Bluetooth\n󰍹  Monitors\n󰐪  Printers\n  Keybindings\n  Input\n󰈷  Fingerprint\n  Fido2") in
         *Configs*)     $SCRIPT_PATH/edit-config.sh ;;
         *Audio*)       terminal alsamixer ;;
         *Wifi*)        $SCRIPT_PATH/nmcli-rofi.sh ;;
         *Bluetooth*)   blueman-manager ;;
         *Monitors*)    $SCRIPT_PATH/switch-monitor.sh ;;
+        *Printers*)    webapp "http://localhost:631" & ;;
         *Keybindings*) [ $DESKTOP_SESSION = "bspwm" ] && edit_vim $HOME/.config/sxhkd/sxhkdrc || edit_vim $HOME/.config/hypr/keybinds.conf ;;
         *Input*)       edit_vim $HOME/.config/hypr/input.conf ;;
         *Fingerprint*) terminal $OMARCHY_BIN_PATH/omarchy-setup-fingerprint ;;
@@ -125,7 +127,7 @@ show_main_menu() {
 
 go_to_menu() {
     case "${1,,}" in
-        *apps*)    rofi -i -show drun -show-icons ;;
+        *apps*)    rofi -i -show drun -show-icons -theme layout-apps;;
         *search*)  $SCRIPT_PATH/search-home.sh ;;
         *learn*)   show_learn_menu ;;
         *capture*) show_capture_menu ;;

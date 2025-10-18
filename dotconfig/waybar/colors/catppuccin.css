@@ -39,6 +39,7 @@ __        __          _                            _
 @define-color flamingo  #f2cdcd;
 @define-color rosewater #f5e0dc;
 
+/* ------ Waybar elements -------------------------------- */
 @define-color bg-normal   @mantle;
 @define-color fg-normal   alpha(@text, 0.8);
 @define-color fg-high     @text;
@@ -48,4 +49,6 @@ __        __          _                            _
 @define-color selected    @blue;
 @define-color warning     @yellow;
 @define-color critical    @red;
+@define-color critical-fg @surface0;
 @define-color success     @green;
+@define-color bg-selected @sapphire;

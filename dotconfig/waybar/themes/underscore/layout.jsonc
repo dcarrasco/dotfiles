@@ -14,6 +14,7 @@ __        __          _                  _                         _
     "margin-top": 5,
     "margin-left": 5,
     "margin-right": 5,
+    "reload_style_on_change": true,
 
     // Choose the order of the modules
     "modules-left": [
@@ -37,7 +38,7 @@ __        __          _                  _                         _
         "custom/power-profiles",
         "bluetooth",
         "network",
-        "network#ethernet",
+        "network#eth",
         "pulseaudio",
         "battery",
         "custom/poweroff"

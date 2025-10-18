@@ -14,16 +14,14 @@ __        __          _                      _         _
 }
 
 window {
-    font-size: 13pt;
+    font-size: 16pt;
     color: @fg-normal;
 }
 
 window#waybar {
     background: alpha(@bg-normal, 0.8);
     border-bottom: 1px solid alpha(@bg-normal, 0.9);
-    border-radius: 0px;
-}
-#waybar {
+    border-radius: 10px;
 }
 
 .modules-left, .modules-right, .modules-center {
@@ -39,7 +37,7 @@ tooltip {
 tooltip label {
     color: @fg-normal;
     font-family: Adwaita Sans;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 12pt;
 }
 
@@ -58,7 +56,7 @@ button label {
     color: @fg-high;
     font-size: 14pt;
     padding: 0px 0.4em;
-    margin: 1px 0;
+    margin: 2px 0;
 }
 
 button.empty label {
@@ -68,7 +66,7 @@ button.empty label {
 button.active label {
     color: @fg-high;
     font-weight: 800;
-    box-shadow: inset 0 -4px @ws-selected;
+    box-shadow: inset 0 -3px @ws-selected;
 }
 
 button.urgent label {
@@ -99,7 +97,7 @@ button:hover label {
 #window label {
     color: @fg-high;
     font-family: Adwaita Sans;
-    font-size: 15pt;
+    font-size: 14pt;
     font-weight: 600;
     padding: 0 0.3em;
 }
@@ -131,6 +129,7 @@ button:hover label {
 
 #clock {
     font-family: Adwaita Sans;
+    font-size: 14pt;
 }
 
 #battery {
@@ -173,7 +172,7 @@ button:hover label {
 #battery.plugged,
 #custom-power-profiles.power-saver {
     color: @success;
-    box-shadow: inset 0 -4px @success;
+    box-shadow: inset 0 -3px @success;
     background-color: transparent;
 }
 
@@ -186,7 +185,7 @@ button:hover label {
 #idle_inhibitor.activated,
 #pulseaudio.muted {
     color: @warning;
-    box-shadow: inset 0 -4px @warning;
+    box-shadow: inset 0 -3px @warning;
     background-color: transparent;
 }
 
@@ -200,7 +199,7 @@ button:hover label {
 #custom-power-profiles.performance,
 #tray > .needs-attention {
     color: @critical;
-    box-shadow: inset 0 -4px @critical;
+    box-shadow: inset 0 -3px @critical;
     background-color: transparent;
 }
 

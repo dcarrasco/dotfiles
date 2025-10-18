@@ -1,0 +1,23 @@
+//   __        __          _
+//   \ \      / /_ _ _   _| |__   __ _ _ __
+//    \ \ /\ / / _` | | | | '_ \ / _` | '__|
+//     \ V  V / (_| | |_| | |_) | (_| | |
+//      \_/\_/ \__,_|\__, |_.__/ \__,_|_|
+//                   |___/
+{
+    "layer": "top",    // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "height": 36,      // Waybar height (to be removed for auto height)
+    "spacing": 4,      // Gaps between modules (4px)
+    "margin-top": 5,
+    "margin-left": 7,
+    "margin-right": 7,
+    "reload_style_on_change": true,
+
+    // Choose the order of the modules
+    "modules-left":   ["custom/leftsep", "hyprland/window"],
+    "modules-center": ["hyprland/workspaces", "custom/windowstatus"],
+    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "pulseaudio", "hyprland/language", "bluetooth", "network", "network#eth", "clock", "custom/power-profiles", "battery"],
+
+}
+# vi: ft=json
