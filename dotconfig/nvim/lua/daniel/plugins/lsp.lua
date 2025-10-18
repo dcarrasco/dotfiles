@@ -14,13 +14,13 @@ return {
     config = function()
       vim.opt.signcolumn = 'yes'
 
-      local lspconfig = require('lspconfig')
-      local lspconfig_defaults = lspconfig.util.default_config
-      lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-        'force',
-        lspconfig_defaults.capabilities,
-        require('cmp_nvim_lsp').default_capabilities()
-      )
+      -- local lspconfig = require('lspconfig')
+      -- local lspconfig_defaults = lspconfig.util.default_config
+      -- lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+        -- 'force',
+        -- lspconfig_defaults.capabilities,
+        -- require('cmp_nvim_lsp').default_capabilities()
+      -- )
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(event)
@@ -48,10 +48,10 @@ return {
         end
       })
 
-      lspconfig.pylsp.setup({})
-      lspconfig.lua_ls.setup({})
-      lspconfig.phpactor.setup({})
-      lspconfig.ts_ls.setup({})
+      vim.lsp.enable('pylsp', {})
+      vim.lsp.enable('lua_ls', {})
+      vim.lsp.enable('phpactor', {})
+      vim.lsp.enable('ts_ls', {})
 
       require('mason-lspconfig').setup({
         ensure_installed = {},
