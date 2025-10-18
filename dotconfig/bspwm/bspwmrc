@@ -23,7 +23,7 @@ export XCURSOR_THEME=MacOS-BigSur
 export XCURSOR_SIZE=42
 export XDG_CURRENT_DESKTOP=bspwm
 
-source $HOME/.config/bspwm/themes/catppuccin-latte
+source $HOME/.config/bspwm/themes/catppuccin
 
 #Set Keyboard Layout
 setxkbmap -layout latam,us -option grp:alt_caps_toggle
@@ -114,7 +114,7 @@ bspc config pointer_action3 resize_corner
 [ $(pgrep -x redshift) ] || redshift -l -33.3:-70.5 &
 lxpolkit &
 dunst &
-picom -b --config $HOME/.config/bspwm/picom.conf &
+picom -b &
 dropbox start &
 # [ $(ps -aux | grep psensor | wc -l) -eq 1 ] && psensor &
 # flameshot &
