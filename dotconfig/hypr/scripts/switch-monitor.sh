@@ -19,12 +19,21 @@ count_monitors() {
     esac
 }
 
+count_enabled_monitors() {
+    case $BACKEND in
+        *wayland*) hyprctl monitors all | grep "disabled: false" | wc -l ;;
+        *x11*)     xrandr -q | grep " connected" | wc -l ;;
+    esac
+}
+
 get_monitor_list() {
     case $BACKEND in
         *wayland*)
             local monitors=$(hyprctl monitors all | grep ^Monitor | cut -d " " -f 2)
             for m in $monitors; do
-                echo "$m $(get_monitor_property $m 2)" ;
+                local icon="  "
+                [ "$MON_INT" !=  "$m" ] && icon="󰍹  "
+                echo "$icon $m $(get_monitor_property $m 2)" ;
             done
             ;;
         *x11*) xrandr -q | grep " connected" | cut -d " " -f 1 ;;
@@ -101,9 +110,19 @@ set_scale() {
     notify-send "Pantalla" "Escala $2"
 }
 
+get_lid_state() {
+    cat /proc/acpi/button/lid/LID0/state | cut -d ":" -f 2 | xargs
+}
+
 switch_monitor_opt() {
-    if [ $(count_monitors) -gt 1 ] && [ "$MON_DISABLED" = "false" ]; then
-        echo -e "$OPT_SET_MON_OFF\n$OPT_SET_MON_ON\n"
+    if [ $(count_monitors) -gt 1 ] && [ "$(get_lid_state)" = "open" ]; then
+        if [ "$MON_DISABLED" = "false" ]; then
+            if [ $(count_enabled_monitors) -gt 1 ]; then
+                echo -e "$OPT_SET_MON_OFF"
+            fi
+        else
+            echo -e "$OPT_SET_MON_ON"
+        fi
     else
         echo ""
     fi
@@ -113,13 +132,13 @@ select_monitor() {
     local monitor
     monitor="$(get_monitor_list)"
     [ $(count_monitors) -gt 1 ] && monitor=$(menu "$monitor" "Seleccione monitor")
-    echo $monitor | cut -d " " -f 1
+    echo $monitor | cut -d " " -f 2
 }
 
 menu_options() {
-    local option_switch = ""
+    local option_switch=""
     OPT_SWITCH_MON="$(switch_monitor_opt)"
-    [ -n OPT_SWITCH_MON ] && option_switch="$OPT_SWITCH_MON\n"
+    [ -n "$OPT_SWITCH_MON" ] && option_switch="$OPT_SWITCH_MON\n"
     echo -e "${option_switch}$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n$OPT_SCALE_200"
 }
 
@@ -159,4 +178,6 @@ case $OPC in
     $OPT_SCALE_150) set_scale $MON 1.5 ;;
     $OPT_SCALE_200) set_scale $MON 2.0 ;;
 esac
+
+$HOME/.config/hypr/scripts/restore-waybar.sh
 
