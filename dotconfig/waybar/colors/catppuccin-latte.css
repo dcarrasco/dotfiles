@@ -43,11 +43,11 @@ __        __          _                            _
 
 
 @define-color bg-normal   @mantle;
-@define-color fg-normal   alpha(@text, 0.8);
+@define-color fg-normal   alpha(@text, 0.9);
 @define-color fg-high     @text;
 @define-color fg-disabled alpha(@text, 0.4);
 @define-color fg-status   @subtext1;
-@define-color ws-selected @yellow;
+@define-color ws-selected @peach;
 @define-color selected    @sapphire;
 @define-color warning     @yellow;
 @define-color critical    @red;

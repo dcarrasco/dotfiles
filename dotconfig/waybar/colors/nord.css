@@ -30,6 +30,7 @@ __        __          _                            _
 @define-color nord15 #b48ead;
 
 @define-color fg-normal   @nord4;
+@define-color fg-disabled alpha(@nord4, 0.4);
 @define-color fg-high     @nord6;
 @define-color fg-status   @nord7;
 @define-color bg-normal   @nord0;
@@ -38,4 +39,5 @@ __        __          _                            _
 @define-color critical    @nord11;
 @define-color bg-selected @nord9;
 @define-color ws-selected @nord13;
-
+@define-color bg-selected @nord7;
+@define-color selected    @nord8;
