@@ -11,7 +11,7 @@ esac
 if [ $updates -gt 0 ]; then
     case $DESKTOP_SESSION in
         bspwm) echo " ($updates)" ;;
-        *)     echo "{\"text\": \"  ($updates)\", \"tooltip\": \"$updates actualizaciones disponibles\"}" ;;
+        *)     echo "{\"text\": \" <span size='small'>($updates)</span>\", \"tooltip\": \"$updates actualizaciones disponibles\"}" ;;
     esac
 else
     case $DESKTOP_SESSION in
