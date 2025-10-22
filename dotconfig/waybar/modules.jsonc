@@ -8,18 +8,28 @@
 {
     "hyprland/workspaces": {
         "persistent-workspaces": {
-            "*": 5,
-            "DP-8": [1,2,3,4,5],
+            // "*": 5,
+            "eDP-1": [1, 2, 3, 4, 5],
+            "DP-8":  [6, 7, 8, 9, 10],
         },
+        "active-only": true,
         "on-click": "activate",
         "disable-scroll": false,
         "smooth-scrolling-threshold": 1.5,
-        "all-outputs": true,
+        "all-outputs": false,
         "window-rewrite": {},
         "format": "{icon}",
         // symbols:                      󰈙                      ,
         "format-icons": {
             "urgent": "",
+        },
+        "on-scroll-up": "hyprctl dispatch workspace r-1",
+        "on-scroll-down": "hyprctl dispatch workspace r+1",
+        "workspace-taskbar": {
+            "enable": false,
+            "format": "{icon}",
+            "icon-size": 16,
+            "orientation": "horizontal"
         }
     },
 
@@ -99,7 +109,7 @@
 
     "tray": {
         "icon-size": 20,
-        "spacing": 12,
+        "spacing": 20,
         "icons": {
             // "variety": "variety",
         }
