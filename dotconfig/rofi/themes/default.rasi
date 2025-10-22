@@ -103,16 +103,16 @@ element {
     text-color: @foreground;
 }
 
+element-text {
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
 element selected {
     text-color: @fg-selected;
     background-color: @bg-selected;
     border-radius: 15px;
     border-color: @bg-color;
-}
-
-element-text {
-    text-color: inherit;
-    vertical-align: 0.5;
 }
 
 element-icon {
