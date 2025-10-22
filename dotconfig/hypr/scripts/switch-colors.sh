@@ -22,8 +22,6 @@ change_theme() {
 
 }
 
-echo "$(current_theme)"
-
 temas=(Catppuccin Catppuccin-Latte Dracula Nord)
 
 opts=""
@@ -36,7 +34,6 @@ for i in "${temas[@]}"; do
 done
 
 theme=$(echo -e $opts | rofi -dmenu -markup-rows -i -format p -p "")
-echo $theme
 
 if [ -n "$theme" ]; then
     change_theme ${theme,,}
