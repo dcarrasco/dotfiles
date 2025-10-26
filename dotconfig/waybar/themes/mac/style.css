@@ -126,6 +126,13 @@ button:hover label {
     margin: 2px 0;
 }
 
+/* iconos de ancho doble */
+#network,
+#idle_inhibitor,
+#language {
+    padding: 0 0.8em 0 0.4em;
+}
+
 #clock {
     font-family: Adwaita Sans;
 }

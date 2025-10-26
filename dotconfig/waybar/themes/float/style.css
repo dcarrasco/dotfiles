@@ -130,11 +130,14 @@ button:hover label {
 #custom-poweroff,
 #mpd {
     padding: 0 0.5em;
-    margin: 2px 0;
+    margin: 4px 0;
 }
 
-#network {
-    padding: 0 0.3em 0 0.5em;
+/* iconos de ancho doble */
+#network,
+#idle_inhibitor,
+#language {
+    padding: 0 0.8em 0 0.4em;
 }
 
 #clock {

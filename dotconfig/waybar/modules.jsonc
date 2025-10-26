@@ -100,8 +100,8 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": " ",
-            "deactivated": " "
+            "activated": "",
+            "deactivated": ""
         },
         "tooltip-format-activated": "Idle inhibitor: {status}",
         "tooltip-format-deactivated": "Idle inhibitor: {status}",
@@ -208,7 +208,7 @@
         "format-disabled": "{icon}  off",
         "format-disconnected": "{icon}  Disconn",
         "format-icons": {
-            "wifi": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
+            "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
             //"wifi": [" "],
             "disconnected": ["󰤭"],
             "disabled": ["󰤭"],
@@ -222,7 +222,7 @@
         "interface": "enp53s0*",
         "family": "ipv4",
         "format": "",
-        "format-ethernet": "󰈀 ",
+        "format-ethernet": "󰈀",
         "format-disabled": "󰈀   off",
         "format-disconnected": "",
         "tooltip-format": "Eth IP: {ipaddr}/{cidr}\nInterface:{ifname}",
@@ -246,7 +246,7 @@
         // "format": "{icon}  {volume}%",
         "tooltip-format": "Volume: {volume}%\n{desc}\nInput: {format_source}",
         "format": "{icon}",
-        "format-muted": " muted",
+        "format-muted": "  muted",
         "format-bluetooth": "{icon} {volume}%",
         "format-bluetooth-muted": "{icon} muted",
         "format-source": " {volume}%",
@@ -277,8 +277,8 @@
     },
 
     "hyprland/language": {
-        "format": " {}",
-        "format-en": " us",
+        "format": "{}",
+        "format-en": "   us",
         "format-es": "",
         "keyboard-name": "at-translated-set-2-keyboard",
     },
@@ -314,7 +314,7 @@
     },
 
     "custom/poweroff": {
-        "format": " ",
+        "format": "",
         "on-click": "wlogout -b 5",
         "tooltip": true,
         "tooltip-format": "Apagar",
