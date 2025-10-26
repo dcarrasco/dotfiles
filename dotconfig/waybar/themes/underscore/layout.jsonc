@@ -24,10 +24,10 @@ __        __          _                  _                         _
         "hyprland/window"
     ],
     "modules-center": [
-        "clock"
+        "clock",
+        "custom/updates",
     ],
     "modules-right":  [
-        "custom/updates",
         "tray",
         "idle_inhibitor",
         // "custom/nightlight",

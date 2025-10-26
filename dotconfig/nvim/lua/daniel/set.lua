@@ -67,7 +67,7 @@ vim.opt.foldlevel = 99
 -- vim.opt.ruler
 
 vim.opt.showcmd = true
-vim.opt.title = false
+vim.opt.title = true
 vim.opt.laststatus = 2
 -- vim.opt.splitbelow = true
 -- vim.opt.splitright = true

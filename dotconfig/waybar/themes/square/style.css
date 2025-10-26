@@ -13,15 +13,14 @@ __        __          _                      _         _
 }
 
 window {
-    font-size: 16pt;
+    font-size: 14pt;
     color: alpha(@fg-normal, 0.8);
 }
 
 window#waybar {
     background: linear-gradient(0deg, alpha(@bg-normal, 0.6), alpha(@bg-normal, 0.7));
     border-bottom: 1px solid alpha(@bg-normal, 0.8);
-    border-radius: 0%;
-    /* border: 1px solid red; */
+    border-radius: 0;
 }
 
 .modules-left, .modules-right, .modules-center {
@@ -54,7 +53,6 @@ button {
 
 button label {
     color: @fg-normal;
-    font-size: 14pt;
     padding: 0px 0.7em;
     margin: 0px 0px;
 }
@@ -64,13 +62,11 @@ button.empty label {
 }
 
 button.active label {
-    background-color: alpha(@bg-selected, 0.7);
+    /* background-color: alpha(@bg-selected, 0.7); */
+    background: linear-gradient(0deg, alpha(@bg-selected, 0.8), alpha(@bg-selected, 0.2));
     color: @fg-high;
     font-weight: 800;
-    padding: 0 0.5em;
-    margin: 3px 0;
-    border-radius: 7px;
-    border: 3px solid alpha(@bg-selected, 0.8);
+    padding: 0 0.7em;
 }
 
 button.urgent label {
@@ -93,7 +89,7 @@ button:hover label {
 
 #custom-windowstatus {
     font-family: SF Mono, FontAwesome;
-    font-size: 16px;
+    font-size: 15px;
     color: @fg-status;
     padding: 0 0.5em;
 }
@@ -132,13 +128,19 @@ button:hover label {
     border-radius: 7px;
 }
 
+/* Iconos de ancho doble */
+#idle_inhibitor,
+#network {
+    padding: 0 0.2em 0 0.4em;
+}
+
 #clock {
     font-family: Adwaita Sans;
-    font-size: 14pt;
     color: @fg-normal;
 }
 
-#battery {
+#battery.charging {
+    padding: 0 0.7em 0 0.4em;
 }
 
 /* Success state ----------------------------------------------------------------------------- */
@@ -266,3 +268,10 @@ button:hover label {
     /* color: @fg-status; */
 }
 
+.drawer-child {
+    /* padding: 0 50; */
+    /* margin: 0 50; */
+    /* border-radius: 20px; */
+    /* background-color: alpha(@bg-normal, 0.4); */
+    /* background-color: red; */
+}

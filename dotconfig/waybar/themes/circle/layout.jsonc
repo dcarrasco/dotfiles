@@ -15,9 +15,30 @@
     "reload_style_on_change": true,
 
     // Choose the order of the modules
-    "modules-left":   ["custom/leftsep", "hyprland/window"],
-    "modules-center": ["hyprland/workspaces", "custom/windowstatus"],
-    "modules-right":  ["custom/updates", "tray", "idle_inhibitor", "cpu", "memory", "temperature", "pulseaudio", "hyprland/language", "bluetooth", "network", "network#eth", "clock", "custom/power-profiles", "battery"],
+    "modules-left":   [
+        "custom/leftsep",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "hyprland/workspaces",
+        "custom/windowstatus",
+        "custom/updates",
+    ],
+    "modules-right":  [
+        "tray",
+        "idle_inhibitor",
+        "cpu",
+        "memory",
+        "temperature",
+        "pulseaudio",
+        "hyprland/language",
+        "bluetooth",
+        "network",
+        "network#eth",
+        "clock",
+        "custom/power-profiles",
+        "battery"
+    ],
 
 }
 # vi: ft=json

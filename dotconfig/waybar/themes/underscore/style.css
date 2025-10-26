@@ -14,7 +14,7 @@ __        __          _                      _         _
 }
 
 window {
-    font-size: 16pt;
+    font-size: 14pt;
     color: @fg-normal;
 }
 
@@ -54,7 +54,6 @@ button {
 
 button label {
     color: @fg-high;
-    font-size: 14pt;
     padding: 0px 0.4em;
     margin: 2px 0;
 }
@@ -84,20 +83,19 @@ button:hover label {
 
 #custom-windowstatus {
     color: @fg-status;
-    font-size: 11pt;
+    font-size: 15pt;
     padding:0 0.3em;
 }
 
 #custom-leftsep {
     color: @selected;
-    font-size: 15pt;
     padding:0 0.5em;
 }
 
 #window label {
     color: @fg-high;
     font-family: Adwaita Sans;
-    font-size: 14pt;
+    font-size: 15pt;
     font-weight: 600;
     padding: 0 0.3em;
 }
@@ -133,7 +131,6 @@ button:hover label {
 
 #clock {
     font-family: Adwaita Sans;
-    font-size: 14pt;
 }
 
 #battery {

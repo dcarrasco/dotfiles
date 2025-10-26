@@ -96,13 +96,14 @@ button:hover label {
 
 #custom-windowstatus {
     font-family: SF Mono, FontAwesome;
-    font-size: 18px;
+    font-size: 15pt;
     color: @fg-status;
     padding: 0 0.5em;
 }
 
 #window label {
     font-family: Adwaita Sans;
+    font-size: 15pt;
     font-weight: 600;
     color: @fg-normal;
     padding: 0 0em;
@@ -132,12 +133,10 @@ button:hover label {
     padding: 0px 0.4em;
     margin: 5px 0px;
     border-radius: 15px;
-    font-size: 16pt;
 }
 
 #clock {
     font-family: Adwaita Sans;
-    font-size: 14pt;
     color: @fg-normal;
 }
 
@@ -186,7 +185,6 @@ button:hover label {
 
 #idle_inhibitor {
     padding: 0 0.1em 0 0.3em;
-    font-size: 14pt;
 }
 
 #wireplumber {
