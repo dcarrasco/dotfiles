@@ -10,7 +10,7 @@ change_theme() {
     sed -i "s/\".*\/layout.jsonc\"/\"\$HOME\/\.config\/waybar\/themes\/$1\/layout.jsonc\"/"   $HOME/.config/waybar/config.jsonc
 }
 
-temas=(Square Circle Underscore Mac Float Tahoe)
+temas=(Square Circle Underscore Mac Float Tahoe KDE)
 
 opts=""
 for i in "${temas[@]}"; do

@@ -53,9 +53,9 @@ get_monitor_data() {
         *wayland*)
             MON_RES=$(get_monitor_property $monitor 1 | cut -d "@" -f 1)
             MON_DESC=$(get_monitor_property $monitor 2)
-            MON_SCALE=$(get_monitor_property $monitor 9)
-            MON_DISABLED=$(get_monitor_property $monitor 16)
-            MON_MODES=$(get_monitor_property $monitor 19)
+            MON_SCALE=$(get_monitor_property $monitor 10)
+            MON_DISABLED=$(get_monitor_property $monitor 21)
+            MON_MODES=$(get_monitor_property $monitor 24)
             MON_RES_LIST=$(echo -e $MON_MODES | sed 's/ /\n/g' | cut -d "@" -f 1)
             ;;
         *x11*)

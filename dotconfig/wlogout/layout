@@ -1,6 +1,6 @@
 {
     "label" : "lock",
-    "action" : "/home/daniel/.local/bin/hyprlock",
+    "action" : "hyprlock",
     "text" : "Bloquear",
     "keybind" : "l"
 }
