@@ -13,7 +13,7 @@ __        __          _                      _         _
 }
 
 window {
-    font-size: 14pt;
+    font-size: 15pt;
     color: alpha(@fg-normal, 0.8);
 }
 
@@ -89,7 +89,7 @@ button:hover label {
 
 #custom-windowstatus {
     font-family: SF Mono, FontAwesome;
-    font-size: 15px;
+    font-size: 13px;
     color: @fg-status;
     padding: 0 0.5em;
 }
@@ -136,6 +136,7 @@ button:hover label {
 
 #clock {
     font-family: Adwaita Sans;
+    font-size: 14pt;
     color: @fg-normal;
 }
 

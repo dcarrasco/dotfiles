@@ -116,9 +116,9 @@
     },
 
     "clock": {
-        // "timezone": "America/New_York",
+        "timezone": "America/Santiago",
         "format": "{:L%a %d %b  %H:%M}",
-        "format-alt": "{:L%A %d de %B %Y}",
+        "format-alt": "{:L%H:%M\n<span size=\"small\">%d %b %Y</span>}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "locale": "es_CL.UTF-8",
         "interval": 30,
@@ -231,7 +231,8 @@
     "bluetooth": {
         // 󰂲
         "format": "",
-        // "format-off": "󰂲",
+        "format-off": "󰂲",
+        "format-disabled": "󰂲",
         "format-connected": "",
         "on-click": "blueman-manager",
         "on-click-right": "$HOME/.config/hypr/scripts/bluetooth.sh --toggle",

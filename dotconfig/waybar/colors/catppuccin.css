@@ -46,7 +46,7 @@ __        __          _                            _
 @define-color fg-disabled alpha(@text, 0.4);
 @define-color fg-status   @subtext1;
 @define-color ws-selected @yellow;
-@define-color selected    @blue;
+@define-color selected    @sapphire;
 @define-color warning     @yellow;
 @define-color critical    @red;
 @define-color critical-fg @surface0;

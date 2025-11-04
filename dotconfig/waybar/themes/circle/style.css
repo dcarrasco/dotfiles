@@ -13,14 +13,14 @@ __        __          _                      _         _
 }
 
 window {
-    font-size: 14pt;
+    font-size: 15pt;
     color: alpha(@fg-normal, 0.8);
 }
 
 window#waybar {
     background: linear-gradient(0deg, alpha(@bg-normal, 0.7), alpha(@bg-normal, 0.8));
     border-bottom: 1px solid alpha(@bg-normal, 0.8);
-    border-radius: 20px;
+    border-radius: 24px;
     /* border: 1px solid red; */
 }
 
@@ -143,6 +143,7 @@ button:hover label {
 
 #clock {
     font-family: Adwaita Sans;
+    font-size: 15pt;
     color: @fg-normal;
 }
 

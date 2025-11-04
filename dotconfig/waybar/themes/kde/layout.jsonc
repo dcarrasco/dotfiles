@@ -8,12 +8,13 @@ __        __          _                  _                         _
 */
 {
     "layer": "top",
-    "position": "top",
-    "height": 36,
+    "position": "bottom",
+    "height": 56,
     "spacing": 2,
-    "margin-top": 5,
-    "margin-left": 7,
-    "margin-right": 7,
+    "margin-top": 0,
+    "margin-left": 8,
+    "margin-right": 8,
+    "margin-bottom": 8,
     "reload_style_on_change": true,
 
     // Choose the order of the modules
@@ -24,10 +25,9 @@ __        __          _                  _                         _
         "hyprland/window"
     ],
     "modules-center": [
-        "clock",
-        "custom/updates",
     ],
     "modules-right":  [
+        "custom/updates",
         "tray",
         "idle_inhibitor",
         // "custom/nightlight",
@@ -41,6 +41,7 @@ __        __          _                  _                         _
         "network#eth",
         "pulseaudio",
         "battery",
+        "clock",
         "custom/poweroff"
     ],
 }

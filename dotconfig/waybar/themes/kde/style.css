@@ -11,7 +11,6 @@ __        __          _                      _         _
     font-family: Noto Sans, SF Mono, Helvetica, Arial, sans-serif;
     /* background-color: transparent; */
     transition: none;
-    text-shadow: 1px 1px 2px alpha(@bg-normal, 0.7);
 }
 
 window {
@@ -20,7 +19,9 @@ window {
 }
 
 window#waybar {
-    background-color: transparent;
+    background: alpha(@bg-normal, 0.8);
+    border-bottom: 1px solid alpha(@bg-normal, 0.9);
+    border-radius: 10px;
 }
 #waybar {
 }
@@ -95,6 +96,7 @@ button:hover label {
 #window label {
     color: @fg-high;
     font-family: Adwaita Sans;
+    font-size: 15pt;
     font-weight: 600;
     padding: 0 0.3em;
 }

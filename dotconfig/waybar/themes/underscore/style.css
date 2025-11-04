@@ -14,14 +14,14 @@ __        __          _                      _         _
 }
 
 window {
-    font-size: 14pt;
+    font-size: 15pt;
     color: @fg-normal;
 }
 
 window#waybar {
     background: alpha(@bg-normal, 0.8);
     border-bottom: 1px solid alpha(@bg-normal, 0.9);
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 .modules-left, .modules-right, .modules-center {
@@ -54,7 +54,7 @@ button {
 
 button label {
     color: @fg-high;
-    padding: 0px 0.4em;
+    padding: 4px 0.4em;
     margin: 2px 0;
 }
 
@@ -83,7 +83,7 @@ button:hover label {
 
 #custom-windowstatus {
     color: @fg-status;
-    font-size: 15pt;
+    font-size: 12pt;
     padding:0 0.3em;
 }
 
@@ -120,6 +120,7 @@ button:hover label {
 #bluetooth,
 #custom-power-profiles,
 #custom-poweroff,
+#custom-updates,
 #mpd {
     padding: 0 0.5em;
     margin: 2px 0;
@@ -135,6 +136,7 @@ button:hover label {
 
 #clock {
     font-family: Adwaita Sans;
+    font-size: 14pt;
 }
 
 #battery {
