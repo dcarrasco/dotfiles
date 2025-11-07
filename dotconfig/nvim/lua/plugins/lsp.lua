@@ -29,7 +29,7 @@ return {
       local lint = require('lint')
 
       lint.linters_by_ft = {
-        python = {'pylint'},
+        python = {'pylint', 'mypy'},
         php = {'phpstan'},
         rust = {'bacon-ls'}
       }
