@@ -7,6 +7,6 @@ return {
   },
   config = function()
     require("nvim-tree").setup {}
-    vim.keymap.set("n", "<leader>d", function () vim.cmd('NvimTreeFindFileToggle') end)
+    vim.keymap.set("n", "<leader>d", function () vim.cmd('NvimTreeFindFileToggle') end, { desc = "NvimTree: Show file panel" })
   end,
 }

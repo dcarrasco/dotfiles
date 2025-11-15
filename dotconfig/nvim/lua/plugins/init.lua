@@ -1,21 +1,25 @@
+local map = function(mode, keys, func, desc)
+  vim.keymap.set(mode, keys, func, { desc = desc })
+end
+
 return {
 
   -- tpope's utilities
+  'tpope/vim-surround',
+  'tpope/vim-commentary',
   {
     'tpope/vim-fugitive',
     config = function()
-      vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-      vim.keymap.set("n", "<leader>gp", function() vim.cmd('Git push') end)
+      map("n", "<leader>gs", vim.cmd.Git, "Git: View status")
+      map("n", "<leader>gp", function() vim.cmd('Git push') end, "Git: Push")
     end
   },
-  'tpope/vim-surround',
-  'tpope/vim-commentary',
 
   {
     'airblade/vim-gitgutter',
     config = function ()
-      vim.keymap.set("n", "[g", function () vim.cmd('GitGutterPrevHunk') end)
-      vim.keymap.set("n", "]g", function () vim.cmd('GitGutterNextHunk') end)
+      map("n", "[g", function () vim.cmd('GitGutterPrevHunk') end, "Git: Jump to previous change")
+      map("n", "]g", function () vim.cmd('GitGutterNextHunk') end, "Git: Jump to next change")
     end
   },
   'jiangmiao/auto-pairs',

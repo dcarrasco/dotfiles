@@ -8,6 +8,7 @@ return {
     name = "catppuccin",
     config = function ()
       require("catppuccin").setup({
+        flavour = "mocha",
         transparent_background = true,
       })
     end
@@ -16,7 +17,6 @@ return {
     'rose-pine/neovim',
     name = 'rose-pine',
     config = function()
-      -- vim.cmd.colorscheme('rose-pine')
       require('rose-pine').setup({
         styles = {
           italic = false,
@@ -25,7 +25,6 @@ return {
       })
 
       function ColorMyPencils(color)
-        -- color = color or "rose-pine"
         color = color or "catppuccin"
         vim.cmd.colorscheme(color)
 
@@ -34,17 +33,13 @@ return {
         vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
         vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
         vim.api.nvim_set_hl(0, "FloatTitle", { bg = "none" })
-        vim.api.nvim_set_option_value('cursorline', true, {})
       end
 
       -- ColorMyPencils("nord")
       -- ColorMyPencils("onedark")
       -- ColorMyPencils("tokyonight")
       -- ColorMyPencils("rose-pine")
-      -- ColorMyPencils("catppuccin")
-      -- ColorMyPencils("catppuccin-frappe")
-      -- ColorMyPencils("catppuccin-macchiato")
-      ColorMyPencils("catppuccin-mocha")
+      ColorMyPencils("catppuccin")
 
     end
   },

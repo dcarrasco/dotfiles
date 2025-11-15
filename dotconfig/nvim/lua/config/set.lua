@@ -4,6 +4,7 @@ vim.opt.relativenumber = true
 vim.opt.numberwidth = 4
 vim.opt.signcolumn = "yes"
 vim.opt.winborder = 'rounded'
+vim.opt.cursorline = true
 
 -- --------------- Tab stop ---------------
 vim.opt.tabstop = 4
@@ -13,24 +14,25 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.autoindent = true
 
-
 -- --------------- Search ---------------
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.incsearch = true
 vim.opt.hlsearch = true
+vim.opt.inccommand = "split"
 
 
 -- --------------- Visuals ---------------
 vim.opt.termguicolors = true
+vim.opt.background = "dark"
 vim.opt.scrolloff = 6
-vim.opt.colorcolumn = "120"
+vim.opt.colorcolumn = "100"
 vim.opt.errorbells = false
 vim.opt.showbreak = ".."
 vim.opt.wrap = true
 vim.opt.showmode= false
 vim.opt.showtabline = 1
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = "␣" }
 
@@ -49,13 +51,11 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.updatetime = 100
-
-vim.g.mapleader = " "
+vim.opt.updatetime = 50
 
 vim.opt.history = 50
 vim.opt.autoread = true
--- vim.opt.backspace=indent,eol,start
+vim.opt.backspace= { "indent", "eol", "start" }
 
 -- vim.opt.textwidth=0
 vim.opt.foldmethod = "indent"
@@ -69,6 +69,6 @@ vim.opt.foldlevel = 99
 vim.opt.showcmd = true
 vim.opt.title = true
 vim.opt.laststatus = 2
--- vim.opt.splitbelow = true
--- vim.opt.splitright = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 
