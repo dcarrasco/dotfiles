@@ -9,7 +9,7 @@ return {
       require('telescope').setup {
         pickers = {
           buffers = { theme = "ivy", sort_mru = true, sort_lastused = true },
-          colorscheme = { theme = "dropdown", enable_preview = true }
+          colorscheme = { theme = "dropdown", enable_preview = false }
         }
       }
 
@@ -24,7 +24,9 @@ return {
       map('n', '<C-p>', builtin.find_files, "Show files")
       map('n', '<leader>pg', builtin.git_files, "Show git files")
       map('n', '<leader>ev', function() builtin.find_files { cwd = vim.fn.stdpath('config') } end, "Show configuration files")
-      map('n', '<leader>ps', function() builtin.grep_string { search = vim.fn.input("Grep > ") } end, "Search text in files")
+      -- map('n', '<leader>ps', function() builtin.grep_string { search = vim.fn.input("Grep > ") } end, "Search text in files")
+      map('n', '<leader>ps', builtin.live_grep, "Search text in files")
+      map('n', '<leader>pt', builtin.treesitter, "Search treesitter")
       map('n', '<leader>ph', builtin.help_tags, "Show help tags")
       map('n', '<leader>pk', builtin.keymaps, "Show keymaps")
       map('n', '<leader>pc', builtin.colorscheme, "Show color schemes")

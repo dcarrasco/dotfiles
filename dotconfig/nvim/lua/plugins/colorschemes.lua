@@ -1,7 +1,7 @@
 return {
   -- Colorschemes
   'folke/tokyonight.nvim',
-  'arcticicestudio/nord-vim',
+  'nordtheme/vim',
   'navarasu/onedark.nvim',
   {
     "catppuccin/nvim",
@@ -10,6 +10,25 @@ return {
       require("catppuccin").setup({
         flavour = "mocha",
         transparent_background = true,
+        float = {
+          transparent = true,
+          solid = true,
+        },
+        styles = {
+          -- properties = {"bold"},
+        },
+        highlight_overrides = {
+          mocha = function(mocha)
+            return {
+              LineNr = { fg = mocha.overlay1 },
+            }
+          end,
+        },
+        integrations = {
+          mason = true,
+          cmp = true,
+          notify = true,
+        }
       })
     end
   },
@@ -28,11 +47,11 @@ return {
         color = color or "catppuccin"
         vim.cmd.colorscheme(color)
 
-        vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-        vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-        vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-        vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
-        vim.api.nvim_set_hl(0, "FloatTitle", { bg = "none" })
+        -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+        -- vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+        -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+        -- vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+        -- vim.api.nvim_set_hl(0, "FloatTitle", { bg = "none" })
       end
 
       -- ColorMyPencils("nord")
