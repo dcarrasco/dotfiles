@@ -19,7 +19,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.incsearch = true
 vim.opt.hlsearch = true
-vim.opt.inccommand = "split"
+vim.opt.inccommand = "nosplit"
 
 
 -- --------------- Visuals ---------------
@@ -30,6 +30,8 @@ vim.opt.colorcolumn = "100"
 vim.opt.errorbells = false
 vim.opt.showbreak = ".."
 vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.breakindent = true
 vim.opt.showmode= false
 vim.opt.showtabline = 1
 vim.opt.cursorline = true

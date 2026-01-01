@@ -22,6 +22,7 @@ return {
       map("n", "]g", function () vim.cmd('GitGutterNextHunk') end, "Git: Jump to next change")
     end
   },
+
   'jiangmiao/auto-pairs',
 
   -- Indent guides

@@ -42,6 +42,14 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup('wrap-lines-typst', { clear = true }),
+  pattern = "typ",
+  callback = function()
+    vim.opt.linebreak = true
+  end,
+})
+
 -- vim.api.nvim_create_autocmd("BufWritePre", {
   -- pattern = "*",
   -- command = ":%s/\s\+$//e"
