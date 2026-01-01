@@ -104,4 +104,5 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 source $HOME/.zsh_aliases
-$HOME/.config/hypr/scripts/ascii-art.sh
+# $HOME/.config/hypr/scripts/ascii-art.sh
+fastfetch --structure Title:OS:Kernel:Packages:DW:WM:Terminal:Shell:Memory --logo Fedora_small --key-width 12 --separator ""
