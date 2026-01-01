@@ -8,11 +8,10 @@
 {
     "hyprland/workspaces": {
         "persistent-workspaces": {
-            // "*": 5,
-            "eDP-1": [1, 2, 3, 4, 5],
-            "DP-8":  [6, 7, 8, 9, 10],
+            "eDP-1": [ 1, 2, 3, 4, 5 ],
+            "DP-8":  [ 6, 7, 8, 9, 10 ],
         },
-        "active-only": false,
+        "active-only": true,
         "all-outputs": false,
         "disable-scroll": false,
         "on-click": "activate",
@@ -34,7 +33,6 @@
     },
 
     "hyprland/window": {
-        // "format": "  {title}",
         "format": "{title}",
         "icon": false,
         "tooltip": false,
@@ -117,7 +115,7 @@
 
     "clock": {
         "timezone": "America/Santiago",
-        "format": "{:L%a %d %b  %H:%M}",
+        "format": "{:L%a %d %b %H:%M}",
         "format-alt": "{:L%H:%M\n<span size=\"small\">%d %b %Y</span>}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "locale": "es_CL.UTF-8",

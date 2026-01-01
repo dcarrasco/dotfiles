@@ -25,15 +25,14 @@ __        __          _                  _                         _
         "hyprland/window"
     ],
     "modules-center": [
-        "clock",
-        "custom/updates",
     ],
     "modules-right":  [
+        "custom/updates",
         "tray",
         "idle_inhibitor",
         // "custom/nightlight",
         "cpu",
-        "memory",
+        // "memory",
         "temperature",
         "hyprland/language",
         "custom/power-profiles",
@@ -42,7 +41,8 @@ __        __          _                  _                         _
         "network#eth",
         "pulseaudio",
         "battery",
-        "custom/poweroff"
+        "clock"
+        // "custom/poweroff"
     ],
 }
 # vi: ft=json
