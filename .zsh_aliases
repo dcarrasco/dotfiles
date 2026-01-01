@@ -98,6 +98,7 @@ source /usr/share/fzf/shell/key-bindings.zsh
 bindkey -s ^f "_tmux_fzf_\n"
 
 
+# tmux ===========================================================================
 function _tmux_fzf_() {
     # local dir=$(find ~ -type d | fzf)
     local dir=$(fd --type d . ~ --max-depth=4 | fzf --border --height=15 --prompt='Init tmux: ')
@@ -123,6 +124,12 @@ function tmuxsession() {
     else
         tmux attach-session -t $session
     fi
+}
+
+# typst options ===========================================================================
+function typst() {
+    podman run --rm -it --init -v "$(pwd):/root:z" -v "$HOME/.local/share/fonts:/fonts:z" ghcr.io/typst/typst:latest $1 --font-path=/fonts /root/$2 $3 $4
+
 }
 
 eval "$(starship init zsh)"
