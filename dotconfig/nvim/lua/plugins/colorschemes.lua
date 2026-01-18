@@ -4,6 +4,23 @@ return {
   'nordtheme/vim',
   'navarasu/onedark.nvim',
   {
+    'AlexvZyl/nordic.nvim',
+    name = "nordic",
+    config = function()
+      require("nordic").setup({
+        reduced_blue = true,
+        bright_border = true,
+        italic_comments = true,
+        transparent = {
+          bg = true,
+        },
+        telescope = {
+          style = 'classic',
+        }
+      })
+    end
+  },
+  {
     "catppuccin/nvim",
     name = "catppuccin",
     config = function ()
@@ -54,7 +71,7 @@ return {
         -- vim.api.nvim_set_hl(0, "FloatTitle", { bg = "none" })
       end
 
-      -- ColorMyPencils("nord")
+      -- ColorMyPencils("nordic")
       -- ColorMyPencils("onedark")
       -- ColorMyPencils("tokyonight")
       -- ColorMyPencils("rose-pine")
