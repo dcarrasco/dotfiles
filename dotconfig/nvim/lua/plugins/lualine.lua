@@ -8,8 +8,8 @@ return {
     config = function()
       require('lualine').setup({
         options = {
-          -- theme = 'nord',
-          theme = 'material',
+          theme = 'nord',
+          -- theme = 'material',
           -- theme = 'catppuccin',
           -- theme = 'base16',
         }

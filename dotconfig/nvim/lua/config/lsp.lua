@@ -24,5 +24,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     map("n", "<leader>vl", function() require('lint').try_lint() end, "Lint buffer")
     map("n", "<leader>vlq", function() vim.diagnostic.setqflist() end, "Show linter diagnostic")
+
+    local dap = require('dap')
+    map("n", "<leader>dt", function() dap.toggle_breakpoint() end, "Debug toggle breakpoint")
+    map("n", "<leader>dc", function() dap.continue() end, "Debug continue")
+    map("n", "<leader>dr", function() dap.repl.open() end, "Debug inspect")
+    map("n", "<leader>dk", function() dap.terminate() end, "Debug terminate")
+    map("n", "<leader>dso", function() dap.step_over() end, "Debug step over")
+    map("n", "<leader>dsi", function() dap.step_into() end, "Debug step into")
+    map("n", "<leader>dsu", function() dap.step_out() end, "Debug step out")
+    map("n", "<leader>dl", function() dap.run_last() end, "Debug run last")
+
+    local dapui = require('dapui')
+    map("n", "<leader>duu", function() dapui.open() end, "Debug open UI")
+    map("n", "<leader>duc", function() dapui.close() end, "Debug close UI")
   end
 })

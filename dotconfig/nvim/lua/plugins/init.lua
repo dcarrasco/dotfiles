@@ -10,19 +10,19 @@ return {
   {
     'tpope/vim-fugitive',
     config = function()
-      map("n", "<leader>gts", vim.cmd.Git, "Git: View status")
+      map("n", "<leader>gts", function() vim.cmd('vert Git') end, "Git: View status")
       map("n", "<leader>gtp", function() vim.cmd('Git push') end, "Git: Push")
       map("n", "<leader>gtd", function() vim.cmd('Gvdiffsplit') end, "Git: VDiff")
     end
   },
 
-  -- {
-  --   'airblade/vim-gitgutter',
-  --   config = function ()
-  --     map("n", "[g", function () vim.cmd('GitGutterPrevHunk') end, "Git: Jump to previous change")
-  --     map("n", "]g", function () vim.cmd('GitGutterNextHunk') end, "Git: Jump to next change")
-  --   end
-  -- },
+  {
+    'airblade/vim-gitgutter',
+    config = function ()
+      map("n", "[g", function () vim.cmd('GitGutterPrevHunk') end, "Git: Jump to previous change")
+      map("n", "]g", function () vim.cmd('GitGutterNextHunk') end, "Git: Jump to next change")
+    end
+  },
 
   'jiangmiao/auto-pairs',
 

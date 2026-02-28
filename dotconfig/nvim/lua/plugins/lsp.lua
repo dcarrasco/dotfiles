@@ -21,7 +21,6 @@ return {
       })
     end
   },
-
   -- LINTER
   {
     'mfussenegger/nvim-lint',
@@ -76,8 +75,60 @@ return {
       })
 
     end
-  }
-
+  },
   -- Snippets
   -- {'rafamadriz/friendly-snippets'},
+  -- DEBUG
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+        {'jay-babu/mason-nvim-dap.nvim'},
+        {'rcarriga/nvim-dap-ui'},
+        {'nvim-neotest/nvim-nio'},
+    },
+    config = function()
+      require('mason-nvim-dap').setup({
+        ensure_installed = { 'cpptools' },
+        automatic_installation = true,
+        handlers = {
+          function(config)
+            require('mason-nvim-dap').default_setup(config)
+          end,
+        },
+      })
+      require('dapui').setup()
+
+      local dap = require('dap')
+      dap.adapters.gdb = {
+        type = 'executable',
+        command = 'gdb',
+        args = { '--interpreter=dap', '--eval-command', 'set print pretty on' }
+      }
+      dap.configurations.c = {
+        {
+          name = 'Launch',
+          type = 'gdb',
+          request = 'launch',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          end,
+          args = {},
+          cwd = "${workspaceFolder}",
+          stopAtBeginningOfMainSubprogram = false,
+        },
+        {
+          name = "Attach to gdb server :1234",
+          type = "gdb",
+          request = "launch",
+          MIMode = 'gdb',
+          miDebuggerServerAddress = 'localhost:1234',
+          miDebuggerPath = '/usr/bin/gdb/',
+          cwd = "${workspaceFolder}",
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          end,
+        }
+      }
+    end
+  }
 }
