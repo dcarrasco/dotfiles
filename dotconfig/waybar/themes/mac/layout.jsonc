@@ -9,6 +9,7 @@ __        __          _                  _                         _
 {
     "layer": "top",
     "position": "top",
+    // "output": ["eDP-1", "DP-8"],
     "height": 38,
     "spacing": 2,
     "margin-top": 0,

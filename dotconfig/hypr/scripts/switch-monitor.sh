@@ -82,7 +82,7 @@ set_monitor_on() {
     local monitor=$1
     local resolution=$2
     local position=$3
-    local scale=$3
+    local scale=$4
 
     case $BACKEND in
         *wayland*) hyprctl keyword monitor $monitor, $resolution, $position, $scale ;;
