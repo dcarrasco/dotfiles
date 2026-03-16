@@ -7,7 +7,7 @@ if [ "$1" = "up" ]; then
     icon="audio-volume-high"
 elif [ "$1" = "down" ]; then
     step="5%-"
-    icon="audio-volume-low"
+    icon="audio-volume-high"
 elif [ "$1" = "toggle" ]; then
     amixer set Master toggle
     new_status=$(amixer get Master | grep "Front Left:" | sed -e "s/.*\[\(on\|off\)\].*/\1/")

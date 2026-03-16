@@ -15,7 +15,7 @@ __        __          _                      _         _
 }
 
 window {
-    font-size: 15pt;
+    font-size: 12pt;
     color: @fg-normal;
 }
 
@@ -39,7 +39,7 @@ tooltip label {
     color: @fg-normal;
     font-family: Adwaita Sans;
     font-weight: 400;
-    font-size: 12pt;
+    font-size: 10pt;
 }
 
 #workspaces {

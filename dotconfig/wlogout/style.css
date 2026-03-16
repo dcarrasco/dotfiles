@@ -33,7 +33,7 @@ button {
 	/* background-color: @nord0; */
     /* border: none; */
     border-style: solid;
-	border-width: 4px;
+	border-width: 2px;
     border-color: rgba(46, 52, 64, 0.0);
     border-radius: 2em;
     /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
@@ -42,17 +42,17 @@ button {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 30%;
-    margin: 13em 0.5em;
+    margin: 10em 0.5em;
 
     font-family: Adwaita Sans;
-    font-size: 18pt;
+    font-size: 14pt;
     color: @nord4;
 }
 
 /* button:focus, button:active, button:hover { */
 button:focus {
 	border-style: solid;
-	border-width: 4px;
+	border-width: 2px;
     border-color: @nord3;
     border-radius: 2em;
     color: @nord6;

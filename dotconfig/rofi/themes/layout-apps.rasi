@@ -14,7 +14,7 @@ window {
     transparency: "real";
     border: 4px;
     border-color: @window-border;
-    border-radius: 15px;
+    border-radius: 12px;
     height: 60%;
     width: 50%;
     // margin: 0 0 0 0;
@@ -44,7 +44,7 @@ inputbar {
 
 prompt {
     /* simbolo de busqueda */
-    font: "SF UI Display 48";
+    font: "SF UI Display 32";
     text-color: @fg-prompt;
     vertical-align: 0.5;
     padding: 0 1em 0 0;
@@ -68,7 +68,7 @@ entry {
 
 case-indicator, num-rows, num-filtered-rows {
     /* Cuadro para incluir case-indicator */
-    font: "SF Mono Display 16";
+    font: "SF Mono Display 12";
     text-color: @foreground;
     margin: 0;
     padding: 0;
@@ -106,7 +106,7 @@ element {
     width: 100px;
     text-color: @foreground;
     orientation: vertical;
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 element selected {
@@ -116,7 +116,7 @@ element selected {
 
 element-icon {
     vertical-align: 0.5;
-    size: 2.7em ;
+    size: 2.5em;
 }
 
 element-text {
@@ -124,7 +124,7 @@ element-text {
     padding: 0.3em 0em 0 0;
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    font: "SF UI Display 13";
+    font: "SF UI Display 12";
 }
 
 scrollbar {
@@ -136,7 +136,7 @@ scrollbar {
 
 // buttons  ------------------------------------------------------------------------------
 button {
-    padding: 6px;
+    padding: 5px;
     color: @foreground;
     horizontal-align: 0.5;
 

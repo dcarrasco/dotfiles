@@ -13,7 +13,7 @@ __        __          _                      _         _
 }
 
 window {
-    font-size: 15pt;
+    font-size: 12pt;
     color: alpha(@fg-normal, 0.8);
 }
 
@@ -38,7 +38,7 @@ tooltip label {
     color: @fg-normal;
     font-family: Adwaita Sans;
     font-weight: 500;
-    font-size: 12pt;
+    font-size: 10pt;
 }
 
 #workspaces {
@@ -102,7 +102,7 @@ button:hover label {
 
 #window label {
     font-family: Adwaita Sans;
-    font-size: 15pt;
+    font-size: 13pt;
     font-weight: 600;
     color: @fg-normal;
     padding: 0 0em;
@@ -143,7 +143,7 @@ button:hover label {
 
 #clock {
     font-family: Adwaita Sans;
-    font-size: 15pt;
+    font-size: 12pt;
     color: @fg-normal;
 }
 

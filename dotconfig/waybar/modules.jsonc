@@ -193,6 +193,7 @@
             // "charging": ["󰂎", "󱊡", "󱊢", "󱊣", "󰂄"],
             "discharging": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
             "charging":    ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+            "not-charging": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
             "full":        ["󰁹"],
             "plugged":     [""],
         },
@@ -229,8 +230,8 @@
     "bluetooth": {
         // 󰂲
         "format": "",
-        "format-off": "󰂲",
-        "format-disabled": "󰂲",
+        "format-off": "󰂲 off",
+        "format-disabled": "󰂲 off",
         "format-connected": "",
         "on-click": "blueman-manager",
         "on-click-right": "$HOME/.config/hypr/scripts/bluetooth.sh --toggle",

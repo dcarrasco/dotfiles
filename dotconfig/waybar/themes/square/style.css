@@ -13,7 +13,7 @@ __        __          _                      _         _
 }
 
 window {
-    font-size: 15pt;
+    font-size: 12pt;
     color: alpha(@fg-normal, 0.8);
 }
 
@@ -37,7 +37,7 @@ tooltip label {
     color: @fg-normal;
     font-family: Adwaita Sans;
     font-weight: 500;
-    font-size: 12pt;
+    font-size: 10pt;
 }
 
 #workspaces {
@@ -89,14 +89,14 @@ button:hover label {
 
 #custom-windowstatus {
     font-family: SF Mono, FontAwesome;
-    font-size: 13px;
+    font-size: 12px;
     color: @fg-status;
     padding: 0 0.5em;
 }
 
 #window label {
     font-family: Adwaita Sans;
-    font-size: 15pt;
+    font-size: 13pt;
     font-weight: 600;
     color: @fg-normal;
     padding: 0 0.5em;
@@ -123,7 +123,7 @@ button:hover label {
 #custom-power-profiles,
 #custom-poweroff,
 #mpd {
-    padding: 0 0.5em;
+    padding: 0 0.4em;
     margin: 5px 0px;
     border-radius: 7px;
 }
@@ -131,12 +131,12 @@ button:hover label {
 /* Iconos de ancho doble */
 #idle_inhibitor,
 #network {
-    padding: 0 0.9em 0 0.5em;
+    padding: 0 0.9em 0 0.4em;
 }
 
 #clock {
     font-family: Adwaita Sans;
-    font-size: 14pt;
+    font-size: 12pt;
     color: @fg-normal;
 }
 
