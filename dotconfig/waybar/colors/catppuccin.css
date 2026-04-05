@@ -41,6 +41,7 @@ __        __          _                            _
 
 /* ------ Waybar elements -------------------------------- */
 @define-color bg-normal   @mantle;
+@define-color shadow      alpha(@mantle, 0.8);
 @define-color fg-normal   alpha(@text, 0.8);
 @define-color fg-high     @text;
 @define-color fg-disabled alpha(@text, 0.4);

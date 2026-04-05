@@ -8,19 +8,20 @@ __        __          _                      _         _
 */
 
 * {
+    all: initial;
     font-family: Noto Sans, SF Mono, Helvetica, Arial, sans-serif;
+    font-size: 11pt;
     /* background-color: transparent; */
     transition: none;
 }
 
 window {
-    font-size: 12pt;
     color: @fg-normal;
 }
 
 window#waybar {
     background: alpha(@bg-normal, 0.8);
-    border-bottom: 1px solid alpha(@bg-normal, 0.9);
+    border: 1px solid alpha(@bg-normal, 0.9);
     border-radius: 15px;
 }
 
@@ -45,7 +46,7 @@ tooltip label {
     padding: 0;
 }
 
-button {
+#workspaces button {
     border: none;
     border-radius: 0;
     padding: 0 0.3em;
@@ -54,7 +55,8 @@ button {
 
 button label {
     color: @fg-high;
-    padding: 4px 0.4em;
+    font-size: 12pt;
+    padding: 2px 0.4em;
     margin: 2px 0;
 }
 
@@ -83,7 +85,7 @@ button:hover label {
 
 #custom-windowstatus {
     color: @fg-status;
-    font-size: 10pt;
+    font-size: 11pt;
     padding:0 0.3em;
 }
 
@@ -95,7 +97,7 @@ button:hover label {
 #window label {
     color: @fg-high;
     font-family: Adwaita Sans;
-    font-size: 13pt;
+    font-size: 12pt;
     font-weight: 600;
     padding: 0 0.3em;
 }
@@ -121,6 +123,7 @@ button:hover label {
 #custom-power-profiles,
 #custom-poweroff,
 #custom-updates,
+#custom-start-menu,
 #mpd {
     padding: 0 0.5em;
     margin: 2px 0;
@@ -136,7 +139,7 @@ button:hover label {
 
 #clock {
     font-family: Adwaita Sans;
-    font-size: 12pt;
+    /* font-size: 11pt; */
 }
 
 #battery {
@@ -155,6 +158,21 @@ button:hover label {
 }
 
 #custom-power-profiles {
+}
+
+#custom-start-menu {
+    color: @selected;
+    font-size: 14pt;
+    margin: 5px 0;
+    /* padding-right: 1em; */
+    /* border-right: 2px solid @fg-disabled; */
+}
+
+#custom-start-menu:hover {
+    color: @ws-selected;
+    /* background-color: alpha(@ws-selected, 0.3); */
+    /* padding-right: 0; */
+    /* border-right: 2px solid red; */
 }
 
 #bluetooth.connected {

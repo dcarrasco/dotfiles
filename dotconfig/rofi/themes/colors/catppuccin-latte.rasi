@@ -48,7 +48,7 @@
     bg-textbox:      @surface1;
     fg-prompt:       @text;
     fg-placeholder:  @text-alpha;
-    fg-selected:     @sapphire;
+    fg-selected:     @mauve;
     bg-selected:     none;
     fg-scrollbar:    @surface1;
 

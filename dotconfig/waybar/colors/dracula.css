@@ -22,6 +22,7 @@ __        __          _                            _
 
 /* ------ Waybar elements -------------------------------- */
 @define-color bg-normal   @background;
+@define-color shadow      alpha(@background, 0.6);
 @define-color fg-normal   alpha(@foreground, 0.8);
 @define-color fg-high     @foreground;
 @define-color fg-disabled alpha(@foreground, 0.4);

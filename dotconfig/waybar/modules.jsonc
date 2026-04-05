@@ -36,6 +36,7 @@
         "format": "{title}",
         "icon": false,
         "tooltip": false,
+        "separate-outputs": true,
         "rewrite": {
             "(.*) — Mozilla Firefox": "$1",
             "(.*) - Youtube — Mozilla Firefox": "$1",
@@ -107,9 +108,9 @@
 
     "tray": {
         "icon-size": 20,
-        "spacing": 20,
+        "spacing": 12,
         "icons": {
-            // "variety": "variety",
+            "variety": "variety",
         }
     },
 
@@ -277,8 +278,8 @@
     },
 
     "hyprland/language": {
-        "format": "{}",
-        "format-en": "   us",
+        "format": " {}",
+        "format-en": "  us",
         "format-es": "",
         "keyboard-name": "at-translated-set-2-keyboard",
     },
@@ -332,6 +333,13 @@
         "on-click": "$HOME/.config/hypr/scripts/switch-nightlight.sh",
         "tooltip": true,
         "tooltip-format": "Switch nightlight",
+    },
+
+    "custom/start-menu": {
+        "format": "",
+        "tooltip": true,
+        "tooltip-format": "Start menu",
+        "on-click": "rofi -show drun -show-icons -theme layout-apps",
     },
 
     "custom/expand-icon": {

@@ -43,6 +43,7 @@ __        __          _                            _
 
 
 @define-color bg-normal   @mantle;
+@define-color shadow      alpha(@text, 0.3);
 @define-color fg-normal   alpha(@text, 0.9);
 @define-color fg-high     @text;
 @define-color fg-disabled alpha(@text, 0.4);
