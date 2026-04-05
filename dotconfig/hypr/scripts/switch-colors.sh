@@ -22,7 +22,7 @@ change_theme() {
 
 }
 
-temas=(Catppuccin Catppuccin-Latte Dracula Nord)
+temas=(Catppuccin Catppuccin-Latte Dracula Nord Nord-Frost)
 
 opts=""
 for i in "${temas[@]}"; do
