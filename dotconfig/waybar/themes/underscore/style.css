@@ -8,7 +8,6 @@ __        __          _                      _         _
 */
 
 * {
-    all: initial;
     font-family: Noto Sans, SF Mono, Helvetica, Arial, sans-serif;
     font-size: 11pt;
     /* background-color: transparent; */
@@ -44,6 +43,10 @@ tooltip label {
 
 #workspaces {
     padding: 0;
+}
+
+#workspaces > * {
+    all: initial;
 }
 
 #workspaces button {

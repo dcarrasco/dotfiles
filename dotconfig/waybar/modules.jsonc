@@ -110,7 +110,7 @@
         "icon-size": 20,
         "spacing": 12,
         "icons": {
-            "variety": "variety",
+            // "variety": "variety",
         }
     },
 
