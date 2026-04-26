@@ -173,7 +173,7 @@ menu_options() {
 
     OPT_SWITCH_MON="$(switch_monitor_opt)"
     [ -n "$OPT_SWITCH_MON" ] && option_switch="$OPT_SWITCH_MON\n"
-    echo -e "${option_switch}$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_150\n$OPT_SCALE_200"
+    echo -e "${option_switch}$OPT_SET_RESOL\n$OPT_SCALE_100\n$OPT_SCALE_125\n$OPT_SCALE_133\n$OPT_SCALE_150\n$OPT_SCALE_200"
 }
 
 get_backend() {
@@ -199,6 +199,7 @@ set_monitor_props() {
             ;;
         $OPT_SCALE_100) set_scale $MON 1.0 ;;
         $OPT_SCALE_125) set_scale $MON 1.25 ;;
+        $OPT_SCALE_133) set_scale $MON 1.33 ;;
         $OPT_SCALE_150) set_scale $MON 1.5 ;;
         $OPT_SCALE_200) set_scale $MON 2.0 ;;
     esac
@@ -243,6 +244,7 @@ OPT_SET_MON_ON="    Activar monitor"
 OPT_SET_RESOL="󰹑    Cambiar resolucion"
 OPT_SCALE_100="    Escalar al 100"
 OPT_SCALE_125="    Escalar al 125"
+OPT_SCALE_133="    Escalar al 133"
 OPT_SCALE_150="    Escalar al 150"
 OPT_SCALE_200="    Escalar al 200"
 

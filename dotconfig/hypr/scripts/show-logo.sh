@@ -1,0 +1,5 @@
+clear
+echo -e "\033[34m"
+cat <~/.config/hypr/scripts/logo.txt
+echo -e "\033[0m"
+echo

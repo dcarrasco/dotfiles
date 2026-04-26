@@ -1,7 +1,7 @@
 #!/bin/sh
 
-echo -e "\e[32mUpdate system packages\e[0m"
-figlet -c "Update"
+$HOME/.config/hypr/scripts/show-title.sh "Update system packages"
+# figlet -c "Update"
 
 os=$(grep ^NAME= /etc/os-release | cut -d = -f 2 | tr -d '"')
 
@@ -20,4 +20,3 @@ case  "$DESKTOP_SESSION" in
     *)     bash -c "$HOME/.config/hypr/scripts/restore-waybar.sh >/dev/null 2>/dev/null &" ;;
 esac
 
-echo -e "\e[32mPress [ENTER]...\e[0m" && read
