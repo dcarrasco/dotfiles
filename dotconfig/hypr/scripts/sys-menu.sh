@@ -100,12 +100,11 @@ show_toggle_menu() {
 }
 
 show_style_menu() {
-    case $(menu "Style" "  Theme\n󰸌  Colors\n  Font\n  Prev Background\n  Next Background") in
+    case $(menu "Style" "  Theme\n󰸌  Colors\n  Font\n  Background") in
         *Theme*)  switch-theme.sh ;;
         *Colors*) switch-colors.sh ;;
         *Font*)   font-menu.sh ;;
-        *Prev\ Background*) variety -p ;;
-        *Next\ Background*) variety -n ;;
+        *Background*) switch-wallpaper.sh ;;
         *) show_main_menu ;;
     esac
 }

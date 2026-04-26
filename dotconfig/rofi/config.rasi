@@ -16,6 +16,8 @@ configuration {
     hover-select: true;
     me-select-entry: "";
     me-accept-entry: "MousePrimary";
+    directory: "/home/daniel/Imágenes/fondos pantalla/";
+    directories-first: true;
 }
 
 @theme "themes/default.rasi"
