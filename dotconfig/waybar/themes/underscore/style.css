@@ -11,7 +11,7 @@ __        __          _                      _         _
     font-family: Noto Sans, SF Mono, Helvetica, Arial, sans-serif;
     font-size: 11pt;
     /* background-color: transparent; */
-    transition: none;
+    /* transition: none; */
 }
 
 window {
@@ -20,7 +20,7 @@ window {
 
 window#waybar {
     background: alpha(@bg-normal, 0.8);
-    border: 1px solid alpha(@bg-normal, 0.9);
+    border: 1px solid alpha(@fg-normal, 0.5);
     border-radius: 15px;
 }
 
@@ -172,7 +172,7 @@ button:hover label {
 }
 
 #custom-start-menu:hover {
-    color: @ws-selected;
+    color: @fg-high;
     /* background-color: alpha(@ws-selected, 0.3); */
     /* padding-right: 0; */
     /* border-right: 2px solid red; */

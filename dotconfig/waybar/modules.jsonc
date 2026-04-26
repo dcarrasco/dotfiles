@@ -116,8 +116,8 @@
 
     "clock": {
         "timezone": "America/Santiago",
-        "format": "{:L%a %d %b %H:%M}",
-        "format-alt": "{:L%H:%M\n<span size=\"small\">%d %b %Y</span>}",
+        "format": "{:L%a %d  %H:%M}",
+        "format-alt": "{:L%d %b %Y  %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "locale": "es_CL.UTF-8",
         "interval": 30,
@@ -192,11 +192,11 @@
             //"format-icons": ["", "", "", "", ""],
             // "discharging": ["󰂎", "󱊡", "󱊢", "󱊣", "󰂄"],
             // "charging": ["󰂎", "󱊡", "󱊢", "󱊣", "󰂄"],
-            "discharging": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-            "charging":    ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-            "not-charging": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-            "full":        ["󰁹"],
-            "plugged":     [""],
+            "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+            "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+            "full": "󰂅",
+            "not-charging": "󰂅",
+            "plugged": "",
         },
     },
 
@@ -339,7 +339,8 @@
         "format": "",
         "tooltip": true,
         "tooltip-format": "Start menu",
-        "on-click": "rofi -show drun -show-icons -theme layout-apps",
+        "on-click": "$HOME/.config/hypr/scripts/sys-menu.sh",
+        "on-click-right": "kitty",
     },
 
     "custom/expand-icon": {
