@@ -1,6 +1,6 @@
 #!/bin/sh
 
-$HOME/.config/hypr/scripts/show-title.sh "Update system packages"
+$HOME/.config/hypr/scripts/show-title.sh "Update system packages..."
 # figlet -c "Update"
 
 os=$(grep ^NAME= /etc/os-release | cut -d = -f 2 | tr -d '"')
@@ -15,8 +15,9 @@ case ${os,,} in
     *) echo No linux distro detected ;;
 esac
 
+# Reloads update indicator after updating system
 case  "$DESKTOP_SESSION" in
     bspwm) bspc wm --restart ;;
-    *)     bash -c "$HOME/.config/hypr/scripts/restore-waybar.sh >/dev/null 2>/dev/null &" ;;
+    *)     pkill -RTMIN+7 waybar ;;
 esac
 

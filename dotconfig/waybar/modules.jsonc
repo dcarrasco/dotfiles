@@ -10,6 +10,7 @@
         "persistent-workspaces": {
             "eDP-1": [ 1, 2, 3, 4, 5 ],
             "DP-8":  [ 6, 7, 8, 9, 10 ],
+            "*": 5,
         },
         "active-only": true,
         "all-outputs": false,
@@ -26,7 +27,8 @@
         "window-rewrite": {},
         "workspace-taskbar": {
             "enable": false,
-            "format": "{icon}",
+            "update-active-window": true,
+            "format": "{icon} {title:.22}",
             "icon-size": 16,
             "orientation": "horizontal"
         }
@@ -43,6 +45,14 @@
             "(.*) - Brave": "$1",
             "(.*) - Chromium": "$1",
         },
+    },
+
+    "hyprland/windowcount": {
+        "format": "[{}]",
+        "format-empty": "[X]",
+        "format-windowed": "[T]",
+        "format-fullscreen": "[{}]",
+        "separate-outputs": true,
     },
 
     "keyboard-state": {
@@ -140,7 +150,7 @@
             "critical": 80,
         },
         "tooltip": true,
-        "on-click": "GTK_THEME=Yaru-purple flatpak run net.nokyan.Resources",
+        "on-click": "flatpak run net.nokyan.Resources",
         // "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
     },
 
@@ -304,8 +314,9 @@
         "return-type": "json",
         "format": "{}",
         "exec": "$HOME/.config/hypr/scripts/show-updates.sh",
-        "on-click": "kitty --class hypr-sys-menu bash -c $HOME/.config/hypr/scripts/do-update.sh",
+        "on-click": "$HOME/.config/hypr/scripts/sys-menu.sh do-update",
         "restart-interval": 3600,
+        "signal": 7,
         "tooltip": true
     },
 
