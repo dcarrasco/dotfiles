@@ -26,11 +26,9 @@ __        __          _                            _
 @define-color fg-normal   alpha(@foreground, 0.8);
 @define-color fg-high     @foreground;
 @define-color fg-disabled alpha(@foreground, 0.4);
-@define-color fg-status   @yellow;
-@define-color ws-selected @yellow;
-@define-color selected    @purple;
+@define-color accent1     @purple;
+@define-color accent2     @yellow;
+@define-color accent3     @cyan;
 @define-color warning     @yellow;
 @define-color critical    @red;
-@define-color critical-fg @selection;
 @define-color success     @green;
-@define-color bg-selected @purple;

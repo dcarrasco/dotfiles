@@ -63,7 +63,7 @@ entry {
     hide-cursor-on-empty: true;
     placeholder: "Buscar...";
     placeholder-color: @fg-placeholder;
-    background-color: @bg-color;
+    background-color: @bg-prompt;
 }
 
 case-indicator, num-rows, num-filtered-rows {

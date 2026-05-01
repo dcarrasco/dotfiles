@@ -8,4 +8,5 @@
 */
 
 @import "colors/catppuccin.css";
+@import "base_style.css";
 @import "themes/underscore/style.css";

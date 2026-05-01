@@ -46,6 +46,7 @@
     foreground:      @text;
     bg-textbox:      @surface1;
     fg-prompt:       @blue;
+    bg-prompt:       @base-alpha;
     fg-placeholder:  @text-alpha;
     fg-selected:     @sapphire;
     bg-selected:     none;

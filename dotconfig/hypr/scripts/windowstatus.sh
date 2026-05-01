@@ -16,15 +16,16 @@ if [ $rofi = 0 ]; then
     fi
 
     if [ "$(window_status floating)" = "1" ]; then
-        client_status=" "
-        # client_status=" "
+        # client_status=" "
+        client_status=" "
     fi
 
     if [ "$(window_status fullscreen:)" = "1" ]; then
         # client_status=" "
         # client_status="  "
         # client_status="  "
-        client_status=" "
+        # client_status=" "
+        client_status=" "
     fi
 
     if [ "$(window_status fullscreenClient)" = "2" ]; then
@@ -40,7 +41,7 @@ if [ $rofi = 0 ]; then
         client_status=" "
     fi
 
-    if [ $(window_status grouped) != "0" ]; then
+    if [ "$(window_status grouped)" != "0" ] && [ "$(window_status grouped)" != "" ]; then
         # extra_status=" "
         extra_status=" "
     fi

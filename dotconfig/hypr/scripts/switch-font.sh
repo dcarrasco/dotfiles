@@ -1,0 +1,25 @@
+#!/bin/sh
+
+kitty_conf=$HOME/.config/kitty/kitty.conf
+alacritty_conf=$HOME/.config/alacritty/alacritty.toml
+
+# figlet -c "Terminal font"
+
+if [ -n "$1" ]; then
+    font="$1"
+else
+    current_font=$(grep ^font_family $kitty_conf | sed 's/^font_family  *//')
+    font=$(fc-list :spacing=100 -f "%{family[0]}\n" | sort -u | sed 's/\(.*\)/<span font_family="\1">\1<\/span>/' | rofi -dmenu -i -markup-rows -format p -p "Elige font" -mesg "Current font: $current_font")
+fi
+
+if [[ -n "$font" ]]; then
+    if [[ -f $kitty_conf ]]; then
+        sed -i "s/^font_family .*/font_family      $font/g" $kitty_conf
+        pkill -USR1 kitty
+    fi
+
+    if [[ -f $alacritty_conf ]]; then
+        sed -i "s/^family = \".*\"/family = \"$font\"/g" $alacritty_conf
+    fi
+fi
+

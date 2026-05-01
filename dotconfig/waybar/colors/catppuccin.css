@@ -45,11 +45,9 @@ __        __          _                            _
 @define-color fg-normal   alpha(@text, 0.8);
 @define-color fg-high     @text;
 @define-color fg-disabled alpha(@text, 0.4);
-@define-color fg-status   @subtext1;
-@define-color ws-selected @yellow;
-@define-color selected    @sapphire;
+@define-color accent1     @sapphire;
+@define-color accent2     @yellow;
+@define-color accent3     @mauve;
 @define-color warning     @yellow;
 @define-color critical    @red;
-@define-color critical-fg @surface0;
 @define-color success     @green;
-@define-color bg-selected @sapphire;

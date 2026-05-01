@@ -2,9 +2,17 @@
 
 SCRIPT_PATH=$HOME/.config/hypr/scripts
 export PATH="$SCRIPT_PATH:$PATH"
+terminal-pgm=kitty
 
 menu() {
-    echo -e "$2" | rofi -dmenu -i -theme-str "prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:20%;font:'Hack Nerd Font 14';}" -p ""
+    local menu_font="Hack Nerd Font 14"
+    local menu_width="390px"
+    local menu_height="600px"
+
+    local theme_str="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$menu_width;height:$menu_height;font:'$menu_font';}"
+
+    echo -e "$2" | rofi -dmenu -i -markup-rows -format p -theme-str "$theme_str" -p ""
+
 }
 
 terminal() {
@@ -101,12 +109,67 @@ show_toggle_menu() {
 
 show_style_menu() {
     case $(menu "Style" "  Theme\n󰸌  Colors\n  Font\n  Background") in
-        *Theme*)  switch-theme.sh ;;
-        *Colors*) switch-colors.sh ;;
-        *Font*)   font-menu.sh ;;
+        *Theme*)      show_theme_menu ;;
+        *Colors*)     show_colors_menu ;;
+        *Font*)       show_font_menu ;;
         *Background*) switch-wallpaper.sh ;;
         *) show_main_menu ;;
     esac
+}
+
+show_theme_menu() {
+    local temas=(Square Circle Underscore Mac Float Tahoe KDE)
+    local current_theme=$(grep import $HOME/.config/waybar/style.css | grep themes | cut -d "/" -f 2)
+
+    local opts=""
+    for i in "${temas[@]}"; do
+        if [ "${i,,}" = "$current_theme" ]; then
+            opts="$opts<i>$i</i>\n"
+        else
+            opts="$opts$i\n"
+        fi
+    done
+    local theme=$(menu "Theme" "$opts")
+
+    if [[ -n "$theme" ]]; then
+        switch-theme.sh $theme
+    else
+        back_to show_style_menu
+    fi
+}
+
+show_colors_menu() {
+    local temas=(Catppuccin Catppuccin-Latte Dracula Nord Nord-Frost)
+    local current_theme=$(grep import $HOME/.config/waybar/style.css | grep colors | tr -d '"' | tr -d ';' | cut -d / -f 2 | cut -d . -f 1)
+
+    local opts=""
+    for i in "${temas[@]}"; do
+        if [ "${i,,}" = "$current_theme" ]; then
+            opts="$opts<i>$i</i>\n"
+        else
+            opts="$opts$i\n"
+        fi
+    done
+    local theme=$(menu "Colors" "$opts")
+
+    if [[ -n "$theme" ]]; then
+        switch-colors.sh $theme
+    else
+        back_to show_style_menu
+    fi
+}
+
+show_font_menu() {
+    local kitty_conf=$HOME/.config/kitty/kitty.conf
+    local current_font=$(grep ^font_family $kitty_conf | sed 's/^font_family  *//')
+    local opts=$(fc-list :spacing=100 -f "%{family[0]}\n" | sort -u | gawk '{print "<span font_family=\"" $0 "\">" $0 "</span>"}')
+    local font=$(menu "$current_font" "$opts")
+
+    if [[ -n "$font" ]]; then
+        switch-font.sh "$font"
+    else
+        back_to show_style_menu
+    fi
 }
 
 show_setup_menu() {
@@ -116,7 +179,7 @@ show_setup_menu() {
         *Wifi*)        nmcli-rofi.sh ;;
         *Bluetooth*)   blueman-manager ;;
         *Monitors*)    switch-monitor.sh ;;
-        *Printers*)    webapp "http://localhost:631" & ;;
+        *Printers*)    webapp "http://localhost:631" ;;
         *Keybindings*) [ $DESKTOP_SESSION = "bspwm" ] && edit_file $HOME/.config/sxhkd/sxhkdrc || edit_file $HOME/.config/hypr/keybinds.conf ;;
         *Input*)       edit_file $HOME/.config/hypr/input.conf ;;
         *Fingerprint*) terminal $OMARCHY_BIN_PATH/omarchy-setup-fingerprint ;;
@@ -136,7 +199,7 @@ show_update_menu() {
 }
 
 show_main_menu() {
-    go_to_menu "$(menu "Start" "󰀻  Apps\n  Search\n  Learn\n󱓞  Trigger\n  Style\n  Setup\n  Update\n  About\n  System")"
+    go_to_menu "$(menu "Start" "󰀻  Apps\n  Search\n  Learn\n  Style\n󱓞  Trigger\n  Setup\n  Update\n  About\n  System")"
 }
 
 go_to_menu() {
@@ -149,6 +212,7 @@ go_to_menu() {
         *toggle*)  show_toggle_menu ;;
         *style*)   show_style_menu ;;
         *setup*)   show_setup_menu ;;
+        *do-update*)  present_terminal do-update.sh ;;
         *update*)  show_update_menu ;;
         *about*)   terminal "fastfetch && read -n 1 -s" ;;
         *system*)

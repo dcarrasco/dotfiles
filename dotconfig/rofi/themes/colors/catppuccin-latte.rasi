@@ -41,12 +41,14 @@
     base-alpha: #eff1f599;
     mantle: #e6e9ef;
     crust: #dce0e8;
+    crust-alpha: #dce0e877;
 
     window-border:   @sapphire;
     bg-color:        @base-alpha;
     foreground:      @text;
     bg-textbox:      @surface1;
     fg-prompt:       @text;
+    bg-prompt:       @crust-alpha;
     fg-placeholder:  @text-alpha;
     fg-selected:     @mauve;
     bg-selected:     none;

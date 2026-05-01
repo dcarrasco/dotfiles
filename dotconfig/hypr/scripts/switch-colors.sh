@@ -22,18 +22,21 @@ change_theme() {
 
 }
 
-temas=(Catppuccin Catppuccin-Latte Dracula Nord Nord-Frost)
+if [ -n "$1" ]; then
+    theme=$1
+else
+    temas=(Catppuccin Catppuccin-Latte Dracula Nord Nord-Frost)
 
-opts=""
-for i in "${temas[@]}"; do
-    if [ "${i,,}" = "$(current_theme)" ]; then
-        opts="$opts<i>$i</i>\n"
-    else
-        opts="$opts$i\n"
-    fi
-done
-
-theme=$(echo -e $opts | rofi -dmenu -markup-rows -i -format p -p "")
+    opts=""
+    for i in "${temas[@]}"; do
+        if [ "${i,,}" = "$(current_theme)" ]; then
+            opts="$opts<i>$i</i>\n"
+        else
+            opts="$opts$i\n"
+        fi
+    done
+    theme=$(echo -e $opts | rofi -dmenu -markup-rows -i -format p -p "")
+fi
 
 if [ -n "$theme" ]; then
     change_theme ${theme,,}

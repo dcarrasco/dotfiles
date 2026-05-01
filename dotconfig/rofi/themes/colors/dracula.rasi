@@ -30,7 +30,8 @@
     bg-color:        @background-alpha;
     // foreground:      @foreground;
     bg-textbox:      @comment;
-    fg-prompt:       @cyan;
+    fg-prompt:       @purple;
+    bg-prompt:       @background-alpha;
     fg-placeholder:  @foreground-alpha;
     fg-selected:     @purple;
     bg-selected:     none;

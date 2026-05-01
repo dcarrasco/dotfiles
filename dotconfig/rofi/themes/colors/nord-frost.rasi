@@ -19,7 +19,7 @@
 	nord4alpha: #d8dee999;
 	nord5: #e5e9f0;
 	nord6: #eceff4;
-	nord6alpha: #eceff499;
+	nord6alpha: #eceff4BB;
 
     /* frost */
 	nord7: #8fbcbb;
@@ -37,10 +37,11 @@
 
     window-border:   @nord8;
     bg-color:        @nord6alpha;
-    foreground:      @nord4;
+    foreground:      @nord0;
     bg-textbox:      @nord3;
-    fg-prompt:       @nord8;
-    fg-placeholder:  @nord4alpha;
+    fg-prompt:       @nord10;
+    bg-prompt:       @nord4alpha;
+    fg-placeholder:  @nord3;
     fg-selected:     @nord16;
     bg-selected:     none;
     fg-scrollbar:    @nord4alpha;

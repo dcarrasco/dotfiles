@@ -8,13 +8,8 @@ __        __          _                      _         _
 */
 
 * {
-    /* `otf-font-awesome` is required to be installed for icons */
     font-family: Noto Sans, SF Mono, Helvetica, Arial, sans-serif;
-}
-
-window {
     font-size: 11pt;
-    color: alpha(@fg-normal, 0.9);
 }
 
 window#waybar {
@@ -28,84 +23,31 @@ window#waybar {
     padding: 0 1em;
 }
 
-tooltip {
-    background-color: alpha(@bg-normal, 0.8);
-    border: 2px solid alpha(@fg-normal, 0.7);
-    border-radius: 10px;
-}
-
-tooltip label {
-    color: @fg-normal;
-    font-family: Adwaita Sans;
-    font-weight: 500;
-    font-size: 10pt;
-}
-
 #workspaces {
     padding: 0;
     /* border-radius: 20px; */
     /* background-color: alpha(@bg-normal, 0.2); */
 }
 
-button {
-    padding: 0px 2px;
-    margin: 0px 0px;
-}
-
 button label {
-    color: @bg-selected;
     padding: 0px 0.6em;
-    font-weight: 700;
-    margin: 0;
-}
-
-button.empty label {
-    color: alpha(@fg-normal, 0.5);
-    font-weight: 400;
 }
 
 button.active label {
-    background-color: alpha(@bg-selected, 0.8);
-    color: @fg-high;
-    font-weight: 800;
+    background-color: alpha(@accent1, 0.8);
     text-shadow: 1px 1px 2px alpha(@bg-normal, 0.7);
     padding: 1px 0.6em;
     margin: 5px 0.1em;
+    box-shadow: none;
     border-radius: 100%;
-    /* border: 2px solid @bg-selected; */
 }
 
 button.urgent label {
     background-color: @bg-critical;
 }
 
-button:hover {
-    background-color: transparent;
-    transition: none;
-}
-
-button:hover label {
-    color: @fg-high;
-    font-weight: 600;
-}
-
-#custom-leftsep {
-    padding: 0 0.5em;
-    color: @bg-selected;
-}
-
-#custom-windowstatus {
-    font-family: SF Mono, FontAwesome;
-    color: @fg-status;
-    padding: 0 0.5em;
-}
-
 #window label {
-    font-family: Adwaita Sans;
     font-size: 12pt;
-    font-weight: 600;
-    color: @fg-normal;
-    padding: 0 0em;
 }
 
 
@@ -140,11 +82,6 @@ button:hover label {
     padding: 0 0.9em 0 0.4em;
 }
 
-#clock {
-    /* font-family: Adwaita Sans; */
-    /* font-size: 12pt; */
-    /* color: @fg-normal; */
-}
 
 /* Success state ----------------------------------------------------------------------------- */
 #custom-power-profiles.power-saver,
@@ -183,93 +120,5 @@ button:hover label {
 #network.disconnected, #network.disabled,
 #bluetooth.disabled, #bluetooth.off {
     color: alpha(@fg-normal, 0.4);
-}
-
-#battery.charging {
-    padding: 0 0.6em 0 0.4em;
-}
-
-#wireplumber {
-    background-color: #fff0f5;
-    color: #000000;
-}
-
-#wireplumber.muted {
-    background-color: #f53c3c;
-}
-
-#custom-media {
-    background-color: #66cc99;
-    color: #2a5c45;
-    min-width: 100px;
-}
-
-#custom-media.custom-spotify {
-    background-color: #66cc99;
-}
-
-#custom-media.custom-vlc {
-    background-color: #ffa000;
-}
-
-#temperature {
-    /* background-color: #f0932b; */
-}
-
-#tray {
-}
-
-#tray > .passive {
-    /* -gtk-icon-effect: dim; */
-    background-color: @bg-critical;
-}
-
-#mpd {
-    /* background-color: #66cc99; */
-    /* color: #2a5c45; */
-}
-
-#mpd.disconnected {
-    /* background-color: #f53c3c; */
-}
-
-#mpd.stopped {
-    /* background-color: #90b1b1; */
-}
-
-#mpd.paused {
-    /* background-color: #51a37a; */
-}
-
-#language {
-}
-
-#keyboard-state {
-    background: #97e1ad;
-    color: #000000;
-    padding: 0 0px;
-    margin: 0 5px;
-    min-width: 16px;
-}
-
-#keyboard-state > label {
-    padding: 0 5px;
-}
-
-#keyboard-state > label.locked {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-#scratchpad {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-#scratchpad.empty {
-	background-color: transparent;
-}
-
-#bluetooth.connected {
-    /* color: #0082FC; */
-    /* color: @fg-status; */
 }
 

@@ -29,16 +29,15 @@ __        __          _                            _
 @define-color nord14 #a3be8c;
 @define-color nord15 #b48ead;
 
-@define-color fg-normal   @nord2;
-@define-color shadow      alpha(@nord0, 0.6);
-@define-color fg-disabled alpha(@nord2, 0.4);
-@define-color fg-high     @nord1;
-@define-color fg-status   @nord7;
+/* ------ Waybar elements -------------------------------- */
 @define-color bg-normal   @nord4;
-@define-color success     @nord14;
+@define-color shadow      alpha(@nord0, 0.6);
+@define-color fg-normal   @nord2;
+@define-color fg-high     @nord1;
+@define-color fg-disabled alpha(@nord2, 0.4);
+@define-color accent1     @nord10;
+@define-color accent2     @nord12;
+@define-color accent3     @nord15;
 @define-color warning     @nord12;
 @define-color critical    @nord11;
-@define-color bg-selected @nord9;
-@define-color ws-selected @nord15;
-@define-color bg-selected @nord9;
-@define-color selected    @nord10;
+@define-color success     @nord14;
