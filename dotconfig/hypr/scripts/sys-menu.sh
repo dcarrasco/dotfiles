@@ -25,7 +25,7 @@ present_terminal() {
 }
 
 edit_file() {
-    notify-send "Editing config file" "$1"
+    notify-send -u low "Editing config file" "$1"
     kitty nvim "$1"
 }
 
@@ -108,11 +108,12 @@ show_toggle_menu() {
 }
 
 show_style_menu() {
-    case $(menu "Style" "  Theme\n󰸌  Colors\n  Font\n  Background") in
+    case $(menu "Style" "  Theme\n󰸌  Colors\n  Font\n  Background\n  Hyprland") in
         *Theme*)      show_theme_menu ;;
         *Colors*)     show_colors_menu ;;
         *Font*)       show_font_menu ;;
         *Background*) switch-wallpaper.sh ;;
+        *Hyprland*)   edit_file $HOME/.config/hypr/looknfeel.conf ;;
         *) show_main_menu ;;
     esac
 }

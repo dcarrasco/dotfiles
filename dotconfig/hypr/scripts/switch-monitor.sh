@@ -88,7 +88,7 @@ set_monitor_on() {
         *wayland*) hyprctl keyword monitor $monitor, $resolution, $position, $scale ;;
         *x11*) xrandr --output $monitor --right-of $MON_INT --auto;;
     esac
-    notify-send "Pantalla" "Set pantalla $monitor on"
+    notify-send -u low "Pantalla" "Set pantalla $monitor on"
 }
 
 set_monitor_on_mirror() {
@@ -101,7 +101,7 @@ set_monitor_on_mirror() {
         *wayland*) hyprctl keyword monitor $monitor, $resolution, $position, $scale, mirror, $MON_INT ;;
         *x11*) xrandr --output $monitor --right-of $MON_INT --auto;;
     esac
-    notify-send "Pantalla" "Set pantalla $monitor (mirror) on"
+    notify-send -u low "Pantalla" "Set pantalla $monitor (mirror) on"
 }
 
 set_monitor_off() {
@@ -111,7 +111,7 @@ set_monitor_off() {
         *wayland*) hyprctl keyword monitor $monitor, disable ;;
         *x11*)     xrandr --output $monitor --off ;;
     esac
-    notify-send "Pantalla" "Set pantalla $monitor off"
+    notify-send -u low "Pantalla" "Set pantalla $monitor off"
 }
 
 set_resolution() {
@@ -122,7 +122,7 @@ set_resolution() {
         *wayland*) set_monitor_on $1 $2 $MON_POS $MON_SCALE ;;
         *x11*)     xrandr --output $1 --mode $2 ;;
     esac
-    notify-send "Pantalla" "Resolucion $2"
+    notify-send -u low "Pantalla" "Resolucion $2"
 }
 
 set_scale() {
@@ -141,7 +141,7 @@ set_scale() {
             [ "$2" == "2.0" ]  && xrandr --output $monitor --scale 0.5
             ;;
     esac
-    notify-send "Pantalla" "Escala $monitor"
+    notify-send -u low "Pantalla" "Escala $monitor"
 }
 
 get_lid_state() {

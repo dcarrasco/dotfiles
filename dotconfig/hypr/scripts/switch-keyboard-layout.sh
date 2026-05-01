@@ -28,4 +28,4 @@ else
     done
 fi
 
-notify-send "Keyboard" "New layout: $newlayout"
+notify-send -u low "Keyboard" "New layout: $newlayout"

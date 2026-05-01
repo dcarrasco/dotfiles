@@ -19,6 +19,7 @@ arch=(\
     "hypr/looknfeel.conf" \
     "hypr/rules.conf" \
     "hypr/hyprlock.conf" \
+    "hypr/hypridle.conf" \
     "hypr/scripts/edit-config.sh" \
     "hypr/scripts/sys-menu.sh" \
     "wlogout/layout" \
@@ -68,7 +69,7 @@ file=$(echo -e "$listado" | rofi -dmenu -i -p "Edit config")
 if [[ -n $file ]]; then
     icon=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 1)
     file=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 2)
-    notify-send "Editing config file" "$icon   $file..."
+    notify-send -u low "Editing config file" "$icon   $file..."
     cd "$(dirname $config_dir/$file)"
     kitty nvim "$config_dir/$file"
 fi

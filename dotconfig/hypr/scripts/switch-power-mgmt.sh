@@ -16,4 +16,4 @@ case "$power_profile" in
     *) tuned-adm profile $balanced_profile ;;
 esac
 
-notify-send "Power Management" "New profile: $(tuned-adm active | cut -d ' ' -f 4)"
+notify-send -u low "Power Management" "New profile: $(tuned-adm active | cut -d ' ' -f 4)"

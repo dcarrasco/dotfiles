@@ -30,6 +30,6 @@ fi
 if [ -n "$theme" ]; then
     change_theme ${theme,,}
     [ "$DESKTOP_SESSION" = "bspwm" ] && bspc wm --restart || $HOME/.config/hypr/scripts/restore-waybar.sh
-    notify-send "Theme" "Change theme to $theme"
+    notify-send -u low "Theme" "Change theme to $theme"
 fi
 
