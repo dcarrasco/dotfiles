@@ -16,7 +16,7 @@ window {
     border: 3px;
     border-color: @window-border;
     border-radius: 12px;
-    height: 65%;
+    height: 70%;
     width: 55%;
     // icon-theme: "ePapirus";
     // margin: 0 0 0 0;
@@ -136,7 +136,7 @@ element-text {
 
 element-icon {
     vertical-align: 0.5;
-    size: 7em;
+    size: 6.5em;
     padding: 0;
 }
 

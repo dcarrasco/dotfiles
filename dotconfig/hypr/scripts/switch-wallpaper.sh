@@ -1,16 +1,23 @@
 #! /bin/bash
 
-wallpaper_folder="$HOME/Imágenes/fondos pantalla"
-rofi_theme=$HOME/.config/rofi/themes/layout-wallpapers.rasi
-wallpaper_conf=$HOME/.config/hypr/scripts/set-wallpaper.sh
+abstract_folder="$HOME/Imágenes/fondos pantalla/abstract"
+nature_folder="$HOME/Imágenes/fondos pantalla/nature"
+bing_folder="$HOME/Imágenes/BingWallpaper"
+
+rofi_theme="$HOME/.config/rofi/themes/layout-wallpapers.rasi"
+wallpaper_conf="$HOME/.config/hypr/scripts/set-wallpaper.sh"
 
 
-wallpaper=$(find "$wallpaper_folder" -type f \
+wallpaper=$(find "$abstract_folder" "$nature_folder" "$bing_folder" -type f \
     | awk -F "" '{print $0 "\0icon\x1f" $0;}' \
-    | rofi -dmenu -show-icons -p Wallpapers -config $rofi_theme)
+    | rofi -dmenu -show-icons -p 󰸉  -config $rofi_theme -theme-str "entry{placeholder:\"Fondo de pantalla...\";}")
 
-echo "$wallpaper"
-sed -i "s#^wallpaper=.*#wallpaper=\"$wallpaper\"#g" $wallpaper_conf
+# echo "$wallpaper"
 
-$HOME/.config/hypr/scripts/set-wallpaper.sh
+if [ -n "$wallpaper" ]; then
+    # Cambia la configuración inicial del fondo de pantalla
+    sed -i "s#^wallpaper=.*#wallpaper=\"$wallpaper\"#g" $wallpaper_conf
 
+    # Ejecuta cambio de fondo de pantalla
+    $HOME/.config/hypr/scripts/set-wallpaper.sh
+fi
