@@ -10,7 +10,7 @@ __        __          _                  _                         _
     "layer": "top",
     "position": "top",
     // "output": ["eDP-1", "DP-8"],
-    "height": 34,
+    "height": 32,
     "spacing": 0,
     "margin-top": 0,
     "margin-left": 0,
@@ -21,12 +21,12 @@ __        __          _                  _                         _
     // Choose the order of the modules
     "modules-left": [
         "custom/start-menu",
-        "hyprland/workspaces",
-        "custom/windowstatus",
-        "custom/leftsep",
+        // "custom/leftsep",
         "hyprland/window"
     ],
     "modules-center": [
+        "hyprland/workspaces",
+        "custom/windowstatus",
     ],
     "modules-right":  [
         "custom/updates",

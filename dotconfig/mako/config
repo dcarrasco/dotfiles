@@ -27,3 +27,4 @@ background-color=#BF616ADD
 [category=OSD]
 background-color=#1e1e2eDD
 progress-color=#74c7ec55
+format=%s\n%b

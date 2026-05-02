@@ -12,10 +12,13 @@ Style: Mac
 * {
     font-family: SF UI Text, SF Mono, sans-serif;
     font-size: 11pt;
+    padding: 0;
+    margin: 0;
 }
 
-window#waybar > box {
+#waybar {
     border-bottom: 1px solid alpha(@bg-normal, 0.9);
+    border-radius: 0.7em 0.7em 0 0;
 }
 
 #window label {

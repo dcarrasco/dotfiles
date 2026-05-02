@@ -16,15 +16,17 @@ __        __          _                  ____                   ____  _         
 #waybar {
     color: @fg-normal;
     background: alpha(@bg-normal, 0.8);
+    padding: 0;
+    margin: 0;
 }
 
 .modules-left, .modules-right, .modules-center {
-    /* padding: 0 0.3em; */
+    padding: 0 0.4em;
 }
 
 .modules-left .module, .modules-right .module, .modules-center .module {
-    margin: 2px 0.5em;
-    /* padding: 0 0.6em; */
+    margin: 2px 0.6em;
+    padding: 0;
     /* background-color: red; */
 }
 
@@ -57,9 +59,7 @@ tooltip label {
 
 button label {
     color: @fg-high;
-    padding: 2px 0.4em;
-    margin: 2px 0;
-    /* background-color: red; */
+    padding: 0px 0.4em;
 }
 
 button.empty label {
@@ -83,7 +83,7 @@ button:hover label {
 
 #custom-start-menu {
     color: @accent1;
-    font-size: 14pt;
+    font-size: 17pt;
 }
 
 #custom-windowstatus {
