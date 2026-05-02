@@ -15,10 +15,10 @@ change_theme() {
     sed -i "s/^@import \"themes\/colors\/.*\.rasi\"/@import \"themes\/colors\/$1.rasi\"/" $HOME/.config/rofi/themes/colors.rasi
 
     # bspwm
-    sed -i "s/^source \$HOME\/\.config\/bspwm\/themes\/.*/source \$HOME\/.config\/bspwm\/themes\/$1/" $HOME/.config/bspwm/bspwmrc
+    # sed -i "s/^source \$HOME\/\.config\/bspwm\/themes\/.*/source \$HOME\/.config\/bspwm\/themes\/$1/" $HOME/.config/bspwm/bspwmrc
 
     # polybar
-    sed -i "s/include-file = .*\/config.ini/include-file = \$HOME\/\.config\/polybar\/themes\/$1\/config.ini/" $HOME/.config/polybar/config.ini
+    # sed -i "s/include-file = .*\/config.ini/include-file = \$HOME\/\.config\/polybar\/themes\/$1\/config.ini/" $HOME/.config/polybar/config.ini
 
 }
 
