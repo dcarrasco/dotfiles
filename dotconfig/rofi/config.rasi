@@ -21,4 +21,3 @@ configuration {
 }
 
 @theme "themes/default.rasi"
-

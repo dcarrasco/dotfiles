@@ -53,7 +53,7 @@ prompt {
 
 entry {
     /* cuadro de texto para escribir */
-    font: "SF UI Display 20";
+    font: "SF UI Display 18";
     text-color: @foreground;
     vertical-align: 0.5;
     border-radius: 15px;
