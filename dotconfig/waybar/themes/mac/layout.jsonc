@@ -34,7 +34,7 @@ __        __          _                  _                         _
         "idle_inhibitor",
         // "custom/nightlight",
         "cpu",
-        // "memory",
+        "memory",
         "temperature",
         "hyprland/language",
         "custom/power-profiles",

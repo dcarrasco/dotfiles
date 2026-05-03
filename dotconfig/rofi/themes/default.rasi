@@ -63,7 +63,9 @@ entry {
     hide-cursor-on-empty: true;
     placeholder: "Buscar...";
     placeholder-color: @fg-placeholder;
-    background-color: @bg-prompt;
+    // background-color: @bg-prompt;
+    border: 1px;
+    border-color: @fg-scrollbar;
 }
 
 case-indicator, num-rows, num-filtered-rows {
@@ -78,7 +80,7 @@ case-indicator, num-rows, num-filtered-rows {
 
 // message  ------------------------------------------------------------------------------
 message {
-    padding: 0.5em 1em;
+    padding: 0em 0em 0.5em 0em;
 }
 
 textbox {

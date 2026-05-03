@@ -196,7 +196,17 @@ show_update_menu() {
         *Remove*)  terminal "pkg-remove.sh; show-done.sh" ;;
         *) show_main_menu ;;
     esac
+}
 
+show_system_menu() {
+    case $(menu "System" " Lock\n󰗽 Logout\n󰐥 Power Off\n Suspend\n Restart") in
+        *Lock*)       hyprlock ;;
+        *Logout*)     hyprctl dispatch exit ;;
+        *Power\ Off*) systemctl poweroff ;;
+        *Suspend*)    systemctl suspend ;;
+        *Restart*)    systemctl reboot ;;
+        *) show_main_menu ;;
+    esac
 }
 
 show_main_menu() {
@@ -219,7 +229,8 @@ go_to_menu() {
         *system*)
             case $DESKTOP_SESSION in
                 bspwm) $HOME/.config/rofi/powermenu/powermenu.sh ;;
-                *)     wlogout -b 5 ;;
+                *)     show_system_menu ;;
+                # *)     wlogout -b 5 ;;
             esac
             ;;
     esac
