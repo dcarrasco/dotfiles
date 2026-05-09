@@ -21,6 +21,7 @@ $rust\
 $docker_context\
 [](fg:group5 bg:group6)\
 $time\
+$character\
 [ ](fg:group6)\
 """
 
@@ -174,3 +175,13 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:group6"
 format = '[ $time ]($style)'
+
+
+[character]
+error_symbol = "[✗](bold red bg:group6) "
+success_symbol = ""
+vimcmd_symbol = '[❮](bold green bg:group6)'
+vimcmd_replace_one_symbol = '[❮](bold purple bg:group6)'
+vimcmd_replace_symbol = '[❮](bold purple bg:group6)'
+vimcmd_visual_symbol = '[❮](bold yellow bg:group6)'
+format = '[$symbol](bg:group6)'
