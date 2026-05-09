@@ -13,6 +13,7 @@
 	nord1: #3b4252;
 	nord2: #434c5e;
 	nord3: #4c566a;
+	nord3alpha: #4c566a55;
 
     /* snow storm */
 	nord4: #d8dee9;
@@ -44,7 +45,7 @@
     fg-placeholder:  @nord3;
     fg-selected:     @nord16;
     bg-selected:     none;
-    fg-scrollbar:    @nord4alpha;
+    fg-scrollbar:    @nord3alpha;
 
     background-color: transparent;
 }

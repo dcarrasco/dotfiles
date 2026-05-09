@@ -14,12 +14,13 @@
     crust:  #11111b;
 
     text:     #cdd6f4;
-    text-alpha: #cdd6f488;
+    text-alpha: #cdd6f455;
     subtext0: #a6adc8;
     subtext1: #bac2de;
 
     surface0: #313244;
     surface1: #45475a;
+    surface1-alpha: #45475a88;
     surface2: #585b70;
 
     overlay0: #6c7086;
@@ -50,7 +51,7 @@
     fg-placeholder:  @text-alpha;
     fg-selected:     @sapphire;
     bg-selected:     none;
-    fg-scrollbar:    @surface1;
+    fg-scrollbar:    @text-alpha;
 
     background-color: transparent;
 }

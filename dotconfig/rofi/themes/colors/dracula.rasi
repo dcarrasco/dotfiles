@@ -11,7 +11,7 @@
     background: #282A36;
     background-alpha: #282A3699;
     foreground: #F8F8F2;
-    foreground-alpha: #F8F8F299;
+    foreground-alpha: #F8F8F255;
     selection:  #44475A;
     comment:    #6272A4;
     red:        #FF5555;
@@ -35,7 +35,7 @@
     fg-placeholder:  @foreground-alpha;
     fg-selected:     @purple;
     bg-selected:     none;
-    fg-scrollbar:    @selection;
+    fg-scrollbar:    @foreground-alpha;
 
     background-color: transparent;
 }

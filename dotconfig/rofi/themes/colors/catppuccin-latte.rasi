@@ -25,7 +25,7 @@
     lavender: #7287fd;
 
     text: #4c4f69;
-    text-alpha: #4c4f6988;
+    text-alpha: #4c4f6955;
     subtext1: #5c5f77;
     subtext0: #6c6f85;
 
@@ -52,7 +52,7 @@
     fg-placeholder:  @text-alpha;
     fg-selected:     @mauve;
     bg-selected:     none;
-    fg-scrollbar:    @surface1;
+    fg-scrollbar:    @text-alpha;
 
     background-color: transparent;
 }

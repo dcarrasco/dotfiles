@@ -16,7 +16,7 @@
 
     /* snow storm */
 	nord4: #d8dee9;
-	nord4alpha: #d8dee988;
+	nord4alpha: #d8dee955;
 	nord5: #e5e9f0;
 	nord6: #eceff4;
 
@@ -42,7 +42,7 @@
     fg-placeholder:  @nord4alpha;
     fg-selected:     @nord8;
     bg-selected:     none;
-    fg-scrollbar:    @nord3;
+    fg-scrollbar:    @nord4alpha;
 
     background-color: transparent;
 }
