@@ -20,8 +20,8 @@ arch=(\
     "hypr/rules.conf" \
     "hypr/hyprlock.conf" \
     "hypr/hypridle.conf" \
-    "hypr/scripts/edit-config.sh" \
-    "hypr/scripts/sys-menu.sh" \
+    "hypr/scripts/hypr-edit-config" \
+    "hypr/scripts/hypr-sys-menu" \
     "wlogout/layout" \
     "wlogout/style.css" \
     "kitty/kitty.conf" \

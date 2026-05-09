@@ -266,5 +266,5 @@ else
     esac
 fi
 
-# $HOME/.config/hypr/scripts/restore-waybar.sh
+# $HOME/.config/hypr/scripts/hypr-restore-waybar
 

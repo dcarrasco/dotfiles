@@ -225,7 +225,7 @@
         },
         "tooltip-format-wifi": "{essid} ({signalStrength}%, {frequency}GHz)\nWIFI IP: {ipaddr}/{cidr}\nInterface: {ifname}",
         /* "format-alt": "{ifname}: {ipaddr}/{cidr}", */
-        "on-click": "$HOME/.config/hypr/scripts/nmcli-rofi.sh &",
+        "on-click": "$HOME/.config/hypr/scripts/hypr-nmcli-rofi &",
     },
 
     "network#eth": {
@@ -245,7 +245,7 @@
         "format-disabled": "󰂲 off",
         "format-connected": "",
         "on-click": "blueman-manager",
-        "on-click-right": "$HOME/.config/hypr/scripts/bluetooth.sh --toggle",
+        "on-click-right": "$HOME/.config/hypr/scripts/hypr-bluetooth --toggle",
         "tooltip-format": "{status} ({num_connections})\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "* {device_alias}",
         "tooltip-format-enumerate-connected-battery": "* {device_alias} ({device_battery_percentage}%)",
@@ -297,7 +297,7 @@
     "custom/windowname": {
         "format": "{}",
         // "exec": "hyprctl activewindow | grep 'title:' | cut -d : -f 2",
-        "exec": "$HOME/.config/hypr/scripts/windowname.sh",
+        "exec": "$HOME/.config/hypr/scripts/hypr-windowname",
         "tooltip": false,
         "restart-interval": 1,
         "max-length": 60
@@ -305,7 +305,7 @@
 
     "custom/windowstatus": {
         "format": "{}",
-        "exec": "$HOME/.config/hypr/scripts/windowstatus.sh",
+        "exec": "$HOME/.config/hypr/scripts/hypr-windowstatus",
         "restart-interval": 1,
         "tooltip": false
     },
@@ -313,8 +313,8 @@
     "custom/updates": {
         "return-type": "json",
         "format": "{}",
-        "exec": "$HOME/.config/hypr/scripts/show-updates.sh",
-        "on-click": "$HOME/.config/hypr/scripts/sys-menu.sh do-update",
+        "exec": "$HOME/.config/hypr/scripts/hypr-show-updates",
+        "on-click": "$HOME/.config/hypr/scripts/hypr-sys-menu do-update",
         "restart-interval": 3600,
         "signal": 7,
         "tooltip": true
@@ -333,14 +333,14 @@
 
     "custom/power-profiles": {
         "format": "{text}",
-        "exec": "$HOME/.config/hypr/scripts/show-power-mgmt.sh",
+        "exec": "$HOME/.config/hypr/scripts/hypr-show-power-mgmt",
         "interval": 1,
         "tooltip": true,
     },
 
     "custom/nightlight": {
         "format": "󱩌 ",
-        "on-click": "$HOME/.config/hypr/scripts/switch-nightlight.sh",
+        "on-click": "$HOME/.config/hypr/scripts/hypr-switch-nightlight",
         "tooltip": true,
         "tooltip-format": "Switch nightlight",
     },
@@ -349,7 +349,7 @@
         "format": "",
         "tooltip": true,
         "tooltip-format": "Start menu",
-        "on-click": "$HOME/.config/hypr/scripts/sys-menu.sh",
+        "on-click": "$HOME/.config/hypr/scripts/hypr-sys-menu",
         "on-click-right": "kitty",
     },
 

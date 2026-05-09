@@ -39,10 +39,10 @@ selected=$(echo "$options" | rofi -dmenu -i -p "Settings")
 
 case $selected in
     $bluetooth_option)
-        ~/.config/polybar/scripts/bluetooth.sh --toggle
+        ~/.config/hypr/scripts/hypr-bluetooth --toggle
     ;;
     $keyboard_option)
-        ~/.config/hypr/scripts/switch-keyboard-layout.sh
+        ~/.config/hypr/scripts/hypr-switch-keyboard-layout
     ;;
     $swapcontrol_option)
         if hyprctl getoption input:kb_options | grep swapcaps; then

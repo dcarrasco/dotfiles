@@ -1,25 +1,25 @@
 ART_DIR=$HOME/.config/hypr/scripts/ascii-art
 
-list_art=$(find $ART_DIR -type f | xargs -I $ basename $ | cut -d " " -f 1 | sort | nl)
-length_art=$(find $ART_DIR -type f | wc -l)
+LIST_ART=$(find $ART_DIR -type f | xargs -I $ basename $ | cut -d " " -f 1 | sort | nl)
+LENGTH_ART=$(find $ART_DIR -type f | wc -l)
 
 function _random() {
-    declare -i random_index=$RANDOM%$length_art
-    random_index=$((random_index+1))
-    random_art="$(echo "${list_art}" | sed -n ${random_index}p | tr -d ' ' | tr '\t' ' ' | cut -d ' ' -f 2)"
+    declare -i random_index=$RANDOM%$LENGTH_ART
+    local random_index=$((random_index+1))
+    local random_art="$(echo "${LIST_ART}" | sed -n ${random_index}p | tr -d ' ' | tr '\t' ' ' | cut -d ' ' -f 2)"
     exec $ART_DIR/$random_art
 }
 
 function _all() {
-    for f in $(echo "$list_art" | cut -f 2); do
+    for f in $(echo "$LIST_ART" | cut -f 2); do
         echo -e "\nScript: $f"
         echo "$($ART_DIR/$f)"
     done
 }
 
 function _list() {
-    echo "Hay $length_art scripts instalados"
-    echo "$list_art"
+    echo "Hay $LENGTH_ART scripts instalados"
+    echo "$LIST_ART"
 }
 
 function _help() {
@@ -46,9 +46,9 @@ case "$#" in
     1)
         case "$1" in
             random | --random | -r) _random ;;
-            all | --all | -a) _all ;;
-            list | --list | -l) _list ;;
-            help | --help | -h) _help ;;
+            all | --all | -a)       _all ;;
+            list | --list | -l)     _list ;;
+            help | --help | -h)     _help ;;
         esac
         ;;
     2)

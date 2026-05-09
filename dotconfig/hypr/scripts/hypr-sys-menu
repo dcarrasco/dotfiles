@@ -21,7 +21,7 @@ terminal() {
 
 present_terminal() {
     local cmd="$*"
-    kitty --class hypr-sys-menu bash -c "show-logo.sh; $cmd; show-done.sh"
+    kitty --class hypr-sys-menu bash -c "hypr-show-logo; $cmd; hypr-show-done"
 }
 
 edit_file() {
@@ -40,7 +40,7 @@ webapp() {
 
 show_learn_menu() {
     case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n  Bspwm\n  Waybar\n  Polybar\n  NerdFonts\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
-        *Keybindings*) show-keybinds.sh ;;
+        *Keybindings*) hypr-show-keybinds ;;
         *Omarchy*)     webapp "https://manuals.omamix.org/2/the-omarchy-manual" ;;
         *Hyprland*)    webapp "https://wiki.hypr.land/" ;;
         *Bspwm*)       webapp "https://github.com/baskerville/bspwm/wiki" ;;
@@ -73,9 +73,9 @@ show_capture_menu() {
 
 show_screenshot_menu() {
     case $(menu "Screenshot" "󰩬   Region to clipboard\n󰩬   Region to file\n󰹑    Display to clipboard\n󰹑    Display to file") in
-        *Region\ to\ clipboard*) cmd-screenshot.sh clipboard ;;
-        *Region\ to\ file*)      cmd-screenshot.sh region ;;
-        *Display\ to\ file*)     cmd-screenshot.sh ;;
+        *Region\ to\ clipboard*) hypr-cmd-screenshot clipboard ;;
+        *Region\ to\ file*)      hypr-cmd-screenshot region ;;
+        *Display\ to\ file*)     hypr-cmd-screenshot ;;
         *) show_capture_menu ;;
     esac
 }
@@ -94,12 +94,12 @@ show_toggle_menu() {
     # power_status=$(tuned-adm active | cut -d " " -f 4)
     # keyb_status=$(setxkbmap -query | grep layout | awk '{print $2}')
     case $(menu "Toggle" "  Wifi\n󰂯  Bluetooth\n  Power Management\n  Keyboard Layout\n󰪛  Keyboard ControlCaps\n󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar") in
-        *Wifi*)                  switch-wifi.sh ;;
-        *Bluetooth*)             bluetooth.sh --toggle ;;
-        *Power\ Management*)     switch-power-mgmt.sh ;;
-        *Keyboard\ Layout*)      switch-keyboard-layout.sh ;;
-        *Keyboard\ ControlCaps*) switch-controlcaps.sh ;;
-        *Nightlight*)            switch-nightlight.sh ;;
+        *Wifi*)                  hypr-switch-wifi ;;
+        *Bluetooth*)             hypr-bluetooth --toggle ;;
+        *Power\ Management*)     hypr-switch-power-mgmt ;;
+        *Keyboard\ Layout*)      hypr-switch-keyboard-layout ;;
+        *Keyboard\ ControlCaps*) hypr-switch-controlcaps ;;
+        *Nightlight*)            hypr-switch-nightlight ;;
         *Bar*)                   pkill -SIGUSR1 waybar ;;
         *Screensaver*)       $OMARCHY_BIN_PATH/omarchy-launch-screensaver ;;
         *Idle*)              $OMARCHY_BIN_PATH/omarchy-toggle-idle ;;
@@ -112,7 +112,7 @@ show_style_menu() {
         *Theme*)      show_theme_menu ;;
         *Colors*)     show_colors_menu ;;
         *Font*)       show_font_menu ;;
-        *Background*) switch-wallpaper.sh ;;
+        *Background*) hypr-switch-wallpaper ;;
         *Hyprland*)   edit_file $HOME/.config/hypr/looknfeel.conf ;;
         *) show_main_menu ;;
     esac
@@ -133,7 +133,7 @@ show_theme_menu() {
     local theme=$(menu "Theme" "$opts")
 
     if [[ -n "$theme" ]]; then
-        switch-theme.sh $theme
+        hypr-switch-theme $theme
     else
         back_to show_style_menu
     fi
@@ -154,7 +154,7 @@ show_colors_menu() {
     local theme=$(menu "Colors" "$opts")
 
     if [[ -n "$theme" ]]; then
-        switch-colors.sh $theme
+        hypr-switch-colors $theme
     else
         back_to show_style_menu
     fi
@@ -167,7 +167,7 @@ show_font_menu() {
     local font=$(menu "$current_font" "$opts")
 
     if [[ -n "$font" ]]; then
-        switch-font.sh "$font"
+        hypr-switch-font "$font"
     else
         back_to show_style_menu
     fi
@@ -175,11 +175,11 @@ show_font_menu() {
 
 show_setup_menu() {
     case $(menu "Setup" "  Configs\n  Audio\n  Wifi\n󰂯  Bluetooth\n󰍹  Monitors\n󰐪  Printers\n  Keybindings\n  Input\n󰈷  Fingerprint\n  Fido2") in
-        *Configs*)     edit-config.sh ;;
+        *Configs*)     hypr-edit-config ;;
         *Audio*)       terminal alsamixer ;;
-        *Wifi*)        nmcli-rofi.sh ;;
+        *Wifi*)        hypr-nmcli-rofi ;;
         *Bluetooth*)   blueman-manager ;;
-        *Monitors*)    switch-monitor.sh ;;
+        *Monitors*)    hypr-switch-monitor ;;
         *Printers*)    webapp "http://localhost:631" ;;
         *Keybindings*) [ $DESKTOP_SESSION = "bspwm" ] && edit_file $HOME/.config/sxhkd/sxhkdrc || edit_file $HOME/.config/hypr/keybinds.conf ;;
         *Input*)       edit_file $HOME/.config/hypr/input.conf ;;
@@ -191,9 +191,9 @@ show_setup_menu() {
 
 show_update_menu() {
     case $(menu "Update" "  Update\n󰉉  Install package\n󰭌  Remove package") in
-        *Update*)  present_terminal do-update.sh ;;
-        *Install*) terminal "pkg-install.sh; show-done.sh" ;;
-        *Remove*)  terminal "pkg-remove.sh; show-done.sh" ;;
+        *Update*)  present_terminal hypr-do-update ;;
+        *Install*) terminal "hypr-pkg-install; hypr-show-done" ;;
+        *Remove*)  terminal "hypr-pkg-remove; hypr-show-done" ;;
         *) show_main_menu ;;
     esac
 }
@@ -215,17 +215,17 @@ show_main_menu() {
 
 go_to_menu() {
     case "${1,,}" in
-        *apps*)    rofi -i -show drun -show-icons -theme layout-apps;;
-        *search*)  search-home.sh ;;
-        *learn*)   show_learn_menu ;;
-        *trigger*) show_trigger_menu ;;
-        *capture*) show_capture_menu ;;
-        *toggle*)  show_toggle_menu ;;
-        *style*)   show_style_menu ;;
-        *setup*)   show_setup_menu ;;
-        *do-update*)  present_terminal do-update.sh ;;
-        *update*)  show_update_menu ;;
-        *about*)   terminal "fastfetch && read -n 1 -s" ;;
+        *apps*)       rofi -i -show drun -show-icons -theme layout-apps;;
+        *search*)     hypr-search-home ;;
+        *learn*)      show_learn_menu ;;
+        *trigger*)    show_trigger_menu ;;
+        *capture*)    show_capture_menu ;;
+        *toggle*)     show_toggle_menu ;;
+        *style*)      show_style_menu ;;
+        *setup*)      show_setup_menu ;;
+        *do-update*)  present_terminal hypr-do-update ;;
+        *update*)     show_update_menu ;;
+        *about*)      terminal "fastfetch && read -n 1 -s" ;;
         *system*)
             case $DESKTOP_SESSION in
                 bspwm) $HOME/.config/rofi/powermenu/powermenu.sh ;;

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-$HOME/.config/hypr/scripts/show-title.sh "Update system packages..."
+$HOME/.config/hypr/scripts/hypr-show-title "Update system packages..."
 # figlet -c "Update"
 
 os=$(grep ^NAME= /etc/os-release | cut -d = -f 2 | tr -d '"')

@@ -8,5 +8,5 @@ VM=$(printf "$OPCIONES" | rofi -dmenu -p "Start VM" | cut -d " " -f 1)
 echo $VM
 
 if [ -n "$VM" ]; then
-    ~/.config/hypr/scripts/start-vm.sh $VM
+    ~/.config/hypr/scripts/hypr-start-vm $VM
 fi
