@@ -2,7 +2,16 @@ return {
   -- Colorschemes
   'folke/tokyonight.nvim',
   'navarasu/onedark.nvim',
+  'navarasu/onedark.nvim',
   'nordtheme/vim',
+  {
+    'AlexvZyl/nordic.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+        require('nordic').load()
+    end
+  },
   {
     -- 'shaunsingh/nord.nvim',
     -- config = function ()
@@ -65,6 +74,7 @@ return {
       end
 
       ColorMyPencils("nord")
+      -- ColorMyPencils("nordic")
       -- ColorMyPencils("onedark")
       -- ColorMyPencils("tokyonight")
       -- ColorMyPencils("rose-pine")
