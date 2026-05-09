@@ -1,7 +1,11 @@
 #!/bin/sh
 
 OUTPUT_DIR=$HOME/Imágenes/Screenshots
-output_file=$OUTPUT_DIR/$(date +"%Y%m%d_%H%M%S.png")
+OUTPUT_FILE=$OUTPUT_DIR/$(date +"%Y%m%d_%H%M%S.png")
+
+notify() {
+    notify-send -i camera-photo "Screenshot" "$1"
+}
 
 if [[ ! -d "$OUTPUT_DIR" ]]; then
   notify-send "Screenshot directory does not exist: $OUTPUT_DIR" -u critical -t 3000
@@ -11,26 +15,44 @@ fi
 case "$1" in
     region | --region)
         case $DESKTOP_SESSION in
-            bspwm) maim -s $output_file ;;
-            *)     pkill slurp || grim -g "$(slurp)" $output_file ;;
+            bspwm)
+                maim -s $OUTPUT_FILE
+                notify "Area creado en archivo"
+                ;;
+            *)
+                pkill slurp
+                region=$(slurp 2> /dev/null)
+                if [ -n "$region" ]; then
+                    grim -g "$region" $OUTPUT_FILE
+                    notify "Area creado en archivo"
+                fi
+                ;;
         esac
-        notify-send "Screenshot" "Area creado en archivo"
         ;;
 
-    clipboard | --clipboard)
+    file | --file)
         case $DESKTOP_SESSION in
-            bspwm) maim -s | xclip -selection clipboard -t image/png ;;
-            *)     pkill slurp || grim -g "$(slurp)" -t png - | wl-copy -t image/png ;;
+            bspwm) maim $OUTPUT_FILE ;;
+            *)     grim $OUTPUT_FILE ;;
         esac
-        notify-send "Screenshot" "Area creado en clipboard"
+        notify "Pantalla creado en archivo"
         ;;
 
     *)
         case $DESKTOP_SESSION in
-            bspwm) maim $output_file ;;
-            *)     grim $output_file ;;
+            bspwm)
+                maim -s | xclip -selection clipboard -t image/png
+                notify "Area creado en clipboard"
+                ;;
+            *)
+                pkill slurp
+                region=$(slurp 2> /dev/null)
+                if [ -n "$region" ]; then
+                    grim -g "$region" -t png - | wl-copy -t image/png;
+                    notify "Area creado en clipboard"
+                fi
+                ;;
         esac
-        notify-send "Screenshot" "Pantalla creado en archivo"
         ;;
 esac
 
