@@ -37,6 +37,7 @@ arch=(\
     "wofi/style.css" \
     "dunst/dunstrc" \
     "nvim/lua/daniel/" \
+    "starship.toml" \
     "../.tmux.conf" \
     "../.zshrc" \
 )
@@ -52,6 +53,7 @@ for file in ${arch[@]}; do
         *wlogout*) icon="󰍃  " ;;
         *kitty*) icon="  " ;;
         *alacritty*) icon="  " ;;
+        *starship*) icon="  " ;;
         *bspwm*) icon="  " ;;
         *sway*) icon="  " ;;
         *rofi*) icon="  " ;;

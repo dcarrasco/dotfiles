@@ -1,6 +1,6 @@
 #! /bin/sh
 
-wallpaper="/home/daniel/Imágenes/BingWallpaper/Flow_by_Emanuele_Santoro.png"
+wallpaper="/home/daniel/Imágenes/fondos pantalla/abstract/lights-bokeh-circles-blur-background-blue-purple-pattern-3840x2160-4626.png"
 
 if [ -n "$1" ]; then
     wallpaper="$1"

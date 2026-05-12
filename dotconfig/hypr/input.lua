@@ -1,0 +1,46 @@
+--   _                   _
+--  (_)_ __  _ __  _   _| |_
+--  | | '_ \| '_ \| | | | __|
+--  | | | | | |_) | |_| | |_
+--  |_|_| |_| .__/ \__,_|\__|
+--          |_|
+
+-- For all categories, see https://wiki.hyprland.org/Configuring/Variables/
+hl.config({
+  input = {
+    kb_layout = "latam,us",
+    -- kb_layout = us
+    kb_variant = "",
+    kb_model = "",
+    -- kb_options = grp:alt_caps_toggle, ctrl:swapcaps    #
+    kb_options = "grp:alt_caps_toggle",
+    kb_rules = "",
+    repeat_rate = 40,
+    repeat_delay = 600,
+
+    follow_mouse = 1,
+
+    touchpad  = {
+      natural_scroll = true,
+      -- scroll_factor = 0.3
+    },
+
+    -- -1.0 - 1.0, 0 means no modification.
+    sensitivity = 0.35,
+  }
+})
+
+-- Example per-device config
+-- See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
+hl.device({
+  name = "epic-mouse-v1",
+  sensitivity = -0.5
+})
+
+hl.device({
+  name = "msft0001:00-04f3:317c-touchpad",
+  enabled = true,
+  natural_scroll = true,
+})
+
+-- gesture = 3, horizontal, workspace

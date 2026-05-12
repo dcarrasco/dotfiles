@@ -24,3 +24,38 @@ Style: Mac
     font-size: 12pt;
 }
 
+button.active label {
+    box-shadow: 0 0 transparent;
+    color: @accent1;
+}
+
+/* ------------------------------------------------------
+ * Success state
+ * ------------------------------------------------------ */
+#battery.charging,
+#custom-power-profiles.power-saver {
+    box-shadow: 0 0 transparent;
+}
+
+/* ------------------------------------------------------
+ * Warning state
+ * ------------------------------------------------------ */
+#battery.warning:not(.charging),
+#cpu.warning,
+#memory.warning,
+#idle_inhibitor.activated,
+#pulseaudio.muted {
+    box-shadow: 0 0 transparent;
+}
+
+/* ------------------------------------------------------
+ * Critical state
+ * ------------------------------------------------------ */
+#battery.critical:not(.charging),
+#cpu.critical,
+#memory.critical,
+#temperature.critical,
+#custom-power-profiles.performance,
+#tray > .needs-attention {
+    box-shadow: 0 0 transparent;
+}

@@ -1,5 +1,6 @@
 #!/bin/sh
 # Muestra mensaje de termino y espera que se presione una tecla
+# Simbolos:     󰗠  󱕝  󰗡    󰄵
 echo
-echo -e "\e[32mListo! Presione cualquier tecla para cerrar...\e[0m"
+echo -e "\e[32m󰄵 Listo! Presione cualquier tecla para cerrar...\e[0m"
 read -n 1 -s

@@ -9,7 +9,7 @@ change_theme() {
     sed -i "s/\"colors\/.*\.css\"/\"colors\/$1.css\"/" $HOME/.config/waybar/style.css
 
     # hyprland
-    sed -i "s/theme = .*/theme = $1/" $HOME/.config/hypr/theme.conf
+    sed -i "s/THEME_COLORS.*/THEME_COLORS[\"theme\"] = \"$1\"/" $HOME/.config/hypr/theme.lua
 
     # rofi
     sed -i "s/^@import \"themes\/colors\/.*\.rasi\"/@import \"themes\/colors\/$1.rasi\"/" $HOME/.config/rofi/themes/colors.rasi

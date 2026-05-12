@@ -2,10 +2,10 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # default config
-FIELDS=SSID,SECURITY,BARS,SIGNAL,RATE
+FIELDS=SSID,SECURITY,BARS,SIGNAL,RATE,CHAN
 POSITION=0; XOFF=0; YOFF=0
 MAGIC=-4
-FONT="Adwaita Mono 13"
+FONT="Hack Nerd Font 12"
 
 # supported locales (en, ru, de, fr, hi, ja)
 declare -A LOC_ENABLE=(["en"]="enabled" ["ru"]="включен" ["de"]="aktiviert" ["fr"]="activé" ["hi"]="सक्षम" ["ja"]="有効" ["es"]="activado")

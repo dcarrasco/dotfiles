@@ -1,32 +1,31 @@
 #!/bin/sh
 
+TERMINAL=kitty
 SCRIPT_PATH=$HOME/.config/hypr/scripts
 export PATH="$SCRIPT_PATH:$PATH"
-terminal-pgm=kitty
 
 menu() {
-    local menu_font="Hack Nerd Font 14"
-    local menu_width="390px"
-    local menu_height="600px"
+    local font="Hack Nerd Font 14"
+    local width="390px"
+    local height="600px"
+    local theme="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$width; height:$height;}"
 
-    local theme_str="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$menu_width;height:$menu_height;font:'$menu_font';}"
-
-    echo -e "$2" | rofi -dmenu -i -markup-rows -format p -theme-str "$theme_str" -p ""
+    echo -e "$2" | rofi -dmenu -i -markup-rows -format p -theme-str "$theme" -p "" -font "$font"
 
 }
 
 terminal() {
-    kitty --class hypr-sys-menu --title=Fedora bash -c "$1"
+    $TERMINAL --class hypr-sys-menu --title=Fedora bash -c "$1"
 }
 
 present_terminal() {
     local cmd="$*"
-    kitty --class hypr-sys-menu bash -c "hypr-show-logo; $cmd; hypr-show-done"
+    $TERMINAL --class hypr-sys-menu bash -c "hypr-show-logo; $cmd; hypr-show-done"
 }
 
 edit_file() {
     notify-send -u low "Editing config file" "$1"
-    kitty nvim "$1"
+    $TERMINAL nvim "$1"
 }
 
 back_to() {
@@ -39,7 +38,8 @@ webapp() {
 }
 
 show_learn_menu() {
-    case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n  Bspwm\n  Waybar\n  Polybar\n  NerdFonts\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
+    # case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n  Bspwm\n  Waybar\n  Polybar\n  NerdFonts\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
+    case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n  Waybar\n  NerdFonts\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
         *Keybindings*) hypr-show-keybinds ;;
         *Omarchy*)     webapp "https://manuals.omamix.org/2/the-omarchy-manual" ;;
         *Hyprland*)    webapp "https://wiki.hypr.land/" ;;
@@ -226,13 +226,7 @@ go_to_menu() {
         *do-update*)  present_terminal hypr-do-update ;;
         *update*)     show_update_menu ;;
         *about*)      terminal "fastfetch && read -n 1 -s" ;;
-        *system*)
-            case $DESKTOP_SESSION in
-                bspwm) $HOME/.config/rofi/powermenu/powermenu.sh ;;
-                *)     show_system_menu ;;
-                # *)     wlogout -b 5 ;;
-            esac
-            ;;
+        *system*)     show_system_menu ;;
     esac
 }
 
