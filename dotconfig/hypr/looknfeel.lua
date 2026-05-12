@@ -13,8 +13,8 @@ hl.config({
     gaps_out = 10,
     col = {
       -- col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-      active_border = { colors = { THEME_COLORS["color_active_border_1"], THEME_COLORS["color_active_border_2"] }, angle = 45 },
-      inactive_border = THEME_COLORS["color_inactive_border"],
+      active_border = { colors = { HYPR.theme.color_active_border_1, HYPR.theme.color_active_border_2 }, angle = 45 },
+      inactive_border = HYPR.theme.color_inactive_border,
     },
 
     -- layout = "dwindle"
@@ -32,8 +32,8 @@ hl.config({
 
   group = {
     col = {
-      border_active = THEME_COLORS["color_group_border_active"],
-      border_inactive = THEME_COLORS["color_group_border_inactive"],
+      border_active = HYPR.theme.color_group_border_active,
+      border_inactive = HYPR.theme.color_group_border_inactive,
     },
     groupbar = {
       enabled = true,
@@ -45,10 +45,10 @@ hl.config({
       height = 20,
       stacked = false,
       render_titles = true,
+      text_color = HYPR.theme.color_text_groupbar,
       col = {
-        active = THEME_COLORS["color_groupbar_active"],
-        inactive = THEME_COLORS["color_groupbar_inactive"],
-        -- text_color = THEME_COLORS["color_text_groupbar"],
+        active = HYPR.theme.color_groupbar_active,
+        inactive = HYPR.theme.color_groupbar_inactive,
       },
       blur = true,
     },
@@ -76,8 +76,8 @@ hl.config({
       enabled = true,
       range = 12,
       render_power = 2,
-      color = THEME_COLORS["color_shadow"],
-      color_inactive = THEME_COLORS["color_shadow_inactive"],
+      color = HYPR.theme.color_shadow,
+      color_inactive = HYPR.theme.color_shadow_inactive,
       offset = {0, 0},
     },
   },

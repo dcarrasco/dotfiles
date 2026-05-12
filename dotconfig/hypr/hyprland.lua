@@ -8,9 +8,11 @@
 
 -- Please note not all available settings / options are set here.
 -- For a full list, see the wiki
+HYPR = {}
+require("functions")
 
 -- Default Apps
-APPS = {
+HYPR.apps = {
   scripts_path = "$HOME/.config/hypr/scripts/",
   terminal  = "kitty -d ~",
   terminal2 = "alacritty",
@@ -22,15 +24,13 @@ APPS = {
   launcher_run = "rofi -show run -config $HOME/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'",
 }
 
-THEME_COLORS = {}
-
 -- Source a file (multi-file configs)
 require("envs")
 require("monitors")
 require("autostart")
 require("keybinds")
 require("theme")
-require("themes/" .. THEME_COLORS["theme"])
+require("themes/" .. HYPR.theme_name)
 require("input")
 require("looknfeel")
 require("rules")

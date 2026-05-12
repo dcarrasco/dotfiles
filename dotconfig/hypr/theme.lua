@@ -1,1 +1,1 @@
-THEME_COLORS["theme"] = "catppuccin"
+HYPR.theme_name = "catppuccin"
