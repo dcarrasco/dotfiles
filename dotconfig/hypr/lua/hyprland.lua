@@ -12,8 +12,9 @@ HYPR = {}
 require("functions")
 
 -- Default Apps
+HYPR.scripts_path = "$HOME/.config/hypr/scripts"
+
 HYPR.apps = {
-  scripts_path = "$HOME/.config/hypr/scripts/",
   terminal  = "kitty -d ~",
   terminal2 = "alacritty",
   browser   = "brave-browser --password-store=basic",

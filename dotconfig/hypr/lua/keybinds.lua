@@ -16,7 +16,7 @@ hl.bind("SUPER + ALT + RETURN", hl.dsp.exec_cmd(HYPR.apps.terminal2), { descript
 hl.bind("SUPER + B", hl.dsp.exec_cmd(HYPR.apps.browser), { description = "Open browser" })
 hl.bind("SUPER + ALT + B", hl.dsp.exec_cmd(HYPR.apps.browser2), { description = "Open alternate browser" })
 hl.bind("SUPER + F", hl.dsp.exec_cmd(HYPR.apps.files), { description = "Open file manager" })
-hl.bind("SUPER + V", hl.dsp.exec_cmd(HYPR.apps.scripts_path .. "hypr-start-vm windows"), { description = "Open Windows 11" })
+hl.bind("SUPER + V", hl.dsp.exec_cmd(HYPR.scripts("hypr-start-vm windows")), { description = "Open Windows 11" })
 hl.bind("SUPER + ALT + V", hl.dsp.exec_cmd("virt-manager"), { description = "Open virt-manager" })
 hl.bind("XF86Calculator", hl.dsp.exec_cmd("gnome-calculator"), { description = "Open calculator" })
 hl.bind("XF86Favorites", hl.dsp.exec_cmd(HYPR.apps.browser), { description = "Open Firefox" })

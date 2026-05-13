@@ -43,4 +43,4 @@ hl.device({
   natural_scroll = true,
 })
 
--- gesture = 3, horizontal, workspace
+hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })

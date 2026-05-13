@@ -1,5 +1,5 @@
 -- Close window
-hl.bind("SUPER + Q", hl.dsp.window.kill(), { description = "Close active window" })
+hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close active window" })
 
 -- Cycle windows and apps
 hl.bind("ALT + TAB", hl.dsp.window.cycle_next({next = true}), { description = "Change to next window" })
@@ -19,10 +19,10 @@ hl.bind("SUPER + ALT + G", hl.dsp.group.toggle(), { description = "Toggle group"
 -- bindd = SUPER CTRL, W, Toggle master/dwindle, exec, $hypr_scripts/hypr-toggle-master-dwindle
 
 -- # Move focus
-hl.bind("SUPER + H", hl.dsp.focus({direction = "left"}), { description = "Move focus to left" })
-hl.bind("SUPER + L", hl.dsp.focus({direction = "right"}), { description = "Move focus to right" })
-hl.bind("SUPER + K", hl.dsp.focus({direction = "up"}), { description = "Move focus up" })
-hl.bind("SUPER + J", hl.dsp.focus({direction = "down"}), { description = "Move focus down" })
+hl.bind("SUPER + H", hl.dsp.focus({direction = "left"}), { description = "Move focus to left", repeating = true })
+hl.bind("SUPER + L", hl.dsp.focus({direction = "right"}), { description = "Move focus to right", repeating = true })
+hl.bind("SUPER + K", hl.dsp.focus({direction = "up"}), { description = "Move focus up", repeating = true })
+hl.bind("SUPER + J", hl.dsp.focus({direction = "down"}), { description = "Move focus down", repeating = true })
 
 -- # Swap/Move window
 hl.bind("SUPER + SHIFT + H", hl.dsp.window.move({direction = "left"}), { description = "Move window to left" })
