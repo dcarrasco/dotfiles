@@ -178,7 +178,7 @@ format = '[ $time ]($style)'
 
 
 [character]
-error_symbol = "[✗](bold red bg:group6) "
+error_symbol = "[✗](bold bg:group6)"
 success_symbol = ""
 vimcmd_symbol = '[❮](bold green bg:group6)'
 vimcmd_replace_one_symbol = '[❮](bold purple bg:group6)'
