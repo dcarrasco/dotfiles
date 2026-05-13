@@ -4,8 +4,8 @@ path+=("$HOME/.local/bin")
 
 # List all files colorized in long format
 alias l='ls -CF --color=auto'
-alias ll='ls -lhF --color=auto'
-alias la='ls -laFh --color=auto'
+alias ll='ls -lhF --color=auto --group-directories-first'
+alias la='ls -laFh --color=auto --group-directories-first'
 alias lsd="ls -lFh --color | grep '^d'"
 alias ls='ls --color=auto -F'
 alias l.="ls -a --color | grep --color=never '^\.'"
