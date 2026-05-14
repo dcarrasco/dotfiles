@@ -11,13 +11,13 @@ arch=(\
     "waybar/config.jsonc" \
     "waybar/style.css" \
     "hypr/hyprland.conf" \
-    "hypr/envs.conf" \
-    "hypr/autostart.conf" \
-    "hypr/keybinds.conf" \
-    "hypr/monitors.conf" \
-    "hypr/input.conf" \
-    "hypr/looknfeel.conf" \
-    "hypr/rules.conf" \
+    "hypr/conf/envs.conf" \
+    "hypr/conf/autostart.conf" \
+    "hypr/conf/keybinds.conf" \
+    "hypr/conf/monitors.conf" \
+    "hypr/conf/input.conf" \
+    "hypr/conf/looknfeel.conf" \
+    "hypr/conf/rules.conf" \
     "hypr/hyprlock.conf" \
     "hypr/hypridle.conf" \
     "hypr/scripts/hypr-edit-config" \

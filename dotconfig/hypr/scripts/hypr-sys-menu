@@ -10,7 +10,7 @@ menu() {
     local height="600px"
     local theme="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$width; height:$height;}"
 
-    echo -e "$2" | rofi -dmenu -i -markup-rows -format p -theme-str "$theme" -p "" -font "$font"
+    echo -e "$2" | rofi -dmenu -i -markup-rows -format p -theme-str "$theme" -font "$font"
 
 }
 
@@ -181,7 +181,7 @@ show_setup_menu() {
         *Bluetooth*)   blueman-manager ;;
         *Monitors*)    hypr-switch-monitor ;;
         *Printers*)    webapp "http://localhost:631" ;;
-        *Keybindings*) [ $DESKTOP_SESSION = "bspwm" ] && edit_file $HOME/.config/sxhkd/sxhkdrc || edit_file $HOME/.config/hypr/keybinds.conf ;;
+        *Keybindings*) [ $DESKTOP_SESSION = "bspwm" ] && edit_file $HOME/.config/sxhkd/sxhkdrc || edit_file $HOME/.config/hypr/conf/keybinds.conf ;;
         *Input*)       edit_file $HOME/.config/hypr/input.conf ;;
         *Fingerprint*) terminal $OMARCHY_BIN_PATH/omarchy-setup-fingerprint ;;
         *Fido2*)       terminal $OMARCHY_BIN_PATH/omarchy-setup-fido2 ;;
