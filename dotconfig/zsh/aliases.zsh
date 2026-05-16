@@ -1,8 +1,16 @@
+HISTFILE="$XDG_STATE_HOME/zsh/history"
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt NUMERIC_GLOB_SORT
+
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
+
 unsetopt BEEP
 path+=("$HOME/.config/composer/vendor/bin")
-path+=("$HOME/.local/bin")
 
-# List all files colorized in long format
+#HIST_FIND_NO_DUPS List all files colorized in long format
 alias l='ls -CF --color=auto'
 alias ll='ls -lhF --color=auto --group-directories-first'
 alias la='ls -laFh --color=auto --group-directories-first'
