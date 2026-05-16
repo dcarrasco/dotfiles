@@ -96,9 +96,10 @@ alias tinker='php artisan tinker'
 alias t='vendor/bin/phpunit'
 
 # FZF options ===========================================================================
-export FZF_DEFAULT_COMMAND="fd ."
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --strip-cwd-prefix"
 export FZF_ALT_C_COMMAND="fd --type d . $HOME"
 export FZF_CTRL_P_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --border"
 source /usr/share/fzf/shell/key-bindings.zsh
 # source /usr/share/doc/fzf/examples/completion.zsh
 
