@@ -31,33 +31,12 @@ autoload -Uz compinit
 compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-
-# -------------------------------------------------------------------------------------------------
-# FZF
-# -------------------------------------------------------------------------------------------------
-# MacOS Homebrew
-if [[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]]; then
-    source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-    source /opt/homebrew/opt/fzf/shell/completion.zsh
-fi
-
-# MacOS Homebrew
-if [[ -f /usr/local/opt/fzf/shell/key-bindings.zsh ]]; then
-    source /usr/local/opt/fzf/shell/key-bindings.zsh
-    source /usr/local/opt/fzf/shell/completion.zsh
-fi
-
-# Arch
-if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
-    source /usr/share/fzf/key-bindings.zsh
-    source /usr/share/fzf/completion.zsh
-fi
-
-# Fedora
-if [[ -f /usr/share/fzf/shell/key-bindings.zsh ]]; then
-    source /usr/share/fzf/shell/key-bindings.zsh
-    # source /usr/share/fzf/shell/completion.zsh
-fi
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+zstyle ':completion:*:messages' format '%F{purple}-- %d --%f'
+zstyle ':completion:*:warnings' format '%F{red}-- no matches found --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # -------------------------------------------------------------------------------------------------
 # Modular config files
@@ -68,7 +47,10 @@ source $ZDOTDIR/aliases.zsh
 source $ZDOTDIR/bindings.zsh
 source $ZDOTDIR/plugins.zsh
 source $ZDOTDIR/prompt.zsh
-#
+
+# show ascii art on new shell
 # $HOME/.config/hypr/scripts/ascii-art.sh
+
+# show fastfetch on new shell
 fastfetch --structure Title:OS:Kernel:Packages:DW:WM:Terminal:Shell:Memory --logo Fedora_small --key-width 12 --separator ""
 

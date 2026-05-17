@@ -2,13 +2,14 @@
 # tmux config file
 # -------------------------------------------------------------------------------------------------
 
-function _tmux_fzf_() {
+function _tmux_fzf() {
     # local dir=$(find ~ -type d | fzf)
     local dir=$(fd --type d . ~ --max-depth=4 | fzf --border --height=15 --prompt='Init tmux: ')
 
     if [[ -n $dir ]]; then
         local sess=$(basename $dir)
-        tmuxsession $sess -c $dir
+        LBUFFER+="tmuxsession $sess -c $dir"
+        zle accept-line
     fi
 }
 
@@ -29,5 +30,4 @@ function tmuxsession() {
     fi
 }
 
-# CTRL-F para directorio y session en tmux
-bindkey -s ^f "_tmux_fzf_\n"
+zle -N _tmux_fzf
