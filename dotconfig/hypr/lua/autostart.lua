@@ -15,6 +15,7 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("wlsunset -l -33 -L -70")
   hl.exec_cmd("dropbox start")
   hl.exec_cmd("hypridle")
+  hl.exec_cmd("brightnessctl set 50%")
   --
   -- hl.exec_cmd("xhost +SI:localuser:root")
   -- hl.exec_cmd("/usr/bin/variety")

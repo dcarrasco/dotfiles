@@ -11,7 +11,7 @@ alias mv='mv -i'
 alias diff='diff --color=auto'
 alias ps='ps -auf'
 alias rm='trash -v'
-alias grep='rg --color=auto'
+# alias grep='rg --color=auto'
 alias df='df -h'
 
 

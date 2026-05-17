@@ -26,20 +26,22 @@ arch=(\
     "wlogout/style.css" \
     "kitty/kitty.conf" \
     "alacritty/alacritty.toml" \
-    "bspwm/bspwmrc" \
-    "bspwm/picom.conf" \
-    "sxhkd/sxhkdrc" \
-    "polybar/config.ini" \
-    "polybar/themes/nord/config.ini" \
-    "sway/config" \
+    # "bspwm/bspwmrc" \
+    # "bspwm/picom.conf" \
+    # "sxhkd/sxhkdrc" \
+    # "polybar/config.ini" \
+    # "polybar/themes/nord/config.ini" \
+    # "sway/config" \
     "rofi/config.rasi" \
-    "wofi/config" \
-    "wofi/style.css" \
-    "dunst/dunstrc" \
+    # "wofi/config" \
+    # "wofi/style.css" \
+    # "dunst/dunstrc" \
+    "mako/config" \
     "nvim/lua/daniel/" \
     "starship.toml" \
     "../.tmux.conf" \
-    "../.zshrc" \
+    "zsh/.zshrc" \
+    "../.zshenv" \
 )
 
 config_dir=$HOME/.config
@@ -47,21 +49,22 @@ config_dir=$HOME/.config
 listado=""
 for file in ${arch[@]}; do
     case $(echo $file | cut -d "/" -f 1) in
-        *waybar*) icon="   " ;;
-        *polybar*) icon="   " ;;
-        *hypr*) icon="   " ;;
-        *wlogout*) icon="󰍃  " ;;
-        *kitty*) icon="  " ;;
-        *alacritty*) icon="  " ;;
-        *starship*) icon="  " ;;
-        *bspwm*) icon="  " ;;
-        *sway*) icon="  " ;;
-        *rofi*) icon="  " ;;
-        *wofi*) icon="  " ;;
-        *sxhkd*) icon="  " ;;
-        *dunst*) icon="  " ;;
-        *nvim*) icon="  " ;;
-        *) icon="  " ;;
+        *waybar*)    icon="   " ;;
+        *polybar*)   icon="   " ;;
+        *hypr*)      icon="   " ;;
+        *wlogout*)   icon="󰍃   " ;;
+        *kitty*)     icon="   " ;;
+        *alacritty*) icon="   " ;;
+        *starship*)  icon="   " ;;
+        *bspwm*)     icon="   " ;;
+        *sway*)      icon="   " ;;
+        *rofi*)      icon="   " ;;
+        *wofi*)      icon="   " ;;
+        *sxhkd*)     icon="   " ;;
+        *dunst*)     icon="   " ;;
+        *mako*)      icon="   " ;;
+        *nvim*)      icon="   " ;;
+        *)           icon="   " ;;
     esac
     listado+="$icon$file\n"
 done

@@ -9,7 +9,7 @@
 -- Please note not all available settings / options are set here.
 -- For a full list, see the wiki
 HYPR = {}
-require("functions")
+require("lua/functions")
 
 -- Default Apps
 HYPR.scripts_path = "$HOME/.config/hypr/scripts"
@@ -26,13 +26,13 @@ HYPR.apps = {
 }
 
 -- Source a file (multi-file configs)
-require("envs")
-require("monitors")
-require("autostart")
-require("keybinds")
-require("theme")
+require("lua/envs")
+require("lua/monitors")
+require("lua/autostart")
+require("lua/keybinds")
+require("lua/theme")
 require("themes/" .. HYPR.theme_name)
-require("input")
-require("looknfeel")
-require("rules")
+require("lua/input")
+require("lua/looknfeel")
+require("lua/rules")
 
