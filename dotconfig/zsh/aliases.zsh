@@ -1,15 +1,3 @@
-HISTFILE="$XDG_STATE_HOME/zsh/history"
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_FIND_NO_DUPS
-setopt NUMERIC_GLOB_SORT
-
-compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
-
-unsetopt BEEP
-path+=("$HOME/.config/composer/vendor/bin")
-
 #HIST_FIND_NO_DUPS List all files colorized in long format
 alias l='ls -CF --color=auto'
 alias ll='ls -lhF --color=auto --group-directories-first'
@@ -20,9 +8,12 @@ alias l.="ls -a --color | grep --color=never '^\.'"
 
 alias cp='cp -i'
 alias mv='mv -i'
-alias diff='diff --color'
+alias diff='diff --color=auto'
 alias ps='ps -auf'
 alias rm='trash -v'
+alias grep='rg --color=auto'
+alias df='df -h'
+
 
 alias cd..="cd .."
 alias ..="cd .."
@@ -95,52 +86,10 @@ alias fresh='php artisan migrate:fresh --seed'
 alias tinker='php artisan tinker'
 alias t='vendor/bin/phpunit'
 
-# FZF options ===========================================================================
-export FZF_DEFAULT_COMMAND="fd --type f --hidden --strip-cwd-prefix"
-export FZF_ALT_C_COMMAND="fd --type d . $HOME"
-export FZF_CTRL_P_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --border"
-source /usr/share/fzf/shell/key-bindings.zsh
-# source /usr/share/doc/fzf/examples/completion.zsh
-
-# CTRL-F para directorio y session en tmux
-bindkey -s ^f "_tmux_fzf_\n"
-
-
-# tmux ===========================================================================
-function _tmux_fzf_() {
-    # local dir=$(find ~ -type d | fzf)
-    local dir=$(fd --type d . ~ --max-depth=4 | fzf --border --height=15 --prompt='Init tmux: ')
-
-    if [[ -n $dir ]]; then
-        local sess=$(basename $dir)
-        tmuxsession $sess -c $dir
-    fi
-}
-
-function tmuxsession() {
-    local session=$1
-    shift
-
-    tmux has-session -t $session 2>/dev/null
-
-    if [ $? != 0 ]; then
-        tmux new-session -s $session -d $*
-    fi
-
-    if [ -n "$TMUX" ]; then
-        tmux switch-client -t $session
-    else
-        tmux attach-session -t $session
-    fi
-}
-
 # typst options ===========================================================================
 function typst() {
     podman run --rm -it --init -v "$(pwd):/root:z" -v "$HOME/.local/share/fonts:/fonts:z" ghcr.io/typst/typst:latest $1 --font-path=/fonts /root/$2 $3 $4
 
 }
-
-eval "$(starship init zsh)"
 
 # vim: set ft=sh :

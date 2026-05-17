@@ -12,4 +12,4 @@ export VISUAL="nvim"
 export GPG_TTY=$(tty)
 
 # PATH ------------------------------------------
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH"
