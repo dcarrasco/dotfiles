@@ -200,11 +200,11 @@ show_update_menu() {
 
 show_system_menu() {
     case $(menu "System" " Lock\n󰗽 Logout\n󰐥 Power Off\n Suspend\n Restart") in
-        *Lock*)       hyprlock ;;
-        *Logout*)     hyprctl dispatch exit ;;
-        *Power\ Off*) systemctl poweroff ;;
-        *Suspend*)    systemctl suspend ;;
-        *Restart*)    systemctl reboot ;;
+        *Lock*)        hyprlock ;;
+        *Logout*)      loginctl terminate-user $USER ;;
+        *Power\ Off*)  systemctl poweroff ;;
+        *Suspend*)     systemctl suspend ;;
+        *Restart*)     systemctl reboot ;;
         *) show_main_menu ;;
     esac
 }
