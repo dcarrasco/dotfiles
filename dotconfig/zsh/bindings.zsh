@@ -20,7 +20,7 @@ zvm_after_init() {
     bindkey '^[[1;5C' forward-word
     bindkey '^[[1;5D' backward-word
     bindkey '^F' _fzf_file_no_hidden
-    bindkey '^M' _tmux_fzf
+    bindkey '^T' _tmux_fzf
 
     # bindkey '^\' autosuggest-toggle
     # bindkey '^[[A' history-substring-search-up
