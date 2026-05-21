@@ -85,7 +85,11 @@ set_monitor_on() {
     local scale=$4
 
     case $BACKEND in
-        *wayland*) hyprctl keyword monitor $monitor, $resolution, $position, $scale ;;
+        *wayland*)
+            case $HYPRCONF in
+                *conf*) hyprctl keyword monitor $monitor, $resolution, $position, $scale ;;
+                *lua*)  hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale})" ;;
+            esac ;;
         *x11*) xrandr --output $monitor --right-of $MON_INT --auto;;
     esac
     notify-send -u low "Pantalla" "Set pantalla $monitor on"
@@ -98,7 +102,11 @@ set_monitor_on_mirror() {
     local scale=$3
 
     case $BACKEND in
-        *wayland*) hyprctl keyword monitor $monitor, $resolution, $position, $scale, mirror, $MON_INT ;;
+        *wayland*)
+            case $HYPRCONF in
+                *conf*) hyprctl keyword monitor $monitor, $resolution, $position, $scale, mirror, $MON_INT ;;
+                *lua*)  hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale, mirror='$MON_INT'})" ;;
+            esac ;;
         *x11*) xrandr --output $monitor --right-of $MON_INT --auto;;
     esac
     notify-send -u low "Pantalla" "Set pantalla $monitor (mirror) on"
@@ -108,7 +116,11 @@ set_monitor_off() {
     local monitor=$1
 
     case $BACKEND in
-        *wayland*) hyprctl keyword monitor $monitor, disable ;;
+        *wayland*)
+            case $HYPRCONF in
+                *conf*) hyprctl keyword monitor $monitor, disable ;;
+                *lua*)  hyprctl eval "hl.monitor({ output='$monitor', disabled=true})" ;;
+            esac ;;
         *x11*)     xrandr --output $monitor --off ;;
     esac
     notify-send -u low "Pantalla" "Set pantalla $monitor off"
@@ -179,8 +191,10 @@ menu_options() {
 get_backend() {
     MON_INT="eDP"
     BACKEND="x11"
+    HYPRCONF="conf"
     [ $(is_wayland) -gt 0 ] && BACKEND="wayland" && MON_INT="eDP-1"
-    echo "Backend: $BACKEND / Internal Monitor: $MON_INT"
+    [ -f $HOME/.config/hypr/hyprland.lua ] && HYPRCONF="lua"
+    echo "Backend: $BACKEND / Internal Monitor: $MON_INT / HyprConf: $HYPRCONF"
 }
 
 set_monitor_props() {

@@ -1,7 +1,16 @@
 #!/bin/sh
 
+HYPRCONF="conf"
+[ -f $HOME/.config/hypr/hyprland.lua ] && HYPRCONF="lua"
+
 if [[ -n "$(hyprctl getoption input:kb_options | grep swapcaps)" ]]; then
-    hyprctl keyword input:kb_options ctrl:
+    case $HYPRCONF in
+        *conf*) hyprctl keyword input:kb_options ctrl: ;;
+        *lua*)  hyprctl eval "hl.config({ input = { kb_options = 'ctrl:' } })" ;;
+    esac
 else
-    hyprctl keyword input:kb_options ctrl:swapcaps
+    case $HYPRCONF in
+        *conf*) hyprctl keyword input:kb_options ctrl:swapcaps ;;
+        *lua*)  hyprctl eval "hl.config({ input = { kb_options = 'ctrl:swapcaps' } })" ;;
+    esac
 fi

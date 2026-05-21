@@ -10,14 +10,21 @@
 arch=(\
     "waybar/config.jsonc" \
     "waybar/style.css" \
-    "hypr/hyprland.conf" \
-    "hypr/conf/envs.conf" \
-    "hypr/conf/autostart.conf" \
-    "hypr/conf/keybinds.conf" \
-    "hypr/conf/monitors.conf" \
-    "hypr/conf/input.conf" \
-    "hypr/conf/looknfeel.conf" \
-    "hypr/conf/rules.conf" \
+    "hypr/hyprland.lua" \
+    "hypr/lua/envs.lua" \
+    "hypr/lua/autostart.lua" \
+    "hypr/lua/keybinds.lua" \
+    "hypr/lua/monitors.lua" \
+    "hypr/lua/input.lua" \
+    "hypr/lua/looknfeel.lua" \
+    "hypr/lua/rules.lua" \
+    # "hypr/conf/envs.conf" \
+    # "hypr/conf/autostart.conf" \
+    # "hypr/conf/keybinds.conf" \
+    # "hypr/conf/monitors.conf" \
+    # "hypr/conf/input.conf" \
+    # "hypr/conf/looknfeel.conf" \
+    # "hypr/conf/rules.conf" \
     "hypr/hyprlock.conf" \
     "hypr/hypridle.conf" \
     "hypr/scripts/hypr-edit-config" \
