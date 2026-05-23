@@ -1,3 +1,40 @@
+require('mason').setup()
+
+vim.lsp.config('lua_ls', {
+  settings = {
+    Lua = {
+      runtine = { version = 'LuaJIT' },
+      diagnostics = { globals = { 'vim', 'require' } },
+      telemetry = { enable = false },
+    }
+  }
+})
+
+vim.diagnostic.config({
+  severity_sort = true,
+  update_in_insert = false,
+  float = {
+    -- source = true,
+    border = 'rounded',
+    source = 'if_many',
+  },
+  underline = true,
+  virtual_text = {
+    spacing = 2,
+    prefix = "●",
+    source = false,
+  },
+  signs = {
+    text = {
+      --     ⚑   󰅙
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN]  = '',
+      [vim.diagnostic.severity.HINT]  = '⚑',
+      [vim.diagnostic.severity.INFO]  = '',
+    },
+  },
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(ev)

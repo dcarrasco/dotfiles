@@ -1,37 +1,28 @@
 return {
   {
-    'williamboman/mason.nvim',
-    lazy = false,
-    config = true,
+    'mason-org/mason.nvim',
+    opts = {},
   },
   -- LSP Support
   {
     'neovim/nvim-lspconfig',
+  },
+  {
+    'mason-org/mason-lspconfig.nvim',
     dependencies = {
-        {'williamboman/mason-lspconfig.nvim'},
-        {'sbdchd/neoformat'},
+        'mason-org/mason.nvim',
+        'neovim/nvim-lspconfig',
     },
-    config = function()
-      require('mason-lspconfig').setup({
-        ensure_installed = {
-          'lua_ls',
-        },
-        -- handlers = {
-        --   lua_ls = function()
-        --   end,
-        -- },
-      })
-      vim.lsp.config('lua_ls', {
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { 'vim', 'require', }
-            },
-            telemetry = { enable = false },
-          }
-        }
-      })
-    end
+    opts = {},
+  },
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    dependencies = { 'mason-org/mason.nvim' },
+    opts = {
+      ensure_installed = {
+        'lua_ls',
+      },
+    },
   },
   -- LINTER
   {
@@ -66,25 +57,6 @@ return {
         return "󱉶 " .. table.concat(linters, ", ")
       end
 
-      vim.diagnostic.config({
-        float = {
-          source = true,
-          border = 'rounded'
-        },
-        virtual_text = {
-          prefix = "●",
-          source = false,
-        },
-        signs = {
-          text = {
-            --     ⚑   󰅙
-            [vim.diagnostic.severity.ERROR] = '',
-            [vim.diagnostic.severity.WARN]  = '',
-            [vim.diagnostic.severity.HINT]  = '⚑',
-            [vim.diagnostic.severity.INFO]  = '',
-          },
-        },
-      })
 
     end
   },
