@@ -13,11 +13,23 @@ return {
     },
     config = function()
       require('mason-lspconfig').setup({
-        ensure_installed = {},
-        handlers = {
-          lua_ls = function()
-          end,
+        ensure_installed = {
+          'lua_ls',
         },
+        -- handlers = {
+        --   lua_ls = function()
+        --   end,
+        -- },
+      })
+      vim.lsp.config('lua_ls', {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim', 'require', }
+            },
+            telemetry = { enable = false },
+          }
+        }
       })
     end
   },

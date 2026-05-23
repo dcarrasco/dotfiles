@@ -21,7 +21,6 @@ vim.opt.incsearch = true
 vim.opt.hlsearch = true
 vim.opt.inccommand = "nosplit"
 
-
 -- --------------- Visuals ---------------
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
@@ -32,12 +31,11 @@ vim.opt.showbreak = ".."
 vim.opt.wrap = true
 vim.opt.linebreak = true
 vim.opt.breakindent = true
-vim.opt.showmode= false
+vim.opt.showmode = false
 vim.opt.showtabline = 1
 vim.opt.cursorline = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = "␣" }
-
 
 -- --------------- File format ---------------
 vim.opt.encoding = "utf-8"
@@ -45,7 +43,6 @@ vim.opt.fileencoding = "utf-8"
 vim.opt.fileformat = "unix"
 vim.opt.tags = "./tags,tags,tags.vendor,.git/tags;"
 vim.opt.grepformat = "%f:%l:%m"
-
 
 -- --------------- Others ---------------
 
