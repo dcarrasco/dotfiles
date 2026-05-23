@@ -6,16 +6,21 @@
 
 -- Execute your favorite apps at launch
 hl.on("hyprland.start", function()
-  hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland DISPLAY XAUTHORITY")
-  hl.exec_cmd("waybar")
+  hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland")
+  -- hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland DISPLAY XAUTHORITY")
+  -- hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+  -- hl.exec_cmd("systemctl --user start graphical-session.target")
   -- hl.exec_cmd("qs")
-  hl.exec_cmd("systemctl --user start hyprpolkitagent")
-  hl.exec_cmd("mako")
-  hl.exec_cmd("$HOME/.config/hypr/scripts/hypr-set-wallpaper")
-  hl.exec_cmd("wlsunset -l -33 -L -70")
-  hl.exec_cmd("dropbox start")
-  hl.exec_cmd("hypridle")
-  hl.exec_cmd("brightnessctl set 50%")
+  hl.exec_cmd("uwsm app -- $HOME/.config/hypr/scripts/hypr-set-wallpaper")
+  hl.exec_cmd("uwsm app -- wlsunset -l -33 -L -70")
+  hl.exec_cmd("uwsm app -- dropbox start")
+  hl.exec_cmd("uwsm app -- brightnessctl set 50%")
+
+  -- Those processes are being started by systemd
+  -- hl.exec_cmd("systemctl --user start hyprpolkitagent")
+  -- hl.exec_cmd("waybar")
+  -- hl.exec_cmd("hypridle")
+  -- hl.exec_cmd("mako")
   --
   -- hl.exec_cmd("xhost +SI:localuser:root")
   -- hl.exec_cmd("/usr/bin/variety")

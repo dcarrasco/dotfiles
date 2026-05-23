@@ -15,14 +15,14 @@ require("lua/functions")
 HYPR.scripts_path = "$HOME/.config/hypr/scripts"
 
 HYPR.apps = {
-  terminal  = "kitty -d ~",
-  terminal2 = "alacritty",
-  browser   = "brave-browser --password-store=basic",
-  browser2  = "firefox",
-  files     = "thunar ~",
-  logout    = "wlogout -b 5",
-  launcher  = "rofi -show drun -show-icons -theme layout-apps",
-  launcher_run = "rofi -show run -config $HOME/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'",
+  terminal  = "uwsm app -- kitty -d ~",
+  terminal2 = "uwsm app -- alacritty",
+  browser   = "uwsm app -- brave-browser --password-store=basic",
+  browser2  = "uwsm app -- firefox",
+  files     = "uwsm app -- thunar ~",
+  logout    = "uwsm app -- wlogout -b 5",
+  launcher  = "uwsm app -- rofi -show drun -show-icons -theme layout-apps",
+  launcher_run = "uwsm app -- rofi -show run -config $HOME/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'",
 }
 
 -- Source a file (multi-file configs)

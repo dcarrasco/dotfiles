@@ -4,7 +4,7 @@
 --  \___|_| |_|\_/ |___/
 
 -- Some default env vars.
--- hl.env("GTK_THEME", "Gnome-professional-solid-40.1"
+-- hl.env("GTK_THEME", "adw-gtk3")
 hl.env("HYPRCURSOR_THEME", "macOS-BigSur")
 hl.env("HYPRCURSOR_SIZE", "32")
 hl.env("XCURSOR_THEME", "macOS-BigSur")

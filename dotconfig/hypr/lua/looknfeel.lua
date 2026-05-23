@@ -135,13 +135,8 @@ hl.curve("quick", { type = "bezier", points = { {0.15, 0}, {0.1, 1} } } )
 -- enabled = true
 -- animation = global, 1, 3, default
 --
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 3, bezier = "myBezier" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "default", style = "popin 80%" })
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 2, bezier = "myBezier" })
-hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "default" })
-hl.animation({ leaf = "borderangle", enabled = true, speed = 3, bezier = "default" })
+hl.animation({ leaf = "windows", enabled = true, speed = 3, bezier = "myBezier", style = "popin 80%" })
 hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "default" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 1, bezier = "default" })
-hl.animation({ leaf = "layersIn", enabled = true, speed = 3, bezier = "default", style = "popin 70%" })
-hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "default", style = "popin 70%" })
+hl.animation({ leaf = "layers", enabled = true, speed = 3, bezier = "default", style = "popin 70%" })
 

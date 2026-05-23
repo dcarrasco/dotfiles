@@ -12,8 +12,8 @@ Style: Mac
 * {
     font-family: SF UI Text, SF Mono, sans-serif;
     font-size: 11pt;
-    padding: 0;
-    margin: 0;
+    /* padding: 0; */
+    /* margin: 0; */
 }
 
 #waybar {
@@ -25,6 +25,7 @@ Style: Mac
 }
 
 button.active label {
+    font-size: 12pt;
     box-shadow: 0 0 transparent;
     color: @accent1;
 }

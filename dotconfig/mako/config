@@ -14,7 +14,7 @@ icons=1
 icon-path=/home/daniel/.local/share/icons/ePapirus
 max-icon-size=32
 icon-location=left
-group-by=category
+group-by=category,summary
 
 [urgency=low]
 background-color=#1e1e2eDD

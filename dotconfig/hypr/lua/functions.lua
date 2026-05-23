@@ -7,5 +7,5 @@ HYPR.hex_rgba = function (hex, alpha)
 end
 
 HYPR.scripts = function (script)
-  return HYPR.scripts_path .. "/" .. script
+  return "uwsm app -- " .. HYPR.scripts_path .. "/" .. script
 end
