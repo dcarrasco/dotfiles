@@ -115,7 +115,7 @@ element {
 
 element selected {
     text-color: @fg-selected;
-    // background-color: @bg-color;
+    background-color: @bg-selected;
     border-color: @fg-scrollbar;
     border: 2px;
 }

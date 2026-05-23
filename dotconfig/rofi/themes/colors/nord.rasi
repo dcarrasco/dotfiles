@@ -17,6 +17,7 @@
     /* snow storm */
 	nord4: #d8dee9;
 	nord4alpha: #d8dee955;
+	nord4alpha2: #d8dee911;
 	nord5: #e5e9f0;
 	nord6: #eceff4;
 
@@ -41,7 +42,7 @@
     bg-prompt:       @nord0alpha;
     fg-placeholder:  @nord4alpha;
     fg-selected:     @nord8;
-    bg-selected:     none;
+    bg-selected:     @nord4alpha2;
     fg-scrollbar:    @nord4alpha;
 
     background-color: transparent;

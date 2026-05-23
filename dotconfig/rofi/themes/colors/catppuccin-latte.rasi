@@ -28,6 +28,7 @@
     text-alpha: #4c4f6955;
     subtext1: #5c5f77;
     subtext0: #6c6f85;
+    subtext0-alpha: #6c6f8511;
 
     overlay2: #7c7f93;
     overlay1: #8c8fa1;
@@ -51,7 +52,7 @@
     bg-prompt:       @crust-alpha;
     fg-placeholder:  @text-alpha;
     fg-selected:     @mauve;
-    bg-selected:     none;
+    bg-selected:     @subtext0-alpha;
     fg-scrollbar:    @text-alpha;
 
     background-color: transparent;

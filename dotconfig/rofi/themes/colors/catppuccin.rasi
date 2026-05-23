@@ -17,6 +17,7 @@
     text-alpha: #cdd6f455;
     subtext0: #a6adc8;
     subtext1: #bac2de;
+    subtext1-alpha: #bac2de11;
 
     surface0: #313244;
     surface1: #45475a;
@@ -50,7 +51,7 @@
     bg-prompt:       @base-alpha;
     fg-placeholder:  @text-alpha;
     fg-selected:     @sapphire;
-    bg-selected:     none;
+    bg-selected:     @subtext1-alpha;
     fg-scrollbar:    @text-alpha;
 
     background-color: transparent;
