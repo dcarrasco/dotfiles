@@ -1,0 +1,55 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$time\
+$directory\
+$git_branch\
+$git_status\
+$docker_context
+$character\
+"""
+
+command_timeout = 5000
+
+# Disable the blank line at the start of the prompt
+# add_newline = false
+
+# You can also replace your username with a neat symbol like  to save some space
+[username]
+show_always = true
+style_user = "bg:group1"
+style_root = "bg:group1"
+format = '[ $user ]($style)'
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+# style = "bg:group6"
+format = '[$time](dimmed) '
+
+[directory]
+format = " [$path](bold blue) "
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+format = ' [$symbol $branch](yellow) '
+
+[git_status]
+format = '[\[$all_status$ahead_behind\]](yellow) '
+
+[docker_context]
+symbol = " "
+style = "bg:group5"
+format = '[ $symbol $context ]($style) $path'
+
+[character]
+error_symbol = "[✗](bold red)"
+success_symbol = "[❯](bold cyan)"
+vimcmd_symbol = '[❮](bold green)'
+vimcmd_replace_one_symbol = '[❮](bold purple)'
+vimcmd_replace_symbol = '[❮](bold purple)'
+vimcmd_visual_symbol = '[❮](bold yellow)'
+format = '[$symbol ]()'

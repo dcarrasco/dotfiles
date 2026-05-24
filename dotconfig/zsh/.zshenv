@@ -15,5 +15,8 @@ export VISUAL="nvim"
 # GPG -------------------------------------------
 export GPG_TTY=$(tty)
 
+# STARSHIP --------------------------------------
+export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/minimal.toml
+
 # PATH ------------------------------------------
 export PATH="$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH"
