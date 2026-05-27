@@ -14,7 +14,7 @@ hl.bind("SUPER + S", hl.dsp.layout("swapwithmaster"), { description = "Toggle ps
 -- bindd = SUPER ALT, S, Toggle maximized window margins, exec, $hypr_scripts/hypr-master-max
 hl.bind("SUPER + M", hl.dsp.window.fullscreen({mode = "maximized", action = "toggle"}), { description = "Maximize window" })
 hl.bind("SUPER + ALT + M", hl.dsp.window.fullscreen({mode = "fullscreen", action = "toggle"}), { description = "Fullscreen" })
-hl.bind("SUPER + CTRL + M", hl.dsp.window.fullscreen_state({internal = 0, client = 2, action = "toggle"}), { description = "Fullscreen" })
+hl.bind("SUPER + CTRL + M", hl.dsp.window.fullscreen_state({internal = 0, client = 2, action = "toggle"}), { description = "Internal fullscreen" })
 hl.bind("SUPER + ALT + G", hl.dsp.group.toggle(), { description = "Toggle group" })
 -- bindd = SUPER CTRL, W, Toggle master/dwindle, exec, $hypr_scripts/hypr-toggle-master-dwindle
 
