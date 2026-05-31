@@ -13,7 +13,7 @@ window {
     location: center;
     anchor:   center;
     transparency: "real";
-    border: 3px;
+    border: 2px;
     border-color: @window-border;
     border-radius: 12px;
     height: 70%;
@@ -119,7 +119,7 @@ element {
 
 element selected {
     text-color: @fg-selected;
-    background-color: @bg-color;
+    background-color: @bg-selected;
     border-color: @fg-scrollbar;
     border: 2px;
 }
@@ -138,6 +138,7 @@ element-icon {
     vertical-align: 0.5;
     size: 6.5em;
     padding: 0;
+    squared: true;
 }
 
 scrollbar {
