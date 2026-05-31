@@ -1,10 +1,10 @@
 #HIST_FIND_NO_DUPS List all files colorized in long format
 alias l='ls -CF --color=auto'
 alias ll='ls -lhF --color=auto --group-directories-first'
-alias la='ls -laFh --color=auto --group-directories-first'
-alias lsd="ls -lFh --color | grep '^d'"
+alias la='ls -laFhA --color=auto --group-directories-first'
+alias lsd="ls -lFh --color=auto | grep --color=none '^d'"
 alias ls='ls --color=auto -F'
-alias l.="ls -a --color | grep --color=never '^\.'"
+alias l.="ls -a --color=auto | grep --color=never '^\.'"
 
 alias cp='cp -i'
 alias mv='mv -i'
