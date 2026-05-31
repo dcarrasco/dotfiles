@@ -41,7 +41,7 @@ hl.layer_rule({ match = {namespace = "waybar"}, ignore_alpha = 0 })
 
 -- Aesthtics
 hl.layer_rule({ match = {namespace = "logout_dialog"}, blur = true })
-hl.layer_rule({ match = {namespace = "wallpaper"}, no_anim = true })
+hl.layer_rule({ match = {namespace = "wallpaper"}, animation = "fade" })
 hl.layer_rule({ match = {namespace = "notifications"}, animation = "slide right" })
 hl.layer_rule({ match = {namespace = "notifications"}, blur = true })
 hl.layer_rule({ match = {namespace = "notifications"}, ignore_alpha = 0 })
@@ -71,7 +71,8 @@ hl.window_rule({ match = {class = "thunar", title = "^(Renombrar .*)$"}, float =
 
 -- Others
 hl.window_rule({ match = {class = "^(org.gnome.Calculator)$"}, float = true })
-hl.window_rule({ match = {class = "^(steam_.*)$"}, maximize = false })
+hl.window_rule({ match = {class = "steam_proton"}, tile = true })
+hl.window_rule({ match = {class = "steam_proton"}, maximize = false })
 hl.window_rule({ match = {class = "^(.*bottles.*)$", title = "^Microsoft.*$"}, maximize = false })
 hl.window_rule({ match = {class = "(Gaia Sky)"}, tile = true })
 hl.window_rule({ match = {class = "^(dosbox)$"}, float = true })

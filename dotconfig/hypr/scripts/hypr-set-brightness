@@ -10,5 +10,5 @@ fi
 if [ -n "$step" ]; then
     brightnessctl s $step
     brightness=$((100 * $(brightnessctl g) / $(brightnessctl max)))
-    notify-send -c OSD -h int:value:$brightness -i display-brightness-symbolic "Brillo pantalla"
+    notify-send -c OSD -h int:value:$brightness -i display-brightness-symbolic "" "Brillo pantalla ($brightness%)"
 fi

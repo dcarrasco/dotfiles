@@ -3,6 +3,7 @@ hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close active window
 
 -- Cycle windows and apps
 hl.bind("ALT + TAB", hl.dsp.window.cycle_next({next = true}), { description = "Change to next window" })
+hl.bind("ALT + SHIFT + TAB", hl.dsp.window.cycle_next({next = false}), { description = "Change to next window" })
 hl.bind("SUPER + TAB", hl.dsp.focus({last = true}), { description = "Focus last window" })
 
 -- # Control tiling
@@ -10,8 +11,7 @@ hl.bind("SUPER + ALT + F", hl.dsp.window.float(), { description = "Toggle floati
 hl.bind("SUPER + CTRL + F", hl.dsp.window.pin(), { description = "Pin window" })
 hl.bind("SUPER + ALT + P", hl.dsp.window.pseudo(), { description = "Toggle pseudo floating" })
 -- hl.bind("SUPER + S", hl.dsp.layout("togglesplit"), { description = "Toggle pseudo floating" })
-hl.bind("SUPER + S", hl.dsp.layout("swapwithmaster"), { description = "Toggle pseudo floating" })
--- bindd = SUPER ALT, S, Toggle maximized window margins, exec, $hypr_scripts/hypr-master-max
+hl.bind("SUPER + S", hl.dsp.layout("swapwithmaster"), { description = "Swap with master" })
 hl.bind("SUPER + M", hl.dsp.window.fullscreen({mode = "maximized", action = "toggle"}), { description = "Maximize window" })
 hl.bind("SUPER + ALT + M", hl.dsp.window.fullscreen({mode = "fullscreen", action = "toggle"}), { description = "Fullscreen" })
 hl.bind("SUPER + CTRL + M", hl.dsp.window.fullscreen_state({internal = 0, client = 2, action = "toggle"}), { description = "Internal fullscreen" })

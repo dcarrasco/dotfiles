@@ -8,7 +8,7 @@ rofi_theme="$HOME/.config/rofi/themes/layout-wallpapers.rasi"
 wallpaper_conf="$HOME/.config/hypr/scripts/hypr-set-wallpaper"
 
 
-wallpaper=$(find "$abstract_folder" "$nature_folder" "$bing_folder" -type f \
+wallpaper=$(find "$abstract_folder" "$nature_folder" -type f \
     | awk -F "" '{print $0 "\0icon\x1f" $0;}' \
     | rofi -dmenu -show-icons -p 󰸉  -config $rofi_theme -theme-str "entry{placeholder:\"Fondo de pantalla...\";}")
 

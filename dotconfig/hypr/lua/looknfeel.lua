@@ -139,4 +139,5 @@ hl.animation({ leaf = "windows", enabled = true, speed = 3, bezier = "myBezier",
 hl.animation({ leaf = "fade", enabled = true, speed = 3, bezier = "default" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 1, bezier = "default" })
 hl.animation({ leaf = "layers", enabled = true, speed = 3, bezier = "default", style = "popin 70%" })
+hl.animation({ leaf = "fadeLayers", enabled = true, speed = 5, bezier = "default" })
 

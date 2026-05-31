@@ -1,13 +1,13 @@
 #!/bin/sh
 
-chk_cmd=$(hyprctl getoptions master:no_gaps_when_only)
+chk_cmd=$(hyprctl eval "onlyWindowMarginRule:is_enabled()")
 
-option=$(echo "$chk_cmd" | grep 'int' | awk '{print $2}')
+echo $chk_cmd
 
-if [ $option -eq 1 ]; then
-    hyprctl keyword master:no_gaps_when_only 0
-else
-    hyprctl keyword master:no_gaps_when_only 1
-fi
+# if [ $option -eq 1 ]; then
+#     hyprctl keyword master:no_gaps_when_only 0
+# else
+#     hyprctl keyword master:no_gaps_when_only 1
+# fi
 
 
