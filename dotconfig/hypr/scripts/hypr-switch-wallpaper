@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 abstract_folder="$HOME/Imágenes/fondos pantalla/abstract"
 nature_folder="$HOME/Imágenes/fondos pantalla/nature"

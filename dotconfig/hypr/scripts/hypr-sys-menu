@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 TERMINAL=kitty
 SCRIPT_PATH=$HOME/.config/hypr/scripts

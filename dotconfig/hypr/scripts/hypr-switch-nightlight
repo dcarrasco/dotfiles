@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 case $DESKTOP_SESSION in
     bspwm)

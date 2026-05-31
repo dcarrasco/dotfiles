@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 window_status() {
     echo "$(hyprctl activewindow | grep $1 | cut -d : -f 2)" | xargs

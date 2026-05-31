@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/bash
 
 step=""
 if [ "$1" = "up" ]; then

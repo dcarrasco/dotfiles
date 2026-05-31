@@ -7,7 +7,7 @@
  */
 
 * {
-    /* ------ Catpuccin Mocha  -------------------------------- */
+    /* ------ Dracula  -------------------------------- */
     background: #282A36;
     background-alpha: #282A3699;
     foreground: #F8F8F2;

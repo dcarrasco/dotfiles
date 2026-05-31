@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 layout=$(hyprctl -j getoption general:layout | jq -r ".str")
 

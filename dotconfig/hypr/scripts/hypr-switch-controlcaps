@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 HYPRCONF="conf"
 [ -f $HOME/.config/hypr/hyprland.lua ] && HYPRCONF="lua"

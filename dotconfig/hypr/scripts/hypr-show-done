@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Muestra mensaje de termino y espera que se presione una tecla
 # Simbolos:     󰗠  󱕝  󰗡    󰄵
 echo

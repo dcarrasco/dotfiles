@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 is_wayland() {
     wlr-randr | grep current | wc -l

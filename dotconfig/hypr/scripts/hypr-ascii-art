@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ART_DIR=$HOME/.config/hypr/scripts/ascii-art
 
 LIST_ART=$(find $ART_DIR -type f | xargs -I $ basename $ | cut -d " " -f 1 | sort | nl)

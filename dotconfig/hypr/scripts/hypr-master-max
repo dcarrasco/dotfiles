@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 chk_cmd=$(hyprctl eval "onlyWindowMarginRule:is_enabled()")
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 current_theme() {
     grep import $HOME/.config/waybar/style.css | grep themes | cut -d "/" -f 2

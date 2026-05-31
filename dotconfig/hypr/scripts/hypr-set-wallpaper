@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/bash
 
 wallpaper="/home/daniel/Imágenes/fondos pantalla/nature/20230814-GeckoLeaf_ROW1753443584_UHD.jpg"
 

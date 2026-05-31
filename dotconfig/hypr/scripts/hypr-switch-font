@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 kitty_conf=$HOME/.config/kitty/kitty.conf
 alacritty_conf=$HOME/.config/alacritty/alacritty.toml

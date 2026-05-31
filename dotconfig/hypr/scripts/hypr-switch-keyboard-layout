@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$DESKTOP_SESSION" = "bspwm" ]; then
     [ $(setxkbmap -query | grep layout | awk '{print $2}') = "us" ] && setxkbmap latam || setxkbmap us

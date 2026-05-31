@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 bluetooth_status=$(bluetoothctl show | grep -q "Powered: no")
 # wifi_status=$(nmcli device wifi | grep '*' | wc -l)

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 bluetooth_print() {
     if [ $(bluetooth_state) = "off" ]; then
