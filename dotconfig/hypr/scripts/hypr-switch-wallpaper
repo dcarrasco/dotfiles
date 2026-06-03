@@ -5,7 +5,8 @@ nature_folder="$HOME/Imágenes/fondos pantalla/nature"
 bing_folder="$HOME/Imágenes/BingWallpaper"
 
 rofi_theme="$HOME/.config/rofi/themes/layout-wallpapers.rasi"
-wallpaper_conf="$HOME/.config/hypr/scripts/hypr-set-wallpaper"
+# wallpaper_conf="$HOME/.config/hypr/scripts/hypr-set-wallpaper"
+wallpaper_conf="$HOME/.config/hypr/hyprpaper.conf"
 
 
 wallpaper=$(find "$abstract_folder" "$nature_folder" -type f \
@@ -16,8 +17,8 @@ wallpaper=$(find "$abstract_folder" "$nature_folder" -type f \
 
 if [ -n "$wallpaper" ]; then
     # Cambia la configuración inicial del fondo de pantalla
-    sed -i "s#^wallpaper=.*#wallpaper=\"$wallpaper\"#g" $wallpaper_conf
+    sed -i "s#    path = .*#    path = $wallpaper#g" $wallpaper_conf
 
     # Ejecuta cambio de fondo de pantalla
-    $HOME/.config/hypr/scripts/hypr-set-wallpaper
+    $HOME/.config/hypr/scripts/hypr-set-wallpaper "$wallpaper"
 fi

@@ -1,14 +1,9 @@
 #!/bin/bash
 
-wallpaper="/home/daniel/Imágenes/fondos pantalla/nature/20230814-GeckoLeaf_ROW1753443584_UHD.jpg"
+wallpaper="/home/daniel/Imágenes/fondos pantalla/abstract/liquid/fluidic-glossy-gradient-background-purple-background-3840x2160-7641.jpg"
 
 if [ -n "$1" ]; then
     wallpaper="$1"
 fi
 
-pid=$(pidof swaybg)
-if [ -n "$pid" ]; then
-    killall swaybg
-fi
-
-swaybg -i "$wallpaper" -m fill &
+hyprctl hyprpaper wallpaper "eDP-1,$wallpaper"
