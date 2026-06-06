@@ -211,7 +211,7 @@
     },
 
     "network": {
-        "interface": "wlp*", // (Optional) To force the use of this interface
+        "interface": "w*", // (Optional) To force the use of this interface
         "family": "ipv4",
         //  󰤯 󰤨 󰤥 󰤥 󰤭 󰤠
         "format": "{icon}",
@@ -271,7 +271,9 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        // "on-click": "pavucontrol",
+        "on-click": "kitty --class hypr-sys-menu wiremix",
+        "on-click-right": "$HOME/.config/hypr/scripts/hypr-set-volume toggle"
     },
 
     "custom/media": {

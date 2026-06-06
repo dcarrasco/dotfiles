@@ -176,7 +176,7 @@ show_font_menu() {
 show_setup_menu() {
     case $(menu "Setup" "  Configs\n  Audio\n  Wifi\n󰂯  Bluetooth\n󰍹  Monitors\n󰐪  Printers\n  Keybindings\n  Input\n󰈷  Fingerprint\n  Fido2") in
         *Configs*)     hypr-edit-config ;;
-        *Audio*)       terminal alsamixer ;;
+        *Audio*)       terminal wiremix ;;
         *Wifi*)        hypr-nmcli-rofi ;;
         *Bluetooth*)   blueman-manager ;;
         *Monitors*)    hypr-switch-monitor ;;
