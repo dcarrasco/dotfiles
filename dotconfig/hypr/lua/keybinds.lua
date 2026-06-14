@@ -12,7 +12,8 @@
 
 -- Programs
 hl.bind("SUPER + RETURN", hl.dsp.exec_cmd(HYPR.apps.terminal), { description = "Open terminal" })
-hl.bind("SUPER + ALT + RETURN", hl.dsp.exec_cmd(HYPR.apps.terminal2), { description = "Open alternate terminal" })
+hl.bind("SUPER + ALT + RETURN", hl.dsp.exec_cmd(HYPR.apps.tmux), { description = "Open tmux in terminal" })
+hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd(HYPR.apps.terminal2), { description = "Open alternate terminal" })
 hl.bind("SUPER + B", hl.dsp.exec_cmd(HYPR.apps.browser), { description = "Open browser" })
 hl.bind("SUPER + ALT + B", hl.dsp.exec_cmd(HYPR.apps.browser2), { description = "Open alternate browser" })
 hl.bind("SUPER + F", hl.dsp.exec_cmd(HYPR.apps.files), { description = "Open file manager" })

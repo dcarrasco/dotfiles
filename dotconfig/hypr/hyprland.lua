@@ -17,6 +17,7 @@ HYPR.scripts_path = "$HOME/.config/hypr/scripts"
 HYPR.apps = {
   terminal  = "uwsm app -- kitty -d ~",
   terminal2 = "uwsm app -- alacritty",
+  tmux      = "uwsm app -- kitty -d ~ tmux",
   browser   = "uwsm app -- brave-browser --password-store=basic",
   browser2  = "uwsm app -- firefox",
   files     = "uwsm app -- thunar ~",

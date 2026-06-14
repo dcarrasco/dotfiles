@@ -16,10 +16,10 @@ alias df='df -h'
 
 
 alias cd..="cd .."
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
+alias ..="cd ..;pwd"
+alias ...="cd ../..;pwd"
+alias ....="cd ../../..;pwd"
+alias .....="cd ../../../..;pwd"
 alias ~="cd ~"     # `cd` is probably faster to type though
 alias -- -="cd -"
 
