@@ -5,7 +5,7 @@ SCRIPT_PATH=$HOME/.config/hypr/scripts
 export PATH="$SCRIPT_PATH:$PATH"
 
 menu() {
-    local font="Hack Nerd Font 14"
+    local font="Hack Nerd Font 15"
     local width="390px"
     local height="600px"
     local theme="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$width; height:$height;}"
@@ -113,7 +113,7 @@ show_style_menu() {
         *Colors*)     show_colors_menu ;;
         *Font*)       show_font_menu ;;
         *Background*) hypr-switch-wallpaper ;;
-        *Hyprland*)   edit_file $HOME/.config/hypr/looknfeel.conf ;;
+        *Hyprland*)   edit_file $HOME/.config/hypr/lua/looknfeel.lua ;;
         *) show_main_menu ;;
     esac
 }
@@ -181,8 +181,8 @@ show_setup_menu() {
         *Bluetooth*)   blueman-manager ;;
         *Monitors*)    hypr-switch-monitor ;;
         *Printers*)    webapp "http://localhost:631" ;;
-        *Keybindings*) [ $DESKTOP_SESSION = "bspwm" ] && edit_file $HOME/.config/sxhkd/sxhkdrc || edit_file $HOME/.config/hypr/conf/keybinds.conf ;;
-        *Input*)       edit_file $HOME/.config/hypr/input.conf ;;
+        *Keybindings*) [ $DESKTOP_SESSION = "bspwm" ] && edit_file $HOME/.config/sxhkd/sxhkdrc || edit_file $HOME/.config/hypr/lua/keybinds.lua ;;
+        *Input*)       edit_file $HOME/.config/hypr/lua/input.lua ;;
         *Fingerprint*) terminal $OMARCHY_BIN_PATH/omarchy-setup-fingerprint ;;
         *Fido2*)       terminal $OMARCHY_BIN_PATH/omarchy-setup-fido2 ;;
         *) show_main_menu ;;
