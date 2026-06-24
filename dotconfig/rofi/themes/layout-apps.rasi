@@ -20,30 +20,32 @@ entry {
 
 // listview  ------------------------------------------------------------------------------
 listview {
-    flow: horizontal;
-    columns: 5;
+    // flow: horizontal;
+    columns: 2;
     fixed-columns: true;
 }
 
 element {
-    orientation: vertical;
+    // orientation: vertical;
     border-radius: 0.5em;
     spacing: 0.5em;
+    padding: 0.4em 1em;
 }
 
 element selected {
     border-color: @fg-scrollbar;
-    border: 2px;
+    border: 1px;
 }
 
 element-text {
-    horizontal-align: 0.5;
-    font: "SF UI Display 11";
+    // horizontal-align: 0.5;
+    font: "SF UI Display 14";
     cursor: pointer;
+    padding: 0em;
 }
 
 element-icon {
-    size: 2.4em;
+    size: 1.2em;
     horizontal-align: 0.5;
     padding: 0;
 }
