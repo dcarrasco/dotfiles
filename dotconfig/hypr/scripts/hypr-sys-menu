@@ -1,11 +1,11 @@
 #!/bin/bash
 
 TERMINAL=kitty
-SCRIPT_PATH=$HOME/.config/hypr/scripts
+SCRIPT_PATH=$XDG_CONFIG_HOME/hypr/scripts
 export PATH="$SCRIPT_PATH:$PATH"
 
 menu() {
-    local font="Hack Nerd Font 15"
+    local font="Hack Nerd Font 14"
     local width="390px"
     local height="600px"
     local theme="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$width; height:$height;}"
@@ -96,7 +96,7 @@ show_toggle_menu() {
     case $(menu "Toggle" "  Wifi\n󰂯  Bluetooth\n  Power Management\n  Keyboard Layout\n󰪛  Keyboard ControlCaps\n󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar") in
         *Wifi*)                  hypr-switch-wifi ;;
         *Bluetooth*)             hypr-bluetooth --toggle ;;
-        *Power\ Management*)     hypr-switch-power-mgmt ;;
+        *Power\ Management*)     show_power_management ;;
         *Keyboard\ Layout*)      hypr-switch-keyboard-layout ;;
         *Keyboard\ ControlCaps*) hypr-switch-controlcaps ;;
         *Nightlight*)            hypr-switch-nightlight ;;
@@ -107,20 +107,30 @@ show_toggle_menu() {
     esac
 }
 
+show_power_management() {
+    case $(menu "Power Management" "  Balanced\n  Balanced Battery\n  Performance\n  Power Saver") in
+        *Balanced\ Battery*) tuned-adm profile balanced-battery ;;
+        *Balanced*)          tuned-adm profile balanced ;;
+        *Performance*)       tuned-adm profile throughput-performance ;;
+        *Power\ Saver*)      tuned-adm profile powersave ;;
+        *) back_to show_toggle_menu ;;
+    esac
+}
+
 show_style_menu() {
     case $(menu "Style" "  Theme\n󰸌  Colors\n  Font\n  Background\n  Hyprland") in
         *Theme*)      show_theme_menu ;;
         *Colors*)     show_colors_menu ;;
         *Font*)       show_font_menu ;;
         *Background*) hypr-switch-wallpaper ;;
-        *Hyprland*)   edit_file $HOME/.config/hypr/lua/looknfeel.lua ;;
+        *Hyprland*)   edit_file $XDG_CONFIG_HOME/hypr/lua/looknfeel.lua ;;
         *) show_main_menu ;;
     esac
 }
 
 show_theme_menu() {
     local temas=(Square Circle Underscore Mac Float Tahoe KDE)
-    local current_theme=$(grep import $HOME/.config/waybar/style.css | grep themes | cut -d "/" -f 2)
+    local current_theme=$(grep import $XDG_CONFIG_HOME/waybar/style.css | grep themes | cut -d "/" -f 2)
 
     local opts=""
     for i in "${temas[@]}"; do
@@ -141,7 +151,7 @@ show_theme_menu() {
 
 show_colors_menu() {
     local temas=(Catppuccin Catppuccin-Latte Dracula Nord Nord-Frost)
-    local current_theme=$(grep import $HOME/.config/waybar/style.css | grep colors | tr -d '"' | tr -d ';' | cut -d / -f 2 | cut -d . -f 1)
+    local current_theme=$(grep import $XDG_CONFIG_HOME/waybar/style.css | grep colors | tr -d '"' | tr -d ';' | cut -d / -f 2 | cut -d . -f 1)
 
     local opts=""
     for i in "${temas[@]}"; do
@@ -161,7 +171,7 @@ show_colors_menu() {
 }
 
 show_font_menu() {
-    local kitty_conf=$HOME/.config/kitty/kitty.conf
+    local kitty_conf=$XDG_CONFIG_HOME/kitty/kitty.conf
     local current_font=$(grep ^font_family $kitty_conf | sed 's/^font_family  *//')
     local opts=$(fc-list :spacing=100 -f "%{family[0]}\n" | sort -u | gawk '{print "<span font_family=\"" $0 "\">" $0 "</span>"}')
     local font=$(menu "$current_font" "$opts")
@@ -181,8 +191,8 @@ show_setup_menu() {
         *Bluetooth*)   blueman-manager ;;
         *Monitors*)    hypr-switch-monitor ;;
         *Printers*)    webapp "http://localhost:631" ;;
-        *Keybindings*) [ $DESKTOP_SESSION = "bspwm" ] && edit_file $HOME/.config/sxhkd/sxhkdrc || edit_file $HOME/.config/hypr/lua/keybinds.lua ;;
-        *Input*)       edit_file $HOME/.config/hypr/lua/input.lua ;;
+        *Keybindings*) [ $DESKTOP_SESSION = "bspwm" ] && edit_file $XDG_CONFIG_HOME/sxhkd/sxhkdrc || edit_file $XDG_CONFIG_HOME/hypr/lua/keybinds.lua ;;
+        *Input*)       edit_file $XDG_CONFIG_HOME/hypr/lua/input.lua ;;
         *Fingerprint*) terminal $OMARCHY_BIN_PATH/omarchy-setup-fingerprint ;;
         *Fido2*)       terminal $OMARCHY_BIN_PATH/omarchy-setup-fido2 ;;
         *) show_main_menu ;;
