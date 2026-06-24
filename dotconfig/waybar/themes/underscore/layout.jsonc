@@ -12,6 +12,7 @@ __        __          _                  _                         _
     "height": 34,
     "spacing": 0,
     "margin-top": 5,
+    // "margin-bottom": 5,
     "margin-left": 5,
     "margin-right": 5,
     "reload_style_on_change": true,
@@ -26,9 +27,9 @@ __        __          _                  _                         _
     ],
     "modules-center": [
         "clock",
-        "custom/updates",
     ],
     "modules-right":  [
+        "custom/updates",
         "tray",
         "idle_inhibitor",
         // "custom/nightlight",
