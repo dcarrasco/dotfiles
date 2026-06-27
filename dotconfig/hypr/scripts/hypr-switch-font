@@ -1,9 +1,17 @@
 #!/bin/bash
 
-kitty_conf=$HOME/.config/kitty/kitty.conf
-alacritty_conf=$HOME/.config/alacritty/alacritty.toml
+kitty_conf=$HOME/.config/kitty/theme.conf
+alacritty_conf=$HOME/.config/alacritty/theme.toml
 
 # figlet -c "Terminal font"
+
+if [ ! -f "$kitty_conf" ]; then
+    cp "$kitty_conf".orig "$kitty_conf"
+fi
+
+if [ ! -f "$alacritty_conf" ]; then
+    cp "$alacritty_conf".orig "$alacritty_conf"
+fi
 
 if [ -n "$1" ]; then
     font="$1"
@@ -14,7 +22,7 @@ fi
 
 if [[ -n "$font" ]]; then
     if [[ -f $kitty_conf ]]; then
-        sed -i "s/^font_family .*/font_family      $font/g" $kitty_conf
+        sed -i "s/^font_family .*/font_family  $font/g" $kitty_conf
         pkill -USR1 kitty
     fi
 
