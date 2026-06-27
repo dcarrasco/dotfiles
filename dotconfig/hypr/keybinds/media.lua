@@ -1,10 +1,11 @@
--- Special keys
-local hypr_scripts = "$HOME/.config/hypr/scripts/"
+return {
+  -- Audio keys
+  { mod = "", key = "XF86AudioMute", dsp = HYPR.scripts("hypr-set-volume toggle"), desc = "Mute" },
+  { mod = "", key = "XF86AudioLowerVolume", dsp = HYPR.scripts("hypr-set-volume down"), desc = "Decrease volume", repeating = true },
+  { mod = "", key = "XF86AudioRaiseVolume", dsp = HYPR.scripts("hypr-set-volume up"), desc = "Increase volume", repeating = true },
 
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd(hypr_scripts .. "hypr-set-volume toggle"), { description = "Mute" })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(hypr_scripts .. "hypr-set-volume down"), { description = "Decrease volume", repeating = true })
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(hypr_scripts .. "hypr-set-volume up"), { description = "Increase volume", repeating = true })
-
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(hypr_scripts .. "hypr-set-brightness down"), { description = "Decrease brightness" })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(hypr_scripts .. "hypr-set-brightness up"), { description = "Increase brightness" })
+  -- Brightness keys
+  { mod = "", key = "XF86MonBrightnessDown", dsp = HYPR.scripts("hypr-set-brightness down"), desc = "Decrease brightness" },
+  { mod = "", key = "XF86MonBrightnessUp", dsp = HYPR.scripts("hypr-set-brightness up"), desc = "Increase brightness" },
+}
 

@@ -44,6 +44,6 @@ HYPR.theme = {
   color_groupbar_active       = HYPR.hex_rgba(colors.peach, "CC"),
   color_groupbar_inactive     = HYPR.hex_rgba(colors.overlay0, "77"),
   color_text_groupbar         = HYPR.hex_rgb(colors.surface0),
-  color_shadow                = HYPR.hex_rgba(colors.base, "77"),
+  color_shadow                = HYPR.hex_rgba(colors.base, "AA"),
   color_shadow_inactive       = HYPR.hex_rgba("000000", "77"),
 }

@@ -1,42 +1,40 @@
--- *************************************************************************************************
--- Menus
--- *************************************************************************************************
-hl.bind("SUPER + SPACE", hl.dsp.exec_cmd(HYPR.apps.launcher), { description = "Open launcher" })
-hl.bind("SUPER + ALT + SPACE", hl.dsp.exec_cmd(HYPR.scripts("hypr-sys-menu")), { description = "System menu" })
--- # bindd = SUPER ALT, SPACE, Search files, exec, $APPS["scripts_path"]/hypr-search-home
-hl.bind("SUPER + CTRL + SPACE", hl.dsp.exec_cmd(HYPR.apps.launcher_run), { description = "Open run launcher" })
-hl.bind("SUPER + CTRL + V", hl.dsp.exec_cmd(HYPR.scripts("hypr-list-vm")), { description = "List virtual machines" })
-hl.bind("SUPER + CTRL + Q", hl.dsp.exec_cmd(HYPR.apps.logout), { description = "System menu" })
-hl.bind("SUPER + comma", hl.dsp.exec_cmd(HYPR.scripts("hypr-edit-config")), { description = "Edit config files" })
-hl.bind("SUPER + XF86AudioMute", hl.dsp.exec_cmd(HYPR.scripts("hypr-show-keybinds")), { description = "Show keyboard bindings" })
-hl.bind("SUPER + F1", hl.dsp.exec_cmd(HYPR.scripts("hypr-show-keybinds")), { description = "Show keyboard bindings" })
-hl.bind("Help", hl.dsp.exec_cmd(HYPR.scripts("hypr-show-keybinds")), { description = "Show keyboard bindings" })
-hl.bind("SUPER + P", hl.dsp.exec_cmd(HYPR.scripts("hypr-switch-monitor")), { description = "Monitors menu" })
-hl.bind("SUPER + ALT + Q", hl.dsp.exit(), { description = "Exit Hyprland" })
+return {
+  -- *************************************************************************************************
+  -- Menus
+  -- *************************************************************************************************
+  { key = "SPACE", dsp = HYPR.apps.launcher, desc = "Open launcher" },
+  { key = "ALT + SPACE", dsp = HYPR.scripts("hypr-sys-menu"), desc = "System menu" },
+  { key = "CTRL + SPACE", dsp = HYPR.apps.launcher_run, desc = "Open run launcher" },
+  { key = "CTRL + V", dsp = HYPR.scripts("hypr-list-vm"), desc = "List virtual machines" },
+  { key = "CTRL + Q", dsp = HYPR.apps.logout, desc = "System menu" },
+  { key = "comma", dsp = HYPR.scripts("hypr-edit-config"), desc = "Edit config files" },
+  { key = "XF86AudioMute", dsp = HYPR.scripts("hypr-show-keybinds"), desc = "Show keyboard bindings" },
+  { key = "F1", dsp = HYPR.scripts("hypr-show-keybinds"), desc = "Show keyboard bindings" },
+  { mod = "", key = "Help", dsp = HYPR.scripts("hypr-show-keybinds"), desc = "Show keyboard bindings" },
+  { key = "P", dsp = HYPR.scripts("hypr-switch-monitor"), desc = "Monitors menu" },
+  { key = "ALT + Q", dsp = hl.dsp.exit(), desc = "Exit Hyprland" },
 
--- *************************************************************************************************
--- Aesthetics
--- *************************************************************************************************
--- bindd = SUPER,XF86MonBrightnessDown, Previous wallpaper, exec, variety -p && sleep 1.5 && notify-send "Fondo de pantalla" "Nuevo fondo: $(variety --current 2> /dev/null | xargs -0 -- basename)"
--- bindd = SUPER,XF86MonBrightnessUp, Next wallpaper, exec, variety -n && sleep 1.5 && notify-send "Fondo de pantalla" "Nuevo fondo: $(variety --current 2> /dev/null | xargs -0 -- basename)"
-hl.bind("SUPER + ALT + R", hl.dsp.exec_cmd(HYPR.scripts("hypr-restore-waybar")), { description = "Reset Waybar" })
-hl.bind("SUPER + XF86Favorites", hl.dsp.exec_cmd(HYPR.scripts("hypr-restore-waybar")), { description = "Reset Waybar" })
+  -- *************************************************************************************************
+  -- Aesthetics
+  -- *************************************************************************************************
+  { key = "XF86MonBrightnessDown", dsp = HYPR.scripts("hypr-switch-wallpaper previous"), desc = "Previo fondo de pantalla" },
+  { key = "XF86MonBrightnessUp", dsp = HYPR.scripts("hypr-switch-wallpaper next"), desc = "Siguiente fondo de pantalla" },
+  { key = "ALT + R", dsp = HYPR.scripts("hypr-restore-waybar"), desc = "Reset Waybar" },
+  { key = "XF86Favorites", dsp = HYPR.scripts("hypr-restore-waybar"), desc = "Reset Waybar" },
+  --
+  -- *************************************************************************************************
+  -- Screenshots
+  -- *************************************************************************************************
+  { mod = "", key = "Print", dsp = HYPR.scripts("hypr-cmd-screenshot file"), desc = "Save screenshot to file" },
+  { key = "SUPER + SHIFT + ALT + S", dsp = HYPR.scripts("hypr-cmd-screenshot region"), desc = "Save screen area to file" },
+  { key = "SUPER + SHIFT + S", dsp = HYPR.scripts("hypr-cmd-screenshot"), desc = "Copy screen area to clipboard" },
+  { key = "SUPER + SHIFT + CTRL + S", dsp = "pkill hyprpicker || hyprpicker -a", desc = "Color picker" },
 
--- *************************************************************************************************
--- Screenshots
--- *************************************************************************************************
-hl.bind("Print", hl.dsp.exec_cmd(HYPR.scripts("hypr-cmd-screenshot file")), { description = "Save screenshot to file" })
-hl.bind("SUPER + SHIFT + ALT + S", hl.dsp.exec_cmd(HYPR.scripts("hypr-cmd-screenshot region")), { description = "Save screen area to file" })
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(HYPR.scripts("hypr-cmd-screenshot")), { description = "Copy screen area to clipboard" })
-hl.bind("SUPER + SHIFT + CTRL + S", hl.dsp.exec_cmd("pkill hyprpicker || hyprpicker -a"), { description = "Color picker" })
-
--- *************************************************************************************************
--- Keyboard
--- *************************************************************************************************
-hl.bind("SUPER + SHIFT + SPACE", hl.dsp.exec_cmd(HYPR.scripts("hypr-switch-keyboard-layout")), { description = "Switch keyboard layout" })
--- # trigger when the switch is turning off
-
-hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("hyprctl keyword monitor 'eDP-1, disable'"), { description = "Disable screen on close lid" })
-hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl keyword monitor 'eDP-1, preferred, auto, 1'"), { description = "Enable screen on close lid" })
-
+  -- *************************************************************************************************
+  -- Keyboard
+  -- *************************************************************************************************
+  { key = "SHIFT + SPACE", dsp = HYPR.scripts("hypr-switch-keyboard-layout"), desc = "Switch keyboard layout" },
+  { mod = "", key = "switch:on:Lid Switch", dsp = "hyprctl keyword monitor 'eDP-1, disable'", desc = "Disable screen on close lid" },
+  { mod = "", key = "switch:off:Lid Switch", dsp = "hyprctl keyword monitor 'eDP-1, preferred, auto, 1'", desc = "Enable screen on close lid" },
+}
 
