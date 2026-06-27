@@ -39,7 +39,7 @@
     surface0: #ccd0da;
 
     base: #eff1f5;
-    base-alpha: #eff1f599;
+    base-alpha: #eff1f5CD;
     mantle: #e6e9ef;
     crust: #dce0e8;
     crust-alpha: #dce0e877;
@@ -51,7 +51,7 @@
     fg-prompt:       @text;
     bg-prompt:       @crust-alpha;
     fg-placeholder:  @text-alpha;
-    fg-selected:     @mauve;
+    fg-selected:     @sapphire;
     bg-selected:     @subtext0-alpha;
     fg-scrollbar:    @text-alpha;
 

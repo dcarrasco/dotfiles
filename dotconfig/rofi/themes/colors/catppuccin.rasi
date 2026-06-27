@@ -9,7 +9,7 @@
 * {
     /* ------ Catpuccin Mocha  -------------------------------- */
     base:   #1e1e2e;
-    base-alpha:   #1e1e2e99;
+    base-alpha:   #1e1e2eCD;
     mantle: #181825;
     crust:  #11111b;
 
