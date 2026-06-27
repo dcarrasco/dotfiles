@@ -2,23 +2,57 @@
 
 abstract_folder="$HOME/Imágenes/fondos pantalla/abstract"
 nature_folder="$HOME/Imágenes/fondos pantalla/nature"
+f1_folder="$HOME/Imágenes/fondos pantalla/F1"
 bing_folder="$HOME/Imágenes/BingWallpaper"
 
 rofi_theme="$HOME/.config/rofi/themes/layout-wallpapers.rasi"
 # wallpaper_conf="$HOME/.config/hypr/scripts/hypr-set-wallpaper"
 wallpaper_conf="$HOME/.config/hypr/hyprpaper.conf"
 
+wallpaper_list() {
+    find "$abstract_folder" "$nature_folder" -type f
+}
 
-wallpaper=$(find "$abstract_folder" "$nature_folder" -type f \
-    | awk -F "" '{print $0 "\0icon\x1f" $0;}' \
-    | rofi -dmenu -show-icons -p 󰸉  -config $rofi_theme -theme-str "entry{placeholder:\"Fondo de pantalla...\";}")
+current_wallpaper() {
+    basename "$(grep path "$wallpaper_conf" | cut -d "=" -f 2)"
+}
 
-# echo "$wallpaper"
+wallpaper_number() {
+    echo "$(wallpaper_list)" | grep -n "$(current_wallpaper)" | cut -d ":" -f 1
+}
+
+if [ ! -f "$wallpaper_conf" ]; then
+    cp "$wallpaper_conf".orig "$wallpaper_conf"
+fi
+
+case "$1" in
+    *random*)
+        wallpaper=$(wallpaper_list | shuf -n 1)
+        ;;
+    *next*)
+        line=$(wallpaper_number)
+        line=$((line+1))
+        wallpaper=$(echo "$(wallpaper_list)" | head -n $line | tail -n 1)
+        ;;
+    *previous*)
+        line=$(wallpaper_number)
+        line=$((line-1))
+        wallpaper=$(echo "$(wallpaper_list)" | head -n $line | tail -n 1)
+        ;;
+    *)
+        wallpaper=$(wallpaper_list \
+            | awk -F "" '{print $0 "\0icon\x1f" $0;}' \
+            | rofi -dmenu -show-icons -p 󰸉  -config $rofi_theme -theme-str "entry{placeholder:\"Fondo de pantalla...\";}")
+        ;;
+esac
+
+echo "$wallpaper"
 
 if [ -n "$wallpaper" ]; then
     # Cambia la configuración inicial del fondo de pantalla
-    sed -i "s#    path = .*#    path = $wallpaper#g" $wallpaper_conf
+    sed -i "s#    path.*#    path = $wallpaper#g" $wallpaper_conf
 
     # Ejecuta cambio de fondo de pantalla
     $HOME/.config/hypr/scripts/hypr-set-wallpaper "$wallpaper"
+    notify-send -u low "Set wallpaper" "$(basename "$wallpaper")"
 fi
