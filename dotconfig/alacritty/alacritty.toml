@@ -8,11 +8,7 @@
 
 [general]
 live_config_reload = true
-# import = ["~/.config/alacritty/themes/TomorrowNight.toml"]
-import = ["~/.config/alacritty/themes/CatppuccinMocha.toml"]
-# import = ["~/.config/alacritty/themes/Dracula.toml"]
-# import = ["~/.config/alacritty/themes/Nord.toml"]
-# import = ["~/.config/alacritty/themes/GruvboxDark.toml"]
+import = ["~/.config/alacritty/theme.toml"]
 
 working_directory = "/home/daniel"
 
@@ -24,10 +20,6 @@ size = 13
 
 [font.glyph_offset]
 y = 4
-
-[font.normal]
-family = "CaskaydiaCove Nerd Font"
-style = "Regular"
 
 [font.offset]
 y = 8

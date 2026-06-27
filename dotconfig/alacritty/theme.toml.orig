@@ -1,0 +1,10 @@
+[font.normal]
+family = "Adwaita Mono"
+style = "Regular"
+
+[general]
+# import = ["~/.config/alacritty/themes/TomorrowNight.toml"]
+import = ["~/.config/alacritty/themes/CatppuccinMocha.toml"]
+# import = ["~/.config/alacritty/themes/Dracula.toml"]
+# import = ["~/.config/alacritty/themes/Nord.toml"]
+# import = ["~/.config/alacritty/themes/GruvboxDark.toml"]
