@@ -171,7 +171,7 @@ show_colors_menu() {
 }
 
 show_font_menu() {
-    local kitty_conf=$XDG_CONFIG_HOME/kitty/kitty.conf
+    local kitty_conf=$XDG_CONFIG_HOME/kitty/theme.conf
     local current_font=$(grep ^font_family $kitty_conf | sed 's/^font_family  *//')
     local opts=$(fc-list :spacing=100 -f "%{family[0]}\n" | sort -u | gawk '{print "<span font_family=\"" $0 "\">" $0 "</span>"}')
     local font=$(menu "$current_font" "$opts")
