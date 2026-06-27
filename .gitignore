@@ -4,3 +4,6 @@ dotconfig/alacritty/theme.toml
 dotconfig/hypr/hyprpaper.conf
 dotconfig/waybar/config.jsonc
 dotconfig/waybar/style.css
+dotconfig/hypr/conf/theme.conf
+dotconfig/hypr/lua/theme.lua
+dotconfig/rofi/themes/colors.rasi
