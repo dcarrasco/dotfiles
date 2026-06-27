@@ -9,7 +9,7 @@
 * {
     /* polar night */
 	nord0: #2e3440;
-	nord0alpha: #2e3440AA;
+	nord0alpha: #2e3440CD;
 	nord1: #3b4252;
 	nord2: #434c5e;
 	nord3: #4c566a;
