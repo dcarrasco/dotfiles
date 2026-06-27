@@ -130,7 +130,7 @@ show_style_menu() {
 
 show_bar_layout_menu() {
     local temas=(Square Circle Underscore Mac Float Tahoe KDE)
-    local current_theme=$(grep import $XDG_CONFIG_HOME/waybar/style.css | grep themes | cut -d "/" -f 2)
+    local current_theme=$(grep import $XDG_CONFIG_HOME/waybar/theme.css | grep themes | cut -d "/" -f 2)
 
     local opts=""
     for i in "${temas[@]}"; do
@@ -151,7 +151,7 @@ show_bar_layout_menu() {
 
 show_colors_menu() {
     local temas=(Catppuccin Catppuccin-Latte Dracula Nord Nord-Frost)
-    local current_theme=$(grep import $XDG_CONFIG_HOME/waybar/style.css | grep colors | tr -d '"' | tr -d ';' | cut -d / -f 2 | cut -d . -f 1)
+    local current_theme=$(grep import $XDG_CONFIG_HOME/waybar/colors.css | grep colors | tr -d '"' | tr -d ';' | cut -d / -f 2 | cut -d . -f 1)
 
     local opts=""
     for i in "${temas[@]}"; do

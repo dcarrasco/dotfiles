@@ -1,7 +1,7 @@
 #!/bin/bash
 
-waybar_style=$HOME/.config/waybar/style.css
-waybar_layout=$HOME/.config/waybar/config.jsonc
+waybar_style=$XDG_CONFIG_HOME/waybar/theme.css
+waybar_layout=$XDG_CONFIG_HOME/waybar/theme.jsonc
 
 current_theme() {
     grep import $waybar_style | grep themes | cut -d "/" -f 2
@@ -13,13 +13,14 @@ change_theme() {
     sed -i "s/\".*\/layout.jsonc\"/\"\$HOME\/\.config\/waybar\/themes\/$1\/layout.jsonc\"/" $waybar_layout
 }
 
-if [ ! -f "$waybar_style" ]; then
-    cp "$waybar_style".orig "$waybar_style"
-fi
+create_config_file() {
+    if [ ! -f "$1" ]; then
+        cp "${1}.orig" "$1"
+    fi
+}
 
-if [ ! -f "$waybar_layout" ]; then
-    cp "$waybar_layout".orig "$waybar_layout"
-fi
+create_config_file "$waybar_style"
+create_config_file "$waybar_layout"
 
 
 if [ -n "$1" ]; then

@@ -7,6 +7,6 @@
 *                 |___/
 */
 
-@import "colors/catppuccin.css";
+@import "colors.css";
 @import "base_style.css";
-@import "themes/underscore/style.css";
+@import "theme.css";

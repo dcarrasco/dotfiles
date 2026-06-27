@@ -2,8 +2,9 @@ dotconfig/zsh/plugins
 dotconfig/kitty/theme.conf
 dotconfig/alacritty/theme.toml
 dotconfig/hypr/hyprpaper.conf
-dotconfig/waybar/config.jsonc
-dotconfig/waybar/style.css
+dotconfig/waybar/theme.jsonc
+dotconfig/waybar/theme.css
+dotconfig/waybar/colors.css
 dotconfig/hypr/conf/theme.conf
 dotconfig/hypr/lua/theme.lua
 dotconfig/rofi/themes/colors.rasi

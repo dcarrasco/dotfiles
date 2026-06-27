@@ -1,26 +1,20 @@
 #!/bin/bash
 
-waybar_style=$HOME/.config/waybar/style.css
-hypr_conf=$HOME/.config/hypr/conf/theme.conf
-hypr_lua=$HOME/.config/hypr/lua/theme.lua
-rofi_colors=$HOME/.config/rofi/themes/colors.rasi
+waybar_style=$XDG_CONFIG_HOME/waybar/colors.css
+hypr_conf=$XDG_CONFIG_HOME/hypr/conf/theme.conf
+hypr_lua=$XDG_CONFIG_HOME/hypr/lua/theme.lua
+rofi_colors=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
 
-if [ ! -f "$waybar_style" ]; then
-    cp "$waybar_style".orig "$waybar_style"
-fi
+create_config_file() {
+    if [ ! -f "$1" ]; then
+        cp "${1}.orig" "$1"
+    fi
+}
 
-if [ ! -f "$hypr_conf" ]; then
-    cp "$hypr_conf".orig "$hypr_conf"
-fi
-
-if [ ! -f "$hypr_lua" ]; then
-    cp "$hypr_lua".orig "$hypr_lua"
-fi
-
-if [ ! -f "$rofi_colors" ]; then
-    cp "$rofi_colors".orig "$rofi_colors"
-fi
-
+create_config_file "$waybar_style"
+create_config_file "$hypr_conf"
+create_config_file "$hypr_lua"
+create_config_file "$rofi_colors"
 
 current_theme() {
     grep import $waybar_style | grep colors | tr -d '"' | tr -d ';' | cut -d / -f 2 | cut -d . -f 1
