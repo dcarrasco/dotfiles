@@ -6,7 +6,7 @@ export PATH="$SCRIPT_PATH:$PATH"
 
 menu() {
     local font="Hack Nerd Font 14"
-    local width="390px"
+    local width="400px"
     local height="600px"
     local theme="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$width; height:$height;}"
 
@@ -118,17 +118,17 @@ show_power_management() {
 }
 
 show_style_menu() {
-    case $(menu "Style" "  Theme\n󰸌  Colors\n  Font\n  Background\n  Hyprland") in
-        *Theme*)      show_theme_menu ;;
-        *Colors*)     show_colors_menu ;;
-        *Font*)       show_font_menu ;;
-        *Background*) hypr-switch-wallpaper ;;
-        *Hyprland*)   edit_file $XDG_CONFIG_HOME/hypr/lua/looknfeel.lua ;;
+    case $(menu "Style" "  Bar Layout\n󰸌  Colors\n  Font\n  Background\n  Hyprland") in
+        *Bar\ Layout*) show_bar_layout_menu ;;
+        *Colors*)      show_colors_menu ;;
+        *Font*)        show_font_menu ;;
+        *Background*)  hypr-switch-wallpaper ;;
+        *Hyprland*)    edit_file $XDG_CONFIG_HOME/hypr/lua/looknfeel.lua ;;
         *) show_main_menu ;;
     esac
 }
 
-show_theme_menu() {
+show_bar_layout_menu() {
     local temas=(Square Circle Underscore Mac Float Tahoe KDE)
     local current_theme=$(grep import $XDG_CONFIG_HOME/waybar/style.css | grep themes | cut -d "/" -f 2)
 
@@ -143,7 +143,7 @@ show_theme_menu() {
     local theme=$(menu "Theme" "$opts")
 
     if [[ -n "$theme" ]]; then
-        hypr-switch-theme $theme
+        hypr-switch-theme ${theme,,}
     else
         back_to show_style_menu
     fi
