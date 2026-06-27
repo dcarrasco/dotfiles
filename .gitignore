@@ -1,3 +1,6 @@
 dotconfig/zsh/plugins
 dotconfig/kitty/theme.conf
 dotconfig/alacritty/theme.toml
+dotconfig/hypr/hyprpaper.conf
+dotconfig/waybar/config.jsonc
+dotconfig/waybar/style.css
