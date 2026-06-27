@@ -22,7 +22,7 @@ wallpaper_number() {
 }
 
 if [ ! -f "$wallpaper_conf" ]; then
-    cp "$wallpaper_conf".orig "$wallpaper_conf"
+    cp "${wallpaper_conf}.orig" "$wallpaper_conf"
 fi
 
 case "$1" in
