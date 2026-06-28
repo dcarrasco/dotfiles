@@ -27,6 +27,7 @@ arch=(\
     # "hypr/conf/rules.conf" \
     "hypr/hyprlock.conf" \
     "hypr/hypridle.conf" \
+    "hypr/hyprpaper.conf" \
     "hypr/scripts/hypr-edit-config" \
     "hypr/scripts/hypr-sys-menu" \
     "wlogout/layout" \
@@ -45,13 +46,13 @@ arch=(\
     # "dunst/dunstrc" \
     "mako/config" \
     "nvim/lua/daniel/" \
-    "starship.toml" \
-    "../.tmux.conf" \
+    "starship/starship.toml" \
+    "tmux/tmux.conf" \
     "zsh/.zshrc" \
-    "../.zshenv" \
+    "zsh/.zshenv" \
 )
 
-config_dir=$HOME/.config
+config_dir=$XDG_CONFIG_HOME
 
 listado=""
 for file in ${arch[@]}; do
@@ -62,7 +63,8 @@ for file in ${arch[@]}; do
         *wlogout*)   icon="󰍃   " ;;
         *kitty*)     icon="   " ;;
         *alacritty*) icon="   " ;;
-        *starship*)  icon="   " ;;
+        *starship*)  icon="   " ;;
+        *tmux*)      icon="   " ;;
         *bspwm*)     icon="   " ;;
         *sway*)      icon="   " ;;
         *rofi*)      icon="   " ;;
@@ -71,18 +73,20 @@ for file in ${arch[@]}; do
         *dunst*)     icon="   " ;;
         *mako*)      icon="   " ;;
         *nvim*)      icon="   " ;;
+        *zsh*)       icon="   " ;;
         *)           icon="   " ;;
     esac
     listado+="$icon$file\n"
 done
 
-file=$(echo -e "$listado" | rofi -dmenu -i -p "Edit config")
+theme="prompt{enabled:false;} entry{placeholder:\"Edit config...\";} window{width:400px;}"
+file=$(echo -e "$listado" | rofi -dmenu -i -theme-str "$theme")
 
 if [[ -n $file ]]; then
     icon=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 1)
     file=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 2)
     notify-send -u low "Editing config file" "$icon   $file..."
-    cd "$(dirname $config_dir/$file)"
-    kitty nvim "$config_dir/$file"
+    cd "$(dirname $XDG_CONFIG_HOME/$file)"
+    kitty nvim "$XDG_CONFIG_HOME/$file"
 fi
 
