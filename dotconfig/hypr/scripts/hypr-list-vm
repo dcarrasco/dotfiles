@@ -1,9 +1,9 @@
 #!/bin/bash
 
 OPCIONES=$(virsh --connect qemu:///system list --all | cut -c 7- | sed -E 's/[ ]+/ /g' | grep -v Nombre | grep -v "\-\-" | grep -E -v "^$" | awk -F " " '{ print $1 " (" $2 $3 ")" }')
-echo 'ss'
 
-VM=$(printf "$OPCIONES" | rofi -dmenu -p "Start VM" | cut -d " " -f 1)
+theme="prompt{enabled:false;} entry{placeholder:\"Start VM...\";} window{width:400px; height:600px;}"
+VM=$(printf "$OPCIONES" | rofi -dmenu -p "" -theme-str "$theme" | cut -d " " -f 1)
 
 echo $VM
 
