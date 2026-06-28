@@ -29,6 +29,7 @@ hl.window_rule({ match = {class = "^(virt-viewer)$"}, fullscreen_state = "0 2" }
 hl.layer_rule({ match = {namespace = "rofi"}, blur = true })
 hl.layer_rule({ match = {namespace = "rofi"}, no_anim = true })
 hl.layer_rule({ match = {namespace = "rofi"}, dim_around = false })
+hl.layer_rule({ match = {namespace = "rofi"}, ignore_alpha = 0.1 })
 
 -- Variety
 hl.window_rule({ match = {class = "variety"}, float = true })

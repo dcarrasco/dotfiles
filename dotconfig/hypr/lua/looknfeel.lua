@@ -56,7 +56,7 @@ hl.config({
 
   decoration = {
     -- See https://wiki.hyprland.org/Configuring/Variables/ for more
-    rounding = 10,
+    rounding = 12,
     rounding_power = 4.0,
     dim_modal = true,
     -- dim_inactive = true,
