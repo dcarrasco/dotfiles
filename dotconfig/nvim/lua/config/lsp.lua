@@ -4,7 +4,7 @@ vim.lsp.config('lua_ls', {
   settings = {
     Lua = {
       runtine = { version = 'LuaJIT' },
-      diagnostics = { globals = { 'vim', 'require' } },
+      diagnostics = { globals = { 'vim', 'require', 'hl' } },
       telemetry = { enable = false },
     }
   }
