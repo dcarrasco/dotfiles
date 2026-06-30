@@ -27,7 +27,7 @@ local colors = {
   nord15 = "B48EAD",
 }
 
-HYPR.theme = {
+return {
   color_active_border_1       = HYPR.hex_rgb(colors.nord8),
   color_active_border_2       = HYPR.hex_rgb(colors.nord10),
   color_inactive_border       = HYPR.hex_rgb(colors.nord3),

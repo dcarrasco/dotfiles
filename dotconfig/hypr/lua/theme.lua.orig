@@ -1,1 +1,1 @@
-HYPR.theme_name = "catppuccin"
+HYPR.theme = require("themes/catppuccin")

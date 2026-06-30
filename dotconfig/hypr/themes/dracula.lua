@@ -20,7 +20,7 @@ local colors = {
   accent     = "$purple",
 }
 
-HYPR.theme = {
+return {
   color_active_border_1       = HYPR.hex_rgb(colors.purple),
   color_active_border_2       = HYPR.hex_rgb(colors.pink),
   color_inactive_border       = HYPR.hex_rgb(colors.selection),

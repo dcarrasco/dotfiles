@@ -38,7 +38,7 @@ local colors = {
   crust     = "dce0e8",
 }
 
-HYPR.theme = {
+return {
   color_active_border_1       = HYPR.hex_rgb(colors.sky),
   color_active_border_2       = HYPR.hex_rgb(colors.lavender),
   color_inactive_border       = HYPR.hex_rgb(colors.overlay0),

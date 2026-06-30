@@ -25,8 +25,8 @@ change_theme() {
     sed -i "s/\"colors\/.*\.css\"/\"colors\/$1.css\"/" $waybar_style
 
     # hyprland
+    sed -i "s/HYPR\.theme.*/HYPR.theme = require\(\"themes\/$1\"\)/" $hypr_lua
     sed -i "s/\$theme = .*/\$theme = $1/" $hypr_conf
-    sed -i "s/HYPR\.theme_name.*/HYPR.theme_name = \"$1\"/" $hypr_lua
 
     # rofi
     sed -i "s/^@import \"themes\/colors\/.*\.rasi\"/@import \"themes\/colors\/$1.rasi\"/" $rofi_colors
