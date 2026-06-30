@@ -10,11 +10,11 @@
 
 // inputbar ------------------------------------------------------------------------------
 prompt {
-    font: "SF UI Display 32";
+    font: "SF UI Display 40";
 }
 
 entry {
-    font: "SF UI Display 24";
+    font: "SF UI Display 30";
     placeholder: "Aplicaciones";
 }
 
@@ -39,7 +39,7 @@ element selected {
 
 element-text {
     // horizontal-align: 0.5;
-    font: "SF UI Display 14";
+    font: "SF UI Display 18";
     cursor: pointer;
     padding: 0em;
 }

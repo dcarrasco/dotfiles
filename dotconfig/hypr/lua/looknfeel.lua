@@ -8,7 +8,7 @@
 hl.config({
   general = {
     -- See https://wiki.hyprland.org/Configuring/Variables/ for more
-    border_size = 2,
+    border_size = 3,
     gaps_in = 5,
     gaps_out = 10,
     col = {

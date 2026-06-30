@@ -39,8 +39,8 @@ else
     )
 fi
 
-THEME="window{width:40%; height:70%;}"
-echo "$keybinds" | rofi -dmenu -i -p "Keybinds" -theme-str "$THEME" -font "Hack Nerd Font 12"
+THEME="window{width:40%;}"
+echo "$keybinds" | rofi -dmenu -i -p "Keybinds" -theme-str "$THEME" -font "Hack Nerd Font 15"
 
 # rofi_theme="~/.config/rofi/themes/catppuccin-mocha.rasi"
 # echo "$keybinds" | rofi -dmenu -i -p "Keybinds" -theme $rofi_theme

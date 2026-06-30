@@ -9,7 +9,7 @@ __        __          _                  ____                   ____  _         
 
 * {
     font-family: Noto Sans, Font Awesome, SF Mono;
-    font-size: 12pt;
+    font-size: 14pt;
     transition: none;
 }
 
@@ -39,7 +39,7 @@ tooltip {
 tooltip label {
     color: @fg-normal;
     font-weight: 600;
-    font-size: 10pt;
+    font-size: 12pt;
 }
 
 #workspaces {

@@ -11,7 +11,7 @@ Style: Float
 
 * {
     font-family: Noto Sans, SF Mono, Helvetica, Arial, sans-serif;
-    font-size: 11pt;
+    font-size: 14pt;
 }
 
 #waybar {
@@ -22,7 +22,7 @@ Style: Float
     padding: 0 1em;
     background: alpha(@bg-normal, 0.6);
     border-radius: 20px;
-    border: 1px solid alpha(@fg-normal, 0.8);
+    border: 2px solid alpha(@fg-normal, 0.8);
 }
 
 button:not(:last-child) {
@@ -31,7 +31,7 @@ button:not(:last-child) {
 
 #window label {
     font-family: Adwaita Sans;
-    font-size: 12pt;
+    font-size: 15pt;
 }
 
 

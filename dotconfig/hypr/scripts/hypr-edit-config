@@ -79,7 +79,7 @@ for file in ${arch[@]}; do
     listado+="$icon$file\n"
 done
 
-theme="prompt{enabled:false;} entry{placeholder:\"Edit config...\";} window{width:400px;}"
+theme="prompt{enabled:false;} entry{placeholder:\"Edit config...\";} window{width:22%;}"
 file=$(echo -e "$listado" | rofi -dmenu -i -theme-str "$theme")
 
 if [[ -n $file ]]; then

@@ -5,9 +5,9 @@ SCRIPT_PATH=$XDG_CONFIG_HOME/hypr/scripts
 export PATH="$SCRIPT_PATH:$PATH"
 
 menu() {
-    local font="Hack Nerd Font 14"
-    local width="400px"
-    local height="600px"
+    local font="Hack Nerd Font 17"
+    local width="22%"
+    local height="55%"
     local theme="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$width; height:$height;}"
 
     echo -e "$2" | rofi -dmenu -i -markup-rows -format p -theme-str "$theme" -font "$font"

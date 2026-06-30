@@ -9,7 +9,7 @@ __        __          _                      _         _
 
 * {
     font-family: Noto Sans, SF Mono;
-    font-size: 11pt;
+    font-size: 14pt;
 }
 
 window#waybar {
@@ -40,7 +40,7 @@ button.urgent label {
 
 
 #window label {
-    font-size: 13pt;
+    font-size: 15pt;
 }
 
 

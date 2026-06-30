@@ -19,7 +19,7 @@ HYPR.apps = {
   terminal     = HYPR.fn.app("kitty -d ~"),
   terminal2    = HYPR.fn.app("alacritty"),
   tmux         = HYPR.fn.app("kitty -d ~ bash -c \"tmux attach || tmux new -s Work\""),
-  browser      = HYPR.fn.app("brave-browser --password-store=basic"),
+  browser      = HYPR.fn.app("brave-browser --password-store=basic --force-device-scale-factor=1.2"),
   browser2     = HYPR.fn.app("firefox"),
   files        = HYPR.fn.app("thunar ~"),
   logout       = HYPR.fn.app("wlogout -b 5"),
