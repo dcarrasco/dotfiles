@@ -39,14 +39,14 @@ local colors = {
 }
 
 return {
-  color_active_border_1       = HYPR.hex_rgb(colors.sky),
-  color_active_border_2       = HYPR.hex_rgb(colors.lavender),
-  color_inactive_border       = HYPR.hex_rgb(colors.overlay0),
-  color_group_border_active   = HYPR.hex_rgb(colors.peach),
-  color_group_border_inactive = HYPR.hex_rgb(colors.overlay0),
-  color_groupbar_active       = HYPR.hex_rgba(colors.peach, "CC"),
-  color_groupbar_inactive     = HYPR.hex_rgba(colors.overlay0, "77"),
-  color_text_groupbar         = HYPR.hex_rgb(colors.surface0),
-  color_shadow                = HYPR.hex_rgba(colors.text, "CC"),
-  color_shadow_inactive       = HYPR.hex_rgba("000000", "00"),
+  color_active_border_1       = HYPR.fn.hex_rgb(colors.sky),
+  color_active_border_2       = HYPR.fn.hex_rgb(colors.lavender),
+  color_inactive_border       = HYPR.fn.hex_rgb(colors.overlay0),
+  color_group_border_active   = HYPR.fn.hex_rgb(colors.peach),
+  color_group_border_inactive = HYPR.fn.hex_rgb(colors.overlay0),
+  color_groupbar_active       = HYPR.fn.hex_rgba(colors.peach, "CC"),
+  color_groupbar_inactive     = HYPR.fn.hex_rgba(colors.overlay0, "77"),
+  color_text_groupbar         = HYPR.fn.hex_rgb(colors.surface0),
+  color_shadow                = HYPR.fn.hex_rgba(colors.text, "CC"),
+  color_shadow_inactive       = HYPR.fn.hex_rgba("000000", "00"),
 }

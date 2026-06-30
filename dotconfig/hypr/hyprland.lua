@@ -8,22 +8,23 @@
 
 -- Please note not all available settings / options are set here.
 -- For a full list, see the wiki
-HYPR = {}
-require("lua/functions")
+HYPR = {
+  fn = require("lua/functions"),
+  use_uwsm = true,
+  scripts_path = "$HOME/.config/hypr/scripts",
+}
 
 -- Default Apps
-HYPR.scripts_path = "$HOME/.config/hypr/scripts"
-
 HYPR.apps = {
-  terminal  = "uwsm app -- kitty -d ~",
-  terminal2 = "uwsm app -- alacritty",
-  tmux      = "uwsm app -- kitty -d ~ bash -c \"tmux attach || tmux new -s Work\"",
-  browser   = "uwsm app -- brave-browser --password-store=basic",
-  browser2  = "uwsm app -- firefox",
-  files     = "uwsm app -- thunar ~",
-  logout    = "uwsm app -- wlogout -b 5",
-  launcher  = "uwsm app -- rofi -show drun -show-icons -theme layout-apps",
-  launcher_run = "uwsm app -- rofi -show run -config $HOME/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'",
+  terminal     = HYPR.fn.app("kitty -d ~"),
+  terminal2    = HYPR.fn.app("alacritty"),
+  tmux         = HYPR.fn.app("kitty -d ~ bash -c \"tmux attach || tmux new -s Work\""),
+  browser      = HYPR.fn.app("brave-browser --password-store=basic"),
+  browser2     = HYPR.fn.app("firefox"),
+  files        = HYPR.fn.app("thunar ~"),
+  logout       = HYPR.fn.app("wlogout -b 5"),
+  launcher     = HYPR.fn.app("rofi -show drun -show-icons -theme layout-apps"),
+  launcher_run = HYPR.fn.app("rofi -show run -config $HOME/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'"),
 }
 
 -- Source a file (multi-file configs)
