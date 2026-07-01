@@ -46,8 +46,6 @@ case "$1" in
         ;;
 esac
 
-echo "$wallpaper"
-
 if [ -n "$wallpaper" ]; then
     # Cambia la configuración inicial del fondo de pantalla
     sed -i "s#    path.*#    path = $wallpaper#g" $wallpaper_conf

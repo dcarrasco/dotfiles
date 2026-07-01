@@ -17,7 +17,8 @@ if [ -n "$1" ]; then
     font="$1"
 else
     current_font=$(grep ^font_family $kitty_conf | sed 's/^font_family  *//')
-    font=$(fc-list :spacing=100 -f "%{family[0]}\n" | sort -u | sed 's/\(.*\)/<span font_family="\1">\1<\/span>/' | rofi -dmenu -i -markup-rows -format p -p "Elige font" -mesg "Current font: $current_font")
+    fonts=$(fc-list :spacing=100 -f "%{family[0]}\n" | sort -u | sed 's/\(.*\)/<span font_family="\1">\1<\/span>/')
+    font=$(hypr-sys-show-menu "$current_font" "$fonts")
 fi
 
 if [[ -n "$font" ]]; then

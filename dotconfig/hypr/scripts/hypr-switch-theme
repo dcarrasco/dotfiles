@@ -37,7 +37,7 @@ else
         fi
     done
 
-    theme=$(echo -e $opts | rofi -dmenu -markup-rows -i -format p -p "")
+    theme=$(hypr-sys-show-menu "Bar Layout" "$opts")
 fi
 
 if [ -n "$theme" ]; then

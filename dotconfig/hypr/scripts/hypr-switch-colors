@@ -52,12 +52,12 @@ else
             opts="$opts$i\n"
         fi
     done
-    theme=$(echo -e $opts | rofi -dmenu -markup-rows -i -format p -p "")
+    theme=$(hypr-sys-show-menu "Colors" "$opts")
 fi
 
 if [ -n "$theme" ]; then
     change_theme ${theme,,}
-    [ "$DESKTOP_SESSION" = "bspwm" ] && bspc wm --restart || $HOME/.config/hypr/scripts/hypr-restore-waybar
+    [ "$DESKTOP_SESSION" = "bspwm" ] && bspc wm --restart
     notify-send -u low "Colors" "Change colors to $theme"
 fi
 
