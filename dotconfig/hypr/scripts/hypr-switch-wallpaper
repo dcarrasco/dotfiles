@@ -1,28 +1,31 @@
 #!/bin/bash
 
-abstract_folder="$HOME/Imágenes/fondos pantalla/abstract"
-nature_folder="$HOME/Imágenes/fondos pantalla/nature"
-f1_folder="$HOME/Imágenes/fondos pantalla/F1"
-bing_folder="$HOME/Imágenes/BingWallpaper"
+WALLPAPER_FOLDERS=( \
+    "$HOME/Imágenes/fondos pantalla/abstract" \
+    "$HOME/Imágenes/fondos pantalla/nature"   \
+    # "$HOME/Imágenes/fondos pantalla/F1"       \
+    "$HOME/Imágenes/BingWallpaper"            \
+)
 
-rofi_theme="$HOME/.config/rofi/themes/layout-wallpapers.rasi"
-# wallpaper_conf="$HOME/.config/hypr/scripts/hypr-set-wallpaper"
-wallpaper_conf="$HOME/.config/hypr/hyprpaper.conf"
+ROFI_THEME="$HOME/.config/rofi/themes/layout-wallpapers.rasi"
+WALLPAPER_CONFIG="$HOME/.config/hypr/hyprpaper.conf"
 
 wallpaper_list() {
-    find "$abstract_folder" "$nature_folder" -type f
+    for f in "${WALLPAPER_FOLDERS[@]}"; do
+        find "$f" -type f
+    done
 }
 
 current_wallpaper() {
-    basename "$(grep path "$wallpaper_conf" | cut -d "=" -f 2)"
+    basename "$(grep path "$WALLPAPER_CONFIG" | cut -d "=" -f 2)"
 }
 
 wallpaper_number() {
     echo "$(wallpaper_list)" | grep -n "$(current_wallpaper)" | cut -d ":" -f 1
 }
 
-if [ ! -f "$wallpaper_conf" ]; then
-    cp "${wallpaper_conf}.orig" "$wallpaper_conf"
+if [ ! -f "$WALLPAPER_CONFIG" ]; then
+    cp "${WALLPAPER_CONFIG}.orig" "$WALLPAPER_CONFIG"
 fi
 
 case "$1" in
@@ -32,23 +35,24 @@ case "$1" in
     *next*)
         line=$(wallpaper_number)
         line=$((line+1))
-        wallpaper=$(echo "$(wallpaper_list)" | head -n $line | tail -n 1)
+        wallpaper=$(wallpaper_list | head -n $line | tail -n 1)
         ;;
     *previous*)
         line=$(wallpaper_number)
         line=$((line-1))
-        wallpaper=$(echo "$(wallpaper_list)" | head -n $line | tail -n 1)
+        wallpaper=$(wallpaper_list | head -n $line | tail -n 1)
         ;;
     *)
+        theme="prompt{enabled:false;} entry{placeholder:\"Elegir fondo de pantalla...\";}"
         wallpaper=$(wallpaper_list \
             | awk -F "" '{print $0 "\0icon\x1f" $0;}' \
-            | rofi -dmenu -show-icons -p 󰸉  -config $rofi_theme -theme-str "entry{placeholder:\"Fondo de pantalla...\";}")
+            | rofi -dmenu -show-icons -config $ROFI_THEME -theme-str "$theme")
         ;;
 esac
 
 if [ -n "$wallpaper" ]; then
     # Cambia la configuración inicial del fondo de pantalla
-    sed -i "s#    path.*#    path = $wallpaper#g" $wallpaper_conf
+    sed -i "s#    path.*#    path = $wallpaper#" $WALLPAPER_CONFIG
 
     # Ejecuta cambio de fondo de pantalla
     $HOME/.config/hypr/scripts/hypr-set-wallpaper "$wallpaper"

@@ -159,7 +159,7 @@ show_system_menu() {
 }
 
 show_main_menu() {
-    go_to_menu "$(menu "Start" "󰀻  Apps\n  Search\n  Learn\n  Style\n󱓞  Trigger\n  Setup\n  Update\n  About\n  System")"
+    go_to_menu "$(menu "Start" "󰀻  Apps\n  Search\n  Style\n  Learn\n󱓞  Trigger\n  Setup\n  Update\n  About\n  System")"
 }
 
 go_to_menu() {
