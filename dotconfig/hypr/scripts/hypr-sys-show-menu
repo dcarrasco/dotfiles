@@ -1,0 +1,13 @@
+#!/bin/bash
+
+show_menu() {
+    local font="Hack Nerd Font 17"
+    local width="22%"
+    local height="55%"
+    local theme="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$width; height:$height;}"
+
+    echo -en "$2" | rofi -dmenu -i -markup-rows -format p -theme-str "$theme" -font "$font"
+}
+
+show_menu "$1" "$2"
+

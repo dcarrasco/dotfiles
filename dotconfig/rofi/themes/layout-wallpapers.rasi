@@ -101,7 +101,7 @@ listview {
     scrollbar: true;
     scrollbar-width: 10px;
     flow: horizontal;
-    columns: 5;
+    columns: 4;
     fixed-columns: true;
     // background-color: red;
 }
@@ -110,7 +110,7 @@ element {
     padding: 0em 0em;
     vertical-align: 0.5;
     text-color: @foreground;
-    orientation: vertical;
+    orientation: horizontal;
     border-radius: 0.5em;
     spacing: 0em;
     highlight: none;
@@ -136,9 +136,11 @@ element-text {
 
 element-icon {
     vertical-align: 0.5;
-    size: 6.5em;
-    padding: 0;
-    squared: true;
+    horizontal-align: 0.5;
+    expand: true;
+    size: 20%;
+    // size: 12em;
+    // padding: 0;
 }
 
 scrollbar {
