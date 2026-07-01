@@ -5,6 +5,7 @@
 --  |_|  |_|\___/|_| |_|_|\__\___/|_|  |___/
 
 hl.env("GDK_SCALE", "1.25")
+hl.env("GDK_DPI_SCALE", "1.2")
 
 -- See https://wiki.hyprland.org/Configuring/Monitors/
 -- monitor=name,resolution,position,scale
