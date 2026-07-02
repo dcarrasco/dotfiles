@@ -112,12 +112,13 @@ show_power_management() {
 }
 
 show_style_menu() {
-    case $(menu "Style" "  Bar Layout\n󰸌  Colors\n  Font\n  Background\n  Hyprland") in
-        *Bar\ Layout*) hypr-switch-theme ;;
-        *Colors*)      hypr-switch-colors ;;
-        *Font*)        hypr-switch-font ;;
-        *Background*)  hypr-switch-wallpaper ;;
-        *Hyprland*)    edit_file $XDG_CONFIG_HOME/hypr/lua/looknfeel.lua ;;
+    case $(menu "Style" "  Bar Layout\n󰸌  Colors\n  Font\n  Background\n  Random Background\n  Hyprland") in
+        *Bar\ Layout*)         hypr-switch-theme ;;
+        *Colors*)              hypr-switch-colors ;;
+        *Font*)                hypr-switch-font ;;
+        *Random\ Background*)  hypr-switch-wallpaper random ;;
+        *Background*)          hypr-switch-wallpaper ;;
+        *Hyprland*)            edit_file $XDG_CONFIG_HOME/hypr/lua/looknfeel.lua ;;
         *) show_main_menu ;;
     esac
 }

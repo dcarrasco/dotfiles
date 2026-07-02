@@ -1,9 +1,19 @@
 #!/bin/bash
 
+WALLPAPER_CONFIG="$XDG_CONFIG_HOME/hypr/hyprpaper.conf"
+
 wallpaper="/home/daniel/Imágenes/fondos pantalla/abstract/liquid/fluidic-glossy-gradient-background-purple-background-3840x2160-7641.jpg"
 
 if [ -n "$1" ]; then
     wallpaper="$1"
 fi
 
-hyprctl hyprpaper wallpaper "eDP-1,$wallpaper"
+if [ -n "$wallpaper" ]; then
+    # Cambia la configuración inicial del fondo de pantalla
+    sed -i "s|^ *path =.*$|    path = $wallpaper|" $WALLPAPER_CONFIG
+
+    # Ejecuta cambio de fondo de pantalla
+    hyprctl hyprpaper wallpaper "eDP-1,$wallpaper"
+
+    notify-send -u low "Set wallpaper" "$(basename "$wallpaper")"
+fi

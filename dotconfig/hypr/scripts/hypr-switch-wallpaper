@@ -7,8 +7,8 @@ WALLPAPER_FOLDERS=( \
     "$HOME/Imágenes/BingWallpaper"            \
 )
 
-ROFI_THEME="$HOME/.config/rofi/themes/layout-wallpapers.rasi"
-WALLPAPER_CONFIG="$HOME/.config/hypr/hyprpaper.conf"
+ROFI_THEME="$XDG_CONFIG_HOME/rofi/themes/layout-wallpapers.rasi"
+WALLPAPER_CONFIG="$XDG_CONFIG_HOME/hypr/hyprpaper.conf"
 
 wallpaper_list() {
     for f in "${WALLPAPER_FOLDERS[@]}"; do
@@ -28,7 +28,7 @@ if [ ! -f "$WALLPAPER_CONFIG" ]; then
     cp "${WALLPAPER_CONFIG}.orig" "$WALLPAPER_CONFIG"
 fi
 
-case "$1" in
+case "${1,,}" in
     *random*)
         wallpaper=$(wallpaper_list | shuf -n 1)
         ;;
@@ -45,16 +45,11 @@ case "$1" in
     *)
         theme="prompt{enabled:false;} entry{placeholder:\"Elegir fondo de pantalla...\";}"
         wallpaper=$(wallpaper_list \
-            | awk -F "" '{print $0 "\0icon\x1f" $0;}' \
+            | sed 's|\(.*\)|\1\x00icon\x1f\1|' \
             | rofi -dmenu -show-icons -config $ROFI_THEME -theme-str "$theme")
         ;;
 esac
 
 if [ -n "$wallpaper" ]; then
-    # Cambia la configuración inicial del fondo de pantalla
-    sed -i "s#    path.*#    path = $wallpaper#" $WALLPAPER_CONFIG
-
-    # Ejecuta cambio de fondo de pantalla
-    $HOME/.config/hypr/scripts/hypr-set-wallpaper "$wallpaper"
-    notify-send -u low "Set wallpaper" "$(basename "$wallpaper")"
+    $XDG_CONFIG_HOME/hypr/scripts/hypr-set-wallpaper "$wallpaper"
 fi
