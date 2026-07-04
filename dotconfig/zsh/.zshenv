@@ -27,4 +27,4 @@ export GPG_TTY=$(tty)
 export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/minimal.toml
 
 # PATH ------------------------------------------
-export PATH="$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH"
+export PATH="$HOME/.local/bin:$XDG_CONFIG_HOME/composer/vendor/bin:$PATH"
