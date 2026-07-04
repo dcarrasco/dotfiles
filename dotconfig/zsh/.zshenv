@@ -8,6 +8,14 @@ if [[ -d "$XDG_CONFIG_HOME/zsh" ]]; then
     export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 fi
 
+if [ ! -d "$XDG_CACHE_HOME/zsh" ]; then
+    mkdir -p "$XDG_CACHE_HOME/zsh"
+end
+
+if [ ! -d "$XDG_STATE_HOME/zsh" ]; then
+    mkdir -p "$XDG_STATE_HOME/zsh"
+end
+
 # EDITOR ----------------------------------------
 export EDITOR="nvim"
 export VISUAL="nvim"
