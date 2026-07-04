@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$HOME/.config/hypr/scripts/hypr-show-title "Update system packages..."
+$XDG_CONFIG_HOME/hypr/scripts/hypr-show-title "Update system packages..."
 # figlet -c "Update"
 
 update_flatpak() {
