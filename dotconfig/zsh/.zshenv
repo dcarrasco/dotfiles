@@ -10,11 +10,11 @@ fi
 
 if [ ! -d "$XDG_CACHE_HOME/zsh" ]; then
     mkdir -p "$XDG_CACHE_HOME/zsh"
-end
+fi
 
 if [ ! -d "$XDG_STATE_HOME/zsh" ]; then
     mkdir -p "$XDG_STATE_HOME/zsh"
-end
+fi
 
 # EDITOR ----------------------------------------
 export EDITOR="nvim"
