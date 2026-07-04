@@ -16,6 +16,7 @@ local appBinds = {
   { key = "B", dsp = HYPR.apps.browser, desc = "Open browser" },
   { key = "ALT + B", dsp = HYPR.apps.browser2, desc = "Open alternate browser" },
   { key = "F", dsp = HYPR.apps.files, desc = "Open file manager" },
+  { key = "E", dsp = HYPR.apps.files, desc = "Open file manager" },
   { key = "V", dsp = HYPR.fn.scripts("hypr-start-vm windows"), desc = "Open Windows 11" },
   { key = "ALT + V", dsp = "virt-manager", desc = "Open virt-manager" },
   { mod = "", key = "XF86Calculator", dsp = "gnome-calculator", desc = "Open calculator" },
