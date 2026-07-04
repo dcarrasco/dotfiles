@@ -21,7 +21,7 @@ return {
       end
 
       map('n', '<leader>pf', function() builtin.find_files { hidden = true, no_ignore = true } end, "Show all files (incl. hidden)")
-      map('n', '<C-p>', builtin.find_files, "Show files")
+      map('n', '<C-p>', function() builtin.find_files { hidden = true } end, "Show files")
       map('n', '<leader>pg', builtin.git_status, "Show git files")
       map('n', '<leader>ev', function() builtin.find_files { cwd = vim.fn.stdpath('config') } end, "Show configuration files")
       -- map('n', '<leader>ps', function() builtin.grep_string { search = vim.fn.input("Grep > ") } end, "Search text in files")
