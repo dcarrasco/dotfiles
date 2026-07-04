@@ -7,6 +7,7 @@ $directory\
 $git_branch\
 $git_status\
 $docker_context
+$container\
 $character\
 """
 
@@ -44,6 +45,10 @@ format = '([\[$all_status$ahead_behind\]](yellow)) '
 symbol = " "
 style = "bg:group5"
 format = '[ $symbol $context ]($style) $path'
+
+[container]
+symbol = "📦"
+format = "[$symbol ]($style)"
 
 [character]
 error_symbol = "[✗](bold red)"
