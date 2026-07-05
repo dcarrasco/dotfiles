@@ -28,10 +28,10 @@ rpm-ostree install \
     rofi \
     wlogout
 
-[ ! -d $HOME/.config/hypr ]     && ln -s $HOME/dotfiles/dotconfig/hypr    $HOME/.config/hypr
-[ ! -d $HOME/.config/wayland ]  && ln -s $HOME/dotfiles/dotconfig/wayland $HOME/.config/wayland
-[ ! -d $HOME/.config/rofi ]     && ln -s $HOME/dotfiles/dotconfig/rofi    $HOME/.config/rofi
-[ ! -d $HOME/.config/mako ]     && ln -s $HOME/dotfiles/dotconfig/mako    $HOME/.config/mako
-[ ! -d $HOME/.config/wlogout ]  && ln -s $HOME/dotfiles/dotconfig/wlogout $HOME/.config/wlogout
-[ ! -d $HOME/.config/kitty ]    && ln -s $HOME/dotfiles/dotconfig/kitty   $HOME/.config/kitty
+# [ ! -d $HOME/.config/hypr ]     && ln -s $HOME/dotfiles/dotconfig/hypr    $HOME/.config/hypr
+# [ ! -d $HOME/.config/wayland ]  && ln -s $HOME/dotfiles/dotconfig/wayland $HOME/.config/wayland
+# [ ! -d $HOME/.config/rofi ]     && ln -s $HOME/dotfiles/dotconfig/rofi    $HOME/.config/rofi
+# [ ! -d $HOME/.config/mako ]     && ln -s $HOME/dotfiles/dotconfig/mako    $HOME/.config/mako
+# [ ! -d $HOME/.config/wlogout ]  && ln -s $HOME/dotfiles/dotconfig/wlogout $HOME/.config/wlogout
+# [ ! -d $HOME/.config/kitty ]    && ln -s $HOME/dotfiles/dotconfig/kitty   $HOME/.config/kitty
 
