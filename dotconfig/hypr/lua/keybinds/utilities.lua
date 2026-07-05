@@ -19,6 +19,7 @@ return {
   -- *************************************************************************************************
   { key = "XF86MonBrightnessDown", dsp = HYPR.fn.scripts("hypr-switch-wallpaper previous"), desc = "Previo fondo de pantalla" },
   { key = "XF86MonBrightnessUp", dsp = HYPR.fn.scripts("hypr-switch-wallpaper next"), desc = "Siguiente fondo de pantalla" },
+  { key = "SHIFT + W", dsp = HYPR.fn.scripts("hypr-switch-wallpaper random"), desc = "Fondo de pantalla al azar" },
   { key = "ALT + R", dsp = HYPR.fn.scripts("hypr-restore-waybar"), desc = "Reset Waybar" },
   { key = "XF86Favorites", dsp = HYPR.fn.scripts("hypr-restore-waybar"), desc = "Reset Waybar" },
   --
