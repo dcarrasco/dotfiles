@@ -21,11 +21,11 @@ __        __          _                  _                         _
     // Choose the order of the modules
     "modules-left": [
         "custom/start-menu",
-        // "custom/leftsep",
+        "hyprland/workspaces",
+        "custom/leftsep",
         "hyprland/window"
     ],
     "modules-center": [
-        "hyprland/workspaces",
         "custom/windowstatus",
     ],
     "modules-right":  [

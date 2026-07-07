@@ -25,9 +25,8 @@ __        __          _                  ____                   ____  _         
 }
 
 .modules-left .module, .modules-right .module, .modules-center .module {
-    margin: 2px 0.5em;
+    margin: 2px 0.4em;
     padding: 0;
-    /* background-color: red; */
 }
 
 tooltip {
