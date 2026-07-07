@@ -38,10 +38,10 @@ return {
   { key = "ALT + J", dsp = hl.dsp.window.move({x = "0", y = "+10", relative = true}), desc = "Move floating window down" },
 
   -- # Resize floating window
-  { key = "ALT + LEFT", dsp = hl.dsp.window.resize({x = "-200", y = "0", relative = true}), desc = "Shrink floating window to left" },
-  { key = "ALT + RIGHT", dsp = hl.dsp.window.resize({x = "200", y = "0", relative = true}), desc = "Expand floating window to right" },
-  { key = "ALT + UP", dsp = hl.dsp.window.resize({x = "0", y = "-200", relative = true}), desc = "Shrink floating window up" },
-  { key = "ALT + DOWN", dsp = hl.dsp.window.resize({x = "0", y = "200", relative = true}), desc = "Expand floating window down" },
+  { key = "ALT + LEFT", dsp = hl.dsp.window.resize({x = "-150", y = "0", relative = true}), desc = "Shrink floating window to left" },
+  { key = "ALT + RIGHT", dsp = hl.dsp.window.resize({x = "150", y = "0", relative = true}), desc = "Expand floating window to right" },
+  { key = "ALT + UP", dsp = hl.dsp.window.resize({x = "0", y = "-150", relative = true}), desc = "Shrink floating window up" },
+  { key = "ALT + DOWN", dsp = hl.dsp.window.resize({x = "0", y = "150", relative = true}), desc = "Expand floating window down" },
 
   -- # Switch and move to workspaces with mainMod + [0-9]
   { key = "1", dsp = hl.dsp.focus({workspace = "1"}), desc = "Switch to workspace 1" },

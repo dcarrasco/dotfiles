@@ -92,7 +92,7 @@ hl.config({
 
   master = {
     -- See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-    mfact = 0.5,
+    mfact = 0.55,
     new_status = "master",
     -- no_gaps_when_only = 1,   # 0 with gaps / 1 no gaps no border / 2 no gaps with border,
   },
