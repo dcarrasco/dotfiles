@@ -23,10 +23,10 @@ __        __          _                  _                         _
         "custom/start-menu",
         "hyprland/workspaces",
         "custom/leftsep",
+        "custom/windowstatus",
         "hyprland/window"
     ],
     "modules-center": [
-        "custom/windowstatus",
     ],
     "modules-right":  [
         "custom/updates",
