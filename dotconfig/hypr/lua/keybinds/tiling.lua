@@ -3,7 +3,8 @@ return {
   { key = "Q", dsp = hl.dsp.window.close(), desc = "Close active window" },
 
   -- Cycle windows and apps
-  { mod = "", key = "ALT + TAB", dsp = hl.dsp.window.cycle_next({next = true}), desc = "Change to next window" },
+  -- { mod = "", key = "ALT + TAB", dsp = hl.dsp.window.cycle_next({next = true}), desc = "Change to next window" },
+  { mod = "", key = "ALT + TAB", dsp = HYPR.fn.scripts("hypr-show-alt-tab"), desc = "Change to next window" },
   { mod = "", key = "ALT + SHIFT + TAB", dsp = hl.dsp.window.cycle_next({next = false}), desc = "Change to next window" },
   { key = "TAB", dsp = hl.dsp.focus({last = true}), desc = "Focus last window" },
 

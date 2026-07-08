@@ -1,0 +1,17 @@
+#!/bin/bash
+
+rofi -show window \
+    -show-icons \
+    -window-format "{n} {t}" \
+    -config layout-alt-tab \
+    -fixed-num-lines \
+    -hover-select \
+    -window-thumbnail \
+    -window-hide-active-window true \
+    -timeout-delay 2 \
+    -timeout-action "kb-accept-entry" \
+    # -kb-cancel "Alt+Escape,Escape" \
+    # -input
+    # -kb-accept-entry "!Alt+Tab,!Alt+Alt_L,Return" \
+    # -kb-row-down "Alt+Tab,Alt+Down" \
+    # -kb-row-up "Alt+ISO_Left_Tab,Alt+Up" \
