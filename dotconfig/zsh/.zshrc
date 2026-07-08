@@ -52,5 +52,5 @@ source $ZDOTDIR/prompt.zsh
 # $HOME/.config/hypr/scripts/ascii-art.sh
 
 # show fastfetch on new shell
-fastfetch --structure Title:OS:Kernel:Packages:DW:WM:Terminal:Shell:Memory --logo Fedora_small --key-width 12 --separator ""
+fastfetch --structure Title:OS:Kernel:Packages:DW:WM:Terminal:Shell:Memory --logo $HOME/Imágenes/varios/fedora2.png --logo-type kitty-icat --logo-width 20 --key-width 12 --separator ""
 
