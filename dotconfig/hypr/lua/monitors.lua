@@ -16,7 +16,7 @@ hl.monitor({ output = "Virtual-1", mode = "1920x1080", position = "auto", scale 
 
 for i = 1, 5 do
   hl.workspace_rule({ workspace = i, monitor = "eDP-1", persistent = true })
-  hl.workspace_rule({ workspace = i, monitor = "Virtual-1", persistent = true })
+  -- hl.workspace_rule({ workspace = i, monitor = "Virtual-1", persistent = true })
 end
 
 for i = 6, 10 do
