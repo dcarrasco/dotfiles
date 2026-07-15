@@ -7,31 +7,75 @@
 
 ########## Variables
 
-dir=~/dotfiles                    # dotfiles directory
+# dotfiles directory
+DOTFILESDIR=$HOME/dotfiles
+# dotconfig dirs
+DOTCONFIGS="alacritty bspwm dunst fastfetch hypr i3 kitty mako noctalia noctalia-shell nvim picom polybar quickshell rofi starship sway swaylock sxhkd tmux waybar wlogout wofi zsh"
+C_GREEN="\e[32m"
+C_RED="\e[31m"
+C_RESET="\e[0m"
+
 files=".bashrc .vimrc .vim/plugins.vim .bash_aliases .bash_prompt .dircolors .inputrc bash_profile .gitconfig .tmux.conf gitignore"    # list of files/folders to symlink in homedir
 
 ##########
+print_error() {
+    echo -e "${C_RED}${1}${C_RESET}"
+    exit 1
+}
+
+install_dotfile() {
+    echo "Installing dotfile: $PKG..."
+    if [ -h "$XDG_CONFIG_HOME/$PKG" ]; then
+        echo "Symlink \"$XDG_CONFIG_HOME/$PKG\" existe, eliminandolo"
+        rm $XDG_CONFIG_HOME/$PKG
+    elif [ -d "$XDG_CONFIG_HOME/$PKG" ]; then
+        echo "Directorio \"$XDG_CONFIG_HOME/$PKG\" existe, realizando backup"
+        mv "$XDG_CONFIG_HOME/$PKG" "$XDG_CONFIG_HOME/$PKG.bak"
+    else
+        echo "Directorio \"$XDG_CONFIG_HOME/$PKG\" no existe"
+    fi
+    echo "Creando symlink \"$XDG_CONFIG_HOME/$PKG\" --> \"$DOTFILESDIR/dotconfig/$PKG\""
+    ln -s $DOTFILESDIR/dotconfig/$PKG $XDG_CONFIG_HOME/$PKG
+}
+
+# echo -e "${C_GREEN}Install dotfiles${C_RESET}"
+if [ -n "$1" ]; then
+    if [ $(echo $DOTCONFIGS | grep -s $1) ]; then
+        install_dotfile $1
+    else
+        print_error "ERROR: Dotfile $1 no existe."
+    fi
+else
+    echo "Select dotfile to install..."
+    PKG=$(echo $DOTCONFIGS | tr " " "\n" | fzf)
+    if [ -z "$PKG" ]; then
+        print_error "ERROR: No se seleccionó dotfile."
+        exit 1
+    fi
+    install_dotfile $PKG
+fi
 
 # create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-echo "Installing dotfiles"
-for file in $files; do
-    echo ""
-    echo "Processing file $file..."
-    #check if exists dotfile
-    if [[ -f $dir/$file ]]; then
-        echo "   $dir/$file exists in directory dotfiles"
+xxxx() {
+    echo "Installing dotfiles"
+    for file in $files; do
+        echo ""
+        echo "Processing file $file..."
+        #check if exists dotfile
+        if [[ -f $dir/$file ]]; then
+            echo "   $dir/$file exists in directory dotfiles"
 
-        if [[ -e ~/$file || -h $dir/$file ]]; then
-            echo "   ~/$file exists in home directory"
-            echo "   Deleting ~/$file"
-            rm ~/$file
+            if [[ -e ~/$file || -h $dir/$file ]]; then
+                echo "   ~/$file exists in home directory"
+                echo "   Deleting ~/$file"
+                rm ~/$file
+            else
+                echo "   ~/$file does not exists in home directory"
+            fi
+            echo "   Creating symlink from $dir/$file to ~/$file"
+            ln -s $dir/$file ~/$file
         else
-            echo "   ~/$file does not exists in home directory"
+            echo "   $dir/$file does not exists in directory dotfiles"
         fi
-        echo "   Creating symlink from $dir/$file to ~/$file"
-        ln -s $dir/$file ~/$file
-    else
-        echo "   $dir/$file does not exists in directory dotfiles"
-    fi
-done
-
+    done
+}
