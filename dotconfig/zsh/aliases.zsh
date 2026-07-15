@@ -61,10 +61,10 @@ alias dtop='podman stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPU
 #alias alpine='docker run -it --rm -v /c/Users/Daniel/:/home/Daniel/ -v /c/Users/Daniel/Code/docker-gastos/profile:/root/.profile -w /home/Daniel/Code --env SERVICE_NAME=alpine alpine:latest /bin/sh -l'
 alias nasdocker='ssh -t qnap /share/CACHEDEV1_DATA/.qpkg/container-station/bin/docker $@'
 
-function dce { podman-compose exec --env SERVICE_NAME=$1 $1 sh -l; }
+function dce { podman-compose exec --env SERVICE_NAME=$1 $1 bash -l; }
 # export -f dce
 
-function drun { podman run --rm -it -v /home/daniel/:/home/daniel/ -w /home/daniel/ $1 $2; }
+function drun { podman run --rm -it -v /home/daniel/:/home/daniel/:z -w /home/daniel/ $1 $2; }
 # export -f drun
 
 
