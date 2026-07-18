@@ -8,25 +8,25 @@ if [ ! -f "/etc/yum.repos.d/$REPO" ]; then
 fi
 
 rpm-ostree install \
+    hyprcursor \
+    hypridle \
     hyprland \
     hyprland-guiutils \
     hyprland-qt-support \
-    hyprcursor \
-    hypridle \
     hyprlock \
     hyprpaper \
     hyprpicker \
     hyprpolkitagent \
     hyprsunset \
-    uwsm \
-    waybar-git \
     kitty \
+    mako \
     nwg-look \
     qt6ct \
-    xdg-desktop-portal-hyprland \
-    mako \
     rofi \
-    wlogout
+    uwsm \
+    waybar-git \
+    wlogout \
+    xdg-desktop-portal-hyprland
 
 # [ ! -d $HOME/.config/hypr ]     && ln -s $HOME/dotfiles/dotconfig/hypr    $HOME/.config/hypr
 # [ ! -d $HOME/.config/wayland ]  && ln -s $HOME/dotfiles/dotconfig/wayland $HOME/.config/wayland
