@@ -61,7 +61,13 @@ alias dtop='podman stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPU
 #alias alpine='docker run -it --rm -v /c/Users/Daniel/:/home/Daniel/ -v /c/Users/Daniel/Code/docker-gastos/profile:/root/.profile -w /home/Daniel/Code --env SERVICE_NAME=alpine alpine:latest /bin/sh -l'
 alias nasdocker='ssh -t qnap /share/CACHEDEV1_DATA/.qpkg/container-station/bin/docker $@'
 
-function dce { podman-compose exec --env SERVICE_NAME=$1 $1 bash -l; }
+function dce {
+    if [ -z "$2" ]; then
+        podman-compose exec --env SERVICE_NAME=$1 $1 bash -l
+    else
+        podman-compose exec --env SERVICE_NAME=$1 $1 $2 -l $3 $4 $5 $6
+    fi
+}
 # export -f dce
 
 function drun { podman run --rm -it -v /home/daniel/:/home/daniel/:z -w /home/daniel/ $1 $2; }
@@ -75,12 +81,12 @@ alias gc='git commit -m $@'
 alias nah='git reset --hard | git clean -df'
 alias gs='git status -s $@'
 alias gg='git graph $@'
-alias gl='git l $@'
-alias gd='git diff $@'
+alias glog='git l $@'
+alias gdiff='git diff $@'
 
 # Laravel specific shortcuts ============================================================
 alias artisan='php artisan'
-alias dart='podman compose exec app php artisan $@'
+alias dart='podman-compose exec app php artisan $@'
 alias migrate='php artisan migrate'
 alias fresh='php artisan migrate:fresh --seed'
 alias tinker='php artisan tinker'
