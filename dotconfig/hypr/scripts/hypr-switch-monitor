@@ -88,7 +88,7 @@ set_monitor_on() {
         *wayland*)
             case $HYPRCONF in
                 *conf*) hyprctl keyword monitor $monitor, $resolution, $position, $scale ;;
-                *lua*)  hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale})" ;;
+                *lua*) hyprctl eval "hl.monitor({ output='$monitor', disabled=false})" ;;
             esac ;;
         *x11*) xrandr --output $monitor --right-of $MON_INT --auto;;
     esac
