@@ -22,9 +22,9 @@ __        __          _                  _                         _
     "modules-left": [
         "custom/start-menu",
         "hyprland/workspaces",
+        "custom/windowstatus",
         "custom/leftsep",
-        "hyprland/window",
-        "custom/windowstatus"
+        "hyprland/window"
     ],
     "modules-center": [
     ],
