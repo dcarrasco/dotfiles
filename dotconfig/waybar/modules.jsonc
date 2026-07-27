@@ -317,7 +317,7 @@
         "format": "{}",
         "exec": "$HOME/.config/hypr/scripts/hypr-show-updates",
         "on-click": "$HOME/.config/hypr/scripts/hypr-sys-menu do-update",
-        "restart-interval": 3600,
+        "interval": 900,
         "signal": 7,
         "tooltip": true
     },
