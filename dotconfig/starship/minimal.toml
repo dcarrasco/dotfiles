@@ -43,12 +43,13 @@ format = '([\[$all_status$ahead_behind\]](yellow)) '
 
 [docker_context]
 symbol = " "
-style = "bg:group5"
+style = "bg:dimmed"
 format = '[ $symbol $context ]($style) $path'
 
 [container]
 symbol = "📦"
-format = "[$symbol ]($style)"
+style = "bg:dimmed"
+format = "[$symbol $name ]($style)"
 
 [character]
 error_symbol = "[✗](bold red)"
