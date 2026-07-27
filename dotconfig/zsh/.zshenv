@@ -16,6 +16,9 @@ if [ ! -d "$XDG_STATE_HOME/zsh" ]; then
     mkdir -p "$XDG_STATE_HOME/zsh"
 fi
 
+# Don't use global completion if it's set in /etc/zshenv
+skip_global_compinit=1
+
 # EDITOR ----------------------------------------
 export EDITOR="nvim"
 export VISUAL="nvim"
