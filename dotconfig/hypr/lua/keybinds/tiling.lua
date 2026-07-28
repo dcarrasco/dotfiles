@@ -54,7 +54,7 @@ return {
   { key = "7", dsp = hl.dsp.focus({workspace = "7"}), desc = "Switch to workspace 7" },
   { key = "8", dsp = hl.dsp.focus({workspace = "8"}), desc = "Switch to workspace 8" },
   { key = "9", dsp = hl.dsp.focus({workspace = "9"}), desc = "Switch to workspace 9" },
-  { key = "0", dsp = hl.dsp.focus({workspace = "0"}), desc = "Switch to workspace 0" },
+  { key = "0", dsp = hl.dsp.focus({workspace = "10"}), desc = "Switch to workspace 10" },
   { key = "BRACELEFT", dsp = hl.dsp.focus({workspace = "-1"}), desc = "Switch to previous workspace" },
   { key = "BRACERIGHT", dsp = hl.dsp.focus({workspace = "+1"}), desc = "Switch to next workspace" },
   { key = "BRACKETLEFT", dsp = hl.dsp.focus({workspace = "-1"}), desc = "Switch to previous workspace" },
@@ -76,7 +76,7 @@ return {
   { key = "SHIFT + 7", dsp = hl.dsp.window.move({workspace = "7"}), desc = "Move window to workspace 7" },
   { key = "SHIFT + 8", dsp = hl.dsp.window.move({workspace = "8"}), desc = "Move window to workspace 8" },
   { key = "SHIFT + 9", dsp = hl.dsp.window.move({workspace = "9"}), desc = "Move window to workspace 9" },
-  { key = "SHIFT + 0", dsp = hl.dsp.window.move({workspace = "0"}), desc = "Move window to workspace 0" },
+  { key = "SHIFT + 0", dsp = hl.dsp.window.move({workspace = "10"}), desc = "Move window to workspace 10" },
 
   -- # Scroll through existing workspaces with mainMod + scroll
   { key = "mouse_down", dsp = hl.dsp.focus({workspace = "-1"}), desc = "Move to previous workspace" },
