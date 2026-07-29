@@ -15,6 +15,13 @@ hl.on("hyprland.start", function()
   hl.exec_cmd(HYPR.fn.app("dropbox start"))
   hl.exec_cmd(HYPR.fn.app("brightnessctl set 50%"))
 
+  -- gnome-keyring: pkcs11/secrets are already unlocked via GDM's PAM
+  -- (pam_gnome_keyring auto_start) and socket-activated by systemd, but that
+  -- unit only starts with --components="pkcs11,secrets". Join the running
+  -- daemon and add the ssh component, then export SSH_AUTH_SOCK so it's
+  -- visible to the systemd user session and dbus-activated services.
+  hl.exec_cmd("bash -c 'eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh); systemctl --user import-environment SSH_AUTH_SOCK; dbus-update-activation-environment --systemd SSH_AUTH_SOCK'")
+
   -- Those processes are being started by systemd
   -- hl.exec_cmd("systemctl --user start hyprpolkitagent")
   -- hl.exec_cmd("waybar")
