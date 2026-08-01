@@ -32,10 +32,11 @@ echo
 
 print_info "Configuring shell..."
 xdg-user-dirs-update
-[ -d "$HOME/.config" ]          || mkdir -p $HOME/.config; print_info "Crea directorio .config"
-[ -d "$HOME/.cache" ]           || mkdir -p $HOME/.cache;  print_info "Crea directorio .cache"
-[ -d "$HOME/.local/share" ]     || mkdir -p $HOME/.local/share; print_info "Crea directorio .local/share"
-[ -d "$HOME/.local/state/zsh" ] || mkdir -p $HOME/.local/state/zsh; print_info "Crea directorio .local/state/zsh"
+[ -d "$HOME/.config" ]          || mkdir -p $HOME/.config && echo "Crea directorio .config"
+[ -d "$HOME/.cache" ]           || mkdir -p $HOME/.cache && echo "Crea directorio .cache"
+[ -d "$HOME/.local/share" ]     || mkdir -p $HOME/.local/share && echo "Crea directorio .local/share"
+[ -d "$HOME/.local/state/zsh" ] || mkdir -p $HOME/.local/state/zsh && echo "Crea directorio .local/state/zsh"
+[ -d "$HOME/.config/zsh" ]      || ln -s $HOME/dotfiles/dotconfig/zsh $HOME/.config/zsh && echo "Link carpeta .config/zsh"
 echo
 
 print_info "Check current shell..."
@@ -49,18 +50,11 @@ exit 0
 
 # install basic programs
 print_info "Installing basic packages"
-sudo apt install -y git neovim xdg-user-dirs
+sudo apt install -y git neovim
 
-print_info "Creating basic dirs"
-xdg-user-dirs-update
-[ -d "$HOME/.config" ]          || mkdir -p $HOME/.config
-[ -d "$HOME/.cache" ]           || mkdir -p $HOME/.cache
-[ -d "$HOME/.local/share" ]     || mkdir -p $HOME/.local/share
-[ -d "$HOME/.local/state/zsh" ] || mkdir -p $HOME/.local/state/zsh
 
 print_info "Creating config dir links"
 [ -d "$HOME/.config/nvim" ]      || ln -s $HOME/dotfiles/dotconfig/nvim      $HOME/.config/nvim
-[ -d "$HOME/.config/zsh" ]       || ln -s $HOME/dotfiles/dotconfig/zsh       $HOME/.config/zsh
 [ -d "$HOME/.config/starship" ]  || ln -s $HOME/dotfiles/dotconfig/starship  $HOME/.config/starship
 [ -d "$HOME/.config/rofi" ]      || ln -s $HOME/dotfiles/dotconfig/rofi      $HOME/.config/rofi
 [ -d "$HOME/.config/kitty" ]     || ln -s $HOME/dotfiles/dotconfig/kitty     $HOME/.config/kitty
