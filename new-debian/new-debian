@@ -8,15 +8,18 @@ VINVERSE='\e[7m'
 NC='\e[0m' # No Color
 
 print_success() {
-  echo -e "${GREEN}$1${NC}"
+    echo
+    echo -e "${GREEN}$1${NC}"
 }
 
 print_error() {
-  echo -e "${RED}$1${NC}"
+    echo
+    echo -e "${RED}$1${NC}"
 }
 
 print_info() {
-  echo -e "${YELLOW}$1${NC}"
+    echo
+    echo -e "${YELLOW}$1${NC}"
 }
 
 # update system
@@ -28,6 +31,8 @@ echo
 
 print_info "Install command line tools..."
 sudo apt install -y zsh fzf fd-find zoxide starship tmux fastfetch trash-cli btop xdg-user-dirs
+
+print_info "Check current shell..."
 exit 0
 
 # install basic programs
