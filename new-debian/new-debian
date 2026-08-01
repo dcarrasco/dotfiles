@@ -32,19 +32,19 @@ sudo apt install -y zsh fzf fd-find zoxide starship tmux fastfetch trash-cli bto
 echo
 print_info "Configuring shell..."
 xdg-user-dirs-update
-[ -d "$HOME/.config" ]           || { mkdir -p $HOME/.config          && echo "Create folder .config" }
-[ -d "$HOME/.cache" ]            || { mkdir -p $HOME/.cache           && echo "Create folder .cache" }
-[ -d "$HOME/.local/share" ]      || { mkdir -p $HOME/.local/share     && echo "Create folder .local/share" }
-[ -d "$HOME/.local/state/zsh" ]  || { mkdir -p $HOME/.local/state/zsh && echo "Create folder .local/state/zsh" }
-[ -d "$HOME/.config/zsh" ]       || { ln -s $HOME/dotfiles/dotconfig/zsh $HOME/.config/zsh && echo "Link folder .config/zsh" }
-[ -f "$HOME/.zshenv" ]           || { ln -s $HOME/dotfiles/dotconfig/zsh/.zshenv $HOME/.zshenv && echo "Link file .zshenv" }
-[ -d "$HOME/.config/starship" ]  || { ln -s $HOME/dotfiles/dotconfig/starship  $HOME/.config/starship && echo "Link folder .config/starship" }
-[ -d "$HOME/.config/fastfetch" ] || { ln -s $HOME/dotfiles/dotconfig/fastfetch $HOME/.config/fastfetch && echo "Link folder .config/fastfetch" }
-[ -d "$HOME/.config/nvim" ]      || { ln -s $HOME/dotfiles/dotconfig/nvim      $HOME/.config/nvim && echo "Link folder .config/nvim" }
+[ -d "$HOME/.config" ]           || { mkdir -p $HOME/.config          && echo "Create folder .config"; }
+[ -d "$HOME/.cache" ]            || { mkdir -p $HOME/.cache           && echo "Create folder .cache"; }
+[ -d "$HOME/.local/share" ]      || { mkdir -p $HOME/.local/share     && echo "Create folder .local/share"; }
+[ -d "$HOME/.local/state/zsh" ]  || { mkdir -p $HOME/.local/state/zsh && echo "Create folder .local/state/zsh"; }
+[ -d "$HOME/.config/zsh" ]       || { ln -s $HOME/dotfiles/dotconfig/zsh $HOME/.config/zsh && echo "Link folder .config/zsh"; }
+[ -f "$HOME/.zshenv" ]           || { ln -s $HOME/dotfiles/dotconfig/zsh/.zshenv $HOME/.zshenv && echo "Link file .zshenv"; }
+[ -d "$HOME/.config/starship" ]  || { ln -s $HOME/dotfiles/dotconfig/starship  $HOME/.config/starship && echo "Link folder .config/starship"; }
+[ -d "$HOME/.config/fastfetch" ] || { ln -s $HOME/dotfiles/dotconfig/fastfetch $HOME/.config/fastfetch && echo "Link folder .config/fastfetch"; }
+[ -d "$HOME/.config/nvim" ]      || { ln -s $HOME/dotfiles/dotconfig/nvim      $HOME/.config/nvim && echo "Link folder .config/nvim"; }
 
 echo
 print_info "Check current shell..."
-if [ ! "$(echo $SHELL)" = "/bin/zsh" ]; then
+if [ ! "$SHELL" = "/bin/zsh" ]; then
     print_info "Current shell: $SHELL, changing to zsh"
     chsh -s /bin/zsh $INSTALL_USERNAME
 else
