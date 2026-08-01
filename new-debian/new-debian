@@ -28,6 +28,15 @@ echo
 
 print_info "Install command line tools..."
 sudo apt install -y zsh fzf fd-find zoxide starship tmux fastfetch trash-cli btop xdg-user-dirs
+echo
+
+print_info "Configuring shell..."
+xdg-user-dirs-update
+[ -d "$HOME/.config" ]          || mkdir -p $HOME/.config; print_info "Crea directorio .config"
+[ -d "$HOME/.cache" ]           || mkdir -p $HOME/.cache;  print_info "Crea directorio .cache"
+[ -d "$HOME/.local/share" ]     || mkdir -p $HOME/.local/share; print_info "Crea directorio .local/share"
+[ -d "$HOME/.local/state/zsh" ] || mkdir -p $HOME/.local/state/zsh; print_info "Crea directorio .local/state/zsh"
+echo
 
 print_info "Check current shell..."
 if [ ! "$(echo $SHELL)" = "/bin/zsh" ]; then
