@@ -72,7 +72,7 @@ sudo apt install -y network-manager firewalld polkitd bluez bluez-tools
 
 echo
 print_info "Installing desktop environment"
-if [ ! grep -q trixie-backports /etc/apt/sources.list ]; then
+if [ ! $(grep -q trixie-backports /etc/apt/sources.list) ]; then
     echo "Add trixie-backports"
     echo "deb http://deb.debian.org/debian/ trixie-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
 fi
