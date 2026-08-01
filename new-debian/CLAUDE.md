@@ -36,6 +36,21 @@ Anything added to the script should preserve this ordering: later steps
 (desktop environment, apps) assume earlier steps (base packages, symlinks)
 already ran.
 
+## Running / checking the script
+
+There's no test suite or build step — this is a single imperative bash
+script meant to be run on a real (or disposable/VM) Debian install:
+
+```sh
+./new-debian/new-debian
+```
+
+It calls `sudo apt` repeatedly and is not safe to run against a system you
+care about without reading it first. To check syntax/lint without a Debian
+box, use `bash -n new-debian/new-debian` (parse-only) or `shellcheck
+new-debian/new-debian` if shellcheck is installed — there's no shellcheck
+config or CI wired up for this yet, it's just a plain sanity check.
+
 ## Current state
 
 - `new-debian` (the script itself) currently ends mid-"install apps" section
@@ -46,6 +61,9 @@ already ran.
 - Uses `set -e`, and `print_info` / `print_success` / `print_error` helpers
   for colored status output. Follow this style for new sections rather than
   introducing a different logging approach.
+- `print_success` references `${GREEN}`, but only `RED`/`YELLOW`/`NC` are
+  defined — it currently prints uncolored. Fix by adding a `GREEN=` var
+  alongside the others rather than reworking the helper.
 - Symlink targets assume the repo lives at `$HOME/dotfiles` — the script is
   meant to run after this dotfiles repo is already cloned there.
 

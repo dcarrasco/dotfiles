@@ -1,9 +1,11 @@
 #!/usr/bin/bash
 
 set -e
-RED='\033[0;31m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+RED='\e[31m'
+YELLOW='\e[33m'
+GREEN='\e[32m'
+VINVERSE='\e[7m'
+NC='\e[0m' # No Color
 
 print_success() {
   echo -e "${GREEN}$1${NC}"
@@ -22,6 +24,8 @@ print_info "Updating system packages"
 sudo apt update
 sudo apt upgrade
 # echo "deb http://deb.debian.org/debian/ trixie-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
+#
+exit 0
 
 # install basic programs
 print_info "Installing basic packages"
