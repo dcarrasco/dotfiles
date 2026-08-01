@@ -28,7 +28,7 @@ sudo apt update; sudo apt -y upgrade
 
 echo
 print_info "Install command line tools..."
-sudo apt install -y zsh fzf fd-find zoxide starship tmux fastfetch trash-cli btop xdg-user-dirs neovim
+sudo apt install -y zsh fzf fd-find zoxide starship tmux fastfetch trash-cli btop xdg-user-dirs
 
 
 echo
@@ -74,9 +74,11 @@ echo
 print_info "Installing desktop environment"
 if [ ! $(grep -q trixie-backports /etc/apt/sources.list) ]; then
     echo "Add trixie-backports"
-    echo "deb http://deb.debian.org/debian/ trixie-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
+    echo "deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list
+    echo "deb-src http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list
 fi
-sudo apt install -y -t trixie-backports hyprland hyprland-guiutils hyprlock hyprpicker hyprpolkitagent hypridle xdg-desktop-portal xdg-desktop-portal-hyprland kitty
+sudo apt update
+sudo apt install -y -t trixie-backports hyprland hyprland-guiutils hyprlock hyprpicker hyprpolkitagent hypridle xdg-desktop-portal xdg-desktop-portal-hyprland kitty neovim
 sudo apt install -y uwsm wayland-utils wayland lightdm wlr-randr qt6-wayland grim slurp mako-notifier brightnessctl wlsunset wlogout
 sudo apt install -y thunar firefox-esr rofi
 #
