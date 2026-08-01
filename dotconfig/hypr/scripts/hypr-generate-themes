@@ -94,7 +94,7 @@ generate_rofi() {
         -e "s/\(bg-prompt:\) .*/\1 ${THEME_PROMPT_BG};/" \
         -e "s/\(fg-placeholder:\) .*/\1 ${THEME_PLACEHOLDER_FG};/" \
         -e "s/\(fg-selected:\) .*/\1 ${THEME_ACCENT1};/" \
-        -e "s/\(bg-selected:\) .*/\1 ${THEME_SELECTED_BG}${THEME_SELECTED_BG_ALPHA};/" \
+        -e "s/\(bg-selected:\) .*/\1 ${THEME_SELECTED_BG};/" \
         -e "s/\(fg-scrollbar:\) .*/\1 ${THEME_PLACEHOLDER_FG};/" \
         $theme_file
 }
@@ -102,9 +102,9 @@ generate_rofi() {
 [ $# -ge 1 ] || die "usage: generate-theme <name> [<name> ...]"
 get_alphas
 THEME_NAME=$1
-source $XDG_CONFIG_HOME/hypr/themes/$THEME_NAME
-
-gen_notice="Generated from $XDG_CONFIG_HOME/hypr/themes/${THEME_NAME}.theme  — do not edit by hand. Run: hypr-generate-themes ${THEME_NAME}"
+theme_source=$XDG_CONFIG_HOME/hypr/themes/$THEME_NAME
+[ -f "$theme_source" ] || die "unknown theme: $THEME_NAME (no such file: $theme_source)"
+source $theme_source
 
 generate_hyprland
 generate_hyprland_conf
