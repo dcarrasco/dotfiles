@@ -12,7 +12,7 @@ window {
     location: center;
     anchor:   center;
     transparency: "real";
-    border: 2px;
+    border: 3px;
     border-color: @window-border;
     border-radius: 12px;
     height: 60%;

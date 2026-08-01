@@ -1,0 +1,110 @@
+#!/bin/bash
+
+# Genera archivos con colores
+
+die() { echo "generate-theme: $*" >&2; exit 1; }
+
+get_alphas() {
+    # Generate THEME_ALPHA variables with hex percentages
+    for i in {1..9}; do
+        local perc=$((i * 10))
+        printf -v THEME_ALPHA_${perc} '%X' $((256 * i / 10))
+    done
+}
+
+hex_to_perc() {
+    local perc=$((100 * $((0x$1)) / 255))
+    echo "scale=2; $perc / 100" | bc
+}
+
+to_waybar() {
+    local color=$1
+    if [ ${#color} -eq 9 ]; then
+        echo "alpha(${color:0:7}, $(hex_to_perc ${color:7:2}))"
+    else
+        echo ${color}
+    fi
+}
+
+generate_hyprland() {
+    local theme_file=$XDG_CONFIG_HOME/hypr/lua/theme.lua
+
+    sed -i \
+        -e "s/\(color_active_border_1\) .*/\1 = \"${THEME_WINDOW_ACTIVE_BORDER}\",/" \
+        -e "s/\(color_active_border_2\) .*/\1 = \"${THEME_WINDOW_ACTIVE_BORDER_2}\",/" \
+        -e "s/\(color_inactive_border\) .*/\1 = \"${THEME_WINDOW_INACTIVE_BORDER}\",/" \
+        -e "s/\(color_group_border_active\) .*/\1 = \"${THEME_WINDOW_GROUP_ACTIVE_BORDER}\",/" \
+        -e "s/\(color_group_border_inactive\) .*/\1 = \"${THEME_WINDOW_GROUP_INACTIVE_BORDER}\",/" \
+        -e "s/\(color_groupbar_active\) .*/\1 = \"${THEME_GROUPBAR_ACTIVE}\",/" \
+        -e "s/\(color_groupbar_inactive\) .*/\1 = \"${THEME_GROUPBAR_ACTIVE}\",/" \
+        -e "s/\(color_text_groupbar\) .*/\1 = \"${THEME_GROUPBAR_TEXT}\",/" \
+        -e "s/\(color_shadow\) .*/\1 = \"${THEME_WINDOW_ACTIVE_SHADOW}\",/" \
+        -e "s/\(color_shadow_inactive\) .*/\1 = \"${THEME_WINDOW_INACTIVE_SHADOW}\",/" \
+        $theme_file
+}
+
+generate_hyprland_conf() {
+    local theme_file=$XDG_CONFIG_HOME/hypr/conf/theme.conf
+
+    sed -i \
+        -e "s/\(\$color_active_border_1\) .*/\1 = \"${THEME_WINDOW_ACTIVE_BORDER}\"/" \
+        -e "s/\(\$color_active_border_2\) .*/\1 = \"${THEME_WINDOW_ACTIVE_BORDER_2}\"/" \
+        -e "s/\(\$color_inactive_border\) .*/\1 = \"${THEME_WINDOW_INACTIVE_BORDER}\"/" \
+        -e "s/\(\$color_group_border_active\) .*/\1 = \"${THEME_WINDOW_GROUP_ACTIVE_BORDER}\"/" \
+        -e "s/\(\$color_group_border_inactive\) .*/\1 = \"${THEME_WINDOW_GROUP_INACTIVE_BORDER}\"/" \
+        -e "s/\(\$color_groupbar_active\) .*/\1 = \"${THEME_GROUPBAR_ACTIVE}\"/" \
+        -e "s/\(\$color_groupbar_inactive\) .*/\1 = \"${THEME_GROUPBAR_ACTIVE}\"/" \
+        -e "s/\(\$color_text_groupbar\) .*/\1 = \"${THEME_GROUPBAR_TEXT}\"/" \
+        -e "s/\(\$color_shadow\) .*/\1 = \"${THEME_WINDOW_ACTIVE_SHADOW}\"/" \
+        -e "s/\(\$color_shadow_inactive\) .*/\1 = \"${THEME_WINDOW_INACTIVE_SHADOW}\"/" \
+        $theme_file
+}
+
+generate_waybar() {
+    local theme_file=$XDG_CONFIG_HOME/waybar/colors.css
+
+    sed -i \
+        -e "s/\(@define-color bg-normal\) .*/\1 $( to_waybar $THEME_BAR_BG );/" \
+        -e "s/\(@define-color shadow\) .*/\1 $( to_waybar $THEME_BAR_BG );/" \
+        -e "s/\(@define-color fg-normal\) .*/\1 $( to_waybar $THEME_FG_NORMAL );/" \
+        -e "s/\(@define-color fg-high\) .*/\1 $( to_waybar $THEME_FG_HIGH );/" \
+        -e "s/\(@define-color fg-disabled\) .*/\1 $( to_waybar $THEME_FG_DISABLED );/" \
+        -e "s/\(@define-color accent1\) .*/\1 $( to_waybar $THEME_ACCENT1 );/" \
+        -e "s/\(@define-color accent2\) .*/\1 $( to_waybar $THEME_ACCENT2 );/" \
+        -e "s/\(@define-color accent3\) .*/\1 $( to_waybar $THEME_ACCENT3 );/" \
+        -e "s/\(@define-color warning\) .*/\1 $( to_waybar $THEME_WARNING );/" \
+        -e "s/\(@define-color critical\) .*/\1 $( to_waybar $THEME_CRITICAL );/" \
+        -e "s/\(@define-color success\) .*/\1 $( to_waybar $THEME_SUCCESS );/" \
+        $theme_file
+}
+
+generate_rofi() {
+    local theme_file=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
+
+    sed -i \
+        -e "s/\(window-border:\) .*/\1 ${THEME_WINDOW_ACTIVE_BORDER};/" \
+        -e "s/\(bg-color:\) .*/\1 ${THEME_WINDOW_BG};/" \
+        -e "s/\(foreground:\) .*/\1 ${THEME_FG_NORMAL};/" \
+        -e "s/\(bg-textbox:\) .*/\1 ${THEME_TEXTBOX_BG};/" \
+        -e "s/\(fg-prompt:\) .*/\1 ${THEME_PROMPT_FG};/" \
+        -e "s/\(bg-prompt:\) .*/\1 ${THEME_PROMPT_BG};/" \
+        -e "s/\(fg-placeholder:\) .*/\1 ${THEME_PLACEHOLDER_FG};/" \
+        -e "s/\(fg-selected:\) .*/\1 ${THEME_ACCENT1};/" \
+        -e "s/\(bg-selected:\) .*/\1 ${THEME_SELECTED_BG}${THEME_SELECTED_BG_ALPHA};/" \
+        -e "s/\(fg-scrollbar:\) .*/\1 ${THEME_PLACEHOLDER_FG};/" \
+        $theme_file
+}
+
+[ $# -ge 1 ] || die "usage: generate-theme <name> [<name> ...]"
+get_alphas
+THEME_NAME=$1
+source $XDG_CONFIG_HOME/hypr/themes/$THEME_NAME
+
+gen_notice="Generated from $XDG_CONFIG_HOME/hypr/themes/${THEME_NAME}.theme  — do not edit by hand. Run: hypr-generate-themes ${THEME_NAME}"
+
+generate_hyprland
+generate_hyprland_conf
+generate_waybar
+generate_rofi
+
+# vim: set ft=sh:

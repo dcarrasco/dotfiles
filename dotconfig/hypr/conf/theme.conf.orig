@@ -1,1 +1,10 @@
-$theme = catppuccin
+$color_active_border_1 = "#89DCEB"
+$color_active_border_2 = "#B4BEFE"
+$color_inactive_border = "#6C7086"
+$color_group_border_active = "#FAB387"
+$color_group_border_inactive = "#6C7086"
+$color_groupbar_active = "#FAB387"
+$color_groupbar_inactive = "#FAB387"
+$color_text_groupbar = "#313244"
+$color_shadow = "#1E1E2E99"
+$color_shadow_inactive = "#11111B80"

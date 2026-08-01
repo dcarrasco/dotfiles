@@ -15,7 +15,7 @@ __        __          _                  ____                   ____  _         
 
 #waybar {
     color: @fg-normal;
-    background: alpha(@bg-normal, 0.8);
+    background: @bg-normal;
     padding: 0;
     margin: 0;
 }
@@ -29,7 +29,7 @@ __        __          _                  ____                   ____  _         
 }
 
 tooltip {
-    background-color: alpha(@bg-normal, 0.8);
+    background-color: @bg-normal;
     border: 1px solid @fg-normal;
     border-radius: 7px;
 }

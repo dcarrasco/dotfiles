@@ -1,1 +1,15 @@
-@import "themes/colors/catppuccin.rasi"
+* {
+    window-border: #89DCEB;
+    bg-color: #1E1E2ECC;
+    foreground: #CDD6F4CC;
+    bg-textbox: #45475A;
+    fg-prompt: #89B4FA;
+    bg-prompt: #1E1E2ECC;
+    fg-placeholder: #CDD6F44C;
+    fg-selected: #74C7EC;
+    bg-selected: #BAC2DE19;
+    fg-scrollbar: #CDD6F44C;
+
+    background-color: transparent;
+}
+

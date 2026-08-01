@@ -1,1 +1,11 @@
-@import "colors/catppuccin.css";
+@define-color bg-normal alpha(#181825, .80);
+@define-color shadow alpha(#181825, .80);
+@define-color fg-normal alpha(#CDD6F4, .80);
+@define-color fg-high #CDD6F4;
+@define-color fg-disabled alpha(#CDD6F4, .40);
+@define-color accent1 #74C7EC;
+@define-color accent2 #F9E2AF;
+@define-color accent3 #CBA6F7;
+@define-color warning #F9E2AF;
+@define-color critical #F38BA8;
+@define-color success #A6E3A1;

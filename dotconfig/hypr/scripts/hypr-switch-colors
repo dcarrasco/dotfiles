@@ -20,25 +20,6 @@ current_theme() {
     grep import $waybar_style | grep colors | tr -d '"' | tr -d ';' | cut -d / -f 2 | cut -d . -f 1
 }
 
-change_theme() {
-    # waybar
-    sed -i "s/\"colors\/.*\.css\"/\"colors\/$1.css\"/" $waybar_style
-
-    # hyprland
-    sed -i "s/HYPR\.theme.*/HYPR.theme = require\(\"themes\/$1\"\)/" $hypr_lua
-    sed -i "s/\$theme = .*/\$theme = $1/" $hypr_conf
-
-    # rofi
-    sed -i "s/^@import \"themes\/colors\/.*\.rasi\"/@import \"themes\/colors\/$1.rasi\"/" $rofi_colors
-
-    # bspwm
-    # sed -i "s/^source \$HOME\/\.config\/bspwm\/themes\/.*/source \$HOME\/.config\/bspwm\/themes\/$1/" $HOME/.config/bspwm/bspwmrc
-
-    # polybar
-    # sed -i "s/include-file = .*\/config.ini/include-file = \$HOME\/\.config\/polybar\/themes\/$1\/config.ini/" $HOME/.config/polybar/config.ini
-
-}
-
 if [ -n "$1" ]; then
     theme=$1
 else
@@ -56,7 +37,7 @@ else
 fi
 
 if [ -n "$theme" ]; then
-    change_theme ${theme,,}
+    hypr-generate-themes ${theme,,}
     [ "$DESKTOP_SESSION" = "bspwm" ] && bspc wm --restart
     notify-send -u low "Colors" "Change colors to $theme"
 fi
