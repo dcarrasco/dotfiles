@@ -1,3 +1,4 @@
+/* THEME: catppuccin */
 * {
     window-border: #89DCEB;
     bg-color: #1E1E2ECC;

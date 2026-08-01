@@ -1,3 +1,4 @@
+# THEME: catppuccin
 $color_active_border_1 = "#89DCEB"
 $color_active_border_2 = "#B4BEFE"
 $color_inactive_border = "#6C7086"

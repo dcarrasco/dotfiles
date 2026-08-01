@@ -17,7 +17,7 @@ create_config_file "$hypr_lua"
 create_config_file "$rofi_colors"
 
 current_theme() {
-    grep import $waybar_style | grep colors | tr -d '"' | tr -d ';' | cut -d / -f 2 | cut -d . -f 1
+    grep -m1 "THEME:" $waybar_style | sed -E 's/.*THEME:\s*([a-z0-9-]+).*/\1/'
 }
 
 if [ -n "$1" ]; then

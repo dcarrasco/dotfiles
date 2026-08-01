@@ -30,6 +30,7 @@ generate_hyprland() {
     local theme_file=$XDG_CONFIG_HOME/hypr/lua/theme.lua
 
     sed -i \
+        -e "s/^-- THEME:.*/-- THEME: ${THEME_NAME}/" \
         -e "s/\(color_active_border_1\) .*/\1 = \"${THEME_WINDOW_ACTIVE_BORDER}\",/" \
         -e "s/\(color_active_border_2\) .*/\1 = \"${THEME_WINDOW_ACTIVE_BORDER_2}\",/" \
         -e "s/\(color_inactive_border\) .*/\1 = \"${THEME_WINDOW_INACTIVE_BORDER}\",/" \
@@ -47,6 +48,7 @@ generate_hyprland_conf() {
     local theme_file=$XDG_CONFIG_HOME/hypr/conf/theme.conf
 
     sed -i \
+        -e "s/^# THEME:.*/# THEME: ${THEME_NAME}/" \
         -e "s/\(\$color_active_border_1\) .*/\1 = \"${THEME_WINDOW_ACTIVE_BORDER}\"/" \
         -e "s/\(\$color_active_border_2\) .*/\1 = \"${THEME_WINDOW_ACTIVE_BORDER_2}\"/" \
         -e "s/\(\$color_inactive_border\) .*/\1 = \"${THEME_WINDOW_INACTIVE_BORDER}\"/" \
@@ -64,6 +66,7 @@ generate_waybar() {
     local theme_file=$XDG_CONFIG_HOME/waybar/colors.css
 
     sed -i \
+        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|" \
         -e "s/\(@define-color bg-normal\) .*/\1 $( to_waybar $THEME_BAR_BG );/" \
         -e "s/\(@define-color shadow\) .*/\1 $( to_waybar $THEME_BAR_BG );/" \
         -e "s/\(@define-color fg-normal\) .*/\1 $( to_waybar $THEME_FG_NORMAL );/" \
@@ -82,6 +85,7 @@ generate_rofi() {
     local theme_file=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
 
     sed -i \
+        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|" \
         -e "s/\(window-border:\) .*/\1 ${THEME_WINDOW_ACTIVE_BORDER};/" \
         -e "s/\(bg-color:\) .*/\1 ${THEME_WINDOW_BG};/" \
         -e "s/\(foreground:\) .*/\1 ${THEME_FG_NORMAL};/" \
