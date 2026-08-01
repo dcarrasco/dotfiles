@@ -72,14 +72,14 @@ sudo apt install -y network-manager firewalld polkitd bluez bluez-tools
 
 echo
 print_info "Installing desktop environment"
-if [ ! $(grep -q trixie-backports /etc/apt/sources.list) ]; then
+if ! grep -q trixie-backports /etc/apt/sources.list; then
     echo "Add trixie-backports"
     echo "deb http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list
     echo "deb-src http://deb.debian.org/debian trixie-backports main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list
 fi
 sudo apt update
-sudo apt install -y -t trixie-backports hyprland hyprland-guiutils hyprlock hyprpicker hyprpolkitagent hypridle xdg-desktop-portal xdg-desktop-portal-hyprland kitty neovim
-sudo apt install -y uwsm wayland-utils wayland lightdm wlr-randr qt6-wayland grim slurp mako-notifier brightnessctl wlsunset wlogout
+sudo apt install -y -t trixie-backports wayland-utils hyprland hyprland-guiutils hyprlock hyprpicker hyprpolkitagent hypridle xdg-desktop-portal xdg-desktop-portal-hyprland kitty neovim
+sudo apt install -y uwsm lightdm wlr-randr qt6-wayland grim slurp mako-notifier brightnessctl wlsunset wlogout waybar
 sudo apt install -y thunar firefox-esr rofi
 #
 # install apps
