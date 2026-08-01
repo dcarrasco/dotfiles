@@ -38,6 +38,7 @@ xdg-user-dirs-update
 [ -d "$HOME/.local/state/zsh" ] || mkdir -p $HOME/.local/state/zsh && echo "Crea directorio .local/state/zsh"
 [ -d "$HOME/.config/zsh" ]      || ln -s $HOME/dotfiles/dotconfig/zsh $HOME/.config/zsh && echo "Link carpeta .config/zsh"
 [ -f "$HOME/.config/zsh" ]      || ln -s $HOME/dotfiles/dotconfig/zsh/.zshenv $HOME/.zshenv && echo "Link .zshenv"
+[ -d "$HOME/.config/starship" ]  || ln -s $HOME/dotfiles/dotconfig/starship  $HOME/.config/starship
 echo
 
 print_info "Check current shell..."
@@ -56,7 +57,6 @@ sudo apt install -y git neovim
 
 print_info "Creating config dir links"
 [ -d "$HOME/.config/nvim" ]      || ln -s $HOME/dotfiles/dotconfig/nvim      $HOME/.config/nvim
-[ -d "$HOME/.config/starship" ]  || ln -s $HOME/dotfiles/dotconfig/starship  $HOME/.config/starship
 [ -d "$HOME/.config/rofi" ]      || ln -s $HOME/dotfiles/dotconfig/rofi      $HOME/.config/rofi
 [ -d "$HOME/.config/kitty" ]     || ln -s $HOME/dotfiles/dotconfig/kitty     $HOME/.config/kitty
 [ -d "$HOME/.config/fastfetch" ] || ln -s $HOME/dotfiles/dotconfig/fastfetch $HOME/.config/fastfetch
