@@ -36,7 +36,7 @@ generate_hyprland() {
         -e "s/\(color_group_border_active\) .*/\1 = \"${THEME_WINDOW_GROUP_ACTIVE_BORDER}\",/" \
         -e "s/\(color_group_border_inactive\) .*/\1 = \"${THEME_WINDOW_GROUP_INACTIVE_BORDER}\",/" \
         -e "s/\(color_groupbar_active\) .*/\1 = \"${THEME_GROUPBAR_ACTIVE}\",/" \
-        -e "s/\(color_groupbar_inactive\) .*/\1 = \"${THEME_GROUPBAR_ACTIVE}\",/" \
+        -e "s/\(color_groupbar_inactive\) .*/\1 = \"${THEME_GROUPBAR_INACTIVE}\",/" \
         -e "s/\(color_text_groupbar\) .*/\1 = \"${THEME_GROUPBAR_TEXT}\",/" \
         -e "s/\(color_shadow\) .*/\1 = \"${THEME_WINDOW_ACTIVE_SHADOW}\",/" \
         -e "s/\(color_shadow_inactive\) .*/\1 = \"${THEME_WINDOW_INACTIVE_SHADOW}\",/" \
@@ -53,7 +53,7 @@ generate_hyprland_conf() {
         -e "s/\(\$color_group_border_active\) .*/\1 = \"${THEME_WINDOW_GROUP_ACTIVE_BORDER}\"/" \
         -e "s/\(\$color_group_border_inactive\) .*/\1 = \"${THEME_WINDOW_GROUP_INACTIVE_BORDER}\"/" \
         -e "s/\(\$color_groupbar_active\) .*/\1 = \"${THEME_GROUPBAR_ACTIVE}\"/" \
-        -e "s/\(\$color_groupbar_inactive\) .*/\1 = \"${THEME_GROUPBAR_ACTIVE}\"/" \
+        -e "s/\(\$color_groupbar_inactive\) .*/\1 = \"${THEME_GROUPBAR_INACTIVE}\"/" \
         -e "s/\(\$color_text_groupbar\) .*/\1 = \"${THEME_GROUPBAR_TEXT}\"/" \
         -e "s/\(\$color_shadow\) .*/\1 = \"${THEME_WINDOW_ACTIVE_SHADOW}\"/" \
         -e "s/\(\$color_shadow_inactive\) .*/\1 = \"${THEME_WINDOW_INACTIVE_SHADOW}\"/" \
