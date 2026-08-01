@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+INSTALL_USERNAME=daniel
+
 set -e
 RED='\e[31m'
 YELLOW='\e[33m'
@@ -21,50 +23,46 @@ print_info() {
 
 # update system
 print_info "Updating system packages..."
-sudo apt update; sudo apt upgrade
-echo
-# echo "deb http://deb.debian.org/debian/ trixie-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
-#
+sudo apt update; sudo apt -y upgrade
 
+echo
 print_info "Install command line tools..."
-sudo apt install -y zsh fzf fd-find zoxide starship tmux fastfetch trash-cli btop xdg-user-dirs
-echo
+sudo apt install -y zsh fzf fd-find zoxide starship tmux fastfetch trash-cli btop xdg-user-dirs neovim
 
+echo
 print_info "Configuring shell..."
 xdg-user-dirs-update
-[ -d "$HOME/.config" ]          || mkdir -p $HOME/.config && echo "Crea directorio .config"
-[ -d "$HOME/.cache" ]           || mkdir -p $HOME/.cache && echo "Crea directorio .cache"
-[ -d "$HOME/.local/share" ]     || mkdir -p $HOME/.local/share && echo "Crea directorio .local/share"
-[ -d "$HOME/.local/state/zsh" ] || mkdir -p $HOME/.local/state/zsh && echo "Crea directorio .local/state/zsh"
-[ -d "$HOME/.config/zsh" ]      || ln -s $HOME/dotfiles/dotconfig/zsh $HOME/.config/zsh && echo "Link carpeta .config/zsh"
-[ -f "$HOME/.config/zsh" ]      || ln -s $HOME/dotfiles/dotconfig/zsh/.zshenv $HOME/.zshenv && echo "Link .zshenv"
-[ -d "$HOME/.config/starship" ]  || ln -s $HOME/dotfiles/dotconfig/starship  $HOME/.config/starship
-echo
+[ -d "$HOME/.config" ]           || { mkdir -p $HOME/.config && echo "Create folder .config" }
+[ -d "$HOME/.cache" ]            || { mkdir -p $HOME/.cache && echo "Create folder .cache" }
+[ -d "$HOME/.local/share" ]      || { mkdir -p $HOME/.local/share && echo "Create folder .local/share" }
+[ -d "$HOME/.local/state/zsh" ]  || { mkdir -p $HOME/.local/state/zsh && echo "Create folder .local/state/zsh" }
+[ -d "$HOME/.config/zsh" ]       || { ln -s $HOME/dotfiles/dotconfig/zsh $HOME/.config/zsh && echo "Link folder .config/zsh" }
+[ -f "$HOME/.zshenv" ]           || { ln -s $HOME/dotfiles/dotconfig/zsh/.zshenv $HOME/.zshenv && echo "Link file .zshenv" }
+[ -d "$HOME/.config/starship" ]  || { ln -s $HOME/dotfiles/dotconfig/starship  $HOME/.config/starship && echo "Link folder .config/starship" }
+[ -d "$HOME/.config/fastfetch" ] || { ln -s $HOME/dotfiles/dotconfig/fastfetch $HOME/.config/fastfetch && echo "Link folder .config/fastfetch" }
+[ -d "$HOME/.config/nvim" ]      || { ln -s $HOME/dotfiles/dotconfig/nvim      $HOME/.config/nvim && echo "Link folder .config/nvim"}
 
+echo
 print_info "Check current shell..."
 if [ ! "$(echo $SHELL)" = "/bin/zsh" ]; then
     print_info "Current shell: $SHELL, changing to zsh"
-    chsh -s /bin/zsh daniel
+    chsh -s /bin/zsh $INSTALL_USERNAME
 else
     print_success "OK, current shell is: $SHELL"
 fi
-exit 0
 
-# install basic programs
-print_info "Installing basic packages"
-sudo apt install -y git neovim
-
-
+echo
 print_info "Creating config dir links"
-[ -d "$HOME/.config/nvim" ]      || ln -s $HOME/dotfiles/dotconfig/nvim      $HOME/.config/nvim
 [ -d "$HOME/.config/rofi" ]      || ln -s $HOME/dotfiles/dotconfig/rofi      $HOME/.config/rofi
 [ -d "$HOME/.config/kitty" ]     || ln -s $HOME/dotfiles/dotconfig/kitty     $HOME/.config/kitty
-[ -d "$HOME/.config/fastfetch" ] || ln -s $HOME/dotfiles/dotconfig/fastfetch $HOME/.config/fastfetch
 [ -d "$HOME/.config/mako" ]      || ln -s $HOME/dotfiles/dotconfig/mako      $HOME/.config/mako
 [ -d "$HOME/.config/waybar" ]    || ln -s $HOME/dotfiles/dotconfig/waybar    $HOME/.config/waybar
 [ -d "$HOME/.config/hypr" ]      || ln -s $HOME/dotfiles/dotconfig/hypr      $HOME/.config/hypr
 [ -d "$HOME/.config/wlogout" ]   || ln -s $HOME/dotfiles/dotconfig/wlogout   $HOME/.config/wlogout
-[ -f "$HOME/.zshenv" ]           || ln -s $HOME/dotfiles/dotconfig/zsh/.zshenv $HOME/.zshenv
+
+# echo "deb http://deb.debian.org/debian/ trixie-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
+#
+exit 0
 
 # install network manager
 print_info "Installing network, bluetooth"
