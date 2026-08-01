@@ -1,20 +1,6 @@
 #!/bin/bash
 
 waybar_style=$XDG_CONFIG_HOME/waybar/colors.css
-hypr_conf=$XDG_CONFIG_HOME/hypr/conf/theme.conf
-hypr_lua=$XDG_CONFIG_HOME/hypr/lua/theme.lua
-rofi_colors=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
-
-create_config_file() {
-    if [ ! -f "$1" ]; then
-        cp "${1}.orig" "$1"
-    fi
-}
-
-create_config_file "$waybar_style"
-create_config_file "$hypr_conf"
-create_config_file "$hypr_lua"
-create_config_file "$rofi_colors"
 
 current_theme() {
     grep -m1 "THEME:" $waybar_style | sed -E 's/.*THEME:\s*([a-z0-9-]+).*/\1/'

@@ -4,6 +4,12 @@
 
 die() { echo "generate-theme: $*" >&2; exit 1; }
 
+create_config_file() {
+    if [ ! -f "$1" ]; then
+        cp "${1}.orig" "$1"
+    fi
+}
+
 get_alphas() {
     # Generate THEME_ALPHA variables with hex percentages
     for i in {1..9}; do
@@ -28,6 +34,7 @@ to_waybar() {
 
 generate_hyprland() {
     local theme_file=$XDG_CONFIG_HOME/hypr/lua/theme.lua
+    create_config_file "$theme_file"
 
     sed -i \
         -e "s/^-- THEME:.*/-- THEME: ${THEME_NAME}/" \
@@ -46,6 +53,7 @@ generate_hyprland() {
 
 generate_hyprland_conf() {
     local theme_file=$XDG_CONFIG_HOME/hypr/conf/theme.conf
+    create_config_file "$theme_file"
 
     sed -i \
         -e "s/^# THEME:.*/# THEME: ${THEME_NAME}/" \
@@ -64,6 +72,7 @@ generate_hyprland_conf() {
 
 generate_waybar() {
     local theme_file=$XDG_CONFIG_HOME/waybar/colors.css
+    create_config_file "$theme_file"
 
     sed -i \
         -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|" \
@@ -83,6 +92,7 @@ generate_waybar() {
 
 generate_rofi() {
     local theme_file=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
+    create_config_file "$theme_file"
 
     sed -i \
         -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|" \
