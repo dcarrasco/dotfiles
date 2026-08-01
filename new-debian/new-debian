@@ -37,6 +37,7 @@ xdg-user-dirs-update
 [ -d "$HOME/.local/share" ]     || mkdir -p $HOME/.local/share && echo "Crea directorio .local/share"
 [ -d "$HOME/.local/state/zsh" ] || mkdir -p $HOME/.local/state/zsh && echo "Crea directorio .local/state/zsh"
 [ -d "$HOME/.config/zsh" ]      || ln -s $HOME/dotfiles/dotconfig/zsh $HOME/.config/zsh && echo "Link carpeta .config/zsh"
+[ -f "$HOME/.config/zsh" ]      || ln -s $HOME/dotfiles/dotconfig/zsh/.zshenv $HOME/.zshenv && echo "Link .zshenv"
 echo
 
 print_info "Check current shell..."
