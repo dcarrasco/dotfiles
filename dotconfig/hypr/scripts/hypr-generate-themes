@@ -109,7 +109,7 @@ generate_rofi() {
         $theme_file
 }
 
-[ $# -ge 1 ] || die "usage: generate-theme <name> [<name> ...]"
+[ $# -eq 1 ] || die "usage: generate-theme <name>"
 get_alphas
 THEME_NAME=$1
 theme_source=$XDG_CONFIG_HOME/hypr/themes/$THEME_NAME
