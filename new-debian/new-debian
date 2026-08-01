@@ -8,17 +8,14 @@ VINVERSE='\e[7m'
 NC='\e[0m' # No Color
 
 print_success() {
-    echo
     echo -e "${GREEN}$1${NC}"
 }
 
 print_error() {
-    echo
     echo -e "${RED}$1${NC}"
 }
 
 print_info() {
-    echo
     echo -e "${YELLOW}$1${NC}"
 }
 
@@ -33,6 +30,12 @@ print_info "Install command line tools..."
 sudo apt install -y zsh fzf fd-find zoxide starship tmux fastfetch trash-cli btop xdg-user-dirs
 
 print_info "Check current shell..."
+if [ ! "$(echo $SHELL)" = "/bin/zsh" ]; then
+    print_info "Current shell: $SHELL, changing to zsh"
+    chsh -s /bin/zsh daniel
+else
+    print_success "OK, current shell is: $SHELL"
+fi
 exit 0
 
 # install basic programs
