@@ -25,9 +25,11 @@ print_info() {
 print_info "Updating system packages..."
 sudo apt update; sudo apt -y upgrade
 
+
 echo
 print_info "Install command line tools..."
 sudo apt install -y zsh fzf fd-find zoxide starship tmux fastfetch trash-cli btop xdg-user-dirs neovim
+
 
 echo
 print_info "Configuring shell..."
@@ -42,6 +44,7 @@ xdg-user-dirs-update
 [ -d "$HOME/.config/fastfetch" ] || { ln -s $HOME/dotfiles/dotconfig/fastfetch $HOME/.config/fastfetch && echo "Link folder .config/fastfetch"; }
 [ -d "$HOME/.config/nvim" ]      || { ln -s $HOME/dotfiles/dotconfig/nvim      $HOME/.config/nvim && echo "Link folder .config/nvim"; }
 
+
 echo
 print_info "Check current shell..."
 if [ ! "$SHELL" = "/bin/zsh" ]; then
@@ -51,8 +54,9 @@ else
     print_success "OK, current shell is: $SHELL"
 fi
 
+
 echo
-print_info "Creating config dir links"
+print_info "Creating config dir links..."
 [ -d "$HOME/.config/rofi" ]      || ln -s $HOME/dotfiles/dotconfig/rofi      $HOME/.config/rofi
 [ -d "$HOME/.config/kitty" ]     || ln -s $HOME/dotfiles/dotconfig/kitty     $HOME/.config/kitty
 [ -d "$HOME/.config/mako" ]      || ln -s $HOME/dotfiles/dotconfig/mako      $HOME/.config/mako
@@ -60,19 +64,21 @@ print_info "Creating config dir links"
 [ -d "$HOME/.config/hypr" ]      || ln -s $HOME/dotfiles/dotconfig/hypr      $HOME/.config/hypr
 [ -d "$HOME/.config/wlogout" ]   || ln -s $HOME/dotfiles/dotconfig/wlogout   $HOME/.config/wlogout
 
-# echo "deb http://deb.debian.org/debian/ trixie-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
-#
-exit 0
 
-# install network manager
-print_info "Installing network, bluetooth"
+echo
+print_info "Installing network, bluetooth..."
 sudo apt install -y network-manager firewalld polkitd bluez bluez-tools
-#
-# install desktop environment
+
+
+echo
 print_info "Installing desktop environment"
+if [ ! grep -q trixie-backports /etc/apt/sources.list ]; then
+    echo "Add trixie-backports"
+    echo "deb http://deb.debian.org/debian/ trixie-backports main contrib non-free" | sudo tee -a /etc/apt/sources.list
+fi
 sudo apt install -y -t trixie-backports hyprland hyprland-guiutils hyprlock hyprpicker hyprpolkitagent hypridle xdg-desktop-portal xdg-desktop-portal-hyprland kitty
 sudo apt install -y uwsm wayland-utils wayland lightdm wlr-randr qt6-wayland grim slurp mako-notifier brightnessctl wlsunset wlogout
 sudo apt install -y thunar firefox-esr rofi
 #
 # install apps
-print_info "Installing apps"
+# print_info "Installing apps"
