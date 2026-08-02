@@ -62,10 +62,12 @@ alias dtop='podman stats --all --format "table {{.Container}}\t{{.Name}}\t{{.CPU
 alias nasdocker='ssh -t qnap /share/CACHEDEV1_DATA/.qpkg/container-station/bin/docker $@'
 
 function dce {
-    if [ -z "$2" ]; then
-        podman-compose exec --env SERVICE_NAME=$1 $1 bash -l
+    local service=$1
+    shift
+    if [ -z "$1" ]; then
+        podman-compose exec --env SERVICE_NAME=$service $service bash -l
     else
-        podman-compose exec --env SERVICE_NAME=$1 $1 $2 -l $3 $4 $5 $6
+        podman-compose exec --env SERVICE_NAME=$service $service "$@"
     fi
 }
 # export -f dce
