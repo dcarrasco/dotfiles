@@ -1,0 +1,1321 @@
+Reinstall fedora:
+
+Check all the packages manually installed
+Check all the flathub packages installed
+
+Installed flatpaks:
+com.github.PintaProject.Pinta
+com.github.jeromerobert.pdfarranger
+com.mattjakeman.ExtensionManager
+com.ranfdev.DistroShelf
+com.usebottles.bottles
+io.dbeaver.DBeaverCommunity
+io.github.dosbox-staging
+io.github.ellie_commons.sequeler
+io.github.flattool.Ignition
+io.github.flattool.Warehouse
+io.github.getnf.embellish
+io.github.kolunmi.Bazaar
+io.github.zingytomato.netpeek
+io.podman_desktop.PodmanDesktop
+net.nokyan.Resources
+org.gimp.GIMP
+org.gnome.Showtime
+org.gnome.World.PikaBackup
+org.gnucash.GnuCash
+org.libreoffice.LibreOffice
+page.codeberg.libre_menu_editor.LibreMenuEditor
+page.tesk.Refine
+
+Manually installed dnf packages:
+7zip
+7zip-standalone
+aajohan-comfortaa-fonts
+abrt-cli
+abrt-desktop
+abrt-java-connector
+acl
+adobe-source-code-pro-fonts
+aisleriot
+alacritty
+alembic-libs
+alsa-lib
+alsa-sof-firmware
+alsa-ucm
+alsa-utils
+amd-gpu-firmware
+amd-ucode-firmware
+anaconda
+anaconda-install-env-deps
+anaconda-live
+anaconda-webui
+armadillo
+arpack
+atari800
+atheros-firmware
+atk
+at-spi2-atk
+at-spi2-core
+attr
+audit
+authselect
+avahi
+avahi-libs
+avahi-ui-gtk3
+b43-fwcutter
+b43-openfwwf
+baobab
+bash
+bash-color-prompt
+bash-completion
+bc
+bind-utils
+blosc
+blueman
+blueman-nautilus
+bluez
+bluez-cups
+bluez-libs
+bluez-tools
+brave-browser
+brcmfmac-firmware
+brightnessctl
+brltty
+bsdcpio
+bsdtar
+btop
+btrfs-progs
+bzip2
+bzip2-libs
+cabextract
+caca-utils
+cairo
+cairo-gobject
+calibre
+cdparanoia-libs
+cfitsio
+CharLS
+chrony
+cifs-utils
+cirrus-audio-firmware
+clang19-libs
+clang19-resource-filesystem
+claude-desktop-unofficial
+clevis
+clevis-luks
+clevis-pin-tpm2
+clinfo
+cmake-rpm-macros
+cmatrix
+cockpit-bridge
+cockpit-storaged
+cockpit-system
+cockpit-ws
+cockpit-ws-selinux
+colord
+colord-libs
+compiler-rt19
+compsize
+coreutils
+cpio
+cpu-x
+cpu-x-data
+cryptsetup
+cups
+cups-browsed
+cups-devel
+cups-filters
+cups-libs
+cups-pk-helper
+curl
+cyrus-sasl-plain
+dbus-devel
+dbus-libs
+dcmtk
+dconf
+dconf-editor
+decibels
+default-editor
+default-fonts-cjk-mono
+default-fonts-cjk-sans
+default-fonts-cjk-serif
+default-fonts-core-emoji
+default-fonts-core-math
+default-fonts-core-mono
+default-fonts-core-sans
+default-fonts-core-serif
+default-fonts-other-mono
+default-fonts-other-sans
+default-fonts-other-serif
+deja-dup
+dejavu-sans-fonts
+deltarpm
+desktop-backgrounds-gnome
+dhcp-client
+distrobox
+dnf5
+dnf5-plugins
+dnf-plugins-core
+dnsmasq
+dnsmasq-langpack
+dos2unix
+dosfstools
+dpkg
+draco
+dracut-config-rescue
+dracut-live
+dracut-network
+duktape
+duplicity
+e2fsprogs
+efibootmgr
+elfutils-debuginfod-client
+elfutils-libelf
+elfutils-libs
+embree
+ethtool
+evince-djvu
+evolution-ews-core
+evolution-ews-langpacks
+exfatprogs
+expat
+f43-backgrounds-base
+f43-backgrounds-gnome
+fastfetch
+fd-find
+fdk-aac-free
+fedora-bookmarks
+fedora-chromium-config
+fedora-flathub-remote
+fedora-release-workstation
+fedora-workstation-backgrounds
+fedora-workstation-repositories
+ffmpeg-free
+ffmpegthumbnailer
+figlet
+file
+file-roller
+filesystem
+firefox
+firewall-config
+firewalld
+flac
+flac-libs
+flatpak
+flatseal
+flexiblas
+flexiblas-netlib
+flexiblas-netlib64
+flexiblas-openblas-openmp
+flexiblas-openblas-openmp64
+flexiblas-openblas-serial
+fontawesome-6-brands-fonts
+fontconfig
+fpaste
+fprintd-pam
+freetype
+freexl
+fribidi
+ftp
+fwupd
+fzf
+gamemode
+gap-srpm-macros
+gcc
+gd
+gdal-libs
+gdcm
+gdk-pixbuf2
+gdm
+gdouros-symbola-fonts
+genisoimage
+geos
+gettext-common-devel
+gettext-devel
+ghostscript
+ghostscript-tools-fontutils
+ghostscript-tools-printing
+git
+glfw
+glib2
+glibc
+glibc-all-langpacks
+glibc-gconv-extra
+glibc-langpack-es
+glib-networking
+glx-utils
+glycin-libs
+glycin-loaders
+gmp
+gnome-backgrounds
+gnome-browser-connector
+gnome-calculator
+gnome-calendar
+gnome-characters
+gnome-classic-session
+gnome-clocks
+gnome-color-manager
+gnome-connections
+gnome-contacts
+gnome-control-center
+gnome-disk-utility
+gnome-epub-thumbnailer
+gnome-firmware
+gnome-font-viewer
+gnome-initial-setup
+gnome-logs
+gnome-maps
+gnome-music
+gnome-nettool
+gnome-remote-desktop
+gnome-session-wayland-session
+gnome-settings-daemon
+gnome-shell
+gnome-shell-extension-appindicator
+gnome-shell-extension-background-logo
+gnome-software
+gnome-sudoku
+gnome-system-monitor
+gnome-terminal
+gnome-terminal-nautilus
+gnome-text-editor
+gnome-tweaks
+gnome-user-docs
+gnome-user-share
+gnome-weather
+gnu-free-sans-fonts
+gnupg2
+gnupg2-dirmngr
+gnupg2-g13
+gnupg2-gpg-agent
+gnupg2-gpgconf
+gnupg2-keyboxd
+gnupg2-scdaemon
+gnupg2-utils
+gnupg2-verify
+gnupg2-wks
+gnutls
+google-carlito-fonts
+google-crosextra-caladea-fonts
+google-droid-sans-fonts
+google-noto-emoji-fonts
+gparted
+gpgverify
+graphene
+graphite2
+grim
+grpc-data
+grub2-efi-ia32
+grub2-efi-ia32-cdboot
+grub2-efi-x64
+grub2-efi-x64-cdboot
+grub2-pc
+grub2-tools
+grub2-tools-efi
+grub2-tools-extra
+grubby
+gsm
+gstreamer1
+gstreamer1-plugin-dav1d
+gstreamer1-plugin-libav
+gstreamer1-plugin-openh264
+gstreamer1-plugins-bad-free
+gstreamer1-plugins-base
+gstreamer1-plugins-good
+gstreamer1-plugins-ugly-free
+gst-thumbnailers
+gtk2
+gtk3
+gtk4-layer-shell
+gum
+gutenprint
+gutenprint-cups
+gvfs-afc
+gvfs-afp
+gvfs-archive
+gvfs-fuse
+gvfs-goa
+gvfs-gphoto2
+gvfs-mtp
+gvfs-smb
+harfbuzz
+hdf5
+hdf-libs
+hdparm
+hfsplus-tools
+highway
+hipcc
+hostname
+hplip
+hplip-gui
+hunspell
+hunspell-es
+hwinfo
+hyperv-daemons
+hyphen-es
+hypridle
+hyprland
+hyprland-guiutils
+hyprlock
+hyprpaper
+hyprpolkitagent
+i3lock
+ibus-anthy
+ibus-chewing
+ibus-gtk3
+ibus-gtk4
+ibus-libpinyin
+ibus-libzhuyin
+ibus-m17n
+ibus-typing-booster
+igvm-libs
+inih
+initscripts
+inotify-tools
+intel-audio-firmware
+intel-gpu-firmware
+intel-lpmd
+intel-vsc-firmware
+iproute
+iptables-nft
+iptstate
+iputils
+iscsi-initiator-utils
+iwlegacy-firmware
+iwlwifi-dvm-firmware
+iwlwifi-mvm-firmware
+java-25-openjdk-headless
+java-srpm-macros
+jbigkit-libs
+jetbrains-mono-fonts
+jose
+json-glib
+julietaula-montserrat-fonts
+kbd
+kbd-legacy
+kdump-anaconda-addon
+kernel
+kernel-core
+kernel-modules
+kernel-modules-core
+kernel-modules-extra
+kexec-tools
+keyutils-libs
+kitty
+krb5-libs
+lame-libs
+langpacks-en
+langpacks-es
+lbzip2
+lcms2
+less
+lhasa
+lhasa-libs
+libaec
+libaom
+libarrow
+libarrow-acero-libs
+libarrow-dataset-libs
+libarrow-doc
+libasyncns
+libatomic
+libavif
+libblkid
+libbrotli
+libcanberra
+libcanberra-gtk2
+libcanberra-gtk3
+libcap
+libcap-devel
+libcloudproviders
+libcom_err
+libcpuid
+libcurl-minimal
+libdatrie
+libdav1d
+libdbusmenu
+libdbusmenu-gtk3
+libdrm
+libedit
+libepoxy
+libertas-firmware
+libevent
+libexif
+libffi
+libgcc
+libgeotiff
+libgfortran
+libglvnd
+libglvnd-egl
+libglvnd-gles
+libglvnd-glx
+libgnome-games-support1
+libgphoto2
+libgta
+libgudev
+libgusb
+libharu
+libheif
+libibverbs
+libICE
+libicu
+libidn2
+libimagequant
+libjose
+libjpeg-turbo
+libjpeg-turbo-devel
+libjxl
+libkml
+liblastlog2
+liblc3
+libldac
+liblerc
+libluksmeta
+libmount
+libnghttp2
+libnl3
+libnsl
+libogg
+libomp19
+libomp19-devel
+liborc2
+libpcap
+libpciaccess
+libpng
+libpng12
+libproxy
+libproxy-bin
+libpsl
+libpst
+libqhull_r
+libquadmath
+librsvg2
+librsync
+librttopo
+libsane-hpaio
+libsbc
+libseccomp
+libselinux
+libsepol
+libsndfile
+libsoup3
+libspatialite
+libspnav
+libstdc++
+libstemmer
+libtasn1
+libtdb
+libthai
+libtheora
+libtiff
+libtinysparql
+libtool
+libtool-ltdl
+libunistring
+libunwind
+libusal
+libusb1
+libusb1-devel
+libuuid
+libv4l
+libva
+libva-intel-media-driver
+libva-utils
+libvdpau
+libverto
+libvisual
+libvorbis
+libwayland-client
+libwayland-cursor
+libwayland-egl
+libwayland-server
+libwebp
+libX11
+libX11-xcb
+libXau
+libxcb
+libXcomposite
+libxcrypt
+libxcrypt-compat
+libXcursor
+libXdamage
+libXext
+libXfixes
+libXft
+libXi
+libXinerama
+libxkbcommon
+libxml2
+libXpm
+libXrandr
+libXrender
+libXScrnSaver
+libxshmfence
+libXtst
+libXv
+libXxf86vm
+libzstd
+light
+linux-firmware
+livesys-scripts
+llvm-libs
+lm_sensors-libs
+localsearch
+lockdev
+logrotate
+loupe
+lrzsz
+lshw
+lsof
+luksmeta
+lvm2
+lz4-libs
+lzip
+lzo
+mac
+mac-libs
+mactel-boot
+mailcap
+maim
+mako
+man-db
+man-pages
+man-pages-es
+mariadb
+mariadb-server
+mc
+mcelog
+mdadm
+mediawriter
+mesa-compat-libxatracker
+mesa-dri-drivers
+mesa-filesystem
+mesa-libEGL
+mesa-libgbm
+mesa-libGL
+mesa-vulkan-drivers
+microcode_ctl
+mingw32-crt
+mingw32-FAudio
+mingw32-filesystem
+mingw32-lcms2
+mingw32-libgcc
+mingw32-libjpeg-turbo
+mingw32-libpng
+mingw32-libstdc++
+mingw32-libtiff
+mingw32-libxml2
+mingw32-libxslt
+mingw32-sdl2-compat
+mingw32-vkd3d
+mingw32-win-iconv
+mingw32-winpthreads
+mingw32-zlib
+mingw64-crt
+mingw64-FAudio
+mingw64-filesystem
+mingw64-lcms2
+mingw64-libgcc
+mingw64-libjpeg-turbo
+mingw64-libpng
+mingw64-libstdc++
+mingw64-libtiff
+mingw64-libxml2
+mingw64-libxslt
+mingw64-sdl2-compat
+mingw64-vkd3d
+mingw64-win-iconv
+mingw64-winpthreads
+mingw64-zlib
+mingw-binutils-generic
+mingw-filesystem-base
+minizip-ng-compat
+ModemManager
+mozjs140
+mpage
+mpg123-libs
+mt7xxx-firmware
+mtr
+muParser
+mythes-es
+nautilus
+ncdu
+ncftp
+ncompress
+ncurses
+ncurses-libs
+neovim
+netcdf
+net-snmp-devel
+nettle
+net-tools
+NetworkManager
+NetworkManager-adsl
+NetworkManager-bluetooth
+NetworkManager-config-connectivity-fedora
+NetworkManager-libnm
+NetworkManager-openconnect-gnome
+NetworkManager-openvpn-gnome
+NetworkManager-ppp
+NetworkManager-pptp-gnome
+NetworkManager-ssh-gnome
+NetworkManager-tui
+NetworkManager-vpnc-gnome
+NetworkManager-wifi
+NetworkManager-wwan
+newt
+nfs-utils
+nftables-services
+ngtcp2
+ngtcp2-crypto-gnutls
+nmap-ncat
+noctalia-qs-legacy
+nodejs22
+nomarch
+nspr
+nss
+nss-mdns
+nss-softokn
+nss-softokn-freebl
+nss-util
+ntfs-3g
+ntfsprogs
+nvidia-gpu-firmware
+nvme-cli
+nwg-look
+nxpwireless-firmware
+ogdi
+oidn-libs
+openblas
+openblas-openmp
+openblas-openmp64
+openblas-serial
+OpenColorIO
+opencv-core
+opencv-imgcodecs
+opencv-imgproc
+opencv-videoio
+OpenImageIO
+openjpeg
+openpgl
+open-sans-fonts
+opensc
+openshadinglanguage-libs
+openssh-clients
+openssh-server
+openssl
+openssl-devel
+openssl-libs
+openssl-pkcs11
+opensubdiv
+openvdb-libs
+open-vm-tools-desktop
+opus
+orc
+orca
+p11-kit
+PackageKit
+PackageKit-command-not-found
+PackageKit-gstreamer-plugin
+PackageKit-gtk3-module
+pam_afs_session
+pango
+papers
+papers-libs
+papers-nautilus
+papers-previewer
+papers-thumbnailer
+paps
+parquet-libs
+parted
+partio-libs
+passwdqc
+patool
+pavucontrol
+pbzip2
+pciutils
+pcre2
+pcsc-lite
+pcsc-lite-ccid
+perl-Clone-PP
+perl-fields
+perl-Hash-Util
+php-cli
+php-intl
+php-mbstring
+php-mysqlnd
+php-pdo
+php-xml
+pinentry-gnome3
+pinfo
+pipewire
+pipewire-alsa
+pipewire-config-raop
+pipewire-gstreamer
+pipewire-libs
+pipewire-pulseaudio
+pipewire-utils
+pixman
+plocate
+plymouth
+plymouth-system-theme
+podman
+podman-compose
+podman-tui
+podofo0.10
+policycoreutils
+policycoreutils-python-utils
+polkit
+polkit-gnome
+potrace
+prefixdevname
+procps-ng
+proj
+proj-data
+proj-data-ar
+proj-data-at
+proj-data-au
+proj-data-be
+proj-data-br
+proj-data-ca
+proj-data-ch
+proj-data-cz
+proj-data-de
+proj-data-dk
+proj-data-es
+proj-data-eur
+proj-data-fi
+proj-data-fo
+proj-data-fr
+proj-data-hu
+proj-data-is
+proj-data-jp
+proj-data-lv
+proj-data-mx
+proj-data-nc
+proj-data-nl
+proj-data-no
+proj-data-nz
+proj-data-pl
+proj-data-pt
+proj-data-se
+proj-data-si
+proj-data-sk
+proj-data-uk
+proj-data-us
+proj-data-za
+psacct
+psmisc
+ptex-libs
+pulseaudio-libs
+pulseaudio-utils
+pystring
+python3-azure-core
+python3-azure-storage-blob
+python3-b2sdk
+python3-bcrypt
+python3-cachetools
+python3-certifi
+python3-cryptography
+python3-cython
+python3-debtcollector
+python3-devel
+python3-distlib
+python3-dropbox
+python3-fasteners
+python3-filelock
+python3-fvs
+python3-google-api-client
+python3-google-api-core
+python3-googleapis-common-protos
+python3-google-auth
+python3-google-auth-httplib2
+python3-google-auth-oauthlib
+python3-grpcio
+python3-grpcio-status
+python3-icoextract
+python3-iso8601
+python3-isodate
+python3-jaraco-classes
+python3-jaraco-context
+python3-jaraco-functools
+python3-keyring
+python3-keyring+completion
+python3-keystoneauth1
+python3-keystoneclient
+python3-libdnf5
+python3-logfury
+python3-more-itertools
+python3-netaddr
+python3-netifaces
+python3-nftables
+python3-numexpr
+python3-numpy
+python3-numpy-f2py
+python3-oauthlib
+python3-openimageio
+python3-orjson
+python3-oslo-config
+python3-oslo-i18n
+python3-oslo-serialization
+python3-oslo-utils
+python3-os-service-types
+python3-paramiko
+python3-pathvalidate
+python3-patool
+python3-pbr
+python3-pefile
+python3-platformdirs
+python3-protobuf
+python3-psutil
+python3-pyasn1
+python3-pyasn1-modules
+python3-pynacl
+python3-pyproj
+python3-PyQt4
+python3-pytz
+python3-requests-oauthlib
+python3-rfc3986
+python3-rsa
+python3-secretstorage
+python3-shtab
+python3-stevedore
+python3-stone
+python3-swiftclient
+python3-swiftclient+keystone
+python3-tqdm
+python3-uritemplate
+python3-virtualenv
+python3-vkbasalt-cli
+python3-wrapt
+python3-zstandard
+python-oslo-i18n-lang
+python-oslo-utils-lang
+python-setuptools-wheel
+python-wheel-wheel
+qadwaitadecorations-qt5
+qcom-wwan-firmware
+qemu-device-uefi-vars
+qemu-guest-agent
+qqwing-libs
+qt5-qtbase
+qt5-qtbase-gui
+qt5-qtdeclarative
+qt5-qttranslations
+qt5-qtxmlpatterns
+qt6-qttranslations
+quota
+radeontop
+rav1e-libs
+rclone
+re2
+readline
+realmd
+realtek-firmware
+remove-retired-packages
+restic
+rocm-clang
+rocm-clang-devel
+rocm-clang-libs
+rocm-clang-runtime-devel
+rocm-comgr
+rocm-device-libs
+rocm-hip
+rocm-libc++
+rocm-libc++-devel
+rocm-lld
+rocm-llvm
+rocm-llvm-devel
+rocm-llvm-filesystem
+rocm-llvm-libs
+rocm-llvm-static
+rocm-runtime
+rocm-runtime-devel
+rofi
+rootfiles
+rpm
+rpmconf
+rsms-inter-fonts
+rsync
+rust
+rygel
+rzip
+samba
+samba-client
+sane-backends-devel
+sane-backends-drivers-scanners
+sane-frontends
+SDL3-devel
+seahorse
+selinux-policy-targeted
+setroubleshoot
+setup
+shadow-utils
+sharutils
+ShellCheck
+shim-ia32
+shim-x64
+shotwell
+showtime
+sil-mingzat-fonts
+simdutf
+simple-scan
+skopeo
+slurp
+snapshot
+sos
+speech-dispatcher
+spice-vdagent
+spice-webdavd
+sqlite-libs
+sscg
+sssd
+sssd-common
+sssd-kcm
+star
+steam-arch-transition
+steam-devices
+sublime-text
+sudo
+sushi
+svt-av1-libs
+symlinks
+system-config-printer
+system-config-printer-udev
+systemd
+systemd-libs
+systemd-oomd-defaults
+systemd-resolved
+systemd-sysusers
+systemd-udev
+tar
+tbb
+tbb2020.3
+tcpdump
+teamd
+terminus-fonts-console
+tesseract-langpack-spa
+thermald
+Thunar
+time
+tinysparql
+tiwilink-firmware
+traceroute
+trash-cli
+tree
+tumbler-extras
+typescript
+udisks2-btrfs
+udisks2-lvm2
+unixODBC
+unrar
+unrar-free
+unzip
+uresourced
+urw-base35-bookman-fonts
+urw-base35-c059-fonts
+urw-base35-d050000l-fonts
+urw-base35-fonts
+urw-base35-gothic-fonts
+urw-base35-nimbus-mono-ps-fonts
+urw-base35-nimbus-roman-fonts
+urw-base35-nimbus-sans-fonts
+urw-base35-p052-fonts
+urw-base35-standard-symbols-ps-fonts
+urw-base35-z003-fonts
+usb_modeswitch
+usbutils
+usd-libs
+utf8proc
+util-linux
+variety
+vim-minimal
+virt-manager
+virtualbox-guest-additions
+virt-viewer
+vkBasalt
+vlc-gui-skins2
+vlc-plugin-ffmpeg
+vlc-plugin-gnome
+vlc-plugin-notify
+vlc-plugins-extra
+vlc-plugin-visualization
+vulkan-loader
+w3m-img
+waybar-git
+wdisplays
+webrtc-audio-processing
+wget2-wget
+which
+whois
+wiremix
+wireplumber
+wlogout
+wlr-randr
+wlsunset
+words
+wpa_supplicant
+xdg-desktop-portal
+xdg-desktop-portal-gnome
+xdg-desktop-portal-gtk
+xdg-user-dirs-gtk
+xdms
+xdpyinfo
+xerces-c
+xev
+xevd-libs
+xeve-libs
+xfsprogs
+xinput
+xorg-x11-xauth
+xorg-x11-xinit
+xrandr
+xset
+xsetroot
+xwininfo
+xz-libs
+xz-lzma-compat
+yaml-cpp
+yelp
+zip
+zlib-ng-compat
+zopfli
+zoxide
+zpaq
+zpaq-libs
+zram-generator-defaults
+zsh
+
+Installed .desktop applications (system-wide + user + flatpak):
+Alacritty — Alacritty
+anaconda-gnome-control-center — Keyboard External
+Asphalt Legends — Asphalt Legends
+atari800 — Atari800
+blueman-adapters — Bluetooth Adapters
+blueman-manager — Bluetooth Manager
+brave-browser — Brave Web Browser
+btop — btop++
+ca.desrt.dconf-editor — dconf Editor
+calibre-ebook-edit — E-book editor
+calibre-ebook-viewer — E-book viewer
+calibre-gui — calibre
+calibre-lrfviewer — LRF viewer
+claude-code-url-handler — Claude Code URL Handler
+claude-desktop-unofficial — Claude
+com.brave.Browser — Brave Web Browser
+com.github.jeromerobert.pdfarranger — PDF Arranger
+com.github.PintaProject.Pinta — Pinta
+com.github.tchx84.Flatseal — Flatseal
+com.mattjakeman.ExtensionManager — Extension Manager
+com.ranfdev.DistroShelf — DistroShelf
+com.usebottles.bottles — Bottles
+com.usebottles.bottles.App_349fc84b71c339bc6a2cd2f62b5d6aa59a02bb61 — World of Warcraft
+com.usebottles.bottles.App_5e3aee6aac0edb6ed75f1249e43c7e2d024bbffa — Microsoft Powerpoint
+com.usebottles.bottles.App_b2d0f9079fdabfede383ebc39f7793ec63701277 — Microsoft Word
+com.usebottles.bottles.App_b5873105ca3e89a3858b882b4f40bf90fe932f98 — Microsoft Excel
+dev.noctalia.noctalia-qs — noctalia-qs
+dropbox — Dropbox
+extlinks — Browser External
+firewall-config — Firewall
+gcm-import — ICC Profile Installer
+gcm-picker — Color Picker
+gcr-prompter — Access Prompt
+gcr-viewer — View file
+geoclue-demo-agent — Geoclue Demo agent
+gnome-about-panel — About
+gnome-applications-panel — Apps
+gnome-background-panel — Appearance
+gnome-bluetooth-panel — Bluetooth
+gnome-color-panel — Color Management
+gnome-datetime-panel — Date & Time
+gnome-disk-image-mounter — Disk Image Mounter
+gnome-disk-image-writer — Disk Image Writer
+gnome-display-panel — Displays
+gnome-initial-setup — Initial Setup
+gnome-keyboard-panel — Keyboard
+gnome-mouse-panel — Mouse & Touchpad
+gnome-multitasking-panel — Multitasking
+gnome-nettool — Network Tools
+gnome-network-panel — Network
+gnome-notifications-panel — Notifications
+gnome-online-accounts-panel — Online Accounts
+gnome-power-panel — Power
+gnome-printers-panel — Printers
+gnome-privacy-panel — Privacy & Security
+gnome-region-panel — Region & Language
+gnome-search-panel — Search
+gnome-sharing-panel — Sharing
+gnome-software-local-file-flatpak — Software Install
+gnome-software-local-file-fwupd — Software Install
+gnome-software-local-file-metainfo — Preview Metainfo
+gnome-software-local-file-packagekit — Software Install
+gnome-sound-panel — Sound
+gnome-system-monitor-kde — GNOME System Monitor
+gnome-system-panel — System
+gnome-universal-access-panel — Accessibility
+gnome-user-share-webdav — File Sharing
+gnome-users-panel — Users
+gnome-wacom-panel — Graphics Tablets
+gnome-wellbeing-panel — Wellbeing
+gnome-wifi-panel — Wi-Fi
+gnome-wwan-panel — Mobile Network
+gparted — GParted
+hplip — HPLIP Graphical Tools
+hp-uiscan — hp-uiscan
+ibus-setup-anthy — IBus Anthy Setup
+ibus-setup-chewing — IBus Chewing Preferences
+ibus-setup-libbopomofo — IBus LibBopomofo Preferences
+ibus-setup-libpinyin — IBus LibPinyin Setup
+ibus-setup-libzhuyin — IBus LibZhuyin Setup
+ibus-setup-m17n — IBus M17N Setup
+ibus-setup-tb — Typing Booster Preferences
+ibus-setup-typing-booster — Typing Booster Preferences
+io.dbeaver.DBeaverCommunity — DBeaver CE
+io.github.dosbox-staging — DOSBox Staging
+io.github.ellie_commons.sequeler — Sequeler
+io.github.flattool.Ignition — Ignition
+io.github.flattool.Warehouse — Warehouse
+io.github.getnf.embellish — Embellish
+io.github.kolunmi.Bazaar — Bazaar
+io.github.thetumultuousunicornofdarkness.cpu-x — CPU-X
+io.github.zingytomato.netpeek — NetPeek
+io.podman_desktop.PodmanDesktop — Podman Desktop
+kitty — kitty
+kitty-open — kitty URL Launcher
+liveinst — Install to Hard Drive
+nautilus-autorun-software — Run Software
+net.nokyan.Resources — Resources
+network.cycles.wdisplays — Displays
+nvim — Neovim
+nwg-look — GTK Settings
+nwg-panel-config — nwg-panel Settings
+orca — Orca
+org.fedoraproject.MediaWriter — Fedora Media Writer
+org.freedesktop.GnomeAbrt — Problem Reporting
+org.freedesktop.IBus.Panel.Emojier — Emoji Choice
+org.freedesktop.IBus.Panel.Extension.Gtk3 — Emoji Choice
+org.freedesktop.IBus.Panel.Wayland.Gtk3 — IBus Wayland
+org.freedesktop.IBus.Setup — IBus Preferences
+org.freedesktop.MalcontentControl — Parental Controls
+org.freedesktop.problems.applet — Problem Reporting
+org.freedesktop.Xwayland — Xwayland
+org.gimp.GIMP — GNU Image Manipulation Program
+org.gnome.baobab — Disk Usage Analyzer
+org.gnome.BrowserConnector — GNOME browser connector
+org.gnome.Calculator — Calculator
+org.gnome.Calendar — Calendar
+org.gnome.Characters — Characters
+org.gnome.clocks — Clocks
+org.gnome.ColorProfileViewer — Color Profile Viewer
+org.gnome.Connections — Connections
+org.gnome.Contacts — Contacts
+org.gnome.Decibels — Audio Player
+org.gnome.DejaDup — Backups
+org.gnome.DiskUtility — Disks
+org.gnome.Evolution-alarm-notify — Events and Tasks Reminders
+org.gnome.evolution-data-server.OAuth2-handler — Evolution Data Server OAuth2 Handler
+org.gnome.FileRoller — File Roller
+org.gnome.Firmware — Firmware
+org.gnome.font-viewer — Fonts
+org.gnome.goa-daemon — Online Accounts
+org.gnome.Logs — Logs
+org.gnome.Loupe — Image Viewer
+org.gnome.Maps — Maps
+org.gnome.Music — Music
+org.gnome.Nautilus — Files
+org.gnome.OnlineAccounts.OAuth2 — GNOME OAuth2 Handler
+org.gnome.Papers — Document Viewer
+org.gnome.Papers-previewer — Print Preview
+org.gnome.seahorse.Application — Passwords and Keys
+org.gnome.Settings — Settings
+org.gnome.Shell.Extensions — Extensions
+org.gnome.Shell.Extensions.GSConnect — GSConnect
+org.gnome.Shell.Extensions.GSConnect.Preferences — GSConnect Preferences
+org.gnome.Shell.PortalHelper — Network Login
+org.gnome.Shotwell — Shotwell
+org.gnome.Shotwell-Viewer — Shotwell Viewer
+org.gnome.Showtime — Video Player
+org.gnome.SimpleScan — Document Scanner
+org.gnome.Snapshot — Camera
+org.gnome.Software — Software
+org.gnome.Sudoku — Sudoku
+org.gnome.SystemMonitor — System Monitor
+org.gnome.Tecla — Tecla
+org.gnome.Terminal — Terminal
+org.gnome.Terminal.Preferences — Terminal Preferences
+org.gnome.TextEditor — Text Editor
+org.gnome.Tour — Tour
+org.gnome.tweaks — Tweaks
+org.gnome.Weather — Weather
+org.gnome.World.PikaBackup — Pika Backup
+org.gnome.World.PikaBackup.Monitor — Pika Backup Monitor
+org.gnome.Yelp — Help
+org.gnome.Zenity — Zenity
+org.gnucash.GnuCash — GnuCash
+org.libreoffice.LibreOffice — LibreOffice
+org.libreoffice.LibreOffice.base — LibreOffice Base
+org.libreoffice.LibreOffice.calc — LibreOffice Calc
+org.libreoffice.LibreOffice.draw — LibreOffice Draw
+org.libreoffice.LibreOffice.impress — LibreOffice Impress
+org.libreoffice.LibreOffice.math — LibreOffice Math
+org.libreoffice.LibreOffice.writer — LibreOffice Writer
+org.libreoffice.LibreOffice.xsltfilter — LibreOffice XSLT based filters
+org.mozilla.firefox — Firefox
+org.pulseaudio.pavucontrol — Volume Control
+page.codeberg.libre_menu_editor.LibreMenuEditor — Main Menu
+page.tesk.Refine — Refine
+panel-desktop-handler — Create Launcher on the panel
+panel-preferences — Panel
+qemu — QEMU
+remote-viewer — Remote Viewer
+rofi — Rofi
+rofi-theme-selector — Rofi Theme Selector
+rygel — Rygel
+rygel-preferences — Rygel Preferences
+setroubleshoot — SELinux Troubleshooter
+Sid Meier's Civilization VI — Sid Meier's Civilization VI
+sol — AisleRiot Solitaire
+steam — Steam
+sublime_text — Sublime Text
+system-config-printer — Print Settings
+The Seven Deadly Sins Origin — The Seven Deadly Sins: Origin
+thunar — Thunar File Manager
+thunar-bulk-rename — Bulk Rename
+thunar-settings — Thunar Preferences
+user-dirs-update-gtk — User folders update
+uuctl — uuctl
+variety — Variety
+virt-manager — Virtual Machine Manager
+wine-extension-chm — hh
+wine-extension-hlp — winhlp32
+wine-extension-msp — Wine Installer
+wine-extension-vbs — wscript
+XCOM 2 — XCOM 2
+xdg-desktop-portal-gnome — Portal
+xdg-desktop-portal-gtk — Portal
+
+Virtual machines (virt-manager, qemu:///system):
+(restore with virsh define /path/to/backup/my-server-backup.xml)
+bluefin
+cachy_os
+debian13
+haiku
+omarchy
+windows
+
+Soluciones principales para el error de SWTPM1.
+* Crear el directorio y ajustar permisos
+* Falta la ruta base donde swtpm almacena las claves y certificados locales. Ejecuta en la terminal:
+* sudo mkdir -p /var/lib/swtpm-localca
+* sudo chown -R tss:tss /var/lib/swtpm-localca (o cambia tss por el usuario con el que corras libvirt si difiere)
+* Asegurar permisos correctos: sudo chmod 750 /var/lib/swtpm-localca
+
+asi esta hoy en fedora44
+drwxr-x---.  2 tss                  root                  4096 ene 16  2026 swtpm-localca
+total 28
+-rw-r--r--. 1 tss tss    1 feb 22  2025 certserial
+-rw-r--r--. 1 tss tss 1505 mar 16  2024 issuercert.pem
+-rw-r-----. 1 tss tss 8180 mar 16  2024 signkey.pem
+-rw-r--r--. 1 tss tss 1468 mar 16  2024 swtpm-localca-rootca-cert.pem
+-rw-r-----. 1 tss tss 8177 mar 16  2024 swtpm-localca-rootca-privkey.pem
+
