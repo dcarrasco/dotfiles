@@ -1,6 +1,7 @@
 # INSTALL NEW DEBIAN
  Usar imagen netinstall de DEBIAN
  Instalar con btrfs separando / y /home
+pdf con pasos a seguir
 
  Bootear
  Instalar sudo y configurar sudo
