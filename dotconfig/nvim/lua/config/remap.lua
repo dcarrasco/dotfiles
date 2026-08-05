@@ -23,6 +23,7 @@ keymap.set("n", "<Leader>f", ":tj <c-r><c-w><CR>")
 keymap.set("n", "<Leader>h", ":tab help<space>", { desc = "Show help" })
 keymap.set("n", "Q", "<nop>")       -- Disable anoying ex modedir
 keymap.set("n", "<C-x>", ":<Up>", { desc = "Show last command" })   -- Last command
+keymap.set("n", "<C-q>", ":q<CR>", { desc = "Show last command" })   -- Last command
 
 
 -- Latam Keyboard mgmt --------------------------------------------------------
