@@ -294,6 +294,8 @@
         "format-en": "  us",
         "format-es": "",
         "keyboard-name": "at-translated-set-2-keyboard",
+        "tooltip": true,
+        "tooltip-format": "Layout: {long}\n<b>SUPER+SHIFT+SPACE</b> to change"
     },
 
     "custom/windowname": {
