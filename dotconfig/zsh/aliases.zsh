@@ -45,13 +45,14 @@ alias python=python3
 alias web='cd /mnt/c/Users/Daniel/Code'
 alias lara='cd /mnt/c/Users/Daniel/Code/gastos-alpine/app/'
 
-# Docker / podman =================================================================
+# Docker / Podman =================================================================
 # alias dmstart=docker-machine start
 # alias dmstop=docker-machine stop
 alias docker=podman
 alias dc='podman-compose $@'
 alias dcu='podman-compose up -d'
 alias dcd='podman-compose down'
+alias pdc='podman-compose'
 alias dclsa='podman container ls --all'
 alias dcbuild='podman-compose build --force-rm --pull'
 alias dps='podman ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}"'
