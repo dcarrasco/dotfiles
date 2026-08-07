@@ -10,8 +10,8 @@ HYPR.mainMod = "SUPER"
 
 -- Programs
 local appBinds = {
-  { key = "RETURN", dsp = HYPR.apps.terminal, desc = "Open terminal" },
-  { key = "ALT + RETURN", dsp = HYPR.apps.tmux, desc = "Open tmux in terminal" },
+  { key = "RETURN", dsp = HYPR.apps.tmux, desc = "Open tmux in terminal" },
+  { key = "ALT + RETURN", dsp = HYPR.apps.terminal, desc = "Open terminal" },
   { key = "SHIFT + RETURN", dsp = HYPR.apps.terminal2, desc = "Open alternate terminal" },
   { key = "B", dsp = HYPR.apps.browser, desc = "Open browser" },
   { key = "ALT + B", dsp = HYPR.apps.browser2, desc = "Open alternate browser" },
