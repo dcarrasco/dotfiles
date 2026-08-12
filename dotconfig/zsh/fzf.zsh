@@ -37,7 +37,7 @@ fi
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # compact UI
-export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --border"
+export FZF_DEFAULT_OPTS="--height=50% --layout=reverse --border"
 
 _fzf_file_no_hidden() {
     local cmd result
