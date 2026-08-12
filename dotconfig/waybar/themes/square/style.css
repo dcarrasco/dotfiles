@@ -13,7 +13,7 @@ __        __          _                      _         _
 }
 
 window#waybar {
-    background: linear-gradient(0deg, alpha(@bg-normal, 0.6), alpha(@bg-normal, 0.7));
+    background: linear-gradient(0deg, @bg-normal, alpha(@bg-normal, 0.7));
     border-bottom: 1px solid alpha(@bg-normal, 0.8);
 }
 
