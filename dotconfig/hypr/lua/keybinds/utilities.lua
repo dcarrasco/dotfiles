@@ -37,5 +37,6 @@ return {
   { key = "SHIFT + SPACE", dsp = HYPR.fn.scripts("hypr-switch-keyboard-layout"), desc = "Switch keyboard layout" },
   { mod = "", key = "switch:on:Lid Switch", dsp = "hyprctl keyword monitor 'eDP-1, disable'", desc = "Disable screen on close lid" },
   { mod = "", key = "switch:off:Lid Switch", dsp = "hyprctl keyword monitor 'eDP-1, preferred, auto, 1'", desc = "Enable screen on close lid" },
+  { mod = "", key = "XF86PowerOff", dsp = HYPR.apps.logout, desc = "System menu" },
 }
 
