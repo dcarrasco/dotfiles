@@ -7,7 +7,7 @@
  */
 
 configuration {
-    font: "Adwaita Sans 17";
+    font: "Adwaita Sans 13";
     icon-theme: "kora-grey";
     drun-display-format: "{name}";
     display-drun: "󰀻";

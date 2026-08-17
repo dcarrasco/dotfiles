@@ -11,7 +11,7 @@ Style: Underscore
 
 * {
     font-family: Adwaita Sans, SF Mono, sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
 }
 
 .modules-left, .modules-right, .modules-center {
@@ -24,6 +24,6 @@ Style: Underscore
 }
 
 #window label {
-    font-size: 15pt;
+    font-size: 13pt;
 }
 

@@ -67,7 +67,7 @@ hl.window_rule({ match = {workspace = "w[tv1]", float = false}, no_shadow = true
 -- System
 hl.window_rule({ match = {class = "hypr-sys-menu"}, float = true })
 hl.window_rule({ match = {class = "hypr-sys-menu"}, center = true })
-hl.window_rule({ match = {class = "hypr-sys-menu"}, size = "1500 875" })
+hl.window_rule({ match = {class = "hypr-sys-menu"}, size = "1200 700" })
 hl.window_rule({ match = {modal = true}, float = true})
 hl.window_rule({ match = {class = "^(xdg-desktop-portal-gtk)$"}, float = true })
 -- Dialogo para grabar en brave desde google, es flotante

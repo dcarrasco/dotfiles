@@ -9,7 +9,7 @@ __        __          _                      _         _
 
 * {
     font-family: SF UI Display, SF Mono, Helvetica, Arial, sans-serif;
-    font-size: 15pt;
+    font-size: 12pt;
     text-shadow: 1px 1px 1px alpha(@bg-normal, 0.5);
 }
 

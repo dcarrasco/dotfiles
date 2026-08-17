@@ -42,10 +42,10 @@ button {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 30%;
-    margin: 10em 0.5em;
+    margin: 8em 0.5em;
 
     font-family: Adwaita Sans;
-    font-size: 18pt;
+    font-size: 15pt;
     color: @nord4;
 }
 
@@ -59,13 +59,13 @@ button:focus {
 	/* background-color: @nord2; */
 	background-color: rgba(67, 76, 94, 0.5);
     border-color: @nord4;
-    background-size: 40%;
+    background-size: 35%;
 }
 
 button:hover {
     color: @nord6;
     border-color: @nord3;
-    background-size: 40%;
+    background-size: 35%;
 }
 
 #lock {

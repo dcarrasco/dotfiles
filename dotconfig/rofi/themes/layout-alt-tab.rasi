@@ -133,8 +133,7 @@ element-text {
     // padding: 0.3em 0em 0 0;
     horizontal-align: 0.5;
     vertical-align: 0.5;
-    font: "SF UI Display 12";
-    // font: "Adwaita Sans 11";
+    font: "SF UI Display 10";
     cursor: pointer;
     expand: false;
 }
