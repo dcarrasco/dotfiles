@@ -20,14 +20,10 @@ hl.window_rule({ match = {class = "org.gnome.Nautilus"}, workspace = "4" })
 
 -- virt-manager
 hl.window_rule({ match = {class = "^(virt-manager)$"}, workspace = "3" })
-hl.window_rule({ match = {class = "^(virt-viewer)$"}, workspace = "3" })
-hl.window_rule({ match = {class = "^(virt-viewer)$"}, maximize = true })
-hl.window_rule({ match = {class = "^(virt-viewer)$"}, fullscreen = true })
-hl.window_rule({ match = {class = "^(virt-viewer)$"}, fullscreen_state = "0 2" })
-hl.window_rule({ match = {class = "^(Virt-viewer)$"}, workspace = "3" })
-hl.window_rule({ match = {class = "^(Virt-viewer)$"}, maximize = true })
-hl.window_rule({ match = {class = "^(Virt-viewer)$"}, fullscreen = true })
-hl.window_rule({ match = {class = "^(Virt-viewer)$"}, fullscreen_state = "0 2" })
+hl.window_rule({ match = {class = "^([Vv]irt-viewer)$"}, workspace = "3" })
+hl.window_rule({ match = {class = "^([Vv]irt-viewer)$"}, maximize = true })
+hl.window_rule({ match = {class = "^([Vv]irt-viewer)$"}, fullscreen = true })
+hl.window_rule({ match = {class = "^([Vv]irt-viewer)$"}, fullscreen_state = "0 2" })
 
 -- rofi / wofi
 hl.layer_rule({ match = {namespace = "rofi"}, blur = true })
