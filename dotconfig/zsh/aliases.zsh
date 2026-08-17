@@ -14,6 +14,7 @@ alias rm='trash -v'
 # alias grep='rg --color=auto'
 alias df='df -h'
 
+alias bat='bat -n'
 
 alias cd..="cd .."
 alias ..="cd ..;pwd"
