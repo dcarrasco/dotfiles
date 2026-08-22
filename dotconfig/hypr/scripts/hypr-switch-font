@@ -1,9 +1,15 @@
 #!/bin/bash
 
-kitty_conf=$HOME/.config/kitty/theme.conf
-alacritty_conf=$HOME/.config/alacritty/theme.toml
+export PATH="$XDG_CONFIG_HOME/hypr/scripts:$PATH"
+
+kitty_conf=$XDG_CONFIG_HOME/kitty/theme.conf
+alacritty_conf=$XDG_CONFIG_HOME/alacritty/theme.toml
 
 # figlet -c "Terminal font"
+
+get_fonts() {
+    fc-list :spacing=100 -f "%{family[0]}\n" | sort -u
+}
 
 if [ ! -f "$kitty_conf" ]; then
     cp "$kitty_conf".orig "$kitty_conf"
@@ -16,19 +22,24 @@ fi
 if [ -n "$1" ]; then
     font="$1"
 else
-    current_font=$(grep ^font_family $kitty_conf | sed 's/^font_family  *//')
-    fonts=$(fc-list :spacing=100 -f "%{family[0]}\n" | sort -u | sed 's/\(.*\)/<span font_family="\1">\1<\/span>/')
+    current_font=$(grep ^font_family "$kitty_conf" | sed 's/^font_family  *//')
+    fonts=$(get_fonts | sed 's/\(.*\)/<span font_family="\1">\1<\/span>/')
     font=$(hypr-sys-show-menu "$current_font" "$fonts")
 fi
 
 if [[ -n "$font" ]]; then
+    # valida que $font sea una fuenta válida instalada
+    if ! get_fonts | grep -q "$font"; then
+        exit 1
+    fi
+
     if [[ -f $kitty_conf ]]; then
-        sed -i "s/^font_family .*/font_family  $font/g" $kitty_conf
+        sed -i "s/^font_family .*/font_family  $font/g" "$kitty_conf"
         pkill -USR1 kitty
     fi
 
     if [[ -f $alacritty_conf ]]; then
-        sed -i "s/^family = \".*\"/family = \"$font\"/g" $alacritty_conf
+        sed -i "s/^family = \".*\"/family = \"$font\"/g" "$alacritty_conf"
     fi
 fi
 

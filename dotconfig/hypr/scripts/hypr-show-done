@@ -2,5 +2,5 @@
 # Muestra mensaje de termino y espera que se presione una tecla
 # Simbolos:     󰗠  󱕝  󰗡    󰄵
 echo
-echo -e "\e[32m󰄵 Listo! Presione cualquier tecla para cerrar...\e[0m"
-read -n 1 -s
+echo -en "\e[32m󰄵 Listo! Presione cualquier tecla para cerrar...\e[0m "
+read -r -n 1 -s

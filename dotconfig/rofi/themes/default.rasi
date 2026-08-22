@@ -123,7 +123,7 @@ element-icon {
 scrollbar {
     handle-color: @fg-scrollbar;
     handle-rounded-corners: true;
-    handle-width: 0.4em;
+    handle-width: 0.2em;
     padding: 0 0 0 0.5em;
 }
 

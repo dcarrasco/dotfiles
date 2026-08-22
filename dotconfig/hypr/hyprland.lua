@@ -22,9 +22,10 @@ HYPR.apps = {
   browser      = HYPR.fn.app("brave-browser --password-store=basic"),
   browser2     = HYPR.fn.app("firefox"),
   files        = HYPR.fn.app("thunar ~"),
-  logout       = HYPR.fn.app("wlogout -b 5"),
   launcher     = HYPR.fn.app("rofi -show drun -show-icons -theme layout-apps"),
   launcher_run = HYPR.fn.app("rofi -show run -config $HOME/.config/rofi/themes/dmenu.rasi -run-shell-command 'kitty --hold {cmd}'"),
+  -- logout       = HYPR.fn.app("wlogout -b 5"),
+  logout       = HYPR.fn.scripts("hypr-sys-menu system"),
 }
 
 -- Source a file (multi-file configs)

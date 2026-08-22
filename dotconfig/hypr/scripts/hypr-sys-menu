@@ -27,7 +27,7 @@ back_to() {
 }
 
 webapp() {
-    brave-browser --password-store=basic --new-window --app=$1
+    brave-browser --password-store=basic --new-window --app="$1"
     # flatpak run com.brave.Browser --password-store=basic --new-window --app=$1
 }
 
@@ -77,8 +77,8 @@ show_screenshot_menu() {
 
 show_screenrecord_menu() {
     case $(menu "Screenrecord" "󰩬  Region\n󰹑  Display") in
-        *Region*)  $OMARCHY_BIN_PATH/omarchy-cmd-screenrecord ;;
-        *Display*) $OMARCHY_BIN_PATH/omarchy-cmd-screenrecord output ;;
+        *Region*)  "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" ;;
+        *Display*) "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" output ;;
         *) show_capture_menu ;;
     esac
 }
@@ -96,8 +96,8 @@ show_toggle_menu() {
         *Keyboard\ ControlCaps*) hypr-switch-controlcaps ;;
         *Nightlight*)            hypr-switch-nightlight ;;
         *Bar*)                   pkill -SIGUSR1 waybar ;;
-        *Screensaver*)       $OMARCHY_BIN_PATH/omarchy-launch-screensaver ;;
-        *Idle*)              $OMARCHY_BIN_PATH/omarchy-toggle-idle ;;
+        *Screensaver*)           "$OMARCHY_BIN_PATH/omarchy-launch-screensaver" ;;
+        *Idle*)                  "$OMARCHY_BIN_PATH/omarchy-toggle-idle" ;;
         *) back_to show_trigger_menu ;;
     esac
 }
@@ -119,7 +119,7 @@ show_style_menu() {
         *Font*)                hypr-switch-font ;;
         *Random\ Background*)  hypr-switch-wallpaper random ;;
         *Background*)          hypr-switch-wallpaper ;;
-        *Hyprland*)            edit_file $XDG_CONFIG_HOME/hypr/lua/looknfeel.lua ;;
+        *Hyprland*)            edit_file "$XDG_CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
         *) show_main_menu ;;
     esac
 }
@@ -132,10 +132,10 @@ show_setup_menu() {
         *Bluetooth*)    blueman-manager ;;
         *Monitors*)     hypr-switch-monitor ;;
         *Printers*)     webapp "http://localhost:631" ;;
-        *Keybindings*)  [ $DESKTOP_SESSION = "bspwm" ] && edit_file $XDG_CONFIG_HOME/sxhkd/sxhkdrc || edit_file $XDG_CONFIG_HOME/hypr/lua/keybinds.lua ;;
-        *Input*)        edit_file $XDG_CONFIG_HOME/hypr/lua/input.lua ;;
-        *Fingerprint*)  terminal $OMARCHY_BIN_PATH/omarchy-setup-fingerprint ;;
-        *Fido2*)        terminal $OMARCHY_BIN_PATH/omarchy-setup-fido2 ;;
+        *Keybindings*)  if [ "$DESKTOP_SESSION" = "bspwm" ]; then edit_file "$XDG_CONFIG_HOME/sxhkd/sxhkdrc"; else edit_file "$XDG_CONFIG_HOME/hypr/lua/keybinds.lua"; fi ;;
+        *Input*)        edit_file "$XDG_CONFIG_HOME/hypr/lua/input.lua" ;;
+        *Fingerprint*)  terminal "$OMARCHY_BIN_PATH/omarchy-setup-fingerprint" ;;
+        *Fido2*)        terminal "$OMARCHY_BIN_PATH/omarchy-setup-fido2" ;;
         *) show_main_menu ;;
     esac
 }
@@ -150,13 +150,12 @@ show_update_menu() {
 }
 
 show_system_menu() {
-    case $(menu "System" " Lock\n󰗽 Logout\n Suspend\n Restart\n󰐥 Power Off") in
+    case $(menu "System" " Lock\n󰗽 Logout\n Suspend\n Reboot\n󰐥 Power Off") in
         *Lock*)        hyprlock ;;
-        *Logout*)      loginctl terminate-user $USER ;;
+        *Logout*)      loginctl terminate-user "$USER" ;;
         *Power\ Off*)  systemctl poweroff ;;
         *Suspend*)     systemctl suspend ;;
-        *Restart*)     systemctl reboot ;;
-        *) show_main_menu ;;
+        *Reboot*)      systemctl reboot ;;
     esac
 }
 
@@ -176,7 +175,7 @@ go_to_menu() {
         *setup*)      show_setup_menu ;;
         *do-update*)  present_terminal hypr-do-update ;;
         *update*)     show_update_menu ;;
-        *about*)      terminal "fastfetch && read -n 1 -s" ;;
+        *about*)      terminal "fastfetch && hypr-show-done" ;;
         *system*)     show_system_menu ;;
     esac
 }

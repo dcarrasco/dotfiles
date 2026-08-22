@@ -3,7 +3,9 @@
 show_menu() {
     local font="Hack Nerd Font 16"
     local width="22%"
-    local theme="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$width;}"
+    local scrollbar=""
+    if [ $(echo -e "$2" | wc -l) -le 10 ]; then scrollbar="listview{scrollbar: false;}"; fi
+    local theme="prompt{enabled:false;} entry{placeholder:\"$1...\";} window{width:$width;} $scrollbar"
 
     echo -en "$2" | rofi -dmenu -i -markup-rows -format p -theme-str "$theme" -font "$font"
 }
