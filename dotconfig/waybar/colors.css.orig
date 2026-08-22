@@ -1,5 +1,6 @@
 /* THEME: catppuccin */
 @define-color bg-normal alpha(#181825, .80);
+@define-color bg-tooltip alpha(#181825, .80);
 @define-color shadow alpha(#181825, .80);
 @define-color fg-normal alpha(#CDD6F4, .80);
 @define-color fg-high #CDD6F4;

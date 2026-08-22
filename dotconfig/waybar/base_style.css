@@ -29,7 +29,7 @@ __        __          _                  ____                   ____  _         
 }
 
 tooltip {
-    background-color: @bg-normal;
+    background-color: @bg-tooltip;
     border: 1px solid @fg-normal;
     border-radius: 7px;
 }
