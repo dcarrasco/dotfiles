@@ -16,14 +16,14 @@
         "all-outputs": false,
         "disable-scroll": false,
         "on-click": "activate",
-        "smooth-scrolling-threshold": 1.5,
+        "on-scroll-up":   "hyprctl dispatch \"hl.dsp.focus({ workspace='-1' })\"",
+        "on-scroll-down": "hyprctl dispatch \"hl.dsp.focus({ workspace='+1' })\"",
+        "smooth-scrolling-threshold": 0.5,
         "format": "{icon}",
         // symbols:                      󰈙                      ,
         "format-icons": {
             "urgent": "",
         },
-        "on-scroll-up": "hyprctl dispatch workspace r-1",
-        "on-scroll-down": "hyprctl dispatch workspace r+1",
         "window-rewrite": {},
         "workspace-taskbar": {
             "enable": false,
@@ -31,6 +31,12 @@
             "format": "{icon} {title:.22}",
             "icon-size": 16,
             "orientation": "horizontal"
+        },
+        "format-window-separator": "\n",
+        "window-rewrite-default": "{class}",
+        "tooltip": true,
+        "tooltips": {
+            "default": "{windows}",
         }
     },
 
@@ -150,6 +156,7 @@
             "critical": 80,
         },
         "tooltip": true,
+        "tooltip-format": "Freq: {avg_frequency}GHz\nCore0: {usage0}%\nCore1: {usage1}%\nCore2: {usage2}%\nCore3: {usage3}%\nCore4: {usage4}%\nCore5: {usage5}%\nCore6: {usage6}%\nCore7: {usage7}%\nCore8: {usage8}%\nCore9:{usage9}%\nCore10: {usage10}%\nCore11: {usage11}%\nCore12: {usage12}%\nCore13: {usage13}%\nCore14: {usage15}%\nCore15: {usage15}%",
         "on-click": "flatpak run net.nokyan.Resources",
         // "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
     },
@@ -326,6 +333,7 @@
 
     "custom/leftsep": {
         "format": "",
+        "tooltip": false,
     },
 
     "custom/poweroff": {

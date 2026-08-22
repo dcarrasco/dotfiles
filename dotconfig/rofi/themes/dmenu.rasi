@@ -33,7 +33,7 @@
     border-color:     @nord0;
     text-color:       @nord4;
     // font:             "Noto Sans Mono 12";
-    font: "Hack Nerd Font 14";
+    font: "Hack Nerd Font 12";
 }
 window {
     background-color: @inherit;
