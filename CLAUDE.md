@@ -24,13 +24,28 @@ There is no single authoritative installer — the scripts target different dist
 - `dotconfig/hypr/hyprland.lua` + `dotconfig/hypr/lua/*.lua` — the **actively maintained** config (most recent commits touch this tree first).
 - `dotconfig/hypr/conf/hyprland.conf` + `dotconfig/hypr/conf/*.conf` — the native Hyprlang format, kept in sync with the lua version via manual "Sync hypr conf files with lua config" commits.
 
-Both trees mirror the same filenames (`theme`, `rules`, `keybinds`, `monitors`, `envs`, `autostart`, `input`, `looknfeel`). **When changing Hyprland behavior, update the `.lua` version first** (that's where new commits land), then port the change to the matching `.conf` file so the two don't drift. Theme files also exist per-theme under `dotconfig/hypr/themes/*.{conf,lua}` (nord, dracula, catppuccin variants, etc.) and are selected via `$theme` / the theme switcher script, not by editing the sourced files directly.
+Both trees mirror the same filenames (`theme`, `rules`, `keybinds`, `monitors`, `envs`, `autostart`, `input`, `looknfeel`). **When changing Hyprland behavior, update the `.lua` version first** (that's where new commits land), then port the change to the matching `.conf` file so the two don't drift.
 
-`dotconfig/hypr/scripts/` holds standalone shell scripts invoked from keybinds/waybar (e.g. `hypr-sys-menu`, `hypr-switch-theme`, `hypr-switch-wallpaper`). `hypr-switch-theme` also rewrites `dotconfig/waybar/theme.css` and `theme.jsonc` via `sed`, so switching themes touches both hypr and waybar state together.
+`dotconfig/hypr/scripts/` holds standalone shell scripts invoked from keybinds/waybar (e.g. `hypr-sys-menu`, `hypr-switch-wallpaper`). Two of them are easy to confuse — see the color-scheme pipeline below vs. `hypr-switch-theme` (waybar layout) in the next section.
+
+## Noctalia shell (Quickshell) — alternate desktop shell stack
+
+Three dotconfig folders together make up a second, parallel bar/shell stack alongside waybar+rofi+mako, built on [Noctalia](https://github.com/noctalia-dev/noctalia-shell) (a Quickshell/Qt-QML Wayland shell: bar, app launcher, notifications, lock screen, OSD, etc.):
+
+- `dotconfig/noctalia-shell` is the vendored upstream project itself, tracked in git as a **gitlink** (`git ls-tree` shows mode `160000`, pinned commit) — but **there is no `.gitmodules` entry for it**, so `git submodule` commands don't recognize it and a fresh clone gets an empty directory here. Populating it (e.g. cloning `noctalia-dev/noctalia-shell` at the pinned commit into place) isn't automated by any install script currently.
+- `dotconfig/noctalia/` is the hand-maintained user config/data for it (`colorschemes/`, `colors.json`, `plugins.json`, `settings.json`) — separate from the vendored code above.
+- `dotconfig/quickshell/shell.qml` is the actual entry point the `quickshell` binary loads; it just imports modules from the noctalia-shell tree (`qs.Commons`, `qs.Modules.*`, where `qs` resolves into `noctalia-shell`).
+
+Waybar (like `hypridle`, `hyprpaper`, `mako`, `hyprpolkitagent`) is **not** started from Hyprland's autostart — `dotconfig/hypr/lua/autostart.lua` / `conf/autostart.conf` have those `exec-once` lines commented out with a note that "those processes are being started by systemd" (a user systemd service outside this repo). The same file also has a commented-out `hl.exec_cmd("qs")` (quickshell) line, so autostart.lua alone doesn't indicate whether waybar or noctalia-shell is the one actually running — check the user's systemd units (`systemctl --user status`) for that.
 
 ## Theming pattern (repeats across waybar, hypr, rofi, alacritty, kitty)
 
 Several tools use the same convention: a live `theme.*` file (e.g. `waybar/theme.css`, `waybar/theme.jsonc`) that gets overwritten/regenerated, alongside a `theme.*.orig` template it's regenerated from, plus a `themes/` or `colors/` subdirectory holding the actual per-theme variants that get switched between. Don't edit `theme.*` files directly expecting persistence — check for a `.orig` counterpart and a switcher script first.
+
+There are two independent, same-named-sounding "theme" switchers — don't conflate them:
+
+- **Color scheme** (Nord, Dracula, Catppuccin, Catppuccin-Latte, Nord-Frost): `dotconfig/hypr/scripts/hypr-switch-colors` calls `hypr-generate-themes <name>`, which `source`s a master color-definition file at `dotconfig/hypr/themes/<name>` (a plain shell script defining `THEME_*` variables — window borders, bar bg, accents, etc., no file extension) and `sed`-stamps those values into four separately gitignored generated files, each first seeded from its `.orig` template: `dotconfig/hypr/lua/theme.lua`, `dotconfig/hypr/conf/theme.conf`, `dotconfig/waybar/colors.css`, `dotconfig/rofi/themes/colors.rasi`.
+- **Bar layout** (Square, Circle, Underscore, Mac, Float, Tahoe, KDE): `dotconfig/hypr/scripts/hypr-switch-theme` rewrites `dotconfig/waybar/theme.css` + `theme.jsonc` via `sed` to import from `dotconfig/waybar/themes/<layout>/style.css` and `layout.jsonc`. This only affects waybar's layout, not colors.
 
 ## zsh structure
 
