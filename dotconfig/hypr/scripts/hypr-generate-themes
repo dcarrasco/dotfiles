@@ -26,9 +26,9 @@ hex_to_perc() {
 to_waybar() {
     local color=$1
     if [ ${#color} -eq 9 ]; then
-        echo "alpha(${color:0:7}, $(hex_to_perc ${color:7:2}))"
+        echo "alpha(${color:0:7}, $(hex_to_perc "${color:7:2}"))"
     else
-        echo ${color}
+        echo "${color}"
     fi
 }
 
@@ -48,7 +48,7 @@ generate_hyprland() {
         -e "s/\(color_text_groupbar\) .*/\1 = \"${THEME_GROUPBAR_TEXT}\",/" \
         -e "s/\(color_shadow\) .*/\1 = \"${THEME_WINDOW_ACTIVE_SHADOW}\",/" \
         -e "s/\(color_shadow_inactive\) .*/\1 = \"${THEME_WINDOW_INACTIVE_SHADOW}\",/" \
-        $theme_file
+        "$theme_file"
 }
 
 generate_hyprland_conf() {
@@ -67,7 +67,7 @@ generate_hyprland_conf() {
         -e "s/\(\$color_text_groupbar\) .*/\1 = \"${THEME_GROUPBAR_TEXT}\"/" \
         -e "s/\(\$color_shadow\) .*/\1 = \"${THEME_WINDOW_ACTIVE_SHADOW}\"/" \
         -e "s/\(\$color_shadow_inactive\) .*/\1 = \"${THEME_WINDOW_INACTIVE_SHADOW}\"/" \
-        $theme_file
+        "$theme_file"
 }
 
 generate_waybar() {
@@ -76,18 +76,19 @@ generate_waybar() {
 
     sed -i \
         -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|" \
-        -e "s/\(@define-color bg-normal\) .*/\1 $( to_waybar $THEME_BAR_BG );/" \
-        -e "s/\(@define-color shadow\) .*/\1 $( to_waybar $THEME_BAR_BG );/" \
-        -e "s/\(@define-color fg-normal\) .*/\1 $( to_waybar $THEME_FG_NORMAL );/" \
-        -e "s/\(@define-color fg-high\) .*/\1 $( to_waybar $THEME_FG_HIGH );/" \
-        -e "s/\(@define-color fg-disabled\) .*/\1 $( to_waybar $THEME_FG_DISABLED );/" \
-        -e "s/\(@define-color accent1\) .*/\1 $( to_waybar $THEME_ACCENT1 );/" \
-        -e "s/\(@define-color accent2\) .*/\1 $( to_waybar $THEME_ACCENT2 );/" \
-        -e "s/\(@define-color accent3\) .*/\1 $( to_waybar $THEME_ACCENT3 );/" \
-        -e "s/\(@define-color warning\) .*/\1 $( to_waybar $THEME_WARNING );/" \
-        -e "s/\(@define-color critical\) .*/\1 $( to_waybar $THEME_CRITICAL );/" \
-        -e "s/\(@define-color success\) .*/\1 $( to_waybar $THEME_SUCCESS );/" \
-        $theme_file
+        -e "s/\(@define-color bg-normal\) .*/\1 $( to_waybar "$THEME_BAR_BG" );/" \
+        -e "s/\(@define-color bg-tooltip\) .*/\1 $( to_waybar "$THEME_TOOLTIP_BG" );/" \
+        -e "s/\(@define-color shadow\) .*/\1 $( to_waybar "$THEME_BAR_BG" );/" \
+        -e "s/\(@define-color fg-normal\) .*/\1 $( to_waybar "$THEME_FG_NORMAL" );/" \
+        -e "s/\(@define-color fg-high\) .*/\1 $( to_waybar "$THEME_FG_HIGH" );/" \
+        -e "s/\(@define-color fg-disabled\) .*/\1 $( to_waybar "$THEME_FG_DISABLED" );/" \
+        -e "s/\(@define-color accent1\) .*/\1 $( to_waybar "$THEME_ACCENT1" );/" \
+        -e "s/\(@define-color accent2\) .*/\1 $( to_waybar "$THEME_ACCENT2" );/" \
+        -e "s/\(@define-color accent3\) .*/\1 $( to_waybar "$THEME_ACCENT3" );/" \
+        -e "s/\(@define-color warning\) .*/\1 $( to_waybar "$THEME_WARNING" );/" \
+        -e "s/\(@define-color critical\) .*/\1 $( to_waybar "$THEME_CRITICAL" );/" \
+        -e "s/\(@define-color success\) .*/\1 $( to_waybar "$THEME_SUCCESS" );/" \
+        "$theme_file"
 }
 
 generate_rofi() {
@@ -106,7 +107,7 @@ generate_rofi() {
         -e "s/\(fg-selected:\) .*/\1 ${THEME_ACCENT1};/" \
         -e "s/\(bg-selected:\) .*/\1 ${THEME_SELECTED_BG};/" \
         -e "s/\(fg-scrollbar:\) .*/\1 ${THEME_PLACEHOLDER_FG};/" \
-        $theme_file
+        "$theme_file"
 }
 
 [ $# -eq 1 ] || die "usage: generate-theme <name>"
@@ -114,7 +115,7 @@ get_alphas
 THEME_NAME=$1
 theme_source=$XDG_CONFIG_HOME/hypr/themes/$THEME_NAME
 [ -f "$theme_source" ] || die "unknown theme: $THEME_NAME (no such file: $theme_source)"
-source $theme_source
+source "$theme_source"
 
 generate_hyprland
 generate_hyprland_conf

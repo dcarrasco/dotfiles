@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bluetooth_status=$(bluetoothctl show | grep -q "Powered: no")
+# bluetooth_status=$(bluetoothctl show | grep -q "Powered: no")
 # wifi_status=$(nmcli device wifi | grep '*' | wc -l)
 wifi_status=$(nmcli | grep ^wlp2s0: | grep conectado | wc -l)
 power_profile=$(tuned-adm active | cut -d " " -f 4)

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$XDG_CONFIG_HOME/hypr/scripts/hypr-show-title "Update system packages..."
+"$XDG_CONFIG_HOME/hypr/scripts/hypr-show-title" "Update system packages..."
 # figlet -c "Update"
 
 update_flatpak() {
@@ -9,9 +9,9 @@ update_flatpak() {
 }
 
 log_installed_pkgs() {
-    dnf list --installed | sort > $installed_file
-    echo -e "\n\nFlatpak" >> $installed_file
-    flatpak list >> $installed_file
+    dnf list --installed | sort > "$installed_file"
+    echo -e "\n\nFlatpak" >> "$installed_file"
+    flatpak list >> "$installed_file"
 }
 
 installed_file=$HOME/installed_pkg.txt

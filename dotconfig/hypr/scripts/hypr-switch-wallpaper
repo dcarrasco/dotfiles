@@ -21,7 +21,7 @@ current_wallpaper() {
 }
 
 wallpaper_number() {
-    echo "$(wallpaper_list)" | grep -n "$(current_wallpaper)" | cut -d ":" -f 1
+    wallpaper_list | grep -n "$(current_wallpaper)" | cut -d ":" -f 1
 }
 
 if [ ! -f "$WALLPAPER_CONFIG" ]; then
