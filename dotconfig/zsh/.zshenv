@@ -31,3 +31,4 @@ export STARSHIP_CONFIG=$XDG_CONFIG_HOME/starship/minimal.toml
 
 # PATH ------------------------------------------
 export PATH="$HOME/.local/bin:$XDG_CONFIG_HOME/composer/vendor/bin:$PATH"
+export PATH="/opt/llama.cpp/bin:$PATH"
