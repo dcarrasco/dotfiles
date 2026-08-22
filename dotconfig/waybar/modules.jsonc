@@ -157,7 +157,8 @@
         },
         "tooltip": true,
         "tooltip-format": "Freq: {avg_frequency}GHz\nCore0: {usage0}%\nCore1: {usage1}%\nCore2: {usage2}%\nCore3: {usage3}%\nCore4: {usage4}%\nCore5: {usage5}%\nCore6: {usage6}%\nCore7: {usage7}%\nCore8: {usage8}%\nCore9:{usage9}%\nCore10: {usage10}%\nCore11: {usage11}%\nCore12: {usage12}%\nCore13: {usage13}%\nCore14: {usage15}%\nCore15: {usage15}%",
-        "on-click": "flatpak run net.nokyan.Resources",
+        // "on-click": "flatpak run net.nokyan.Resources",
+        "on-click": "kitty --class hypr-sys-menu btop",
         // "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
     },
 
@@ -201,7 +202,7 @@
         "format": "{icon}",
         "format-warning": "{icon} {capacity}%",
         "format-critical": "{icon} {capacity}%",
-        "tooltip-format": "Capacity: {capacity}% / {power:>1.1f}W\n{timeTo}",
+        "tooltip-format": "Capacity: {capacity}% / {power:>1.1f}W\n{timeTo}\nCycles: {cycles}\nHealth: {health}%",
         "format-alt": "{icon} {capacity}%",
         // "format-good": "", // An empty format will hide the module
         "format-icons": {
@@ -226,13 +227,11 @@
         "format-disconnected": "{icon}  Disconn",
         "format-icons": {
             "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
-            //"wifi": [" "],
             "disconnected": ["󰤭"],
             "disabled": ["󰤭"],
         },
-        "tooltip-format-wifi": "{essid} ({signalStrength}%, {frequency}GHz)\nWIFI IP: {ipaddr}/{cidr}\nInterface: {ifname}",
-        /* "format-alt": "{ifname}: {ipaddr}/{cidr}", */
-        "on-click": "$HOME/.config/hypr/scripts/hypr-nmcli-rofi &",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%, {frequency}GHz)\nWIFI IP: {ipaddr}/{cidr}\nInterface: {ifname}\nUp: {bandwidthUpBytesCompact} / Down: {bandwidthDownBytesCompact}",
+        "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-nmcli-rofi &",
     },
 
     "network#eth": {
@@ -252,7 +251,7 @@
         "format-disabled": "󰂲 off",
         "format-connected": "",
         "on-click": "blueman-manager",
-        "on-click-right": "$HOME/.config/hypr/scripts/hypr-bluetooth --toggle",
+        "on-click-right": "$XDG_CONFIG_HOME/hypr/scripts/hypr-bluetooth --toggle",
         "tooltip-format": "{status} ({num_connections})\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "* {device_alias}",
         "tooltip-format-enumerate-connected-battery": "* {device_alias} ({device_battery_percentage}%)",
@@ -280,7 +279,7 @@
         },
         // "on-click": "pavucontrol",
         "on-click": "kitty --class hypr-sys-menu wiremix",
-        "on-click-right": "$HOME/.config/hypr/scripts/hypr-set-volume toggle"
+        "on-click-right": "$XDG_CONFIG_HOME/hypr/scripts/hypr-set-volume toggle"
     },
 
     "custom/media": {
@@ -292,8 +291,8 @@
             "default": "🎜"
         },
         "escape": true,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+        "exec": "$XDG_CONFIG_HOME/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+        // "exec": "$XDG_CONFIG_HOME/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
 
     "hyprland/language": {
@@ -308,7 +307,7 @@
     "custom/windowname": {
         "format": "{}",
         // "exec": "hyprctl activewindow | grep 'title:' | cut -d : -f 2",
-        "exec": "$HOME/.config/hypr/scripts/hypr-windowname",
+        "exec": "$XDG_CONFIG_HOME/hypr/scripts/hypr-windowname",
         "tooltip": false,
         "restart-interval": 1,
         "max-length": 60
@@ -316,7 +315,7 @@
 
     "custom/windowstatus": {
         "format": "{}",
-        "exec": "$HOME/.config/hypr/scripts/hypr-windowstatus",
+        "exec": "$XDG_CONFIG_HOME/hypr/scripts/hypr-windowstatus",
         "restart-interval": 1,
         "tooltip": false
     },
@@ -324,8 +323,8 @@
     "custom/updates": {
         "return-type": "json",
         "format": "{}",
-        "exec": "$HOME/.config/hypr/scripts/hypr-show-updates",
-        "on-click": "$HOME/.config/hypr/scripts/hypr-sys-menu do-update",
+        "exec": "$XDG_CONFIG_HOME/hypr/scripts/hypr-show-updates",
+        "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu do-update",
         "interval": 900,
         "signal": 7,
         "tooltip": true
@@ -345,14 +344,14 @@
 
     "custom/power-profiles": {
         "format": "{text}",
-        "exec": "$HOME/.config/hypr/scripts/hypr-show-power-mgmt",
+        "exec": "$XDG_CONFIG_HOME/hypr/scripts/hypr-show-power-mgmt",
         "interval": 1,
         "tooltip": true,
     },
 
     "custom/nightlight": {
         "format": "󱩌 ",
-        "on-click": "$HOME/.config/hypr/scripts/hypr-switch-nightlight",
+        "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-nightlight",
         "tooltip": true,
         "tooltip-format": "Switch nightlight",
     },
@@ -361,7 +360,7 @@
         "format": "",
         "tooltip": true,
         "tooltip-format": "Start menu",
-        "on-click": "$HOME/.config/hypr/scripts/hypr-sys-menu",
+        "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu",
         "on-click-right": "kitty",
     },
 
