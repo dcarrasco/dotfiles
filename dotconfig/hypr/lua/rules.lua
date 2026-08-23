@@ -40,7 +40,7 @@ hl.window_rule({ match = {class = "variety", title = "^(Imágenes de Variety)$"}
 hl.layer_rule({ match = {namespace = "waybar"}, blur = true })
 hl.layer_rule({ match = {namespace = "waybar"}, ignore_alpha = 0 })
 
--- Aesthtics
+-- Aesthetics
 hl.layer_rule({ match = {namespace = "logout_dialog"}, blur = true })
 hl.layer_rule({ match = {namespace = "wallpaper"}, animation = "fade" })
 hl.layer_rule({ match = {namespace = "notifications"}, animation = "slide right" })
@@ -49,15 +49,15 @@ hl.layer_rule({ match = {namespace = "notifications"}, ignore_alpha = 0 })
 hl.layer_rule({ match = {namespace = "hyprpicker"}, no_anim = true })
 hl.layer_rule({ match = {namespace = "selection"}, no_anim = true })
 hl.window_rule({ match = {focus = false}, no_shadow = true })
+--
 -- no gaps, borders, rounding on fullscreen windows
 hl.workspace_rule({ workspace = "f[1]", gaps_out = 0, gaps_in = 0 })
 hl.window_rule({ match = {workspace = "f[1]", float = false}, border_size = 0 })
 hl.window_rule({ match = {workspace = "f[1]", float = false}, rounding = 0 })
 -- no gaps, borders, rounding when only window
-onlyWindowMarginRule = hl.window_rule({ name = "r2", match = {workspace = "w[tv1]", float = false}, border_size = 0 })
-hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })
-hl.window_rule({ match = {workspace = "w[tv1]", float = false}, rounding = 0 })
-hl.window_rule({ match = {workspace = "w[tv1]", float = false}, no_shadow = true })
+-- hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })
+-- hl.window_rule({ match = {workspace = "w[tv1]", float = false}, border_size = 0 })
+-- hl.window_rule({ match = {workspace = "w[tv1]", float = false}, rounding = 0 })
 -- onlyWindowMarginRule:set_enabled(false)
 
 -- System
@@ -81,4 +81,3 @@ hl.window_rule({ match = {class = "^(dosbox)$"}, float = true })
 -- windowrule = match:class ^(org.dosbox-staging.dosbox-staging)$, float on, size 70% 70%
 hl.window_rule({ match = {class = "^(io.github.Bella)$"}, float = true })
 hl.window_rule({ match = {class = "^(org.gnome.World.PikaBackup)$"}, float = true })
-
