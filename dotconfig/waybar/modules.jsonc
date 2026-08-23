@@ -324,7 +324,7 @@
         "return-type": "json",
         "format": "{}",
         "exec": "$XDG_CONFIG_HOME/hypr/scripts/hypr-show-updates",
-        "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu do-update",
+        "on-click": "kitty --class hypr-sys-menu -d $XDG_CONFIG_HOME/hypr/scripts bash -c \"./hypr-show-logo; ./hypr-do-update; ./hypr-show-done \"",
         "interval": 900,
         "signal": 7,
         "tooltip": true
