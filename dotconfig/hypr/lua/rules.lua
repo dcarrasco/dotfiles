@@ -28,7 +28,7 @@ hl.window_rule({ match = {class = "^([Vv]irt-viewer)$"}, fullscreen_state = "0 2
 -- rofi / wofi
 hl.layer_rule({ match = {namespace = "rofi"}, blur = true })
 hl.layer_rule({ match = {namespace = "rofi"}, no_anim = true })
-hl.layer_rule({ match = {namespace = "rofi"}, dim_around = false })
+hl.layer_rule({ match = {namespace = "rofi"}, dim_around = true })
 hl.layer_rule({ match = {namespace = "rofi"}, ignore_alpha = 0.1 })
 
 -- Variety

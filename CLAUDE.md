@@ -26,7 +26,19 @@ There is no single authoritative installer — the scripts target different dist
 
 Both trees mirror the same filenames (`theme`, `rules`, `keybinds`, `monitors`, `envs`, `autostart`, `input`, `looknfeel`). **When changing Hyprland behavior, update the `.lua` version first** (that's where new commits land), then port the change to the matching `.conf` file so the two don't drift.
 
-`dotconfig/hypr/scripts/` holds standalone shell scripts invoked from keybinds/waybar (e.g. `hypr-sys-menu`, `hypr-switch-wallpaper`). Two of them are easy to confuse — see the color-scheme pipeline below vs. `hypr-switch-theme` (waybar layout) in the next section.
+`dotconfig/hypr/scripts/` holds standalone shell scripts invoked from keybinds/waybar (e.g. `hypr-sys-menu`, `hypr-switch-wallpaper`). Two of them are easy to confuse — see the color-scheme pipeline below vs. `hypr-switch-theme` (waybar layout) in the next section. `hypr-sys-menu` has its own architecture, documented next.
+
+## System menu: `hypr-sys-menu` (rofi script mode)
+
+`dotconfig/hypr/scripts/hypr-sys-menu` is a single self-contained rofi **script mode** (custom `modi`), not a chain of blocking dmenu calls. Run with no args (or from a keybind), it calls `load_rofi()`, which launches `rofi -show sysmenu -modes "sysmenu:$SELF"` — rofi then re-invokes this same script on every keystroke/selection with `ROFI_RETV`/`ROFI_INFO` env vars set, and the script dispatches based on those:
+
+- `render()` prints one menu's entries (each via `entry()`, encoding a `menu:<name>` or `act:<name>` target in rofi's `info` field) — this is what draws a submenu like `style`, `toggle`, `power_management`, etc.
+- `run_action()` executes a leaf `act:<name>`.
+- `title_menu()` supplies the header text for each menu name — every `menu:x` in `render()` needs a matching case here too.
+
+Programs launched from an action go through `exec_pgm()` (a `coproc "$@" > /dev/null; exit 0` wrapper) so the script can exit immediately and rofi doesn't block waiting on the spawned process. When editing this script, keep `render()`/`run_action()`/`title_menu()`'s case statements in sync with each other — adding a menu entry means touching up to three places.
+
+This replaced an older design of nested `show_*_menu` shell functions that each called an external `hypr-sys-show-menu` helper and recursed on the result; that helper and pattern are no longer the current path.
 
 ## Noctalia shell (Quickshell) — alternate desktop shell stack
 

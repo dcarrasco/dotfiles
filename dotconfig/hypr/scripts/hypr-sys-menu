@@ -1,187 +1,253 @@
 #!/bin/bash
 
 TERMINAL=kitty
+
 SCRIPT_PATH=$XDG_CONFIG_HOME/hypr/scripts
 export PATH="$SCRIPT_PATH:$PATH"
 
-menu() {
-    hypr-sys-show-menu "$1" "$2"
+SELF=$SCRIPT_PATH/hypr-sys-menu
+
+exec_pgm() {
+    coproc ( "$@" > /dev/null )
+    exit 0
 }
 
 terminal() {
-    $TERMINAL --class hypr-sys-menu --title=Fedora bash -c "$1"
+    exec_pgm $TERMINAL --class hypr-sys-menu --title=Fedora bash -c "$1"
 }
 
 present_terminal() {
-    local cmd="$*"
-    $TERMINAL --class hypr-sys-menu bash -c "hypr-show-logo; $cmd; hypr-show-done"
+    local cmd="$@"
+    exec_pgm $TERMINAL --class hypr-sys-menu bash -c "hypr-show-logo; $cmd; hypr-show-done"
 }
 
 edit_file() {
     notify-send -u low "Editing config file" "$1"
-    $TERMINAL nvim "$1"
-}
-
-back_to() {
-    "$1"
+    exec_pgm $TERMINAL nvim "$1"
 }
 
 webapp() {
-    brave-browser --password-store=basic --new-window --app="$1"
-    # flatpak run com.brave.Browser --password-store=basic --new-window --app=$1
+    exec_pgm brave-browser --password-store=basic --new-window --app="$1"
+    # exec_pgm flatpak run com.brave.Browser --password-store=basic --new-window --app=$1
 }
 
-show_learn_menu() {
-    # case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n  Bspwm\n  Waybar\n  Polybar\n  NerdFonts\n󰣇  Arch\n  Neovim\n󱆃  Bash") in
-    case $(menu "Learn" "  Keybindings\n  Omarchy\n  Hyprland\n  Waybar\n  NerdFonts\n󰣇  Arch\n  Neovim\n󱆃  Bash\n  Tmux") in
-        *Keybindings*) hypr-show-keybinds ;;
-        *Omarchy*)     webapp "https://manuals.omamix.org/2/the-omarchy-manual" ;;
-        *Hyprland*)    webapp "https://wiki.hypr.land/" ;;
-        *Bspwm*)       webapp "https://github.com/baskerville/bspwm/wiki" ;;
-        *Waybar*)      webapp "https://github.com/Alexays/Waybar/wiki" ;;
-        *Polybar*)     webapp "https://github.com/polybar/polybar/wiki" ;;
-        *NerdFonts*)   webapp "https://www.nerdfonts.com/cheat-sheet" ;;
-        *Arch*)        webapp "https://wiki.archlinux.org/title/Main_page" ;;
-        *Bash*)        webapp "https://devhints.io/bash" ;;
-        *Neovim*)      webapp "https://www.lazyvim.org/keymaps" ;;
-        *Tmux*)        webapp "https://tmuxcheatsheet.com/" ;;
-        *) show_main_menu ;;
+entry() {
+    printf '%s\0info\x1f%s\n' "$1" "$2"
+}
+
+title_menu() {
+    case "$1" in
+        main)              echo "Start" ;;
+        style)             echo "Style" ;;
+        learn)             echo "Learn" ;;
+        trigger)           echo "Trigger" ;;
+        capture)           echo "Capture" ;;
+        screenshot)        echo "Screenshot" ;;
+        toggle)            echo "Toggle" ;;
+        power_management)  echo "Power Management" ;;
+        setup)             echo "Setup" ;;
+        update)            echo "Update" ;;
+        system)            echo "System" ;;
     esac
 }
 
-show_trigger_menu() {
-    case "$(menu "Trigger" "  Capture\n  Toggle")" in
-        *Capture*) show_capture_menu ;;
-        *Toggle*)  show_toggle_menu ;;
-        *) show_main_menu ;;
+render() {
+    local menu="$1"
+    local title="$(title_menu "$menu")"
+
+    printf '\0prompt\x1f%s\n' "$title"
+    printf '\0no-custom\x1ftrue\n'
+    printf '\0data\x1f%s\n' "$menu"
+    # printf '\0theme\x1fentry{placeholder:"%s...";}\n' "$title"
+
+    case "$menu" in
+        main)
+            entry "󰀻  Apps"     "act:apps"
+            entry "  Search"   "act:search"
+            entry "  Style"    "menu:style"
+            entry "  Learn"    "menu:learn"
+            entry "󱓞  Trigger"  "menu:trigger"
+            entry "  Setup"    "menu:setup"
+            entry "  Update"   "menu:update"
+            entry "  About"    "act:about"
+            entry "  System"   "menu:system"
+            ;;
+        style)
+            entry "  Bar Layout"        "act:style_bar_layout"
+            entry "󰸌  Colors"            "act:style_colors"
+            entry "  Font"              "act:style_font"
+            entry "  Background"        "act:style_background"
+            entry "  Random Background" "act:style_random_background"
+            entry "  Hyprland"          "act:style_hyprland"
+            ;;
+        learn)
+            entry "  Keybindings" "act:learn_keybindings"
+            entry "  Omarchy"     "act:learn_omarchy"
+            entry "  Hyprland"    "act:learn_hyprland"
+            entry "  Waybar"      "act:learn_waybar"
+            entry "  NerdFonts"   "act:learn_nerdfonts"
+            entry "󰣇  Arch"        "act:learn_arch"
+            entry "  Neovim"      "act:learn_neovim"
+            entry "󱆃  Bash"        "act:learn_bash"
+            entry "  Tmux"        "act:learn_tmux"
+            ;;
+        trigger)
+            entry "  Capture" "menu:capture"
+            entry "  Toggle"  "menu:toggle"
+            ;;
+        capture)
+            entry "  Screenshot"   "menu:screenshot"
+            entry "  Screenrecord" "menu:screenrecord"
+            entry "󰃉  Color"        "act:capture_color"
+            ;;
+        screenshot)
+            entry "󰩬   Region to clipboard"  "act:screenshot_region_clip"
+            entry "󰩬   Region to file"       "act:screenshot_region_file"
+            entry "󰹑   Display to clipboard" "menu:capture"
+            entry "󰹑   Display to file"      "act:screenshot_display_file"
+            ;;
+        screenrecord)
+            entry "󰩬  Region"  "act:screenrecord_region"
+            entry "󰹑  Display" "act:screenrecord_display"
+            ;;
+        toggle)
+            entry "  Wifi"                 "act:toggle_wifi"
+            entry "󰂯  Bluetooth"            "act:toggle_bluetooth"
+            entry "  Power Management"     "menu:power_management"
+            entry "  Keyboard Layout"      "act:toggle_kb_layout"
+            entry "󰪛  Keyboard ControlCaps" "act:toggle_controlcaps"
+            entry "󱄄  Screensaver"          "act:toggle_screensaver"
+            entry "󰔎  Nightlight"           "act:toggle_nightlight"
+            entry "󱫖  Idle Lock"            "act:toggle_idle"
+            entry "󰍜  Top Bar"              "act:toggle_topbar"
+            ;;
+        power_management)
+            entry "  Balanced"         "act:pm_balanced"
+            entry "  Balanced Battery" "act:pm_balanced_battery"
+            entry "  Performance"      "act:pm_performance"
+            entry "  Power Saver"      "act:pm_powersaver"
+            ;;
+        setup)
+            entry "  Configs"     "act:setup_configs"
+            entry "  Audio"       "act:setup_audio"
+            entry "  Wifi"        "act:setup_wifi"
+            entry "󰂯  Bluetooth"   "act:setup_bluetooth"
+            entry "󰍹  Monitors"    "act:setup_monitors"
+            entry "󰐪  Printers"    "act:setup_printers"
+            entry "  Keybindings" "act:setup_keybindings"
+            entry "  Input"       "act:setup_input"
+            entry "󰈷  Fingerprint" "act:setup_fingerprint"
+            entry "  Fido2"       "act:setup_fido2"
+            ;;
+        update)
+            entry "  Update"           "act:update_run"
+            entry "󰉉  Install package"  "act:update_install"
+            entry "󰭌  Remove package"   "act:update_remove"
+            ;;
+        system)
+            entry " Lock"      "act:system_lock"
+            entry "󰗽 Logout"    "act:system_logout"
+            entry " Suspend"   "act:system_suspend"
+            entry " Reboot"    "act:system_reboot"
+            entry "󰐥 Power Off" "act:system_poweroff"
+            ;;
     esac
 }
 
-show_capture_menu() {
-    case $(menu "Capture" "  Screenshot\n  Screenrecord\n󰃉  Color") in
-        *Screenshot*)   show_screenshot_menu ;;
-        *Screenrecord*) show_screenrecord_menu ;;
-        *Color*)        pkill hyprpicker || hyprpicker -a ;;
-        *) back_to show_trigger_menu ;;
+run_action() {
+    case "$1" in
+        apps)   exec_pgm rofi -i -show drun -show-icons -theme layout-apps ;;
+        search) exec_pgm hypr-search-home ;;
+        about)  terminal "fastfetch && hypr-show-done" ;;
+
+        style_bar_layout)         exec_pgm hypr-switch-theme ;;
+        style_colors)             exec_pgm hypr-switch-colors ;;
+        style_font)               exec_pgm hypr-switch-font ;;
+        style_background)         exec_pgm hypr-switch-wallpaper ;;
+        style_random_background)  exec_pgm hypr-switch-wallpaper random ;;
+        style_hyprland)           exec_pgm edit_file "$XDG_CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
+
+        learn_keybindings) exec_pgm hypr-show-keybinds ;;
+        learn_omarchy)     webapp "https://manuals.omamix.org/2/the-omarchy-manual" ;;
+        learn_hyprland)    webapp "https://wiki.hypr.land/" ;;
+        learn_waybar)      webapp "https://github.com/Alexays/Waybar/wiki" ;;
+        learn_nerdfonts)   webapp "https://www.nerdfonts.com/cheat-sheet" ;;
+        learn_arch)        webapp "https://wiki.archlinux.org/title/Main_page" ;;
+        learn_neovim)      webapp "https://www.lazyvim.org/keymaps" ;;
+        learn_bash)        webapp "https://devhints.io/bash" ;;
+        learn_tmux)        webapp "https://tmuxcheatsheet.com/" ;;
+
+        capture_color)     exec_pgm hyprpicker -a ;;
+
+        screenshot_region_clip)  exec_pgm hypr-cmd-screenshot clipboard ;;
+        screenshot_region_file)  exec_pgm hypr-cmd-screenshot region ;;
+        screenshot_display_file) exec_pgm hypr-cmd-screenshot ;;
+
+        screenrecord_region)  exec_pgm "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" ;;
+        screenrecord_display) exec_pgm "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" output ;;
+
+        toggle_wifi)        exec_pgm hypr-switch-wifi ;;
+        toggle_bluetooth)   exec_pgm hypr-bluetooth --toggle ;;
+        toggle_kb_layout)   exec_pgm hypr-switch-keyboard-layout ;;
+        toggle_controlcaps) exec_pgm hypr-switch-controlcaps ;;
+        toggle_screensaver) exec_pgm "$OMARCHY_BIN_PATH/omarchy-launch-screensaver" ;;
+        toggle_nightlight)  exec_pgm hypr-switch-nightlight ;;
+        toggle_idle)        exec_pgm "$OMARCHY_BIN_PATH/omarchy-toggle-idle" ;;
+        toggle_topbar)      exec_pgm pkill -SIGUSR1 waybar ;;
+
+        pm_balanced)         exec_pgm tuned-adm profile balanced ;;
+        pm_balanced_battery) exec_pgm tuned-adm profile balanced-battery ;;
+        pm_performance)      exec_pgm tuned-adm profile throughput-performance ;;
+        pm_powersaver)       exec_pgm tuned-adm profile powersave ;;
+
+        setup_configs)     exec_pgm hypr-edit-config ;;
+        setup_audio)       terminal wiremix ;;
+        setup_wifi)        exec_pgm hypr-nmcli-rofi ;;
+        setup_bluetooth)   exec_pgm blueman-manager ;;
+        setup_monitors)    exec_pgm hypr-switch-monitor ;;
+        setup_printers)    webapp "http://localhost:631" ;;
+        setup_keybindings) if [ "$DESKTOP_SESSION" = "bspwm" ]; then edit_file "$XDG_CONFIG_HOME/sxhkd/sxhkdrc"; else edit_file "$XDG_CONFIG_HOME/hypr/lua/keybinds.lua"; fi ;;
+        setup_input)       edit_file "$XDG_CONFIG_HOME/hypr/lua/input.lua" ;;
+        setup_fingerprint) terminal "$OMARCHY_BIN_PATH/omarchy-setup-fingerprint" ;;
+        setup_fido2)       terminal "$OMARCHY_BIN_PATH/omarchy-setup-fido2" ;;
+
+        update_run)     present_terminal hypr-do-update ;;
+        update_install) terminal "hypr-pkg-install; hypr-show-done" ;;
+        update_remove)  terminal "hypr-pkg-remove; hypr-show-done" ;;
+
+        system_lock)     exec_pgm hyprlock ;;
+        system_logout)   exec_pgm loginctl terminate-user "$USER" ;;
+        system_suspend)  exec_pgm systemctl suspend ;;
+        system_reboot)   exec_pgm systemctl reboot ;;
+        system_poweroff) exec_pgm systemctl poweroff ;;
     esac
 }
 
-show_screenshot_menu() {
-    case $(menu "Screenshot" "󰩬   Region to clipboard\n󰩬   Region to file\n󰹑    Display to clipboard\n󰹑    Display to file") in
-        *Region\ to\ clipboard*) hypr-cmd-screenshot clipboard ;;
-        *Region\ to\ file*)      hypr-cmd-screenshot region ;;
-        *Display\ to\ file*)     hypr-cmd-screenshot ;;
-        *) show_capture_menu ;;
-    esac
+load_rofi() {
+    local font="Hack Nerd Font 16"
+    local width="22%"
+    local theme="entry{placeholder:\"Search...\";} window{width:$width;}"
+
+    rofi -show sysmenu -modes "sysmenu:$SELF" -i -format p -theme-str "$theme" -font "$font"
 }
 
-show_screenrecord_menu() {
-    case $(menu "Screenrecord" "󰩬  Region\n󰹑  Display") in
-        *Region*)  "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" ;;
-        *Display*) "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" output ;;
-        *) show_capture_menu ;;
-    esac
-}
+# echo "ROFI_RETV: ${ROFI_RETV}"
+# echo "ROFI_DATA: ${ROFI_DATA}"
+# echo "ROFI_INFO: ${ROFI_INFO}"
 
-show_toggle_menu() {
-    # wifi_status=$(nmcli radio wifi)
-    # bt_status=$(if $(bluetoothctl show | grep -q "Powered: no" > /dev/null ); then echo "disabled"; else echo "enabled"; fi)
-    # power_status=$(tuned-adm active | cut -d " " -f 4)
-    # keyb_status=$(setxkbmap -query | grep layout | awk '{print $2}')
-    case $(menu "Toggle" "  Wifi\n󰂯  Bluetooth\n  Power Management\n  Keyboard Layout\n󰪛  Keyboard ControlCaps\n󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar") in
-        *Wifi*)                  hypr-switch-wifi ;;
-        *Bluetooth*)             hypr-bluetooth --toggle ;;
-        *Power\ Management*)     show_power_management ;;
-        *Keyboard\ Layout*)      hypr-switch-keyboard-layout ;;
-        *Keyboard\ ControlCaps*) hypr-switch-controlcaps ;;
-        *Nightlight*)            hypr-switch-nightlight ;;
-        *Bar*)                   pkill -SIGUSR1 waybar ;;
-        *Screensaver*)           "$OMARCHY_BIN_PATH/omarchy-launch-screensaver" ;;
-        *Idle*)                  "$OMARCHY_BIN_PATH/omarchy-toggle-idle" ;;
-        *) back_to show_trigger_menu ;;
-    esac
-}
-
-show_power_management() {
-    case $(menu "Power Management" "  Balanced\n  Balanced Battery\n  Performance\n  Power Saver") in
-        *Balanced\ Battery*) tuned-adm profile balanced-battery ;;
-        *Balanced*)          tuned-adm profile balanced ;;
-        *Performance*)       tuned-adm profile throughput-performance ;;
-        *Power\ Saver*)      tuned-adm profile powersave ;;
-        *) back_to show_toggle_menu ;;
-    esac
-}
-
-show_style_menu() {
-    case $(menu "Style" "  Bar Layout\n󰸌  Colors\n  Font\n  Background\n  Random Background\n  Hyprland") in
-        *Bar\ Layout*)         hypr-switch-theme ;;
-        *Colors*)              hypr-switch-colors ;;
-        *Font*)                hypr-switch-font ;;
-        *Random\ Background*)  hypr-switch-wallpaper random ;;
-        *Background*)          hypr-switch-wallpaper ;;
-        *Hyprland*)            edit_file "$XDG_CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
-        *) show_main_menu ;;
-    esac
-}
-
-show_setup_menu() {
-    case $(menu "Setup" "  Configs\n  Audio\n  Wifi\n󰂯  Bluetooth\n󰍹  Monitors\n󰐪  Printers\n  Keybindings\n  Input\n󰈷  Fingerprint\n  Fido2") in
-        *Configs*)      hypr-edit-config ;;
-        *Audio*)        terminal wiremix ;;
-        *Wifi*)         hypr-nmcli-rofi ;;
-        *Bluetooth*)    blueman-manager ;;
-        *Monitors*)     hypr-switch-monitor ;;
-        *Printers*)     webapp "http://localhost:631" ;;
-        *Keybindings*)  if [ "$DESKTOP_SESSION" = "bspwm" ]; then edit_file "$XDG_CONFIG_HOME/sxhkd/sxhkdrc"; else edit_file "$XDG_CONFIG_HOME/hypr/lua/keybinds.lua"; fi ;;
-        *Input*)        edit_file "$XDG_CONFIG_HOME/hypr/lua/input.lua" ;;
-        *Fingerprint*)  terminal "$OMARCHY_BIN_PATH/omarchy-setup-fingerprint" ;;
-        *Fido2*)        terminal "$OMARCHY_BIN_PATH/omarchy-setup-fido2" ;;
-        *) show_main_menu ;;
-    esac
-}
-
-show_update_menu() {
-    case $(menu "Update" "  Update\n󰉉  Install package\n󰭌  Remove package") in
-        *Update*)   present_terminal hypr-do-update ;;
-        *Install*)  terminal "hypr-pkg-install; hypr-show-done" ;;
-        *Remove*)   terminal "hypr-pkg-remove; hypr-show-done" ;;
-        *) show_main_menu ;;
-    esac
-}
-
-show_system_menu() {
-    case $(menu "System" " Lock\n󰗽 Logout\n Suspend\n Reboot\n󰐥 Power Off") in
-        *Lock*)        hyprlock ;;
-        *Logout*)      loginctl terminate-user "$USER" ;;
-        *Power\ Off*)  systemctl poweroff ;;
-        *Suspend*)     systemctl suspend ;;
-        *Reboot*)      systemctl reboot ;;
-    esac
-}
-
-show_main_menu() {
-    go_to_menu "$(menu "Start" "󰀻  Apps\n  Search\n  Style\n  Learn\n󱓞  Trigger\n  Setup\n  Update\n  About\n  System")"
-}
-
-go_to_menu() {
-    case "${1,,}" in
-        *apps*)       rofi -i -show drun -show-icons -theme layout-apps;;
-        *search*)     hypr-search-home ;;
-        *learn*)      show_learn_menu ;;
-        *trigger*)    show_trigger_menu ;;
-        *capture*)    show_capture_menu ;;
-        *toggle*)     show_toggle_menu ;;
-        *style*)      show_style_menu ;;
-        *setup*)      show_setup_menu ;;
-        *do-update*)  present_terminal hypr-do-update ;;
-        *update*)     show_update_menu ;;
-        *about*)      terminal "fastfetch && hypr-show-done" ;;
-        *system*)     show_system_menu ;;
-    esac
-}
-
-if [ -n "$1" ]; then
-    go_to_menu "$1"
+if [ -n "${ROFI_RETV}" ]; then
+    # When call the script when rofi window is loaded, must show the options
+    if [ "$ROFI_RETV" = "1" ] && [ -n "$ROFI_INFO" ]; then
+        case "$ROFI_INFO" in
+            menu:*)  render     "${ROFI_INFO#menu:}" ;;
+            act:*)   run_action "${ROFI_INFO#act:}"  ;;
+        esac
+    else
+        render "${INI_MENU-main}"
+    fi
 else
-    show_main_menu
+    # When call the script, must load rofi window first
+    [ -n "$1" ] && export INI_MENU="$1"
+    load_rofi
 fi
+
