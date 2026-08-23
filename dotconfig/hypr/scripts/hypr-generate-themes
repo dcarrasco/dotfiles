@@ -4,18 +4,91 @@
 
 die() { echo "generate-theme: $*" >&2; exit 1; }
 
-create_config_file() {
-    if [ ! -f "$1" ]; then
-        cp "${1}.orig" "$1"
-    fi
+state_home=${XDG_STATE_HOME:-$HOME/.local/state}
+theme_state=$state_home/hypr/theme
+
+stage_config_file() {
+    local target=$1
+    local staged=$theme_stage/${target##*/}
+
+    cp "${target}.orig" "$staged" || return 1
+    printf '%s\n' "$staged"
 }
 
-get_alphas() {
-    # Generate THEME_ALPHA variables with hex percentages
-    for i in {1..9}; do
-        local perc=$((i * 10))
-        printf -v THEME_ALPHA_${perc} '%X' $((256 * i / 10))
-    done
+publish_config_file() {
+    local name=$1
+    local target=$2
+
+    mv "$theme_stage/$name" "$target" || die "could not publish $target"
+}
+
+load_theme() {
+    local theme_source=$1
+    local parsed role color alpha alpha_hex
+
+    command -v jq >/dev/null 2>&1 || die "jq is required to parse themes"
+    parsed=$(jq -er --arg expected "$THEME_NAME" '
+        def required_roles: [
+            "window_active_border", "window_active_border_2", "window_active_shadow",
+            "window_inactive_border", "window_inactive_shadow",
+            "window_group_active_border", "window_group_inactive_border",
+            "groupbar_active", "groupbar_inactive", "groupbar_text",
+            "bar_bg", "tooltip_bg", "fg_normal", "fg_high", "fg_disabled",
+            "accent1", "accent2", "accent3", "warning", "critical", "success",
+            "window_bg", "textbox_bg", "prompt_fg", "prompt_bg",
+            "placeholder_fg", "selected_bg"
+        ];
+        def fail($message): error($message);
+        def valid_role:
+            . as $role |
+            ($role | type) == "string" or
+            (($role | type) == "object" and
+             ($role | keys | sort) == ["alpha", "color"] and
+             ($role.color | type) == "string" and
+             ($role.alpha | type) == "number" and
+             $role.alpha >= 0 and $role.alpha <= 1);
+
+        if type != "object" or (keys | sort) != ["name", "palette", "roles"] then
+            fail("theme must contain only name, palette, and roles")
+        elif .name != $expected then
+            fail("theme name must match its filename")
+        elif (.palette | type != "object" or length == 0) then
+            fail("palette must be a non-empty object")
+        elif (.palette | to_entries | all(
+            .key as $key | .value as $value |
+            ($key | test("^[a-z][a-z0-9_]*$")) and
+            (($value | type) == "string" and ($value | test("^#[0-9A-Fa-f]{6}$")))
+        ) | not) then
+            fail("palette names or colors are invalid")
+        elif (.roles | type != "object" or (keys | sort) != (required_roles | sort)) then
+            fail("roles must contain exactly the required semantic roles")
+        elif (.roles | to_entries | all(.value | valid_role) | not) then
+            fail("role values must be palette names or color/alpha objects")
+        else
+            .palette as $palette |
+            .roles | to_entries[] |
+            .key as $role |
+            (if (.value | type) == "string"
+             then { color: .value, alpha: null }
+             else .value
+             end) as $value |
+            if ($palette | has($value.color) | not) then
+                fail("role \($role) references unknown palette color \($value.color)")
+            else
+                [$role, $palette[$value.color],
+                 (if $value.alpha == null then "" else ($value.alpha * 256 | floor) end)] |
+                @tsv
+            end
+        end
+    ' "$theme_source") ||
+        die "could not parse theme: $THEME_NAME"
+    while IFS=$'\t' read -r role color alpha; do
+        if [ -n "$alpha" ]; then
+            printf -v alpha_hex '%02X' "$alpha"
+            color=$color$alpha_hex
+        fi
+        printf -v "THEME_${role^^}" '%s' "$color"
+    done <<< "$parsed"
 }
 
 hex_to_perc() {
@@ -33,8 +106,9 @@ to_waybar() {
 }
 
 generate_hyprland() {
-    local theme_file=$XDG_CONFIG_HOME/hypr/lua/theme.lua
-    create_config_file "$theme_file"
+    local target=$XDG_CONFIG_HOME/hypr/lua/theme.lua
+    local theme_file
+    theme_file=$(stage_config_file "$target") || return 1
 
     sed -i \
         -e "s/^-- THEME:.*/-- THEME: ${THEME_NAME}/" \
@@ -52,8 +126,9 @@ generate_hyprland() {
 }
 
 generate_hyprland_conf() {
-    local theme_file=$XDG_CONFIG_HOME/hypr/conf/theme.conf
-    create_config_file "$theme_file"
+    local target=$XDG_CONFIG_HOME/hypr/conf/theme.conf
+    local theme_file
+    theme_file=$(stage_config_file "$target") || return 1
 
     sed -i \
         -e "s/^# THEME:.*/# THEME: ${THEME_NAME}/" \
@@ -71,8 +146,9 @@ generate_hyprland_conf() {
 }
 
 generate_waybar() {
-    local theme_file=$XDG_CONFIG_HOME/waybar/colors.css
-    create_config_file "$theme_file"
+    local target=$XDG_CONFIG_HOME/waybar/colors.css
+    local theme_file
+    theme_file=$(stage_config_file "$target") || return 1
 
     sed -i \
         -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|" \
@@ -92,8 +168,9 @@ generate_waybar() {
 }
 
 generate_rofi() {
-    local theme_file=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
-    create_config_file "$theme_file"
+    local target=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
+    local theme_file
+    theme_file=$(stage_config_file "$target") || return 1
 
     sed -i \
         -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|" \
@@ -111,15 +188,26 @@ generate_rofi() {
 }
 
 [ $# -eq 1 ] || die "usage: generate-theme <name>"
-get_alphas
 THEME_NAME=$1
-theme_source=$XDG_CONFIG_HOME/hypr/themes/$THEME_NAME
+[[ $THEME_NAME =~ ^[a-z0-9-]+$ ]] || die "invalid theme name: $THEME_NAME"
+theme_source=$XDG_CONFIG_HOME/hypr/themes/$THEME_NAME.json
 [ -f "$theme_source" ] || die "unknown theme: $THEME_NAME (no such file: $theme_source)"
-source "$theme_source"
+load_theme "$theme_source"
 
-generate_hyprland
-generate_hyprland_conf
-generate_waybar
-generate_rofi
+theme_stage=$(mktemp -d "$XDG_CONFIG_HOME/.hypr-theme.XXXXXX") || die "could not create staging directory"
+trap 'rm -rf -- "$theme_stage"' EXIT
+
+generate_hyprland || die "could not generate Hyprland Lua theme"
+generate_hyprland_conf || die "could not generate native Hyprland theme"
+generate_waybar || die "could not generate Waybar theme"
+generate_rofi || die "could not generate Rofi theme"
+
+publish_config_file theme.lua "$XDG_CONFIG_HOME/hypr/lua/theme.lua"
+publish_config_file theme.conf "$XDG_CONFIG_HOME/hypr/conf/theme.conf"
+publish_config_file colors.css "$XDG_CONFIG_HOME/waybar/colors.css"
+publish_config_file colors.rasi "$XDG_CONFIG_HOME/rofi/themes/colors.rasi"
+
+mkdir -p "${theme_state%/*}" || die "could not create theme state directory"
+printf '%s\n' "$THEME_NAME" > "$theme_state" || die "could not record current theme"
 
 # vim: set ft=sh:

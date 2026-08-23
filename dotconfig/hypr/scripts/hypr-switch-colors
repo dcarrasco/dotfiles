@@ -1,30 +1,39 @@
 #!/bin/bash
 
-waybar_style=$XDG_CONFIG_HOME/waybar/colors.css
+state_home=${XDG_STATE_HOME:-$HOME/.local/state}
+theme_state=$state_home/hypr/theme
+themes_dir=$XDG_CONFIG_HOME/hypr/themes
 
 current_theme() {
-    grep -m1 "THEME:" $waybar_style | sed -E 's/.*THEME:\s*([a-z0-9-]+).*/\1/'
+    if [ -r "$theme_state" ]; then
+        IFS= read -r current < "$theme_state"
+        printf '%s\n' "$current"
+    fi
 }
 
 if [ -n "$1" ]; then
     theme=$1
 else
-    temas=(Catppuccin Catppuccin-Latte Dracula Nord Nord-Frost)
+    mapfile -t themes < <(
+        find "$themes_dir" -maxdepth 1 -type f -name '*.json' -printf '%f\n' |
+            sed 's/\.json$//' | sort
+    )
+    selected_theme=$(current_theme)
 
     opts=""
-    for i in "${temas[@]}"; do
-        if [ "${i,,}" = "$(current_theme)" ]; then
-            opts="$opts<i>$i</i>\n"
+    for theme_name in "${themes[@]}"; do
+        label=$(sed -E 's/(^|-)([a-z])/\1\U\2/g' <<< "$theme_name")
+        if [ "$theme_name" = "$selected_theme" ]; then
+            opts="$opts<i>$label</i>\n"
         else
-            opts="$opts$i\n"
+            opts="$opts$label\n"
         fi
     done
     theme=$(hypr-sys-show-menu "Colors" "$opts")
 fi
 
 if [ -n "$theme" ]; then
-    hypr-generate-themes ${theme,,}
+    hypr-generate-themes "${theme,,}"
     [ "$DESKTOP_SESSION" = "bspwm" ] && bspc wm --restart
     notify-send -u low "Colors" "Change colors to $theme"
 fi
-
