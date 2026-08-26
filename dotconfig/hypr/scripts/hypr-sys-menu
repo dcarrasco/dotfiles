@@ -51,12 +51,49 @@ title_menu() {
     esac
 }
 
+show_bar_layouts() {
+    local WAYBAR_STYLE="$XDG_CONFIG_HOME/waybar/theme.css"
+    local temas=(Square Circle Underscore Mac Float Tahoe KDE)
+
+    local current_layout=$(grep import "$WAYBAR_STYLE" | grep themes | cut -d "/" -f 2)
+
+    for i in "${temas[@]}"; do
+        if [ "${i,,}" = "$current_layout" ]; then
+            entry "<i>$i</i>"   "act:style_bar_layout:$i"
+        else
+            entry "$i"   "act:style_bar_layout:$i"
+        fi
+    done
+}
+
+show_theme_colors() {
+    local themes_dir"=$XDG_CONFIG_HOME/hypr/themes"
+    local state_home=${XDG_STATE_HOME:-$HOME/.local/state}
+    local theme_state=$state_home/hypr/theme
+
+    mapfile -t themes < <(
+        find "$themes_dir" -maxdepth 1 -type f -name '*.json' -printf '%f\n' |
+            sed 's/\.json$//' | sort
+    )
+    selected_theme=$(cat "$theme_state" | head -n 1)
+
+    for theme_name in "${themes[@]}"; do
+        label=$(sed -E 's/(^|-)([a-z])/\1\U\2/g' <<< "$theme_name")
+        if [ "$theme_name" = "$selected_theme" ]; then
+            entry "<i>$label</i>"  "act:style_colors:$label"
+        else
+            entry "$label"  "act:style_colors:$label"
+        fi
+    done
+}
+
 render() {
     local menu="$1"
     local title="$(title_menu "$menu")"
 
     printf '\0prompt\x1f%s\n' "$title"
     printf '\0no-custom\x1ftrue\n'
+    printf '\0markup-rows\x1ftrue\n'
     printf '\0data\x1f%s\n' "$menu"
     # printf '\0theme\x1fentry{placeholder:"%s...";}\n' "$title"
 
@@ -73,12 +110,18 @@ render() {
             entry "  System"   "menu:system"
             ;;
         style)
-            entry "  Bar Layout"        "act:style_bar_layout"
-            entry "󰸌  Colors"            "act:style_colors"
+            entry "  Bar Layout"        "menu:bar_layout"
+            entry "󰸌  Colors"            "menu:theme_colors"
             entry "  Font"              "act:style_font"
             entry "  Background"        "act:style_background"
             entry "  Random Background" "act:style_random_background"
             entry "  Hyprland"          "act:style_hyprland"
+            ;;
+        bar_layout)
+            show_bar_layouts
+            ;;
+        theme_colors)
+            show_theme_colors
             ;;
         learn)
             entry "  Keybindings" "act:learn_keybindings"
@@ -160,66 +203,71 @@ run_action() {
         search) exec_pgm hypr-search-home ;;
         about)  terminal "fastfetch && hypr-show-done" ;;
 
-        style_bar_layout)         exec_pgm hypr-switch-theme ;;
-        style_colors)             exec_pgm hypr-switch-colors ;;
-        style_font)               exec_pgm hypr-switch-font ;;
-        style_background)         exec_pgm hypr-switch-wallpaper ;;
-        style_random_background)  exec_pgm hypr-switch-wallpaper random ;;
-        style_hyprland)           exec_pgm edit_file "$XDG_CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
+        style_bar_layout*)          exec_pgm hypr-switch-theme "${1#style_bar_layout:}" ;;
+        style_colors*)              exec_pgm hypr-switch-colors "${1#style_colors:}" ;;
+        style_font)                 exec_pgm hypr-switch-font ;;
+        style_background)           exec_pgm hypr-switch-wallpaper ;;
+        style_random_background)    exec_pgm hypr-switch-wallpaper random ;;
+        style_hyprland)             exec_pgm edit_file "$XDG_CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
 
-        learn_keybindings) exec_pgm hypr-show-keybinds ;;
-        learn_omarchy)     webapp "https://manuals.omamix.org/2/the-omarchy-manual" ;;
-        learn_hyprland)    webapp "https://wiki.hypr.land/" ;;
-        learn_waybar)      webapp "https://github.com/Alexays/Waybar/wiki" ;;
-        learn_nerdfonts)   webapp "https://www.nerdfonts.com/cheat-sheet" ;;
-        learn_arch)        webapp "https://wiki.archlinux.org/title/Main_page" ;;
-        learn_neovim)      webapp "https://www.lazyvim.org/keymaps" ;;
-        learn_bash)        webapp "https://devhints.io/bash" ;;
-        learn_tmux)        webapp "https://tmuxcheatsheet.com/" ;;
+        learn_keybindings)  exec_pgm hypr-show-keybinds ;;
+        learn_omarchy)      webapp "https://manuals.omamix.org/2/the-omarchy-manual" ;;
+        learn_hyprland)     webapp "https://wiki.hypr.land/" ;;
+        learn_waybar)       webapp "https://github.com/Alexays/Waybar/wiki" ;;
+        learn_nerdfonts)    webapp "https://www.nerdfonts.com/cheat-sheet" ;;
+        learn_arch)         webapp "https://wiki.archlinux.org/title/Main_page" ;;
+        learn_neovim)       webapp "https://www.lazyvim.org/keymaps" ;;
+        learn_bash)         webapp "https://devhints.io/bash" ;;
+        learn_tmux)         webapp "https://tmuxcheatsheet.com/" ;;
 
-        capture_color)     exec_pgm hyprpicker -a ;;
+        capture_color)      exec_pgm hyprpicker -a ;;
 
-        screenshot_region_clip)  exec_pgm hypr-cmd-screenshot clipboard ;;
-        screenshot_region_file)  exec_pgm hypr-cmd-screenshot region ;;
-        screenshot_display_file) exec_pgm hypr-cmd-screenshot ;;
+        screenshot_region_clip)     exec_pgm hypr-cmd-screenshot clipboard ;;
+        screenshot_region_file)     exec_pgm hypr-cmd-screenshot region ;;
+        screenshot_display_file)    exec_pgm hypr-cmd-screenshot ;;
 
-        screenrecord_region)  exec_pgm "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" ;;
-        screenrecord_display) exec_pgm "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" output ;;
+        screenrecord_region)    exec_pgm "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" ;;
+        screenrecord_display)   exec_pgm "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" output ;;
 
-        toggle_wifi)        exec_pgm hypr-switch-wifi ;;
-        toggle_bluetooth)   exec_pgm hypr-bluetooth --toggle ;;
-        toggle_kb_layout)   exec_pgm hypr-switch-keyboard-layout ;;
-        toggle_controlcaps) exec_pgm hypr-switch-controlcaps ;;
-        toggle_screensaver) exec_pgm "$OMARCHY_BIN_PATH/omarchy-launch-screensaver" ;;
-        toggle_nightlight)  exec_pgm hypr-switch-nightlight ;;
-        toggle_idle)        exec_pgm "$OMARCHY_BIN_PATH/omarchy-toggle-idle" ;;
-        toggle_topbar)      exec_pgm pkill -SIGUSR1 waybar ;;
+        toggle_wifi)            exec_pgm hypr-switch-wifi ;;
+        toggle_bluetooth)       exec_pgm hypr-bluetooth --toggle ;;
+        toggle_kb_layout)       exec_pgm hypr-switch-keyboard-layout ;;
+        toggle_controlcaps)     exec_pgm hypr-switch-controlcaps ;;
+        toggle_screensaver)     exec_pgm "$OMARCHY_BIN_PATH/omarchy-launch-screensaver" ;;
+        toggle_nightlight)      exec_pgm hypr-switch-nightlight ;;
+        toggle_idle)            exec_pgm "$OMARCHY_BIN_PATH/omarchy-toggle-idle" ;;
+        toggle_topbar)          exec_pgm pkill -SIGUSR1 waybar ;;
 
-        pm_balanced)         exec_pgm tuned-adm profile balanced ;;
-        pm_balanced_battery) exec_pgm tuned-adm profile balanced-battery ;;
-        pm_performance)      exec_pgm tuned-adm profile throughput-performance ;;
-        pm_powersaver)       exec_pgm tuned-adm profile powersave ;;
+        pm_balanced)            exec_pgm tuned-adm profile balanced ;;
+        pm_balanced_battery)    exec_pgm tuned-adm profile balanced-battery ;;
+        pm_performance)         exec_pgm tuned-adm profile throughput-performance ;;
+        pm_powersaver)          exec_pgm tuned-adm profile powersave ;;
 
-        setup_configs)     exec_pgm hypr-edit-config ;;
-        setup_audio)       terminal wiremix ;;
-        setup_wifi)        exec_pgm hypr-nmcli-rofi ;;
-        setup_bluetooth)   exec_pgm blueman-manager ;;
-        setup_monitors)    exec_pgm hypr-switch-monitor ;;
-        setup_printers)    webapp "http://localhost:631" ;;
-        setup_keybindings) if [ "$DESKTOP_SESSION" = "bspwm" ]; then edit_file "$XDG_CONFIG_HOME/sxhkd/sxhkdrc"; else edit_file "$XDG_CONFIG_HOME/hypr/lua/keybinds.lua"; fi ;;
-        setup_input)       edit_file "$XDG_CONFIG_HOME/hypr/lua/input.lua" ;;
-        setup_fingerprint) terminal "$OMARCHY_BIN_PATH/omarchy-setup-fingerprint" ;;
-        setup_fido2)       terminal "$OMARCHY_BIN_PATH/omarchy-setup-fido2" ;;
+        setup_configs)      exec_pgm hypr-edit-config ;;
+        setup_audio)        terminal wiremix ;;
+        setup_wifi)         exec_pgm hypr-nmcli-rofi ;;
+        setup_bluetooth)    exec_pgm blueman-manager ;;
+        setup_monitors)     exec_pgm hypr-switch-monitor ;;
+        setup_printers)     webapp "http://localhost:631" ;;
+        setup_keybindings)  if [ "$DESKTOP_SESSION" = "bspwm" ]; then
+                                edit_file "$XDG_CONFIG_HOME/sxhkd/sxhkdrc";
+                            else
+                                edit_file "$XDG_CONFIG_HOME/hypr/lua/keybinds.lua";
+                            fi
+                            ;;
+        setup_input)        edit_file "$XDG_CONFIG_HOME/hypr/lua/input.lua" ;;
+        setup_fingerprint)  terminal "$OMARCHY_BIN_PATH/omarchy-setup-fingerprint" ;;
+        setup_fido2)        terminal "$OMARCHY_BIN_PATH/omarchy-setup-fido2" ;;
 
-        update_run)     present_terminal hypr-do-update ;;
-        update_install) terminal "hypr-pkg-install; hypr-show-done" ;;
-        update_remove)  terminal "hypr-pkg-remove; hypr-show-done" ;;
+        update_run)         Present_terminal hypr-do-update ;;
+        update_install)     Terminal "hypr-pkg-install; hypr-show-done" ;;
+        update_remove)      Terminal "hypr-pkg-remove; hypr-show-done" ;;
 
-        system_lock)     exec_pgm hyprlock ;;
-        system_logout)   exec_pgm loginctl terminate-user "$USER" ;;
-        system_suspend)  exec_pgm systemctl suspend ;;
-        system_reboot)   exec_pgm systemctl reboot ;;
-        system_poweroff) exec_pgm systemctl poweroff ;;
+        system_lock)        exec_pgm hyprlock ;;
+        system_logout)      exec_pgm loginctl terminate-user "$USER" ;;
+        system_suspend)     exec_pgm systemctl suspend ;;
+        system_reboot)      exec_pgm systemctl reboot ;;
+        system_poweroff)    exec_pgm systemctl poweroff ;;
     esac
 }
 
