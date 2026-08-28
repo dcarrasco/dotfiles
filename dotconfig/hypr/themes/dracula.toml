@@ -1,0 +1,43 @@
+name = "dracula"
+
+[palette]
+background = "#282A36"
+foreground = "#F8F8F2"
+selection =  "#44475A"
+comment =    "#6272A4"
+red =        "#FF5555"
+orange =     "#FFB86C"
+yellow =     "#F1FA8C"
+green =      "#50FA7B"
+purple =     "#BD93F9"
+cyan =       "#8BE9FD"
+pink =       "#FF79C6"
+
+[roles]
+window_active_border = "purple"
+window_active_border_2 = "pink"
+window_active_shadow = { color = "background", alpha = 0.60 }
+window_inactive_border = "selection"
+window_inactive_shadow = { color = "background", alpha = 0.50 }
+window_group_active_border = "orange"
+window_group_inactive_border = "selection"
+groupbar_active = "orange"
+groupbar_inactive = "selection"
+groupbar_text = "foreground"
+bar_bg = { color = "background", alpha = 0.80 }
+tooltip_bg = { color = "background", alpha = 0.80 }
+fg_normal = { color = "foreground", alpha = 0.80 }
+fg_high = "foreground"
+fg_disabled = { color = "foreground", alpha = 0.40 }
+accent1 = "purple"
+accent2 = "yellow"
+accent3 = "cyan"
+warning = "yellow"
+critical = "red"
+success = "green"
+window_bg = { color = "background", alpha = 0.80 }
+textbox_bg = "comment"
+prompt_fg = "purple"
+prompt_bg = { color = "background", alpha = 0.50 }
+placeholder_fg = { color = "foreground", alpha = 0.50 }
+selected_bg = { color = "foreground", alpha = 0.10 }
