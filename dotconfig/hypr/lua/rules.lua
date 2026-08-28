@@ -61,9 +61,9 @@ hl.window_rule({ match = {workspace = "f[1]", float = false}, rounding = 0 })
 -- onlyWindowMarginRule:set_enabled(false)
 
 -- System
-hl.window_rule({ match = {class = "hypr-sys-menu"}, float = true })
-hl.window_rule({ match = {class = "hypr-sys-menu"}, center = true })
-hl.window_rule({ match = {class = "hypr-sys-menu"}, size = "1200 700" })
+hl.window_rule({ match = {class = "hypr-terminal-float"}, float = true })
+hl.window_rule({ match = {class = "hypr-terminal-float"}, center = true })
+hl.window_rule({ match = {class = "hypr-terminal-float"}, size = "1200 700" })
 hl.window_rule({ match = {modal = true}, float = true})
 hl.window_rule({ match = {class = "^(xdg-desktop-portal-gtk)$"}, float = true })
 -- Dialogo para grabar en brave desde google, es flotante

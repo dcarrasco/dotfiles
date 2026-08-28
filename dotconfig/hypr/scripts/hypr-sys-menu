@@ -2,7 +2,7 @@
 
 TERMINAL=kitty
 
-SCRIPT_PATH=$XDG_CONFIG_HOME/hypr/scripts
+SCRIPT_PATH="$XDG_CONFIG_HOME/hypr/scripts"
 export PATH="$SCRIPT_PATH:$PATH"
 
 SELF=$SCRIPT_PATH/hypr-sys-menu
@@ -13,12 +13,13 @@ exec_pgm() {
 }
 
 terminal() {
-    exec_pgm $TERMINAL --class hypr-sys-menu --title=Fedora bash -c "$1"
+    local cmd="$@"
+    exec_pgm $TERMINAL --class hypr-terminal-float --title=Fedora bash -c -- "$cmd"
 }
 
 present_terminal() {
     local cmd="$@"
-    exec_pgm $TERMINAL --class hypr-sys-menu bash -c "hypr-show-logo; $cmd; hypr-show-done"
+    exec_pgm $TERMINAL --class hypr-terminal-float bash -c -- "hypr-show-logo; $cmd; hypr-show-done"
 }
 
 edit_file() {
@@ -110,12 +111,12 @@ render() {
             entry "  System"   "menu:system"
             ;;
         style)
-            entry "  Bar Layout"        "menu:bar_layout"
-            entry "󰸌  Colors"            "menu:theme_colors"
-            entry "  Font"              "act:style_font"
-            entry "  Background"        "act:style_background"
-            entry "  Random Background" "act:style_random_background"
-            entry "  Hyprland"          "act:style_hyprland"
+            entry "  Bar Layout"           "menu:bar_layout"
+            entry "󰸌  Colors"               "menu:theme_colors"
+            entry "  Font"                 "act:style_font"
+            entry "  Background"           "act:style_background"
+            entry "  Random Background"    "act:style_random_bg"
+            entry "  Hyprland"             "act:style_hyprland"
             ;;
         bar_layout)
             show_bar_layouts
@@ -124,103 +125,103 @@ render() {
             show_theme_colors
             ;;
         learn)
-            entry "  Keybindings" "act:learn_keybindings"
-            entry "  Omarchy"     "act:learn_omarchy"
-            entry "  Hyprland"    "act:learn_hyprland"
-            entry "  Waybar"      "act:learn_waybar"
-            entry "  NerdFonts"   "act:learn_nerdfonts"
-            entry "󰣇  Arch"        "act:learn_arch"
-            entry "  Neovim"      "act:learn_neovim"
-            entry "󱆃  Bash"        "act:learn_bash"
-            entry "  Tmux"        "act:learn_tmux"
+            entry "  Keybindings"  "act:learn_keybindings"
+            entry "  Omarchy"      "act:learn_omarchy"
+            entry "  Hyprland"     "act:learn_hyprland"
+            entry "  Waybar"       "act:learn_waybar"
+            entry "  NerdFonts"    "act:learn_nerdfonts"
+            entry "󰣇  Arch"         "act:learn_arch"
+            entry "  Neovim"       "act:learn_neovim"
+            entry "󱆃  Bash"         "act:learn_bash"
+            entry "  Tmux"         "act:learn_tmux"
             ;;
         trigger)
-            entry "  Capture" "menu:capture"
-            entry "  Toggle"  "menu:toggle"
+            entry "  Capture"  "menu:capture"
+            entry "  Toggle"   "menu:toggle"
             ;;
         capture)
-            entry "  Screenshot"   "menu:screenshot"
-            entry "  Screenrecord" "menu:screenrecord"
-            entry "󰃉  Color"        "act:capture_color"
+            entry "  Screenshot"       "menu:screenshot"
+            entry "  Screenrecord"     "menu:screenrecord"
+            entry "󰃉  Color"            "act:capture_color"
             ;;
         screenshot)
-            entry "󰩬   Region to clipboard"  "act:screenshot_region_clip"
-            entry "󰩬   Region to file"       "act:screenshot_region_file"
-            entry "󰹑   Display to clipboard" "menu:capture"
-            entry "󰹑   Display to file"      "act:screenshot_display_file"
+            entry "󰩬   Region to clipboard"     "act:screenshot_region_clip"
+            entry "󰩬   Region to file"          "act:screenshot_region_file"
+            entry "󰹑   Display to clipboard"    "menu:capture"
+            entry "󰹑   Display to file"         "act:screenshot_display_file"
             ;;
         screenrecord)
-            entry "󰩬  Region"  "act:screenrecord_region"
-            entry "󰹑  Display" "act:screenrecord_display"
+            entry "󰩬  Region"   "act:screenrecord_region"
+            entry "󰹑  Display"  "act:screenrecord_display"
             ;;
         toggle)
-            entry "  Wifi"                 "act:toggle_wifi"
-            entry "󰂯  Bluetooth"            "act:toggle_bluetooth"
-            entry "  Power Management"     "menu:power_management"
-            entry "  Keyboard Layout"      "act:toggle_kb_layout"
-            entry "󰪛  Keyboard ControlCaps" "act:toggle_controlcaps"
-            entry "󱄄  Screensaver"          "act:toggle_screensaver"
-            entry "󰔎  Nightlight"           "act:toggle_nightlight"
-            entry "󱫖  Idle Lock"            "act:toggle_idle"
-            entry "󰍜  Top Bar"              "act:toggle_topbar"
+            entry "  Wifi"                     "act:toggle_wifi"
+            entry "󰂯  Bluetooth"                "act:toggle_bluetooth"
+            entry "  Power Management"         "menu:power_management"
+            entry "  Keyboard Layout"          "act:toggle_kb_layout"
+            entry "󰪛  Keyboard ControlCaps"     "act:toggle_controlcaps"
+            entry "󱄄  Screensaver"              "act:toggle_screensaver"
+            entry "󰔎  Nightlight"               "act:toggle_nightlight"
+            entry "󱫖  Idle Lock"                "act:toggle_idle"
+            entry "󰍜  Top Bar"                  "act:toggle_topbar"
             ;;
         power_management)
-            entry "  Balanced"         "act:pm_balanced"
-            entry "  Balanced Battery" "act:pm_balanced_battery"
-            entry "  Performance"      "act:pm_performance"
-            entry "  Power Saver"      "act:pm_powersaver"
+            entry "  Balanced"             "act:pm_balanced"
+            entry "  Balanced Battery"     "act:pm_balanced_battery"
+            entry "  Performance"          "act:pm_performance"
+            entry "  Power Saver"          "act:pm_powersaver"
             ;;
         setup)
-            entry "  Configs"     "act:setup_configs"
-            entry "  Audio"       "act:setup_audio"
-            entry "  Wifi"        "act:setup_wifi"
-            entry "󰂯  Bluetooth"   "act:setup_bluetooth"
-            entry "󰍹  Monitors"    "act:setup_monitors"
-            entry "󰐪  Printers"    "act:setup_printers"
-            entry "  Keybindings" "act:setup_keybindings"
-            entry "  Input"       "act:setup_input"
-            entry "󰈷  Fingerprint" "act:setup_fingerprint"
-            entry "  Fido2"       "act:setup_fido2"
+            entry "  Configs"      "act:setup_configs"
+            entry "  Audio"        "act:setup_audio"
+            entry "  Wifi"         "act:setup_wifi"
+            entry "󰂯  Bluetooth"    "act:setup_bluetooth"
+            entry "󰍹  Monitors"     "act:setup_monitors"
+            entry "󰐪  Printers"     "act:setup_printers"
+            entry "  Keybindings"  "act:setup_keybindings"
+            entry "  Input"        "act:setup_input"
+            entry "󰈷  Fingerprint"  "act:setup_fingerprint"
+            entry "  Fido2"        "act:setup_fido2"
             ;;
         update)
-            entry "  Update"           "act:update_run"
-            entry "󰉉  Install package"  "act:update_install"
-            entry "󰭌  Remove package"   "act:update_remove"
+            entry "  Update"               "act:update_run"
+            entry "󰉉  Install package"      "act:update_install"
+            entry "󰭌  Remove package"       "act:update_remove"
             ;;
         system)
-            entry " Lock"      "act:system_lock"
-            entry "󰗽 Logout"    "act:system_logout"
-            entry " Suspend"   "act:system_suspend"
-            entry " Reboot"    "act:system_reboot"
-            entry "󰐥 Power Off" "act:system_poweroff"
+            entry " Lock"          "act:system_lock"
+            entry "󰗽 Logout"        "act:system_logout"
+            entry " Suspend"       "act:system_suspend"
+            entry " Reboot"        "act:system_reboot"
+            entry "󰐥 Power Off"     "act:system_poweroff"
             ;;
     esac
 }
 
 run_action() {
     case "$1" in
-        apps)   exec_pgm rofi -i -show drun -show-icons -theme layout-apps ;;
-        search) exec_pgm hypr-search-home ;;
-        about)  terminal "fastfetch && hypr-show-done" ;;
+        apps)                   exec_pgm rofi -i -show drun -show-icons -theme layout-apps ;;
+        search)                 exec_pgm hypr-search-home ;;
+        about)                  terminal "fastfetch; hypr-show-done" ;;
 
-        style_bar_layout*)          exec_pgm hypr-switch-theme "${1#style_bar_layout:}" ;;
-        style_colors*)              exec_pgm hypr-switch-colors "${1#style_colors:}" ;;
-        style_font)                 exec_pgm hypr-switch-font ;;
-        style_background)           exec_pgm hypr-switch-wallpaper ;;
-        style_random_background)    exec_pgm hypr-switch-wallpaper random ;;
-        style_hyprland)             exec_pgm edit_file "$XDG_CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
+        style_bar_layout*)      exec_pgm hypr-switch-theme "${1#style_bar_layout:}" ;;
+        style_colors*)          exec_pgm hypr-switch-colors "${1#style_colors:}" ;;
+        style_font)             exec_pgm hypr-switch-font ;;
+        style_background)       exec_pgm hypr-switch-wallpaper ;;
+        style_random_bg)        exec_pgm hypr-switch-wallpaper random ;;
+        style_hyprland)         exec_pgm edit_file "$XDG_CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
 
-        learn_keybindings)  exec_pgm hypr-show-keybinds ;;
-        learn_omarchy)      webapp "https://manuals.omamix.org/2/the-omarchy-manual" ;;
-        learn_hyprland)     webapp "https://wiki.hypr.land/" ;;
-        learn_waybar)       webapp "https://github.com/Alexays/Waybar/wiki" ;;
-        learn_nerdfonts)    webapp "https://www.nerdfonts.com/cheat-sheet" ;;
-        learn_arch)         webapp "https://wiki.archlinux.org/title/Main_page" ;;
-        learn_neovim)       webapp "https://www.lazyvim.org/keymaps" ;;
-        learn_bash)         webapp "https://devhints.io/bash" ;;
-        learn_tmux)         webapp "https://tmuxcheatsheet.com/" ;;
+        learn_keybindings)      exec_pgm hypr-show-keybinds ;;
+        learn_omarchy)          webapp "https://manuals.omamix.org/2/the-omarchy-manual" ;;
+        learn_hyprland)         webapp "https://wiki.hypr.land/" ;;
+        learn_waybar)           webapp "https://github.com/Alexays/Waybar/wiki" ;;
+        learn_nerdfonts)        webapp "https://www.nerdfonts.com/cheat-sheet" ;;
+        learn_arch)             webapp "https://wiki.archlinux.org/title/Main_page" ;;
+        learn_neovim)           webapp "https://www.lazyvim.org/keymaps" ;;
+        learn_bash)             webapp "https://devhints.io/bash" ;;
+        learn_tmux)             webapp "https://tmuxcheatsheet.com/" ;;
 
-        capture_color)      exec_pgm hyprpicker -a ;;
+        capture_color)          exec_pgm hyprpicker -a ;;
 
         screenshot_region_clip)     exec_pgm hypr-cmd-screenshot clipboard ;;
         screenshot_region_file)     exec_pgm hypr-cmd-screenshot region ;;
@@ -243,31 +244,31 @@ run_action() {
         pm_performance)         exec_pgm tuned-adm profile throughput-performance ;;
         pm_powersaver)          exec_pgm tuned-adm profile powersave ;;
 
-        setup_configs)      exec_pgm hypr-edit-config ;;
-        setup_audio)        terminal wiremix ;;
-        setup_wifi)         exec_pgm hypr-nmcli-rofi ;;
-        setup_bluetooth)    exec_pgm blueman-manager ;;
-        setup_monitors)     exec_pgm hypr-switch-monitor ;;
-        setup_printers)     webapp "http://localhost:631" ;;
-        setup_keybindings)  if [ "$DESKTOP_SESSION" = "bspwm" ]; then
-                                edit_file "$XDG_CONFIG_HOME/sxhkd/sxhkdrc";
-                            else
-                                edit_file "$XDG_CONFIG_HOME/hypr/lua/keybinds.lua";
-                            fi
-                            ;;
-        setup_input)        edit_file "$XDG_CONFIG_HOME/hypr/lua/input.lua" ;;
-        setup_fingerprint)  terminal "$OMARCHY_BIN_PATH/omarchy-setup-fingerprint" ;;
-        setup_fido2)        terminal "$OMARCHY_BIN_PATH/omarchy-setup-fido2" ;;
+        setup_configs)          exec_pgm hypr-edit-config ;;
+        setup_audio)            terminal wiremix ;;
+        setup_wifi)             exec_pgm hypr-nmcli-rofi ;;
+        setup_bluetooth)        exec_pgm blueman-manager ;;
+        setup_monitors)         exec_pgm hypr-switch-monitor ;;
+        setup_printers)         webapp "http://localhost:631" ;;
+        setup_keybindings)      if [ "$DESKTOP_SESSION" = "bspwm" ]; then
+                                    edit_file "$XDG_CONFIG_HOME/sxhkd/sxhkdrc";
+                                else
+                                    edit_file "$XDG_CONFIG_HOME/hypr/lua/keybinds.lua";
+                                fi
+                                ;;
+        setup_input)            edit_file "$XDG_CONFIG_HOME/hypr/lua/input.lua" ;;
+        setup_fingerprint)      terminal "$OMARCHY_BIN_PATH/omarchy-setup-fingerprint" ;;
+        setup_fido2)            terminal "$OMARCHY_BIN_PATH/omarchy-setup-fido2" ;;
 
-        update_run)         Present_terminal hypr-do-update ;;
-        update_install)     Terminal "hypr-pkg-install; hypr-show-done" ;;
-        update_remove)      Terminal "hypr-pkg-remove; hypr-show-done" ;;
+        update_run)             present_terminal hypr-do-update ;;
+        update_install)         terminal "hypr-pkg-install; hypr-show-done" ;;
+        update_remove)          terminal "hypr-pkg-remove; hypr-show-done" ;;
 
-        system_lock)        exec_pgm hyprlock ;;
-        system_logout)      exec_pgm loginctl terminate-user "$USER" ;;
-        system_suspend)     exec_pgm systemctl suspend ;;
-        system_reboot)      exec_pgm systemctl reboot ;;
-        system_poweroff)    exec_pgm systemctl poweroff ;;
+        system_lock)            exec_pgm hyprlock ;;
+        system_logout)          exec_pgm loginctl terminate-user "$USER" ;;
+        system_suspend)         exec_pgm systemctl suspend ;;
+        system_reboot)          exec_pgm systemctl reboot ;;
+        system_poweroff)        exec_pgm systemctl poweroff ;;
     esac
 }
 
