@@ -353,4 +353,5 @@ main() {
         render "${INI_MENU-main}"
     fi
 }
+
 main "$@"
