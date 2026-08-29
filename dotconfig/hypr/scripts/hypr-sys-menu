@@ -26,6 +26,23 @@ declare -Ar MENU_TITLES=(
     [system]="System"
 )
 
+declare -Ar MENU_PARENTS=(
+    [style]="main"
+    [bar_layout]="style"
+    [theme_colors]="style"
+    [style_fonts]="style"
+    [learn]="main"
+    [trigger]="main"
+    [capture]="trigger"
+    [screenshot]="capture"
+    [screenrecord]="capture"
+    [toggle]="trigger"
+    [power_management]="toggle"
+    [setup]="main"
+    [update]="main"
+    [system]="main"
+)
+
 die() { printf "ERROR: %s\n" "$*" >&2; exit 1; }
 
 exec_pgm() {
@@ -133,6 +150,17 @@ font_entries(){
     done
 }
 
+render_parent() {
+    local current_menu=${ROFI_DATA:-main}
+    local parent_menu=${MENU_PARENTS[$current_menu]-}
+
+    if [[ -n $parent_menu ]]; then
+        render "$parent_menu"
+    else
+        exit 0
+    fi
+}
+
 render() {
     local menu=$1
     local title=${MENU_TITLES[$menu]-}
@@ -143,6 +171,7 @@ render() {
     printf '\0no-custom\x1ftrue\n'
     printf '\0markup-rows\x1ftrue\n'
     printf '\0data\x1f%s\n' "$menu"
+    printf '\0use-hot-keys\x1ftrue\n'
 
     case "$menu" in
         main)
@@ -331,7 +360,7 @@ load_rofi() {
     local -r font="Hack Nerd Font 16"
     local -r theme="entry{placeholder:\"Search...\";} window{width:22%;}"
 
-    rofi -show sysmenu -modes "sysmenu:$SELF" -i -format p -theme-str "$theme" -font "$font"
+    rofi -show sysmenu -modes "sysmenu:$SELF" -i -format p -theme-str "$theme" -font "$font" -kb-cancel "Control+g,Control+Escape" -kb-custom-1 "Escape"
 }
 
 main() {
@@ -343,15 +372,21 @@ main() {
         return
     fi
 
-    if [[ $ROFI_RETV == 1 && -n ${ROFI_INFO:-} ]]; then
-        case "$ROFI_INFO" in
-            menu:*)  render     "${ROFI_INFO#menu:}" ;;
-            act:*)   run_action "${ROFI_INFO#act:}"  ;;
-            *)       die "invalid rofi entry data: $ROFI_INFO"
-        esac
-    else
-        render "${INI_MENU-main}"
-    fi
+    case $ROFI_RETV in
+        0)
+            render "${INI_MENU-main}"
+            ;;
+        1)
+            case "${ROFI_INFO:-}" in
+                menu:*)  render     "${ROFI_INFO#menu:}" ;;
+                act:*)   run_action "${ROFI_INFO#act:}"  ;;
+                *)       die "invalid rofi entry data: $ROFI_INFO"
+            esac
+            ;;
+        10)
+            render_parent
+            ;;
+    esac
 }
 
 main "$@"
