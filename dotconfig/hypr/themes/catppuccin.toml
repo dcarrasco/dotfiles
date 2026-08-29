@@ -1,4 +1,4 @@
-theme_name = "catppuccin"
+name = "catppuccin"
 
 [palette]
 rosewater = "#F5E0DC"

@@ -2,89 +2,161 @@
 
 set -euo pipefail
 
-declare -A PALETTE
-declare -A THEME
+declare -A PALETTE=()
+declare -A THEME=()
+declare -a LINES=()
 
-STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
-THEME_STATE=$STATE_HOME/hypr/theme
+THEME_NAME=
+THEME_SOURCE=
+THEME_STAGE=
 
-die() { echo "generate-theme: $*" >&2; exit 1; }
+readonly CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+readonly STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
+readonly THEME_STATE=$STATE_HOME/hypr/theme
+readonly -a REQUIRED_ROLES=(
+    WINDOW_ACTIVE_BORDER        WINDOW_ACTIVE_BORDER_2          WINDOW_ACTIVE_SHADOW
+    WINDOW_INACTIVE_BORDER      WINDOW_INACTIVE_SHADOW
+    WINDOW_GROUP_ACTIVE_BORDER  WINDOW_GROUP_INACTIVE_BORDER
+    GROUPBAR_ACTIVE             GROUPBAR_INACTIVE               GROUPBAR_TEXT
+    BAR_BG                      TOOLTIP_BG
+    FG_NORMAL                   FG_HIGH                         FG_DISABLED
+    ACCENT1                     ACCENT2                         ACCENT3
+    WARNING                     CRITICAL                        SUCCESS
+    WINDOW_BG                   TEXTBOX_BG
+    PROMPT_FG                   PROMPT_BG
+    PLACEHOLDER_FG              SELECTED_BG
+)
+
+die() { printf "ERROR - generate-theme: %s\n" "$*" >&2; exit 1; }
 
 read_toml() {
     local section=$1
-    local function=$2
-    local pline=0
+    local line_handler=$2
+    local in_section=0
     local line
+
     for line in "${LINES[@]}"; do
-        if [[ "$line" =~ ^\[${section}\]$ ]]; then
-            pline=1
+        if [[ "$line" =~ ^\[$section\]$ ]]; then
+            in_section=1
         elif [[ "$line" =~ ^\[[a-zA-Z0-9_]+\]$ ]]; then
-            pline=0
-        elif [ $pline -eq 1 ] && [ -n "$line" ] && [[ ! "$line" =~ ^[#]+ ]]; then
-            $function "$line"
+            in_section=0
+        elif (( in_section )) && [[ -n "$line" && "$line" != \#* ]]; then
+            $line_handler "$line"
         fi
     done
 }
 
-to_hex() {
-    local num
-    num=$(echo "255 * $1" | bc)
-    num=${num%.*}
-    printf -v num "%02x" "$num"
-    printf "%s" "${num^^}"
+create_stage() {
+    THEME_STAGE=$(mktemp -d "$CONFIG_HOME/hypr/.hypr-theme.XXXXXX") || die "could not create staging directory"
+
+    trap 'rm -rf -- "$THEME_STAGE"' EXIT
 }
 
-hex_to_perc() {
-    local perc=$((100 * $((0x$1)) / 255))
-    echo "scale=2; $perc / 100" | bc
+stage_config_file() {
+    local target=$1
+    local staged=$THEME_STAGE/${target##*/}
+
+    cp "$target.orig" "$staged" || die "could not stage template: $target.orig"
+
+    printf '%s' "$staged"
 }
 
-process_palette_line() {
-    local key value kv_pattern
-    local line=$1
-    kv_pattern="^([a-zA-Z0-9_]+)[ ]*=[ ]*\"([a-zA-Z0-9#]+)\"$"
-    if [[ $line =~ $kv_pattern ]]; then
-        key="${BASH_REMATCH[1]^^}"
-        value="${BASH_REMATCH[2]^^}"
-        # echo "KV" "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}"
-        PALETTE[${key^^}]="${value^^}"
-    fi
+publish_config_file() {
+    local staged_name=$1
+    local target=$2
+
+    mv -f "$THEME_STAGE/$staged_name" "$target" || die "could not publish generated theme: $target"
 }
 
-process_role_line() {
-    local key value alpha kv_pattern ko_pattern
-    local line=$1
+publish_theme() {
+    publish_config_file theme.lua   "$CONFIG_HOME/hypr/lua/theme.lua"
+    publish_config_file theme.conf  "$CONFIG_HOME/hypr/conf/theme.conf"
+    publish_config_file colors.css  "$CONFIG_HOME/waybar/colors.css"
+    publish_config_file colors.rasi "$CONFIG_HOME/rofi/themes/colors.rasi"
+}
 
-    kv_pattern="^([a-zA-Z0-9_]+)[ ]*=[ ]*\"([a-zA-Z0-9#]+)\"$"
-    if [[ $line =~ $kv_pattern ]]; then
-        key="${BASH_REMATCH[1]^^}"
-        value="${BASH_REMATCH[2]^^}"
-        # echo "KV" "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}"
-        THEME[$key]=${PALETTE[$value]}
-    fi
+validate_theme() {
+    local role
+    for role in "${REQUIRED_ROLES[@]}"; do
+        [[ -v "THEME[$role]" ]] || die "missing theme role: ${role,,}"
+    done
+}
 
-    ko_pattern="^([a-zA-Z0-9_]+)[ ]*=[ ]*\{[ ]*color[ ]*=[ ]*\"([a-zA-Z0-9_]+)\"[ ]*,[ ]*alpha[ ]*=[ ]*([0-9\.]+)[ ]*\}$"
-    if [[ $line =~ $ko_pattern ]]; then
-        key="${BASH_REMATCH[1]^^}"
-        value="${BASH_REMATCH[2]^^}"
-        alpha="${BASH_REMATCH[3]}"
-        # echo "**** Key object pattern" "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}" "${BASH_REMATCH[3]}"
-        THEME[$key]=${PALETTE[$value]}$(to_hex "$alpha")
-    fi
+alpha_to_hex() {
+    local alpha=$1
+    local hex
+
+    hex=$(
+        awk -v alpha="$alpha" '
+            BEGIN {
+                if (alpha !~ /^(0([.][0-9]+)?|1([.]0+)?)$/)
+                    exit 1;
+                printf "%02X", int(alpha * 255 + 0.5);
+            }'
+    ) || die "invalid alpha value: $alpha"
+
+    printf "%s" "$hex"
+}
+
+hex_to_decimal() {
+    local hex=$1
+    local decimal=$((16#$hex))
+
+    awk -v decimal="$decimal" 'BEGIN { printf "%.2f", decimal / 255 }'
 }
 
 to_waybar() {
     local color=$1
     if [ ${#color} -eq 9 ]; then
-        echo "alpha(${color:0:7}, $(hex_to_perc "${color:7:2}"))"
+        printf "alpha(%s, %s)" "${color:0:7}" "$(hex_to_decimal "${color:7:2}")"
     else
-        echo "${color}"
+        printf "%s" "${color}"
+    fi
+}
+
+palette_color() {
+    local name=${1^^}
+    [[ -v "PALETTE[$name]" ]] || die "unknown palette color: $1"
+    printf "%s" "${PALETTE[$name]}"
+}
+
+process_palette_line() {
+    local key color color_pattern
+    local line=$1
+
+    color_pattern="^([a-zA-Z0-9_]+)[[:space:]]*=[[:space:]]*\"(#[[:xdigit:]]{6})\"$"
+    if [[ $line =~ $color_pattern ]]; then
+        key="${BASH_REMATCH[1]^^}"
+        color="${BASH_REMATCH[2]^^}"
+        PALETTE[$key]=$color
+    else
+        die "$THEME_SOURCE: palette line not formatted correctly: $line"
+    fi
+}
+
+process_role_line() {
+    local line=$1 key plain_pattern alpha_pattern alpha
+
+    plain_pattern="^([a-zA-Z0-9_]+)[[:space:]]*=[[:space:]]*\"([a-zA-Z0-9#]+)\"$"
+    alpha_pattern="^([a-zA-Z0-9_]+)[[:space:]]*=[[:space:]]*\{[[:space:]]*color[[:space:]]*=[[:space:]]*\"([a-zA-Z0-9_]+)\"[[:space:]]*,[[:space:]]*alpha[[:space:]]*=[[:space:]]*([0-9\.]+)[[:space:]]*\}$"
+
+    if [[ $line =~ $plain_pattern ]]; then
+        key="${BASH_REMATCH[1]^^}"
+        THEME[$key]=$(palette_color "${BASH_REMATCH[2]}")
+    elif [[ $line =~ $alpha_pattern ]]; then
+        key="${BASH_REMATCH[1]^^}"
+        alpha=${BASH_REMATCH[3]}
+        awk -v value="$alpha" 'BEGIN { exit !(value >= 0 && value <= 1) }' || die "invalid alpha value: $alpha"
+        THEME[$key]=$(palette_color "${BASH_REMATCH[2]}")$(alpha_to_hex "$alpha")
+    else
+        die "$THEME_SOURCE: role line not formatted correctly: $line"
     fi
 }
 
 generate_hyprland() {
-    local target=$XDG_CONFIG_HOME/hypr/lua/theme.lua
-    cp "$target.orig" "$target.stage"
+    local target=$CONFIG_HOME/hypr/lua/theme.lua
+    local staged
+    staged=$(stage_config_file "$target")
 
     sed -i \
         -e "s/^-- THEME:.*/-- THEME: ${THEME_NAME}/"                                             \
@@ -98,14 +170,13 @@ generate_hyprland() {
         -e "s/\(color_text_groupbar\) .*/\1 = \"${THEME[GROUPBAR_TEXT]}\",/"                     \
         -e "s/\(color_shadow\) .*/\1 = \"${THEME[WINDOW_ACTIVE_SHADOW]}\",/"                     \
         -e "s/\(color_shadow_inactive\) .*/\1 = \"${THEME[WINDOW_INACTIVE_SHADOW]}\",/"          \
-        "$target.stage"
-
-    mv -f "$target.stage" "$target"
+        "$staged"
 }
 
 generate_hyprland_conf() {
-    local target=$XDG_CONFIG_HOME/hypr/conf/theme.conf
-    cp "$target.orig" "$target.stage"
+    local target=$CONFIG_HOME/hypr/conf/theme.conf
+    local staged
+    staged=$(stage_config_file "$target")
 
     sed -i \
         -e "s/^# THEME:.*/# THEME: ${THEME_NAME}/"                                               \
@@ -119,14 +190,13 @@ generate_hyprland_conf() {
         -e "s/\(\$color_text_groupbar\) .*/\1 = \"${THEME[GROUPBAR_TEXT]}\"/"                    \
         -e "s/\(\$color_shadow\) .*/\1 = \"${THEME[WINDOW_ACTIVE_SHADOW]}\"/"                    \
         -e "s/\(\$color_shadow_inactive\) .*/\1 = \"${THEME[WINDOW_INACTIVE_SHADOW]}\"/"         \
-        "$target.stage"
-
-    mv -f "$target.stage" "$target"
+        "$staged"
 }
 
 generate_waybar() {
-    local target=$XDG_CONFIG_HOME/waybar/colors.css
-    cp "$target.orig" "$target.stage"
+    local target=$CONFIG_HOME/waybar/colors.css
+    local staged
+    staged=$(stage_config_file "$target")
 
     sed -i \
         -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"                                    \
@@ -142,14 +212,13 @@ generate_waybar() {
         -e "s/\(@define-color warning\) .*/\1 $( to_waybar "${THEME[WARNING]}" );/"            \
         -e "s/\(@define-color critical\) .*/\1 $( to_waybar "${THEME[CRITICAL]}" );/"          \
         -e "s/\(@define-color success\) .*/\1 $( to_waybar "${THEME[SUCCESS]}" );/"            \
-        "$target.stage"
-
-    mv -f "$target.stage" "$target"
+        "$staged"
 }
 
 generate_rofi() {
-    local target=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
-    cp "$target.orig" "$target.stage"
+    local target=$CONFIG_HOME/rofi/themes/colors.rasi
+    local staged
+    staged=$(stage_config_file "$target")
 
     sed -i \
         -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"               \
@@ -163,31 +232,30 @@ generate_rofi() {
         -e "s/\(fg-selected:\) .*/\1 ${THEME[ACCENT1]};/"                 \
         -e "s/\(bg-selected:\) .*/\1 ${THEME[SELECTED_BG]};/"             \
         -e "s/\(fg-scrollbar:\) .*/\1 ${THEME[PLACEHOLDER_FG]};/"         \
-        "$target.stage"
-
-    mv -f "$target.stage" "$target"
+        "$staged"
 }
 
 
 [ $# -eq 1 ] || die "usage: generate-theme <name>"
+
 THEME_NAME=$1
 [[ $THEME_NAME =~ ^[a-z0-9-]+$ ]] || die "invalid theme name: $THEME_NAME"
-THEME_SOURCE="$XDG_CONFIG_HOME/hypr/themes/${THEME_NAME}.toml"
+
+THEME_SOURCE="$CONFIG_HOME/hypr/themes/${THEME_NAME}.toml"
 [ -f "$THEME_SOURCE" ] || die "unknown theme: $THEME_NAME (no such file: $THEME_SOURCE)"
 
 mapfile -t LINES < "$THEME_SOURCE"
 
 read_toml palette process_palette_line
 read_toml roles   process_role_line
+validate_theme
 
-# for p in "${!THEME[@]}"; do
-#     echo "${p}=${THEME[$p]}"
-# done
-
+create_stage
 generate_hyprland
 generate_hyprland_conf
 generate_waybar
 generate_rofi
+publish_theme
 
 mkdir -p "${THEME_STATE%/*}" || die "could not create theme state directory"
 printf '%s\n' "$THEME_NAME" > "$THEME_STATE" || die "could not record current theme"

@@ -15,8 +15,8 @@ if [ -n "$1" ]; then
     theme=$1
 else
     mapfile -t themes < <(
-        find "$themes_dir" -maxdepth 1 -type f -name '*.json' -printf '%f\n' |
-            sed 's/\.json$//' | sort
+        find "$themes_dir" -maxdepth 1 -type f -name '*.toml' -printf '%f\n' |
+            sed 's/\.toml$//' | sort
     )
     selected_theme=$(current_theme)
 
