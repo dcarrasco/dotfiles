@@ -38,6 +38,14 @@ case "$1" in
         notify "Pantalla creado en archivo"
         ;;
 
+    screen | --screen)
+        case ${DESKTOP_SESSION:-} in
+            bspwm) maim | xclip -selection clipboard -t image/png ;;
+            *)     grim -t png - | wl-copy -t image/png;
+        esac
+        notify "Pantalla copiada al clipboard"
+        ;;
+
     *)
         case $DESKTOP_SESSION in
             bspwm)

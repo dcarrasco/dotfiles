@@ -30,6 +30,8 @@ fi
 if [[ -n "$font" ]]; then
     # valida que $font sea una fuenta válida instalada
     if ! get_fonts | grep -q "$font"; then
+        printf "%s\n" "ERROR: missing font: $font"
+        notify-send "Font" "ERROR: missing font: $font"
         exit 1
     fi
 

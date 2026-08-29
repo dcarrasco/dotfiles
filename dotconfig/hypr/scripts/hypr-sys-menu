@@ -1,103 +1,148 @@
 #!/bin/bash
 
-TERMINAL=kitty
+readonly TERMINAL=kitty
+readonly CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+readonly STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
+readonly SCRIPT_PATH=$CONFIG_HOME/hypr/scripts
+readonly SELF=$SCRIPT_PATH/hypr-sys-menu
 
-SCRIPT_PATH="$XDG_CONFIG_HOME/hypr/scripts"
 export PATH="$SCRIPT_PATH:$PATH"
 
-SELF=$SCRIPT_PATH/hypr-sys-menu
+declare -Ar MENU_TITLES=(
+    [main]="Start"
+    [style]="Style"
+    [bar_layout]="Bar Layout"
+    [theme_colors]="Colors"
+    [style_fonts]="Fonts"
+    [learn]="Learn"
+    [trigger]="Trigger"
+    [capture]="Capture"
+    [screenshot]="Screenshot"
+    [screenrecord]="Screenrecord"
+    [toggle]="Toggle"
+    [power_management]="Power Management"
+    [setup]="Setup"
+    [update]="Update"
+    [system]="System"
+)
+
+die() { printf "ERROR: %s\n" "$*" >&2; exit 1; }
 
 exec_pgm() {
-    coproc ( "$@" > /dev/null )
+    coproc {
+        "$@" > /dev/null 2>&1
+    }
     exit 0
 }
 
 terminal() {
-    local cmd="$@"
-    exec_pgm $TERMINAL --class hypr-terminal-float --title=Fedora bash -c -- "$cmd"
+    local command=$*
+
+    exec_pgm "$TERMINAL" --class hypr-terminal-float --title Fedora bash -c -- "$command"
 }
 
 present_terminal() {
-    local cmd="$@"
-    exec_pgm $TERMINAL --class hypr-terminal-float bash -c -- "hypr-show-logo; $cmd; hypr-show-done"
+    local command=$1
+
+    terminal "hypr-show-logo; $command; hypr-show-done"
 }
 
 edit_file() {
-    notify-send -u low "Editing config file" "$1"
-    exec_pgm $TERMINAL nvim "$1"
+    local file=$1
+    notify-send -u low "Editing config file" "$file"
+    exec_pgm "$TERMINAL" nvim "$file"
 }
 
 webapp() {
-    exec_pgm brave-browser --password-store=basic --new-window --app="$1"
-    # exec_pgm flatpak run com.brave.Browser --password-store=basic --new-window --app=$1
+    local url=$1
+    exec_pgm brave-browser --password-store=basic --new-window --app="$url"
 }
 
 entry() {
     printf '%s\0info\x1f%s\n' "$1" "$2"
 }
 
-title_menu() {
-    case "$1" in
-        main)              echo "Start" ;;
-        style)             echo "Style" ;;
-        learn)             echo "Learn" ;;
-        trigger)           echo "Trigger" ;;
-        capture)           echo "Capture" ;;
-        screenshot)        echo "Screenshot" ;;
-        toggle)            echo "Toggle" ;;
-        power_management)  echo "Power Management" ;;
-        setup)             echo "Setup" ;;
-        update)            echo "Update" ;;
-        system)            echo "System" ;;
-    esac
+selectable_entry() {
+    local label=$1
+    local info=$2
+    local selected=${3:-false}
+
+    if [[ $selected == true ]]; then
+        label="<i>$label</i>"
+    fi
+
+    entry "$label" "$info"
 }
 
-show_bar_layouts() {
-    local WAYBAR_STYLE="$XDG_CONFIG_HOME/waybar/theme.css"
-    local temas=(Square Circle Underscore Mac Float Tahoe KDE)
+bar_layouts_entries() {
+    local waybar_style="$CONFIG_HOME/waybar/theme.css"
+    local current_layout layout selected
+    local -a layouts=(Square Circle Underscore Mac Float Tahoe KDE)
 
-    local current_layout=$(grep import "$WAYBAR_STYLE" | grep themes | cut -d "/" -f 2)
+    current_layout=$(sed -nE 's|.*themes/([^/]+)/.*|\1|p' "$waybar_style" | head -n 1)
 
-    for i in "${temas[@]}"; do
-        if [ "${i,,}" = "$current_layout" ]; then
-            entry "<i>$i</i>"   "act:style_bar_layout:$i"
-        else
-            entry "$i"   "act:style_bar_layout:$i"
-        fi
+    for layout in "${layouts[@]}"; do
+        selected=false
+        [[ ${layout,,} == "$current_layout" ]] && selected=true
+
+        selectable_entry "$layout" "act:style_bar_layout:$layout" "$selected"
     done
 }
 
-show_theme_colors() {
-    local themes_dir"=$XDG_CONFIG_HOME/hypr/themes"
-    local state_home=${XDG_STATE_HOME:-$HOME/.local/state}
-    local theme_state=$state_home/hypr/theme
-    local themes
+theme_colors_entries() {
+    local themes_dir=$CONFIG_HOME/hypr/themes
+    local theme_state=$STATE_HOME/hypr/theme
+    local selected_theme=
+    local theme_name label selected
+    local -a themes=()
+
+    if [[ -r $theme_state ]]; then
+        IFS= read -r selected_theme < "$theme_state"
+    fi
 
     mapfile -t themes < <(
         find "$themes_dir" -maxdepth 1 -type f -name '*.toml' -printf '%f\n' |
             sed 's/\.toml$//' | sort
     )
-    selected_theme=$(cat "$theme_state" | head -n 1)
 
     for theme_name in "${themes[@]}"; do
-        label=$(sed -E 's/(^|-)([a-z])/\1\U\2/g' <<< "$theme_name")
-        if [ "$theme_name" = "$selected_theme" ]; then
-            entry "<i>$label</i>"  "act:style_colors:$label"
-        else
-            entry "$label"  "act:style_colors:$label"
-        fi
+        label=$(sed -E 's/^([a-z])/\U\1/; s/-([a-z])/ \U\1/g' <<< "$theme_name")
+
+        selected=false
+        [[ $theme_name == "$selected_theme" ]] && selected=true
+
+        selectable_entry "$label" "act:style_colors:$theme_name" "$selected"
+    done
+}
+
+font_entries(){
+    local kitty_conf=$CONFIG_HOME/kitty/theme.conf
+    local selected current_font
+
+    if [[ -r "$kitty_conf" ]]; then
+        current_font=$(sed -nE 's/^font_family[[:space:]]+//p' "$kitty_conf")
+    fi
+
+    mapfile -t fonts < <(fc-list :spacing=100 -f "%{family[0]}\n" | sort -u )
+
+    for font in "${fonts[@]}"; do
+        selected=false
+        [[ $font == "$current_font" ]] && selected=true
+
+        selectable_entry "<span font_family=\"$font\">$font</span>" "act:style_font:$font" "$selected"
     done
 }
 
 render() {
-    local menu="$1"
-    local title="$(title_menu "$menu")"
+    local menu=$1
+    local title=${MENU_TITLES[$menu]-}
+
+    [[ -n $title ]] || die "cannot render unknown menu title: $menu"
 
     printf '\0prompt\x1f%s\n' "$title"
     printf '\0no-custom\x1ftrue\n'
     printf '\0markup-rows\x1ftrue\n'
     printf '\0data\x1f%s\n' "$menu"
-    # printf '\0theme\x1fentry{placeholder:"%s...";}\n' "$title"
 
     case "$menu" in
         main)
@@ -114,16 +159,19 @@ render() {
         style)
             entry "  Bar Layout"           "menu:bar_layout"
             entry "󰸌  Colors"               "menu:theme_colors"
-            entry "  Font"                 "act:style_font"
+            entry "  Font"                 "menu:style_fonts"
             entry "  Background"           "act:style_background"
             entry "  Random Background"    "act:style_random_bg"
             entry "  Hyprland"             "act:style_hyprland"
             ;;
         bar_layout)
-            show_bar_layouts
+            bar_layouts_entries
             ;;
         theme_colors)
-            show_theme_colors
+            theme_colors_entries
+            ;;
+        style_fonts)
+            font_entries
             ;;
         learn)
             entry "  Keybindings"  "act:learn_keybindings"
@@ -146,10 +194,10 @@ render() {
             entry "󰃉  Color"            "act:capture_color"
             ;;
         screenshot)
-            entry "󰩬   Region to clipboard"     "act:screenshot_region_clip"
-            entry "󰩬   Region to file"          "act:screenshot_region_file"
-            entry "󰹑   Display to clipboard"    "menu:capture"
-            entry "󰹑   Display to file"         "act:screenshot_display_file"
+            entry "󰩬  Region to clipboard"     "act:screenshot_region_clip"
+            entry "󰩬  Region to file"          "act:screenshot_region_file"
+            entry "󰹑  Display to clipboard"    "act:screenshot_display_clip"
+            entry "󰹑  Display to file"         "act:screenshot_display_file"
             ;;
         screenrecord)
             entry "󰩬  Region"   "act:screenrecord_region"
@@ -190,11 +238,14 @@ render() {
             entry "󰭌  Remove package"       "act:update_remove"
             ;;
         system)
-            entry " Lock"          "act:system_lock"
-            entry "󰗽 Logout"        "act:system_logout"
-            entry " Suspend"       "act:system_suspend"
-            entry " Reboot"        "act:system_reboot"
-            entry "󰐥 Power Off"     "act:system_poweroff"
+            entry "  Lock"          "act:system_lock"
+            entry "󰗽  Logout"        "act:system_logout"
+            entry "  Suspend"       "act:system_suspend"
+            entry "  Reboot"        "act:system_reboot"
+            entry "󰐥  Power Off"     "act:system_poweroff"
+            ;;
+        *)
+            die "cannot render unknown menu: $menu"
             ;;
     esac
 }
@@ -205,12 +256,12 @@ run_action() {
         search)                 exec_pgm hypr-search-home ;;
         about)                  terminal "fastfetch; hypr-show-done" ;;
 
-        style_bar_layout*)      exec_pgm hypr-switch-theme "${1#style_bar_layout:}" ;;
-        style_colors*)          exec_pgm hypr-switch-colors "${1#style_colors:}" ;;
-        style_font)             exec_pgm hypr-switch-font ;;
+        style_bar_layout:*)     exec_pgm hypr-switch-theme "${1#style_bar_layout:}" ;;
+        style_colors:*)         exec_pgm hypr-switch-colors "${1#style_colors:}" ;;
+        style_font:*)           exec_pgm hypr-switch-font "${1#style_font:}" ;;
         style_background)       exec_pgm hypr-switch-wallpaper ;;
         style_random_bg)        exec_pgm hypr-switch-wallpaper random ;;
-        style_hyprland)         exec_pgm edit_file "$XDG_CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
+        style_hyprland)         edit_file "$CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
 
         learn_keybindings)      exec_pgm hypr-show-keybinds ;;
         learn_omarchy)          webapp "https://manuals.omamix.org/2/the-omarchy-manual" ;;
@@ -226,7 +277,8 @@ run_action() {
 
         screenshot_region_clip)     exec_pgm hypr-cmd-screenshot clipboard ;;
         screenshot_region_file)     exec_pgm hypr-cmd-screenshot region ;;
-        screenshot_display_file)    exec_pgm hypr-cmd-screenshot ;;
+        screenshot_display_clip)    exec_pgm hypr-cmd-screenshot clipboard ;;
+        screenshot_display_file)    exec_pgm hypr-cmd-screenshot file ;;
 
         screenrecord_region)    exec_pgm "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" ;;
         screenrecord_display)   exec_pgm "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord" output ;;
@@ -251,13 +303,13 @@ run_action() {
         setup_bluetooth)        exec_pgm blueman-manager ;;
         setup_monitors)         exec_pgm hypr-switch-monitor ;;
         setup_printers)         webapp "http://localhost:631" ;;
-        setup_keybindings)      if [ "$DESKTOP_SESSION" = "bspwm" ]; then
-                                    edit_file "$XDG_CONFIG_HOME/sxhkd/sxhkdrc";
+        setup_keybindings)      if [[ "$DESKTOP_SESSION" = "bspwm" ]]; then
+                                    edit_file "$CONFIG_HOME/sxhkd/sxhkdrc";
                                 else
-                                    edit_file "$XDG_CONFIG_HOME/hypr/lua/keybinds.lua";
+                                    edit_file "$CONFIG_HOME/hypr/lua/keybinds.lua";
                                 fi
                                 ;;
-        setup_input)            edit_file "$XDG_CONFIG_HOME/hypr/lua/input.lua" ;;
+        setup_input)            edit_file "$CONFIG_HOME/hypr/lua/input.lua" ;;
         setup_fingerprint)      terminal "$OMARCHY_BIN_PATH/omarchy-setup-fingerprint" ;;
         setup_fido2)            terminal "$OMARCHY_BIN_PATH/omarchy-setup-fido2" ;;
 
@@ -270,34 +322,35 @@ run_action() {
         system_suspend)         exec_pgm systemctl suspend ;;
         system_reboot)          exec_pgm systemctl reboot ;;
         system_poweroff)        exec_pgm systemctl poweroff ;;
+
+        *)                      die "unknown action: $1" ;;
     esac
 }
 
 load_rofi() {
-    local font="Hack Nerd Font 16"
-    local width="22%"
-    local theme="entry{placeholder:\"Search...\";} window{width:$width;}"
+    local -r font="Hack Nerd Font 16"
+    local -r theme="entry{placeholder:\"Search...\";} window{width:22%;}"
 
     rofi -show sysmenu -modes "sysmenu:$SELF" -i -format p -theme-str "$theme" -font "$font"
 }
 
-# echo "ROFI_RETV: ${ROFI_RETV}"
-# echo "ROFI_DATA: ${ROFI_DATA}"
-# echo "ROFI_INFO: ${ROFI_INFO}"
+main() {
+    local initial_menu=${1:-main}
 
-if [ -n "${ROFI_RETV}" ]; then
-    # When call the script when rofi window is loaded, must show the options
-    if [ "$ROFI_RETV" = "1" ] && [ -n "$ROFI_INFO" ]; then
+    if [[ -z ${ROFI_RETV:-} ]]; then
+        export INI_MENU="$initial_menu"
+        load_rofi
+        return
+    fi
+
+    if [[ $ROFI_RETV == 1 && -n ${ROFI_INFO:-} ]]; then
         case "$ROFI_INFO" in
             menu:*)  render     "${ROFI_INFO#menu:}" ;;
             act:*)   run_action "${ROFI_INFO#act:}"  ;;
+            *)       die "invalid rofi entry data: $ROFI_INFO"
         esac
     else
         render "${INI_MENU-main}"
     fi
-else
-    # When call the script, must load rofi window first
-    [ -n "$1" ] && export INI_MENU="$1"
-    load_rofi
-fi
-
+}
+main "$@"
