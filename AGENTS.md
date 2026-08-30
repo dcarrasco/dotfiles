@@ -37,7 +37,9 @@ Hyprland has two manually synchronized representations:
 
 For behavior changes, update Lua first and port the same change to the corresponding `.conf` file. The mirrored areas include `autostart`, `envs`, `input`, `keybinds`, `looknfeel`, `monitors`, `rules`, and `theme`.
 
-`dotconfig/hypr/scripts/hypr-sys-menu` is a self-contained Rofi script-mode menu. Keep its `render()`, `run_action()`, and `title_menu()` cases consistent when adding or removing menus/actions. Programs spawned by actions use `exec_pgm()` so Rofi can exit without blocking.
+`dotconfig/hypr/scripts/hypr-sys-menu` is a self-contained Rofi script-mode menu. Keep `MENU_TITLES`, `MENU_PARENTS`, `render()`, and `run_action()` consistent when adding or removing menus/actions. Use `selectable_entry()` for choices with a current value; it marks the active choice with the filled radio glyph (``) and other choices with the empty glyph (``). Programs spawned by actions use `exec_pgm()` so Rofi can exit without blocking.
+
+Rofi's `normal` and `alternate` element states reflect alternating row positions, independently of states such as `selected`, `active`, or `urgent`. When styling a semantic state in `dotconfig/rofi/themes/default.rasi`, use a selector that covers both row variants (for example, `element active`) unless the variants intentionally need different styling.
 
 ## Themes and generated files
 
