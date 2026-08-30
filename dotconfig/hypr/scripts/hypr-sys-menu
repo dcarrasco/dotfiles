@@ -84,11 +84,10 @@ selectable_entry() {
     local info=$2
     local selected=${3:-false}
 
-    if [[ $selected == true ]]; then
-        label="<i>$label</i>"
-    fi
+    local checked=" "
+    [[ $selected == true ]] && checked=" "
 
-    entry "$label" "$info"
+    entry "$checked $label" "$info"
 }
 
 bar_layouts_entries() {
@@ -146,7 +145,7 @@ font_entries(){
         selected=false
         [[ $font == "$current_font" ]] && selected=true
 
-        selectable_entry "<span font_family=\"$font\">$font</span>" "act:style_font:$font" "$selected"
+        selectable_entry "<span size=\"small\" font_family=\"$font\">$font</span>" "act:style_font:$font" "$selected"
     done
 }
 
