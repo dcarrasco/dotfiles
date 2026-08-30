@@ -92,16 +92,18 @@ selectable_entry() {
 
 bar_layouts_entries() {
     local waybar_style="$CONFIG_HOME/waybar/theme.css"
-    local current_layout layout selected
-    local -a layouts=(Square Circle Underscore Mac Float Tahoe KDE)
+    local layouts_dir=$CONFIG_HOME/waybar/themes
+    local current_layout layouts layout selected
 
-    current_layout=$(sed -nE 's|.*themes/([^/]+)/.*|\1|p' "$waybar_style" | head -n 1)
+    mapfile -t layouts < <( find "$layouts_dir" -maxdepth 1 -type d -printf '%f\n' | sort )
+
+    current_layout="$(sed -nE 's|.*themes/([^/]+)/.*|\1|p' "$waybar_style" | head -n 1)"
 
     for layout in "${layouts[@]}"; do
         selected=false
         [[ ${layout,,} == "$current_layout" ]] && selected=true
 
-        selectable_entry "$layout" "act:style_bar_layout:$layout" "$selected"
+        selectable_entry "${layout^}" "act:style_bar_layout:$layout" "$selected"
     done
 }
 
@@ -117,8 +119,7 @@ theme_colors_entries() {
     fi
 
     mapfile -t themes < <(
-        find "$themes_dir" -maxdepth 1 -type f -name '*.toml' -printf '%f\n' |
-            sed 's/\.toml$//' | sort
+        find "$themes_dir" -maxdepth 1 -type f -name '*.toml' -printf '%f\n' | sed 's/\.toml$//' | sort
     )
 
     for theme_name in "${themes[@]}"; do
@@ -284,9 +285,9 @@ run_action() {
         search)                 exec_pgm hypr-search-home ;;
         about)                  terminal "fastfetch; hypr-show-done" ;;
 
-        style_bar_layout:*)     exec_pgm hypr-switch-theme "${1#style_bar_layout:}" ;;
+        style_bar_layout:*)     exec_pgm hypr-switch-theme  "${1#style_bar_layout:}" ;;
         style_colors:*)         exec_pgm hypr-switch-colors "${1#style_colors:}" ;;
-        style_font:*)           exec_pgm hypr-switch-font "${1#style_font:}" ;;
+        style_font:*)           exec_pgm hypr-switch-font   "${1#style_font:}" ;;
         style_background)       exec_pgm hypr-switch-wallpaper ;;
         style_random_bg)        exec_pgm hypr-switch-wallpaper random ;;
         style_hyprland)         edit_file "$CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
