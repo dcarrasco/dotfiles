@@ -43,7 +43,11 @@ declare -Ar MENU_PARENTS=(
     [system]="main"
 )
 
-die() { printf "ERROR: %s\n" "$*" >&2; exit 1; }
+die() {
+    printf "ERROR: %s\n" "$*" >&2
+    notify-send -u critical -t 0 -i dialog-warning "ERROR: hypr-sys-menu" "$*"
+    exit 1
+}
 
 exec_pgm() {
     coproc {
