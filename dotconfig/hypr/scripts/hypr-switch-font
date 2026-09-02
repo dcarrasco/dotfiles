@@ -36,6 +36,8 @@ set_font() {
         if [[ -f $ALACRITTY_CONF ]]; then
             sed -i "s/^family = \".*\"/family = \"$font\"/g" "$ALACRITTY_CONF"
         fi
+
+        notify-send -u low "Fonts" "Change font to $font"
     fi
 }
 

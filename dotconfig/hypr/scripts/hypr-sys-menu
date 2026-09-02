@@ -80,7 +80,7 @@ selectable_entry() {
     local checked=" "
     [[ $selected == true ]] && checked=" "
 
-    entry "$checked $label" "$info"
+    entry "$checked $label" "$info" ""
 }
 
 title_case() {
@@ -150,10 +150,14 @@ font_entries() {
 pm_entries() {
     local menu_item=$1
     local current_pm pm
-    local -a profiles=()
+    local -a profiles=(
+        balanced
+        balanced-battery
+        throughput-performance
+        powersave
+    )
 
     current_pm="$(tuned-adm active | sed 's/^Current active profile: //')"
-    mapfile -t profiles < <(printf "balanced\nbalanced-battery\nthroughput-performance\npowersave")
 
     for pm in "${profiles[@]}"; do
         local selected=false
