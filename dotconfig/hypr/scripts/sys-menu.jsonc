@@ -49,21 +49,15 @@
     "trigger.capture.screenrecord.display": { "icon": "󰹑", "label": "Display", "action": "$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord output" },
 
     // TOGGLE
-    "trigger.toggle.wifi": { "icon": "", "label": "WiFi", "action": "hypr-switch-wifi" },
-    "trigger.toggle.bluetooth": { "icon": "󰂯", "label": "Bluetooth", "action": "hypr-bluetooth --toggle" },
-    "trigger.toggle.pm": { "icon": "", "label": "Power Management" },
+    "trigger.toggle.wifi": { "icon": "", "label": "WiFi", "action": "hypr-switch-wifi", "checked": "[[ $(nmcli radio wifi) == \"enabled\" ]]" },
+    "trigger.toggle.bluetooth": { "icon": "󰂯", "label": "Bluetooth", "action": "hypr-bluetooth --toggle", "checked": "[[ $(hypr-bluetooth --state) == \"on\" ]]" },
+    "trigger.toggle.pm": { "icon": "", "label": "Power Management", "options": "pm_entries", "action": "tuned-adm profile" },
     "trigger.toggle.keyboard_layout": { "icon": "", "label": "Keyboard Layout", "action": "hypr-switch-keyboard-layout" },
     "trigger.toggle.keyboard_controlcaps": { "icon": "󰪛", "label": "Keyboard ControlCaps", "action": "hypr-switch-controlcaps" },
     "trigger.toggle.screensaver": { "icon": "󱄄", "label": "Screensaver", "action": "$OMARCHY_BIN_PATH/omarchy-launch-screensaver" },
     "trigger.toggle.nightlight": { "icon": "󰔎", "label": "Nightlight", "action": "hypr-switch-nightlight" },
     "trigger.toggle.idle_lock": { "icon": "󱫖", "label": "Idle Lock", "action": "$OMARCHY_BIN_PATH/omarchy-toggle-idle" },
     "trigger.toggle.top_bar": { "icon": "󰍜", "label": "Top Bar", "action": "pkill -SIGUSR1 waybar" },
-
-    // POWER MANAGEMENT
-    "trigger.toggle.pm.balanced": { "icon": "", "label": "Balanced", "action": "tuned-adm profile balanced" },
-    "trigger.toggle.pm.balanced_battery": { "icon": "", "label": "Balanced Battery", "action": "tuned-adm profile balanced-battery" },
-    "trigger.toggle.pm.performance": { "icon": "", "label": "Performance", "action": "tuned-adm profile throughput-performance" },
-    "trigger.toggle.pm.powersaver": { "icon": "", "label": "Power Saver", "action": "tuned-adm profile powersave" },
 
     // SETUP
     "setup.configs": { "icon": "", "label": "Configs", "action": "hypr-edit-config" },
@@ -75,7 +69,6 @@
     "setup.keybindings": { "icon": "", "label": "Keybindings", "action": "edit_file $CONFIG_HOME/hypr/lua/keybinds.lua" },
     "setup.input": { "icon": "", "label": "Input", "action": "edit_file $CONFIG_HOME/hypr/lua/input.lua" },
     "setup.fingerprint": { "icon": "󰈷", "label": "Fingerprint", "action": "$OMARCHY_BIN_PATH/omarchy-setup-fingerprint" },
-    "setup.fido2": { "icon": "", "label": "Fido2", "action": "$OMARCHY_BIN_PATH/omarchy-setup-fido2" },
 
     // UPDATE
     "update.update": { "icon": "", "label": "Update", "action": "present_terminal hypr-do-update" },

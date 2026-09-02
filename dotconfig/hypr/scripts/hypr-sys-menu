@@ -58,7 +58,18 @@ webapp() {
 }
 
 entry() {
-    printf '%s\0info\x1f%s\n' "$1" "$2"
+    local label=$1
+    local action=$2
+    local checked=$3
+    local checked_symbol=""
+
+    if [[ -n $checked ]]; then
+        checked_symbol="$(if (eval "$checked"); then printf ""; fi)"
+    fi
+
+    [[ -n "$checked_symbol" ]] && label="$(printf "%s %s" "$label" "$checked_symbol")"
+
+    printf '%s\0info\x1f%s\n' "$label" "$action"
 }
 
 selectable_entry() {
@@ -70,6 +81,13 @@ selectable_entry() {
     [[ $selected == true ]] && checked=" "
 
     entry "$checked $label" "$info"
+}
+
+title_case() {
+    sed -E \
+        -e 's/^([[:lower:]])/\U\1/'  \
+        -e 's/-([[:lower:]])/ \U\1/g' \
+        <<< "$1"
 }
 
 bar_layout_entries() {
@@ -104,7 +122,7 @@ theme_colors_entries() {
         [[ $theme_name == "$current_theme" ]] && selected=true
 
         selectable_entry \
-            "$(sed -E 's/^([a-z])/\U\1/; s/-([a-z])/ \U\1/g' <<< "$theme_name")" \
+            "$(title_case "$theme_name")" \
             "act:$menu_item:$theme_name" \
             "$selected"
     done
@@ -127,6 +145,26 @@ font_entries() {
             "act:$menu_item:$font" \
             "$selected"
     done
+}
+
+pm_entries() {
+    local menu_item=$1
+    local current_pm pm
+    local -a profiles=()
+
+    current_pm="$(tuned-adm active | sed 's/^Current active profile: //')"
+    mapfile -t profiles < <(printf "balanced\nbalanced-battery\nthroughput-performance\npowersave")
+
+    for pm in "${profiles[@]}"; do
+        local selected=false
+        [[ $pm == "$current_pm" ]] && selected=true
+
+        selectable_entry \
+            "$(title_case "$pm")" \
+            "act:$menu_item:$pm" \
+            "$selected"
+    done
+
 }
 
 render_parent_menu() {
@@ -160,8 +198,8 @@ process_menu() {
                 (.key | startswith($menu + ".")) and (.key | ltrimstr($menu + ".") | contains(".") | not)
             end
         )
-        | [ .key, .value.icon, .value.label, .value.action // empty, .value.options // empty ]
-        | @tsv'
+        | [ .key, .value.icon, .value.label, .value.action, .value.options, .value.checked ]
+        | join("\u001e")'
 }
 
 menu_title() {
@@ -183,14 +221,14 @@ render() {
     printf '\0data\x1f%s\n' "$menu_item"
     printf '\0use-hot-keys\x1ftrue\n'
 
-    while IFS=$'\t' read -r name icon label action options; do
-        debug "render: name: $name  icon: $icon  label: $label  action: $action  options: $options"
+    while IFS=$'\x1e' read -r name icon label action options checked; do
+        debug "RENDER: name: $name  icon: $icon  label: $label  action: $action  options: $options  checked: $checked"
         if [[ -n $options ]]; then
-            entry "$icon  $label"     "opt:$name"
+            entry "$icon  $label" "opt:$name" "$checked"
         elif [[ -n $action && -z $options ]]; then
-            entry "$icon  $label"     "act:$name"
+            entry "$icon  $label" "act:$name" "$checked"
         else
-            entry "$icon  $label"     "menu:$name"
+            entry "$icon  $label" "menu:$name" "$checked"
         fi
     done < <(process_menu "$menu_item")
 }
@@ -200,10 +238,13 @@ run_action() {
 
     local action
     # shellcheck disable=SC2016 # $menu is a jq variable.
-    action=$(menu_query --arg menu "$menu_item" '.[$menu].action')
+    action=$(menu_query --arg menu "${menu_item%%:*}" '.[$menu].action')
+    debug "RUN ACTION: menu_item: ${menu_item%%:*}"
 
     local param=${menu_item##*:}
     [[ $param == "$menu_item" ]] && param=""
+
+    debug "RUN ACTION: action: $action   param: $param"
 
     exec_pgm $action "$param"
 }
