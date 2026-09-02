@@ -212,6 +212,7 @@ render_options() {
     local menu_item=$1
     local options_cmd
 
+    # shellcheck disable=SC2016 # $menu is a jq variable.
     options_cmd=$(menu_query --arg menu "$menu_item" '.[$menu].options')
 
     $options_cmd "$1"
