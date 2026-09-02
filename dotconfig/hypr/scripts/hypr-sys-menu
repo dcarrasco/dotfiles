@@ -1,8 +1,9 @@
 #!/bin/bash
 
+set -euo pipefail
+
 readonly TERMINAL=kitty
 readonly CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
-readonly STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
 readonly SCRIPT_PATH=$CONFIG_HOME/hypr/scripts
 readonly SELF=$SCRIPT_PATH/hypr-sys-menu
 
@@ -95,56 +96,44 @@ selectable_entry() {
 }
 
 bar_layouts_entries() {
-    local waybar_style="$CONFIG_HOME/waybar/theme.css"
-    local layouts_dir=$CONFIG_HOME/waybar/themes
     local current_layout layouts layout selected
 
-    mapfile -t layouts < <( find "$layouts_dir" -maxdepth 1 -type d -printf '%f\n' | sort )
+    current_layout="$(hypr-switch-bar-layout --current)"
+    mapfile -t layouts < <(hypr-switch-bar-layout --get-layouts )
 
-    current_layout="$(sed -nE 's|.*themes/([^/]+)/.*|\1|p' "$waybar_style" | head -n 1)"
 
     for layout in "${layouts[@]}"; do
         selected=false
-        [[ ${layout,,} == "$current_layout" ]] && selected=true
+        [[ $layout == "$current_layout" ]] && selected=true
 
         selectable_entry "${layout^}" "act:style_bar_layout:$layout" "$selected"
     done
 }
 
 theme_colors_entries() {
-    local themes_dir=$CONFIG_HOME/hypr/themes
-    local theme_state=$STATE_HOME/hypr/theme
-    local selected_theme=
-    local theme_name label selected
+    local current_theme theme_name label selected
     local -a themes=()
 
-    if [[ -r $theme_state ]]; then
-        IFS= read -r selected_theme < "$theme_state"
-    fi
-
-    mapfile -t themes < <(
-        find "$themes_dir" -maxdepth 1 -type f -name '*.toml' -printf '%f\n' | sed 's/\.toml$//' | sort
-    )
+    current_theme="$(hypr-switch-colors --current)"
+    mapfile -t themes < <(hypr-switch-colors --get-themes)
 
     for theme_name in "${themes[@]}"; do
         label=$(sed -E 's/^([a-z])/\U\1/; s/-([a-z])/ \U\1/g' <<< "$theme_name")
 
         selected=false
-        [[ $theme_name == "$selected_theme" ]] && selected=true
+        [[ $theme_name == "$current_theme" ]] && selected=true
 
         selectable_entry "$label" "act:style_colors:$theme_name" "$selected"
     done
 }
 
-font_entries(){
-    local kitty_conf=$CONFIG_HOME/kitty/theme.conf
-    local selected current_font
+font_entries() {
+    local selected current_font font
+    local -a fonts=()
 
-    if [[ -r "$kitty_conf" ]]; then
-        current_font=$(sed -nE 's/^font_family[[:space:]]+//p' "$kitty_conf")
-    fi
-
-    mapfile -t fonts < <(fc-list :spacing=100 -f "%{family[0]}\n" | sort -u )
+    current_font="$(hypr-switch-font --current)"
+    mapfile -t fonts < <(hypr-switch-font --get-fonts)
+    echo "${fonts[0]}"
 
     for font in "${fonts[@]}"; do
         selected=false
@@ -289,9 +278,9 @@ run_action() {
         search)                 exec_pgm hypr-search-home ;;
         about)                  terminal "fastfetch; hypr-show-done" ;;
 
-        style_bar_layout:*)     exec_pgm hypr-switch-theme  "${1#style_bar_layout:}" ;;
-        style_colors:*)         exec_pgm hypr-switch-colors "${1#style_colors:}" ;;
-        style_font:*)           exec_pgm hypr-switch-font   "${1#style_font:}" ;;
+        style_bar_layout:*)     exec_pgm hypr-switch-bar-layout --set "${1#style_bar_layout:}" ;;
+        style_colors:*)         exec_pgm hypr-switch-colors --set "${1#style_colors:}" ;;
+        style_font:*)           exec_pgm hypr-switch-font --set "${1#style_font:}" ;;
         style_background)       exec_pgm hypr-switch-wallpaper ;;
         style_random_bg)        exec_pgm hypr-switch-wallpaper random ;;
         style_hyprland)         edit_file "$CONFIG_HOME/hypr/lua/looknfeel.lua" ;;
@@ -378,7 +367,7 @@ main() {
 
     case $ROFI_RETV in
         0)
-            render "${INI_MENU-main}"
+            render "${INI_MENU:-main}"
             ;;
         1)
             case "${ROFI_INFO:-}" in

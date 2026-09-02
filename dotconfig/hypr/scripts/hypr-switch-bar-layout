@@ -1,0 +1,63 @@
+#!/bin/bash
+
+set -euo pipefail
+
+WAYBAR_STYLE=$XDG_CONFIG_HOME/waybar/theme.css
+WAYBAR_LAYOUT=$XDG_CONFIG_HOME/waybar/theme.jsonc
+LAYOUTS_DIR=$XDG_CONFIG_HOME/waybar/themes
+
+current_layout() {
+    sed -nE 's|.*themes/([^/]+)/.*|\1|p' "$WAYBAR_STYLE" | head -n 1
+}
+
+get_layouts() {
+    find "$LAYOUTS_DIR" -maxdepth 1 -type d -printf '%f\n' | grep -v themes | sort -u
+}
+
+change_layout() {
+    # waybar
+    sed -i "s/\".*\/style.css\"/\"themes\/$1\/style.css\"/" "$WAYBAR_STYLE"
+    sed -i "s/\".*\/layout.jsonc\"/\"\$HOME\/\.config\/waybar\/themes\/$1\/layout.jsonc\"/" "$WAYBAR_LAYOUT"
+}
+
+create_config_file() {
+    if [ ! -f "$1" ]; then
+        cp "${1}.orig" "$1"
+    fi
+}
+
+set_bar_layout() {
+    local layout="$1"
+
+    if [ -n "$layout" ]; then
+        change_layout "${layout,,}"
+
+        if [ "$DESKTOP_SESSION" = "bspwm" ]; then
+            bspc wm --restart;
+        else
+            "$XDG_CONFIG_HOME/hypr/scripts/hypr-restore-waybar";
+        fi
+
+        notify-send -u low "Theme" "Change theme to $layout"
+    fi
+
+}
+
+create_config_file "$WAYBAR_STYLE"
+create_config_file "$WAYBAR_LAYOUT"
+
+if [ -z "${1:-}" ]; then
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "bar_layout"
+else
+    case "$1" in
+        set|--set)
+            set_bar_layout "$2"
+            ;;
+        current|--current)
+            current_layout
+            ;;
+        get-layouts|--get-layouts)
+            get_layouts
+            ;;
+    esac
+fi

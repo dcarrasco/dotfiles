@@ -1,39 +1,45 @@
 #!/bin/bash
 
-state_home=${XDG_STATE_HOME:-$HOME/.local/state}
-theme_state=$state_home/hypr/theme
-themes_dir=$XDG_CONFIG_HOME/hypr/themes
+set -euo pipefail
+
+STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
+THEME_STATE=$STATE_HOME/hypr/theme
+THEMES_DIR=$XDG_CONFIG_HOME/hypr/themes
 
 current_theme() {
-    if [ -r "$theme_state" ]; then
-        IFS= read -r current < "$theme_state"
-        printf '%s\n' "$current"
+    if [ -r "$THEME_STATE" ]; then
+        IFS= read -r current < "$THEME_STATE"
+        printf '%s' "$current"
     fi
 }
 
-if [ -n "$1" ]; then
-    theme=$1
+get_themes() {
+    find "$THEMES_DIR" -maxdepth 1 -type f -name '*.toml' -printf '%f\n' | sed 's/\.toml$//' | sort -u
+}
+
+set_theme() {
+    local theme=$1
+
+    if [ -n "$theme" ]; then
+        hypr-generate-themes "${theme,,}"
+        [[ $DESKTOP_SESSION == "bspwm" ]] && bspc wm --restart
+        notify-send -u low "Colors" "Change colors to $theme"
+    fi
+}
+
+
+if [[ -z "${1:-}" ]]; then
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "theme_colors"
 else
-    mapfile -t themes < <(
-        find "$themes_dir" -maxdepth 1 -type f -name '*.toml' -printf '%f\n' |
-            sed 's/\.toml$//' | sort
-    )
-    selected_theme=$(current_theme)
-
-    opts=""
-    for theme_name in "${themes[@]}"; do
-        label=$(sed -E 's/(^|-)([a-z])/\1\U\2/g' <<< "$theme_name")
-        if [ "$theme_name" = "$selected_theme" ]; then
-            opts="$opts<i>$label</i>\n"
-        else
-            opts="$opts$label\n"
-        fi
-    done
-    theme=$(hypr-sys-show-menu "Colors" "$opts")
-fi
-
-if [ -n "$theme" ]; then
-    hypr-generate-themes "${theme,,}"
-    [ "$DESKTOP_SESSION" = "bspwm" ] && bspc wm --restart
-    notify-send -u low "Colors" "Change colors to $theme"
+    case "$1" in
+        set|--set)
+            set_theme "$2"
+            ;;
+        current|--current)
+            current_theme
+            ;;
+        get-themes|--get-themes)
+            get_themes
+            ;;
+    esac
 fi

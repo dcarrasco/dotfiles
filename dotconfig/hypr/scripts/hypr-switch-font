@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export PATH="$XDG_CONFIG_HOME/hypr/scripts:$PATH"
+set -euo pipefail
 
-kitty_conf=$XDG_CONFIG_HOME/kitty/theme.conf
-alacritty_conf=$XDG_CONFIG_HOME/alacritty/theme.toml
+KITTY_CONF=$XDG_CONFIG_HOME/kitty/theme.conf
+ALACRITTY_CONF=$XDG_CONFIG_HOME/alacritty/theme.toml
 
 # figlet -c "Terminal font"
 
@@ -11,37 +11,56 @@ get_fonts() {
     fc-list :spacing=100 -f "%{family[0]}\n" | sort -u
 }
 
-if [ ! -f "$kitty_conf" ]; then
-    cp "$kitty_conf".orig "$kitty_conf"
+current_font() {
+    if [[ -r "$KITTY_CONF" ]]; then
+        cat <(sed -nE 's/^font_family[[:space:]]+//p' "$KITTY_CONF")
+    fi
+}
+
+set_font() {
+    local font="$1"
+
+    if [[ -n "$font" ]]; then
+        # valida que $font sea una fuenta válida instalada
+        if ! get_fonts | grep -q "$font"; then
+            printf "%s\n" "ERROR: missing font: $font"
+            notify-send "Font" "ERROR: missing font: $font"
+            exit 1
+        fi
+
+        if [[ -f $KITTY_CONF ]]; then
+            sed -i "s/^font_family .*/font_family  $font/g" "$KITTY_CONF"
+            pkill -USR1 kitty
+        fi
+
+        if [[ -f $ALACRITTY_CONF ]]; then
+            sed -i "s/^family = \".*\"/family = \"$font\"/g" "$ALACRITTY_CONF"
+        fi
+    fi
+}
+
+
+if [ ! -f "$KITTY_CONF" ]; then
+    cp "${KITTY_CONF}.orig" "$KITTY_CONF"
 fi
 
-if [ ! -f "$alacritty_conf" ]; then
-    cp "$alacritty_conf".orig "$alacritty_conf"
+if [ ! -f "$ALACRITTY_CONF" ]; then
+    cp "${ALACRITTY_CONF}.orig" "$ALACRITTY_CONF"
 fi
 
-if [ -n "$1" ]; then
-    font="$1"
+if [[ -z "${1:-}" ]]; then
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "style_fonts"
 else
-    current_font=$(grep ^font_family "$kitty_conf" | sed 's/^font_family  *//')
-    fonts=$(get_fonts | sed 's/\(.*\)/<span font_family="\1">\1<\/span>/')
-    font=$(hypr-sys-show-menu "$current_font" "$fonts")
-fi
-
-if [[ -n "$font" ]]; then
-    # valida que $font sea una fuenta válida instalada
-    if ! get_fonts | grep -q "$font"; then
-        printf "%s\n" "ERROR: missing font: $font"
-        notify-send "Font" "ERROR: missing font: $font"
-        exit 1
-    fi
-
-    if [[ -f $kitty_conf ]]; then
-        sed -i "s/^font_family .*/font_family  $font/g" "$kitty_conf"
-        pkill -USR1 kitty
-    fi
-
-    if [[ -f $alacritty_conf ]]; then
-        sed -i "s/^family = \".*\"/family = \"$font\"/g" "$alacritty_conf"
-    fi
+    case "$1" in
+        set|--set)
+            set_font "$2"
+            ;;
+        current|--current)
+            current_font
+            ;;
+        get-fonts|--get-fonts)
+            get_fonts
+            ;;
+    esac
 fi
 
