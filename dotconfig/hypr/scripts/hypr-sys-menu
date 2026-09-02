@@ -96,62 +96,56 @@ selectable_entry() {
 }
 
 bar_layouts_entries() {
-    local current_layout layouts layout selected
+    local current_layout layout
+    local -a layouts=()
 
     current_layout="$(hypr-switch-bar-layout --current)"
     mapfile -t layouts < <(hypr-switch-bar-layout --get-layouts )
 
-
     for layout in "${layouts[@]}"; do
-        selected=false
-        [[ $layout == "$current_layout" ]] && selected=true
-
-        selectable_entry "${layout^}" "act:style_bar_layout:$layout" "$selected"
+        selectable_entry \
+            "${layout^}" \
+            "act:style_bar_layout:$layout" \
+            "$([[ $layout == "$current_layout" ]] && printf true || printf false)"
     done
 }
 
 theme_colors_entries() {
-    local current_theme theme_name label selected
+    local current_theme theme_name
     local -a themes=()
 
     current_theme="$(hypr-switch-colors --current)"
     mapfile -t themes < <(hypr-switch-colors --get-themes)
 
     for theme_name in "${themes[@]}"; do
-        label=$(sed -E 's/^([a-z])/\U\1/; s/-([a-z])/ \U\1/g' <<< "$theme_name")
-
-        selected=false
-        [[ $theme_name == "$current_theme" ]] && selected=true
-
-        selectable_entry "$label" "act:style_colors:$theme_name" "$selected"
+        selectable_entry \
+            "$(sed -E 's/^([a-z])/\U\1/; s/-([a-z])/ \U\1/g' <<< "$theme_name")" \
+            "act:style_colors:$theme_name" \
+            "$([[ $theme_name == "$current_theme" ]] && printf true || printf false)"
     done
 }
 
 font_entries() {
-    local selected current_font font
+    local current_font font
     local -a fonts=()
 
     current_font="$(hypr-switch-font --current)"
     mapfile -t fonts < <(hypr-switch-font --get-fonts)
-    echo "${fonts[0]}"
 
     for font in "${fonts[@]}"; do
-        selected=false
-        [[ $font == "$current_font" ]] && selected=true
-
-        selectable_entry "<span size=\"small\" font_family=\"$font\">$font</span>" "act:style_font:$font" "$selected"
+        selectable_entry \
+            "<span size=\"small\" font_family=\"$font\">$font</span>" \
+            "act:style_font:$font" \
+            "$([[ $font == "$current_font" ]] && printf true || printf false)"
     done
 }
 
 render_parent() {
     local current_menu=${ROFI_DATA:-main}
-    local parent_menu=${MENU_PARENTS[$current_menu]-}
+    local parent_menu=${MENU_PARENTS[$current_menu]:-}
 
-    if [[ -n $parent_menu ]]; then
-        render "$parent_menu"
-    else
-        exit 0
-    fi
+    [[ -n $parent_menu ]] || exit 0
+    render "$parent_menu"
 }
 
 render() {
@@ -349,11 +343,29 @@ run_action() {
     esac
 }
 
+handle_selection() {
+    local info="${ROFI_INFO:-}"
+
+    case $info in
+        menu:*)  render     "${ROFI_INFO#menu:}" ;;
+        act:*)   run_action "${ROFI_INFO#act:}"  ;;
+        *)       die "invalid rofi entry data: $ROFI_INFO"
+    esac
+}
+
 load_rofi() {
     local -r font="Hack Nerd Font 16"
     local -r theme="entry{placeholder:\"Search...\";} window{width:22%;}"
 
-    rofi -show sysmenu -modes "sysmenu:$SELF" -i -format p -theme-str "$theme" -font "$font" -kb-cancel "Control+g,Control+Escape" -kb-custom-1 "Escape"
+    rofi \
+        -show sysmenu \
+        -modes "sysmenu:$SELF" \
+        -i \
+        -format p \
+        -theme-str "$theme" \
+        -font "$font" \
+        -kb-cancel "Control+g,Control+Escape" \
+        -kb-custom-1 "Escape"
 }
 
 main() {
@@ -366,19 +378,10 @@ main() {
     fi
 
     case $ROFI_RETV in
-        0)
-            render "${INI_MENU:-main}"
-            ;;
-        1)
-            case "${ROFI_INFO:-}" in
-                menu:*)  render     "${ROFI_INFO#menu:}" ;;
-                act:*)   run_action "${ROFI_INFO#act:}"  ;;
-                *)       die "invalid rofi entry data: $ROFI_INFO"
-            esac
-            ;;
-        10)
-            render_parent
-            ;;
+        0)   render "${INI_MENU:-main}" ;;
+        1)   handle_selection ;;
+        10)  render_parent ;;
+        *)   die "Unexpected Rofi return value: $ROFI_RETV" ;;
     esac
 }
 
