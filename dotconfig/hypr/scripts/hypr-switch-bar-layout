@@ -15,9 +15,8 @@ get_layouts() {
 }
 
 change_layout() {
-    # waybar
-    sed -i "s/\".*\/style.css\"/\"themes\/$1\/style.css\"/" "$WAYBAR_STYLE"
-    sed -i "s/\".*\/layout.jsonc\"/\"\$HOME\/\.config\/waybar\/themes\/$1\/layout.jsonc\"/" "$WAYBAR_LAYOUT"
+    sed -i "s|\".*/style.css\"|\"themes/$1/style.css\"|" "$WAYBAR_STYLE"
+    sed -i "s|\".*/layout.jsonc\"|\"\$HOME/\.config/waybar/themes/$1/layout.jsonc\"|" "$WAYBAR_LAYOUT"
 }
 
 create_config_file() {
@@ -47,17 +46,11 @@ create_config_file "$WAYBAR_STYLE"
 create_config_file "$WAYBAR_LAYOUT"
 
 if [ -z "${1:-}" ]; then
-    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "bar_layout"
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "style"
 else
     case "$1" in
-        set|--set)
-            set_bar_layout "$2"
-            ;;
-        current|--current)
-            current_layout
-            ;;
-        get-layouts|--get-layouts)
-            get_layouts
-            ;;
+        set | --set)                    set_bar_layout "$2" ;;
+        current | --current)            current_layout ;;
+        get-layouts | --get-layouts)    get_layouts ;;
     esac
 fi

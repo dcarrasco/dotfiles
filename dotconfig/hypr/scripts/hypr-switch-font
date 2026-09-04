@@ -51,18 +51,12 @@ if [ ! -f "$ALACRITTY_CONF" ]; then
 fi
 
 if [[ -z "${1:-}" ]]; then
-    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "style_fonts"
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "style"
 else
     case "$1" in
-        set|--set)
-            set_font "$2"
-            ;;
-        current|--current)
-            current_font
-            ;;
-        get-fonts|--get-fonts)
-            get_fonts
-            ;;
+        set | --set)                set_font "$2" ;;
+        current | --current)        current_font ;;
+        get-fonts |--get-fonts)     get_fonts ;;
     esac
 fi
 

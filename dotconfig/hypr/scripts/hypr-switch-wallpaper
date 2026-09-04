@@ -1,10 +1,10 @@
 #!/bin/bash
 
-WALLPAPER_FOLDERS=( \
-    "$HOME/Imágenes/fondos pantalla/abstract" \
-    "$HOME/Imágenes/fondos pantalla/nature"   \
-    # "$HOME/Imágenes/fondos pantalla/F1"       \
-    "$HOME/Imágenes/BingWallpaper"            \
+readonly -a WALLPAPER_FOLDERS=(
+    "$HOME/Imágenes/fondos pantalla/abstract"
+    "$HOME/Imágenes/fondos pantalla/nature"
+    # "$HOME/Imágenes/fondos pantalla/F1"
+    "$HOME/Imágenes/BingWallpaper"
 )
 
 ROFI_THEME="$XDG_CONFIG_HOME/rofi/themes/layout-wallpapers.rasi"
@@ -28,28 +28,28 @@ if [ ! -f "$WALLPAPER_CONFIG" ]; then
     cp "${WALLPAPER_CONFIG}.orig" "$WALLPAPER_CONFIG"
 fi
 
-case "${1,,}" in
-    *random*)
+case "$1" in
+    random | --random)
         wallpaper=$(wallpaper_list | shuf -n 1)
         ;;
-    *next*)
+    next | --next)
         line=$(wallpaper_number)
         line=$((line+1))
         wallpaper=$(wallpaper_list | head -n $line | tail -n 1)
         ;;
-    *previous*)
+    previous | --previous)
         line=$(wallpaper_number)
         line=$((line-1))
         wallpaper=$(wallpaper_list | head -n $line | tail -n 1)
         ;;
     *)
         theme="prompt{enabled:false;} entry{placeholder:\"Elegir fondo de pantalla...\";}"
-        wallpaper=$(wallpaper_list \
-            | sed 's|\(.*\)|\1\x00icon\x1f\1|' \
-            | rofi -dmenu -show-icons -config $ROFI_THEME -theme-str "$theme")
+        wallpaper=$(wallpaper_list |
+            sed 's/\(.*\)/\1\x00icon\x1f\1/' |
+            rofi -dmenu -show-icons -config "$ROFI_THEME" -theme-str "$theme")
         ;;
 esac
 
 if [ -n "$wallpaper" ]; then
-    $XDG_CONFIG_HOME/hypr/scripts/hypr-set-wallpaper "$wallpaper"
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-set-wallpaper" "$wallpaper"
 fi

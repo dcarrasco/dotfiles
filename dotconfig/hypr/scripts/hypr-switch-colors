@@ -29,17 +29,11 @@ set_theme() {
 
 
 if [[ -z "${1:-}" ]]; then
-    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "theme_colors"
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "style"
 else
     case "$1" in
-        set|--set)
-            set_theme "$2"
-            ;;
-        current|--current)
-            current_theme
-            ;;
-        get-themes|--get-themes)
-            get_themes
-            ;;
+        set | --set)                set_theme "$2" ;;
+        current | --current)        current_theme ;;
+        get-themes | --get-themes)  get_themes ;;
     esac
 fi

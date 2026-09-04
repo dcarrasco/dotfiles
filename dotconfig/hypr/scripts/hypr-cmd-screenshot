@@ -16,14 +16,14 @@ case "$1" in
     region | --region)
         case $DESKTOP_SESSION in
             bspwm)
-                maim -s $OUTPUT_FILE
+                maim -s "$OUTPUT_FILE"
                 notify "Area creado en archivo"
                 ;;
             *)
                 pkill slurp
                 region=$(slurp 2> /dev/null)
                 if [ -n "$region" ]; then
-                    grim -g "$region" $OUTPUT_FILE
+                    grim -g "$region" "$OUTPUT_FILE"
                     notify "Area creado en archivo"
                 fi
                 ;;
@@ -32,8 +32,8 @@ case "$1" in
 
     file | --file)
         case $DESKTOP_SESSION in
-            bspwm) maim $OUTPUT_FILE ;;
-            *)     grim $OUTPUT_FILE ;;
+            bspwm) maim "$OUTPUT_FILE" ;;
+            *)     grim "$OUTPUT_FILE" ;;
         esac
         notify "Pantalla creado en archivo"
         ;;
