@@ -2,8 +2,9 @@
 
 set -euo pipefail
 
+declare -xr CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+
 TERMINAL=kitty
-CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 SCRIPT_PATH=$CONFIG_HOME/hypr/scripts
 SELF=$SCRIPT_PATH/hypr-sys-menu
 MENU_FILE=$SCRIPT_PATH/sys-menu.jsonc
@@ -41,9 +42,7 @@ present_terminal() {
 }
 
 edit_file() {
-    local file
-
-    file=$(printf '%s' "$1" | envsubst)
+    local file=$1
 
     notify-send -u low 'Editing config file' "$file"
     "$TERMINAL" nvim "$file"
@@ -58,14 +57,11 @@ webapp() {
 entry() {
     local label=$1
     local action=$2
-    local checked=$3
-    local checked_symbol=''
+    local checked=${3:-}
 
-    if [[ -n $checked ]]; then
-        checked_symbol="$(if (eval "$checked"); then printf ''; fi)"
+    if [[ -n $checked ]] && (eval "$checked"); then
+        label+=' '
     fi
-
-    [[ -n "$checked_symbol" ]] && label="$(printf '%s %s' "$label" "$checked_symbol")"
 
     printf '%s\0info\x1f%s\n' "$label" "$action"
 }
@@ -181,8 +177,8 @@ render_parent_menu() {
 }
 
 menu_query() {
-    sed '/^[[:space:]]*\/\//d' "$MENU_FILE" | jq -r "$@" ||
-        die "menu json file not parseable: $MENU_FILE"
+    sed '/^[[:space:]]*\/\//d' "$MENU_FILE" |
+        jq -r "$@" || die "menu json file not parseable: $MENU_FILE"
 }
 
 process_menu() {
@@ -200,7 +196,14 @@ process_menu() {
                 (.key | startswith($menu + ".")) and (.key | ltrimstr($menu + ".") | contains(".") | not)
             end
         )
-        | [ .key, .value.icon, .value.label, (.value.action // "" | tostring), .value.options, .value.checked ]
+        | [
+            .key,
+            (.value.icon // ""),
+            (.value.label // ""),
+            (.value.action // "" | tostring),
+            (.value.options // ""),
+            (.value.checked // "")
+        ]
         | join("\u001e")'
 }
 
@@ -212,10 +215,11 @@ menu_title() {
 }
 
 render() {
-    local title
     local menu_item=${1:-main}
+    local title rows
 
     title=$(menu_title "$menu_item")
+    rows=$(process_menu "$menu_item")
 
     printf '\0prompt\x1f%s\n' "${title:-Start}"
     printf '\0no-custom\x1ftrue\n'
@@ -232,24 +236,43 @@ render() {
         else
             entry "$icon  $label" "menu:$name" "$checked"
         fi
-    done < <(process_menu "$menu_item")
+    done <<< "$rows"
 }
 
 run_action() {
     local menu_item=$1
-    local param=${menu_item##*:}
+    local menu_key=${menu_item%%:*}
+    local i action_text
     local -a action=()
 
     # shellcheck disable=SC2016 # $menu is a jq variable.
-    mapfile -t action < <(
-        menu_query --arg menu "${menu_item%%:*}" '.[$menu].action[]'
-    )
+    action_text=$(menu_query --arg menu "$menu_key" '
+        .[$menu].action
+        |   if type != "array" then
+                error("action must be an array")
+            elif length == 0 then
+                error("action must not be empty")
+            elif (all(.[]; type == "string") | not) then
+                error("action arguments must be string")
+            elif .[0] == "" then
+                error("action command must not be empty")
+            else
+                .[]
+            end
+    ') || die "invalid action: $menu_key"
 
-    [[ $param == "$menu_item" ]] && param=''
+    mapfile -t action <<< "$action_text"
 
-    debug "RUN ACTION: action: ${action[*]}   param: $param"
+    for i in "${!action[@]}"; do
+        [[ ${action[$i]} == *'$'* ]] || continue
+        action[i]=$(printf '%s' "${action[i]}" | envsubst) || die "cannot expand action: $menu_key"
+    done
 
-    [[ -n $param ]] && action+=("$param")
+    if [[ $menu_item == *:* ]]; then
+        action+=("${menu_item#*:}")
+    fi
+
+    debug "RUN ACTION: ${action[*]}"
 
     exec_pgm "${action[@]}"
 }
@@ -261,17 +284,19 @@ render_options() {
     # shellcheck disable=SC2016 # $menu is a jq variable.
     options_cmd=$(menu_query --arg menu "$menu_item" '.[$menu].options')
 
-    $options_cmd "$1"
+    declare -F "$options_cmd" >/dev/null || die "invalid options function: $options_cmd"
+
+    "$options_cmd" "$menu_item"
 }
 
 handle_selection() {
     local info="${ROFI_INFO:-}"
 
     case $info in
-        menu:*)  render         "${ROFI_INFO#menu:}" ;;
-        act:*)   run_action     "${ROFI_INFO#act:}"  ;;
-        opt:*)   render_options "${ROFI_INFO#opt:}"  ;;
-        *)       die "invalid rofi entry data: $ROFI_INFO"
+        menu:*)  render         "${info#menu:}" ;;
+        act:*)   run_action     "${info#act:}"  ;;
+        opt:*)   render_options "${info#opt:}"  ;;
+        *)       die "invalid rofi entry data: $info"
     esac
 }
 

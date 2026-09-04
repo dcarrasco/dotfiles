@@ -61,24 +61,24 @@
 
     // SETUP
     "setup.configs": { "icon": "", "label": "Configs", "action": ["hypr-edit-config"]  },
-    "setup.audio": { "icon": "", "label": "Audio", "action": ["terminal wiremix"]  },
+    "setup.audio": { "icon": "", "label": "Audio", "action": ["terminal", "wiremix"]  },
     "setup.wifi": { "icon": "", "label": "Wifi", "action": ["hypr-nmcli-rofi"]  },
     "setup.bluetooth": { "icon": "󰂯", "label": "Bluetooth", "action": ["blueman-manager"]  },
     "setup.monitors": { "icon": "󰍹", "label": "Monitors", "action": ["hypr-switch-monitor"]  },
-    "setup.printers": { "icon": "󰐪", "label": "Printers", "action": ["webapp http://localhost:631"]  },
-    "setup.keybindings": { "icon": "", "label": "Keybindings", "action": ["edit_file $CONFIG_HOME/hypr/lua/keybinds.lua"]  },
-    "setup.input": { "icon": "", "label": "Input", "action": ["edit_file $CONFIG_HOME/hypr/lua/input.lua"]  },
+    "setup.printers": { "icon": "󰐪", "label": "Printers", "action": ["webapp", "http://localhost:631"]  },
+    "setup.keybindings": { "icon": "", "label": "Keybindings", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/keybinds.lua"]  },
+    "setup.input": { "icon": "", "label": "Input", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/input.lua"]  },
     "setup.fingerprint": { "icon": "󰈷", "label": "Fingerprint", "action": ["$OMARCHY_BIN_PATH/omarchy-setup-fingerprint"]  },
 
     // UPDATE
-    "update.update": { "icon": "", "label": "Update", "action": ["present_terminal hypr-do-update"]  },
-    "update.install": { "icon": "󰉉", "label": "Install package", "action": ["terminal hypr-pkg-install; hypr-show-done"]  },
-    "update.remove": { "icon": "󰭌", "label": "Remove package", "action": ["terminal hypr-pkg-remove; hypr-show-done"]  },
+    "update.update": { "icon": "", "label": "Update", "action": ["present_terminal", "hypr-do-update"]  },
+    "update.install": { "icon": "󰉉", "label": "Install package", "action": ["terminal", "hypr-pkg-install; hypr-show-done"]  },
+    "update.remove": { "icon": "󰭌", "label": "Remove package", "action": ["terminal", "hypr-pkg-remove; hypr-show-done"]  },
 
     // SYSTEM
     "system.lock": { "icon": "", "label": "Lock", "action": ["hyprlock"]  },
     "system.logout": { "icon": "󰗽", "label": "Logout", "action": ["loginctl", "terminate-user", "$USER"]  },
-    "system.suspend": { "icon": "", "label": "Suspend", "action": ["systemctl suspend"]  },
-    "system.reboot": { "icon": "", "label": "Reboot", "action": ["systemctl reboot"]  },
-    "system.poweroff": { "icon": "󰐥", "label": "Power off", "action": ["systemctl poweroff"]  }
+    "system.suspend": { "icon": "", "label": "Suspend", "action": ["systemctl", "suspend"]  },
+    "system.reboot": { "icon": "", "label": "Reboot", "action": ["systemctl", "reboot"]  },
+    "system.poweroff": { "icon": "󰐥", "label": "Power off", "action": ["systemctl", "poweroff"]  }
 }
