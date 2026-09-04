@@ -1,20 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
-declare -rx CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
-
-readonly TERMINAL=kitty
-readonly SCRIPT_PATH=$CONFIG_HOME/hypr/scripts
-readonly SELF=$SCRIPT_PATH/hypr-sys-menu
-readonly MENU_FILE=$SCRIPT_PATH/sys-menu.jsonc
+TERMINAL=kitty
+CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+SCRIPT_PATH=$CONFIG_HOME/hypr/scripts
+SELF=$SCRIPT_PATH/hypr-sys-menu
+MENU_FILE=$SCRIPT_PATH/sys-menu.jsonc
 
 export PATH="$SCRIPT_PATH:$PATH"
 
-
 die() {
-    printf "ERROR: %s\n" "$*" >&2
-    notify-send -u critical -t 0 -i dialog-warning "ERROR: hypr-sys-menu" "$*"
+    printf 'ERROR: %s\n' "$*" >&2
+    notify-send -u critical -t 0 -i dialog-warning 'ERROR: hypr-sys-menu' "$*"
     exit 1
 }
 
@@ -47,7 +45,7 @@ edit_file() {
 
     file=$(printf '%s' "$1" | envsubst)
 
-    notify-send -u low "Editing config file" "$file"
+    notify-send -u low 'Editing config file' "$file"
     "$TERMINAL" nvim "$file"
 }
 
@@ -61,13 +59,13 @@ entry() {
     local label=$1
     local action=$2
     local checked=$3
-    local checked_symbol=""
+    local checked_symbol=''
 
     if [[ -n $checked ]]; then
-        checked_symbol="$(if (eval "$checked"); then printf ""; fi)"
+        checked_symbol="$(if (eval "$checked"); then printf ''; fi)"
     fi
 
-    [[ -n "$checked_symbol" ]] && label="$(printf "%s %s" "$label" "$checked_symbol")"
+    [[ -n "$checked_symbol" ]] && label="$(printf '%s %s' "$label" "$checked_symbol")"
 
     printf '%s\0info\x1f%s\n' "$label" "$action"
 }
@@ -77,10 +75,10 @@ selectable_entry() {
     local info=$2
     local selected=${3:-false}
 
-    local checked=" "
-    [[ $selected == true ]] && checked=" "
+    local checked=' '
+    [[ $selected == true ]] && checked=' '
 
-    entry "$checked $label" "$info" ""
+    entry "$checked $label" "$info" ''
 }
 
 title_case() {
@@ -174,10 +172,10 @@ pm_entries() {
 render_parent_menu() {
     local current_menu=${ROFI_DATA:-main}
 
-    [[ $current_menu == "main" ]] && exit 0
+    [[ $current_menu == 'main' ]] && exit 0
 
     local parent_menu=${current_menu%.*}
-    [[ $parent_menu == "$current_menu" ]] && parent_menu="main"
+    [[ $parent_menu == "$current_menu" ]] && parent_menu='main'
 
     render "$parent_menu"
 }
@@ -202,7 +200,7 @@ process_menu() {
                 (.key | startswith($menu + ".")) and (.key | ltrimstr($menu + ".") | contains(".") | not)
             end
         )
-        | [ .key, .value.icon, .value.label, .value.action, .value.options, .value.checked ]
+        | [ .key, .value.icon, .value.label, (.value.action // "" | tostring), .value.options, .value.checked ]
         | join("\u001e")'
 }
 
@@ -239,18 +237,21 @@ render() {
 
 run_action() {
     local menu_item=$1
-
-    local action
-    # shellcheck disable=SC2016 # $menu is a jq variable.
-    action=$(menu_query --arg menu "${menu_item%%:*}" '.[$menu].action')
-    debug "RUN ACTION: menu_item: ${menu_item%%:*}"
-
     local param=${menu_item##*:}
-    [[ $param == "$menu_item" ]] && param=""
+    local -a action=()
 
-    debug "RUN ACTION: action: $action   param: $param"
+    # shellcheck disable=SC2016 # $menu is a jq variable.
+    mapfile -t action < <(
+        menu_query --arg menu "${menu_item%%:*}" '.[$menu].action[]'
+    )
 
-    exec_pgm $action "$param"
+    [[ $param == "$menu_item" ]] && param=''
+
+    debug "RUN ACTION: action: ${action[*]}   param: $param"
+
+    [[ -n $param ]] && action+=("$param")
+
+    exec_pgm "${action[@]}"
 }
 
 render_options() {
@@ -275,8 +276,8 @@ handle_selection() {
 }
 
 load_rofi() {
-    local -r font="Hack Nerd Font 16"
-    local -r theme="entry{placeholder:\"Search...\";} window{width:22%;}"
+    local -r font='Hack Nerd Font 16'
+    local -r theme='entry{placeholder:"Search...";} window{width:22%;}'
 
     rofi \
         -show sysmenu \
