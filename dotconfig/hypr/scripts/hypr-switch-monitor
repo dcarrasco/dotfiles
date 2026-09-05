@@ -1,20 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
 die() {
     printf 'ERROR: %s\n' "$*" >&2
-    notify-send -u critical -t 0 -i dialog-warning 'ERROR: hypr-sys-menu' "$*"
+    notify-send -u critical -t 0 -i dialog-warning 'ERROR: hypr-switch-monitor' "$*"
     exit 1
 }
 
 debug() {
-    [[ ${HYPR_SYS_MENU_DEBUG:-false} == true ]] || return 0
+    [[ ${HYPR_SWITCH_MONITOR_DEBUG:-false} == true ]] || return 0
     printf 'DEBUG: %s\n' "$*" >&2
 }
 
 is_wayland() {
-    wlr-randr | grep -c current
+    (( $(wlr-randr | grep -c current) > 0 )) && printf true || printf false
 }
 
 menu() {
@@ -27,28 +27,28 @@ menu() {
 
 count_monitors() {
     case $BACKEND in
-        *wayland*) hyprctl monitors all | grep -c ^Monitor ;;
-        *x11*)     xrandr -q | grep -c ' connected' ;;
+        wayland) hyprctl monitors all | grep -c ^Monitor ;;
+        x11)     xrandr -q | grep -c ' connected' ;;
     esac
 }
 
 count_enabled_monitors() {
     case $BACKEND in
-        *wayland*) hyprctl monitors all | grep -c 'disabled: false' ;;
-        *x11*)     xrandr -q | grep -c ' connected' ;;
+        wayland) hyprctl monitors all | grep -c 'disabled: false' ;;
+        x11)     xrandr -q | grep -c ' connected' ;;
     esac
 }
 
 list_monitors() {
     case $BACKEND in
-        *wayland*) hyprctl monitors all | grep ^Monitor | cut -d " " -f 2 ;;
-        *x11*)     xrandr -q | grep -c ' connected' ;;
+        wayland) hyprctl monitors all | grep ^Monitor | cut -d " " -f 2 ;;
+        x11)     xrandr -q | grep -c ' connected' ;;
     esac
 }
 
 get_monitor_list() {
     case $BACKEND in
-        *wayland*)
+        wayland)
             printf '%s\n%s\n%s\n%s\n' "$OPT_SET_MAIN", "$OPT_SET_DUP", "$OPT_SET_EXT", "$OPT_SET_SEC"
 
             for m in $(list_monitors); do
@@ -57,7 +57,7 @@ get_monitor_list() {
                 echo "$icon $m $(get_monitor_property "$m" 2)" ;
             done
             ;;
-        *x11*) xrandr -q | grep ' connected' | cut -d " " -f 1 ;;
+        x11) xrandr -q | grep ' connected' | cut -d " " -f 1 ;;
     esac
 }
 
@@ -71,7 +71,7 @@ get_monitor_data() {
     local monitor=$1
 
     case $BACKEND in
-        *wayland*)
+        wayland)
             MON_RES=$(get_monitor_property "$monitor" 1 | cut -d "@" -f 1)
             MON_POS=$(get_monitor_property "$monitor" 1 | cut -d "@" -f 2 | cut -d " " -f 3)
             MON_DESC=$(get_monitor_property "$monitor" 2)
@@ -80,7 +80,7 @@ get_monitor_data() {
             MON_MODES=$(get_monitor_property "$monitor" 24)
             MON_RES_LIST=$(echo -e "$MON_MODES" | sed 's/ /\n/g' | cut -d "@" -f 1)
             ;;
-        *x11*)
+        x11)
             MON_RES="$(xrandr -q | grep "$monitor" | sed 's/primary //' | cut -d " " -f 3 | cut -d "+" -f 1)"
             MON_DESC="$monitor"
             MON_SCALE=1.0
@@ -98,12 +98,12 @@ set_monitor_on() {
     local scale=$4
 
     case $BACKEND in
-        *wayland*)
+        wayland)
             case $HYPRCONF in
-                *conf*) hyprctl keyword monitor "$monitor", "$resolution", "$position", "$scale" ;;
-                *lua*) hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale, disabled=false})" ;;
+                conf) hyprctl keyword monitor "$monitor", "$resolution", "$position", "$scale" ;;
+                lua) hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale, disabled=false})" ;;
             esac ;;
-        *x11*) xrandr --output "$monitor" --right-of $MON_INT --auto;;
+        x11) xrandr --output "$monitor" --right-of $MON_INT --auto;;
     esac
     notify-send -u low "Pantalla" "Set pantalla $monitor on"
 }
@@ -115,12 +115,12 @@ set_monitor_on_mirror() {
     local scale=$3
 
     case $BACKEND in
-        *wayland*)
+        wayland)
             case $HYPRCONF in
-                *conf*) hyprctl keyword monitor "$monitor", "$resolution", "$position", "$scale", mirror, "$MON_INT" ;;
-                *lua*)  hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale, mirror='$MON_INT'})" ;;
+                conf) hyprctl keyword monitor "$monitor", "$resolution", "$position", "$scale", mirror, "$MON_INT" ;;
+                lua)  hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale, mirror='$MON_INT'})" ;;
             esac ;;
-        *x11*) xrandr --output "$monitor" --right-of "$MON_INT" --auto;;
+        x11) xrandr --output "$monitor" --right-of "$MON_INT" --auto;;
     esac
     notify-send -u low 'Pantalla' "Set pantalla $monitor (mirror) on"
 }
@@ -129,12 +129,12 @@ set_monitor_off() {
     local monitor=$1
 
     case $BACKEND in
-        *wayland*)
+        wayland)
             case $HYPRCONF in
-                *conf*) hyprctl keyword monitor "$monitor", disable ;;
-                *lua*)  hyprctl eval "hl.monitor({ output='$monitor', disabled=true})" ;;
+                conf) hyprctl keyword monitor "$monitor", disable ;;
+                lua)  hyprctl eval "hl.monitor({ output='$monitor', disabled=true})" ;;
             esac ;;
-        *x11*)     xrandr --output "$monitor" --off ;;
+        x11)     xrandr --output "$monitor" --off ;;
     esac
     notify-send -u low 'Pantalla' "Set pantalla $monitor off"
 }
@@ -144,8 +144,8 @@ set_resolution() {
     local resolution=$2
 
     case $BACKEND in
-        *wayland*) set_monitor_on "$monitor" "$resolution" "$MON_POS" "$MON_SCALE" ;;
-        *x11*)     xrandr --output "$monitor" --mode "$resolution" ;;
+        wayland) set_monitor_on "$monitor" "$resolution" "$MON_POS" "$MON_SCALE" ;;
+        x11)     xrandr --output "$monitor" --mode "$resolution" ;;
     esac
     notify-send -u low 'Pantalla' "Resolucion $2"
 }
@@ -155,11 +155,11 @@ set_scale() {
     local scale=$2
 
     case $BACKEND in
-        *wayland*)
+        wayland)
             [ "$monitor" = "$MON_INT" ] && [ "$scale" = "1.5" ] && scale=1.458333
             set_monitor_on "$monitor" "$MON_RES" "$MON_POS" "$scale"
             ;;
-        *x11*)
+        x11)
             [ "$2" == '1.0' ]  && xrandr --output "$monitor" --scale 1.0
             [ "$2" == '1.25' ] && xrandr --output "$monitor" --scale 0.8
             [ "$2" == '1.5' ]  && xrandr --output "$monitor" --scale 0.666
@@ -174,9 +174,9 @@ get_lid_state() {
 }
 
 switch_monitor_opt() {
-    if [ $(count_monitors) -gt 1 ] && [ "$(get_lid_state)" = "open" ]; then
+    if (( $(count_monitors) > 1 )) && [ "$(get_lid_state)" = "open" ]; then
         if [ "$MON_DISABLED" = 'false' ]; then
-            if [ $(count_enabled_monitors) -gt 1 ]; then
+            if (( $(count_enabled_monitors) > 1 )); then
                 echo -e "$OPT_SET_MON_OFF"
             fi
         else
@@ -188,9 +188,10 @@ switch_monitor_opt() {
 }
 
 select_monitor() {
-    local monitor="$(get_monitor_list)"
+    local monitor
 
-    [ $(count_monitors) -gt 1 ] && echo "$(menu "$monitor" "Seleccione monitor")"
+    monitor="$(get_monitor_list)"
+    (( $(count_monitors) > 1 )) && menu "$monitor" "Seleccione monitor"
 }
 
 menu_options() {
@@ -205,16 +206,19 @@ get_backend() {
     MON_INT='eDP'
     BACKEND='x11'
     HYPRCONF='conf'
-    [ $(is_wayland) -gt 0 ] && BACKEND="wayland" && MON_INT='eDP-1'
-    [ -f $HOME/.config/hypr/hyprland.lua ] && HYPRCONF='lua'
-    echo "Backend: $BACKEND / Internal Monitor: $MON_INT / HyprConf: $HYPRCONF"
+
+    [[ $(is_wayland) == true ]] && BACKEND="wayland" && MON_INT='eDP-1'
+    [[ -f $HOME/.config/hypr/hyprland.lua ]] && HYPRCONF='lua'
+
+    debug "Backend: $BACKEND / Internal Monitor: $MON_INT / HyprConf: $HYPRCONF"
 }
 
 set_monitor_props() {
     MON=$1
-    get_monitor_data $MON
+    get_monitor_data "$MON"
 
     OPC=$(menu "$(menu_options)" "Monitor $MON" "Monitor: $MON_DESC ($MON_RES @ $MON_POS)")
+
     [ -z "$OPC" ] && exit 0
 
     case $OPC in
@@ -278,7 +282,7 @@ OPT_SCALE_200='    Escalar al 200'
 
 get_backend
 
-if [ $(count_monitors) -eq 1 ]; then
+if (( $(count_monitors) == 1 )); then
     set_monitor_props "$(list_monitors)"
 else
     MON=$(select_monitor)
