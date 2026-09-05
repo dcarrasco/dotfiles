@@ -20,13 +20,19 @@ is_wayland() {
 menu() {
     options=$1
     prompt=$2
-    message=$3
+    message=${3:-}
 
     if [[ -z "$message" ]]; then
         printf '%s' "$options" | rofi -dmenu -p "$prompt"
     else
         printf '%s' "$options" | rofi -a 0:2 -dmenu -p "$prompt" -mesg "$message"
     fi
+}
+
+notify() {
+    message=$1
+
+    notify-send -u low 'Pantalla' "$message"
 }
 
 count_monitors() {
@@ -85,7 +91,7 @@ get_monitor_data() {
             MON_SCALE=$(get_monitor_property "$monitor" 10)
             MON_DISABLED=$(get_monitor_property "$monitor" 21)
             MON_MODES=$(get_monitor_property "$monitor" 24)
-            MON_RES_LIST=$(echo -e "$MON_MODES" | sed 's/ /\n/g' | cut -d "@" -f 1)
+            MON_RES_LIST=$(printf '%s' "$MON_MODES" | sed 's/ /\n/g' | cut -d "@" -f 1)
             ;;
         x11)
             MON_RES="$(xrandr -q | grep "$monitor" | sed 's/primary //' | cut -d " " -f 3 | cut -d "+" -f 1)"
@@ -107,14 +113,15 @@ set_monitor_on() {
     case $BACKEND in
         wayland)
             case $HYPRCONF in
-                conf) hyprctl keyword monitor "$monitor", "$resolution", "$position", "$scale" ;;
-                lua) hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale, disabled=false})" ;;
-            esac ;;
+                conf)  hyprctl keyword monitor "$monitor", "$resolution", "$position", "$scale" ;;
+                lua)   hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale, disabled=false})" ;;
+            esac
+            ;;
         x11)
             xrandr --output "$monitor" --right-of $MON_INT --auto
             ;;
     esac
-    notify-send -u low "Pantalla" "Set pantalla $monitor on"
+    notify "Set pantalla $monitor on"
 }
 
 set_monitor_on_mirror() {
@@ -133,7 +140,7 @@ set_monitor_on_mirror() {
             xrandr --output "$monitor" --right-of "$MON_INT" --auto
             ;;
     esac
-    notify-send -u low 'Pantalla' "Set pantalla $monitor (mirror) on"
+    notify "Set pantalla $monitor (mirror) on"
 }
 
 set_monitor_off() {
@@ -149,7 +156,7 @@ set_monitor_off() {
             xrandr --output "$monitor" --off
             ;;
     esac
-    notify-send -u low 'Pantalla' "Set pantalla $monitor off"
+    notify "Set pantalla $monitor off"
 }
 
 set_resolution() {
@@ -160,7 +167,7 @@ set_resolution() {
         wayland) set_monitor_on "$monitor" "$resolution" "$MON_POS" "$MON_SCALE" ;;
         x11)     xrandr --output "$monitor" --mode "$resolution" ;;
     esac
-    notify-send -u low 'Pantalla' "Resolucion $2"
+    notify "Resolucion $monitor: $resolution"
 }
 
 set_scale() {
@@ -179,7 +186,7 @@ set_scale() {
             [[ $2 == '2.0' ]]  && xrandr --output "$monitor" --scale 0.5
             ;;
     esac
-    notify-send -u low 'Pantalla' "Escala $monitor"
+    notify "Escala $monitor: $scale"
 }
 
 get_lid_state() {
@@ -238,6 +245,7 @@ set_monitor_props() {
         "$OPT_SET_MON_OFF") set_monitor_off "$MON" ;;
         "$OPT_SET_MON_ON") set_monitor_on "$MON" "$MON_RES" "$MON_POS" "$MON_SCALE";;
         "$OPT_SET_RESOL")
+            debug "aca"
             RES=$(menu "$MON_RES_LIST" "Resolucion $MON")
             [[ -n "$RES" ]] && set_resolution "$MON" "$RES"
             ;;
@@ -306,7 +314,7 @@ else
         "$OPT_SET_DUP") set_monitor_dup ;;
         "$OPT_SET_EXT") set_monitor_ext ;;
         "$OPT_SET_SEC") set_monitor_sec ;;
-        *) set_monitor_props "$(echo "$MON" | cut -d " " -f 2)" ;;
+        *) set_monitor_props "$(printf '%s' "$MON" | cut -d " " -f 2)" ;;
     esac
 fi
 
