@@ -2,6 +2,37 @@
 
 set -euo pipefail
 
+declare -A OPTIONS=(
+    [SET_MAIN]='   Solo pantalla de PC'
+    [SET_DUP]='   Duplicado'
+    [SET_EXT]='  󰍹  Ampliar'
+    [SET_SEC]='󰍹   Solo segunda pantalla'
+    [SET_OFF]='    Desactivar monitor'
+    [SET_ON]='    Activar monitor'
+    [SET_RESOL]='󰹑    Cambiar resolucion'
+    [SCALE_100]='    Escalar al 100'
+    [SCALE_125]='    Escalar al 125'
+    [SCALE_133]='    Escalar al 133'
+    [SCALE_150]='    Escalar al 150'
+    [SCALE_200]='    Escalar al 200'
+)
+
+declare -a OPTIONS_ONE_MONITOR=(
+    "${OPTIONS[SET_RESOL]}"
+    "${OPTIONS[SCALE_100]}"
+    "${OPTIONS[SCALE_125]}"
+    "${OPTIONS[SCALE_133]}"
+    "${OPTIONS[SCALE_150]}"
+    "${OPTIONS[SCALE_200]}"
+)
+
+declare -a OPTIONS_MULTIPLE_MONITORS=(
+    "${OPTIONS[SET_MAIN]}"
+    "${OPTIONS[SET_DUP]}"
+    "${OPTIONS[SET_EXT]}"
+    "${OPTIONS[SET_SEC]}"
+)
+
 die() {
     printf 'ERROR: %s\n' "$*" >&2
     notify-send -u critical -t 0 -i dialog-warning 'ERROR: hypr-switch-monitor' "$*"
@@ -57,14 +88,15 @@ list_monitors() {
 }
 
 get_monitor_list() {
+    local data
+
     case $BACKEND in
         wayland)
-            printf '%s\n%s\n%s\n%s\n' "$OPT_SET_MAIN" "$OPT_SET_DUP" "$OPT_SET_EXT" "$OPT_SET_SEC"
-
             for monitor in $(list_monitors); do
+                data="$(get_monitor_data "$monitor")"
                 local icon='  '
-                [ $MON_INT != "$monitor" ] && icon='󰍹  '
-                printf '%s %s %s' "$icon", "$monitor", "$(hyprland_monitor_property "$monitor" "description")" ;
+                [[ $MON_INT != "$monitor" ]] && icon='󰍹  '
+                printf '%s %s %s\n' "$icon" "$monitor" "$(get_monitor_property "$data" "description")" ;
             done
             ;;
         x11)
@@ -73,124 +105,145 @@ get_monitor_list() {
     esac
 }
 
-hyprland_monitor_property() {
-    local monitor=$1
-    local property=$2
-
-    hyprland_monitors |
-        jq -r --arg monitor "$monitor" --arg property "$property" \
-            '.[] | select(.name == $monitor) | .[$property]'
-}
-
 get_monitor_data() {
     local monitor=$1
+    local data
 
     case $BACKEND in
         wayland)
-            MON_RES="$(hyprland_monitor_property "$monitor" "width")x$(hyprland_monitor_property "$monitor" "height")"
-            MON_POS="$(hyprland_monitor_property "$monitor" "x")x$(hyprland_monitor_property "$monitor" "y")"
-            MON_DESC=$(hyprland_monitor_property "$monitor" "description")
-            MON_SCALE=$(hyprland_monitor_property "$monitor" "scale")
-            MON_DISABLED=$(hyprland_monitor_property "$monitor" "disabled")
-            MON_RES_LIST=$(hyprland_monitor_property "$monitor" "availableModes" | jq -r '.[] | split("@")[0]')
+            hyprland_monitors | jq -r --arg monitor "$monitor" '
+                .[] | select(.name == $monitor)
+                | ["\(.width)x\(.height)", "\(.x)x\(.y)", .description, (.scale | tostring), (.disabled | tostring)]
+                | @tsv'
             ;;
+
         x11)
-            MON_RES="$(xrandr -q | grep "$monitor" | sed 's/primary //' | cut -d " " -f 3 | cut -d "+" -f 1)"
-            MON_POS='unknown'
-            MON_DESC="$monitor"
-            MON_SCALE=1.0
-            MON_DISABLED="false"
-            MON_RES_LIST="$(xrandr -q | awk -v monitor="$monitor" '{if ($1 ~ monitor) {print_now = 1} if (print_now==1 && $1 ~ /^[1-9]/) {print $1}}')"
+            printf '%s\t%s\t%s\t%s\t%s' \
+                "$(xrandr -q | grep "$monitor" | sed 's/primary //' | cut -d " " -f 3 | cut -d "+" -f 1)" \
+                'unknown' \
+                "$monitor" \
+                '1.0' \
+                'false'
             ;;
     esac
 }
 
-set_monitor_on() {
+get_monitor_property() {
+    local data=$1
+    local property=$2
+    local res pos desc scale disabled
+
+    IFS=$'\t' read -r res pos desc scale disabled <<< "$data"
+    debug "data: $data"
+    debug "description: $desc"
+
+    case $property in
+        resolution)     printf '%s' "$res" ;;
+        position)       printf '%s' "$pos" ;;
+        description)    printf '%s' "$desc" ;;
+        scale)          printf '%s' "$scale" ;;
+        disabled)       printf '%s' "$disabled" ;;
+        *)              printf ''
+    esac
+}
+
+get_monitor_resolution_list() {
+    local monitor=$1
+
+    case $BACKEND in
+        wayland)
+            hyprland_monitors | jq -r --arg monitor "$monitor" '
+                .[] | select(.name == $monitor) | .availableModes | .[] | split("@")[0]'
+            ;;
+        x11)
+            xrandr -q | awk -v monitor="$monitor" '{if ($1 ~ monitor) {print_now = 1} if (print_now==1 && $1 ~ /^[1-9]/) {print $1}}'
+            ;;
+    esac
+}
+
+set_monitor_hypr_lua() {
+    local monitor=$1
+    local property=$2
+    local value=$3
+    local curr_resolution curr_position curr_scale curr_disabled
+
+    data="$(get_monitor_data "$monitor")"
+    curr_resolution="$(get_monitor_property "$data" "resolution")"
+    curr_position="$(get_monitor_property "$data" "position")"
+    curr_scale="$(get_monitor_property "$data" "scale")"
+    curr_disabled="$(get_monitor_property "$data" "disabled")"
+
+    case $property in
+        scale)
+            [[ $monitor == "$MON_INT" && $value = "1.5" ]] && value=1.458333
+
+            hyprctl eval "hl.monitor({ output='$monitor', mode='$curr_resolution', position='$curr_position', scale=$value, disabled=$curr_disabled })"
+            notify "Set scale for $monitor to $value"
+            ;;
+        disabled)
+            hyprctl eval "hl.monitor({ output='$monitor', disabled=$value, mirror='' })"
+            notify "Set $monitor $([[ $value == true ]] && printf 'disabled' || printf 'enabled')"
+            ;;
+        resolution)
+            hyprctl eval "hl.monitor({ output='$monitor', mode='$value', position='$curr_position', scale=$curr_scale, disabled=$curr_disabled })"
+            notify "Set resolution for $monitor to $value"
+            ;;
+        mirror)
+            hyprctl eval "hl.monitor({ output='$monitor', mode='$value', position='$curr_position', scale=$curr_scale, disabled=$curr_disabled, mirror='$value' })"
+            notify "Set mirror for $monitor to $value"
+            ;;
+        *)
+            die "monitor hypr_lua property unknown: $property / $value"
+            ;;
+    esac
+}
+
+set_monitor_hypr_conf() {
     local monitor=$1
     local resolution=$2
     local position=$3
     local scale=$4
+    local disabled=${5:--false}
 
-    case $BACKEND in
-        wayland)
-            case $HYPRCONF in
-                conf)  hyprctl keyword monitor "$monitor", "$resolution", "$position", "$scale" ;;
-                lua)   hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale, disabled=false})" ;;
-            esac
-            ;;
-        x11)
-            xrandr --output "$monitor" --right-of $MON_INT --auto
-            ;;
-    esac
-    notify "Set pantalla $monitor on"
+    [[ $monitor == "$MON_INT" && $scale = "1.5" ]] && scale=1.458333
+
+    if [[ $disabled == true ]]; then
+        hyprctl keyword monitor "$monitor", disable
+    else
+        hyprctl keyword monitor "$monitor", "$resolution", "$position", "$scale"
+    fi
 }
 
-set_monitor_on_mirror() {
+set_monitor_x11() {
     local monitor=$1
     local resolution=$2
     local position=$3
     local scale=$4
+    local disabled=${5:--false}
 
-    case $BACKEND in
-        wayland)
-            case $HYPRCONF in
-                conf) hyprctl keyword monitor "$monitor", "$resolution", "$position", "$scale", mirror, "$MON_INT" ;;
-                lua)  hyprctl eval "hl.monitor({ output='$monitor', mode='$resolution', position='$position', scale=$scale, mirror='$MON_INT'})" ;;
-            esac ;;
-        x11)
-            xrandr --output "$monitor" --right-of "$MON_INT" --auto
-            ;;
-    esac
-    notify "Set pantalla $monitor (mirror) on"
+    [[ $monitor == "$MON_INT" && $scale = "1.5" ]] && scale=1.458333
+
+    if [[ $disabled == true ]]; then
+        xrandr --output "$monitor" --off
+    else
+        xrandr --output "$monitor" --right-of $MON_INT --auto
+    fi
 }
 
-set_monitor_off() {
+set_monitor() {
     local monitor=$1
+    local property=$2
+    local value=$3
 
-    case $BACKEND in
-        wayland)
-            case $HYPRCONF in
-                conf) hyprctl keyword monitor "$monitor", disable ;;
-                lua)  hyprctl eval "hl.monitor({ output='$monitor', disabled=true})" ;;
-            esac ;;
-        x11)
-            xrandr --output "$monitor" --off
-            ;;
-    esac
-    notify "Set pantalla $monitor off"
-}
+    if [[ $BACKEND == wayland && $HYPRCONF == lua ]]; then
+        set_monitor_hypr_lua  "$monitor" "$property" "$value"
 
-set_resolution() {
-    local monitor=$1
-    local resolution=$2
+    elif [[ $BACKEND == wayland && $HYPRCONF == conf ]]; then
+        set_monitor_hypr_conf "$monitor" "$property" "$value"
 
-    case $BACKEND in
-        wayland) set_monitor_on "$monitor" "$resolution" "$MON_POS" "$MON_SCALE" ;;
-        x11)     xrandr --output "$monitor" --mode "$resolution" ;;
-    esac
-    notify "Resolucion $monitor: $resolution"
-}
-
-set_scale() {
-    local monitor=$1
-    local scale=$2
-
-    case $BACKEND in
-        wayland)
-            [[ $monitor == "$MON_INT" && $scale = "1.5" ]] && scale=1.458333
-            set_monitor_on "$monitor" "$MON_RES" "$MON_POS" "$scale"
-            ;;
-        x11)
-            case $scale in
-                1.0)   xrandr --output "$monitor" --scale 1.0 ;;
-                1.25)  xrandr --output "$monitor" --scale 0.8 ;;
-                1.5)   xrandr --output "$monitor" --scale 0.666 ;;
-                2.0)   xrandr --output "$monitor" --scale 0.5 ;;
-                *)     die "Scale not supported: $scale"
-            esac
-            ;;
-    esac
-    notify "Escala $monitor: $scale"
+    elif [[ $BACKEND == x11 ]]; then
+        set_monitor_x11  "$monitor" "$property" "$value"
+    fi
 }
 
 get_lid_state() {
@@ -198,36 +251,24 @@ get_lid_state() {
 }
 
 switch_monitor_opt() {
+    local monitor=$1
+    local data
+
+    data="$(get_monitor_data "$monitor")"
+
+    debug "switch monitor opt $monitor  data $data"
+
     if (( $(count_monitors) > 1 )) && [ "$(get_lid_state)" = "open" ]; then
-        if [[ "$MON_DISABLED" == 'false' ]]; then
+        if [[ $(get_monitor_property "$data" "disabled") == false ]]; then
             if (( $(count_enabled_monitors) > 1 )); then
-                printf '%s' "$OPT_SET_MON_OFF"
+                debug "monitor $monitor disabled falso"
+                printf '%s' "${OPTIONS[SET_OFF]}"
             fi
         else
-            printf '%s' "$OPT_SET_MON_ON"
+            debug "monitor $monitor disabled true"
+            printf '%s' "${OPTIONS[SET_ON]}"
         fi
-    else
-        printf ''
     fi
-}
-
-select_monitor() {
-    local monitor
-
-    monitor="$(get_monitor_list)"
-    (( $(count_monitors) > 1 )) && menu "$monitor" "Seleccione monitor"
-}
-
-menu_options() {
-    local switch_option
-    local -a options=()
-
-    switch_option="$(switch_monitor_opt)"
-    [[ -n "$switch_option" ]] && options+=("$switch_option")
-
-    options+=("$OPT_SET_RESOL" "$OPT_SCALE_100" "$OPT_SCALE_125" "$OPT_SCALE_133" "$OPT_SCALE_150" "$OPT_SCALE_200")
-
-    printf '%s\n' "${options[@]}"
 }
 
 get_backend() {
@@ -245,88 +286,111 @@ get_backend() {
     debug "Backend: $BACKEND / Internal Monitor: $MON_INT / HyprConf: $HYPRCONF"
 }
 
-set_monitor_props() {
-    MON=$1
-    get_monitor_data "$MON"
+menu_monitor_resolution() {
+    local monitor=$1
+    local resolution_list resolution
 
-    OPC=$(menu "$(menu_options)" "Monitor $MON" "Monitor: $MON_DESC ($MON_RES @ $MON_POS)")
+    resolution_list="$(get_monitor_resolution_list "$monitor")"
+    resolution=$(menu "$resolution_list" "Resolucion $monitor")
 
-    [ -z "$OPC" ] && exit 0
+    [[ -n "$resolution" ]] && set_monitor "$monitor" "resolution" "$resolution"
+}
 
-    case $OPC in
-        "$OPT_SET_MON_OFF") set_monitor_off "$MON" ;;
-        "$OPT_SET_MON_ON") set_monitor_on "$MON" "$MON_RES" "$MON_POS" "$MON_SCALE";;
-        "$OPT_SET_RESOL")
-            RES=$(menu "$MON_RES_LIST" "Resolucion $MON")
-            [[ -n "$RES" ]] && set_resolution "$MON" "$RES"
+menu_monitor_props() {
+    local monitor=$1
+    local selected options data monitor_desc
+    local switch_option
+    local -a options=()
+
+    data="$(get_monitor_data "$monitor")"
+
+    debug "menu monitor props   monitor  $monitor   data $data"
+
+    switch_option="$(switch_monitor_opt "$monitor")"
+    [[ -n "$switch_option" ]] && options+=("$switch_option")
+
+    debug "is disabled?? disabled: $(get_monitor_property "$data" "disabled")"
+
+    if [[ $(get_monitor_property "$data" "disabled") == false ]]; then
+        options+=("${OPTIONS_ONE_MONITOR[@]}")
+    fi
+
+    monitor_desc=$(printf '%s (%s@%s)' \
+                            "$(get_monitor_property "$data" "description")" \
+                            "$(get_monitor_property "$data" "resolution")"  \
+                            "$(get_monitor_property "$data" "position")")
+
+    selected="$(menu "$(printf '%s\n' "${options[@]}")" "Monitor $monitor" "$monitor_desc")"
+
+    [[ -n $selected ]] || exit 0
+
+    case $selected in
+        "${OPTIONS[SET_OFF]}")    set_monitor "$monitor" "disabled" "true" ;;
+        "${OPTIONS[SET_ON]}")     set_monitor "$monitor" "disabled" "false" ;;
+        "${OPTIONS[SCALE_100]}")  set_monitor "$monitor" "scale" "1.0" ;;
+        "${OPTIONS[SCALE_125]}")  set_monitor "$monitor" "scale" "1.25" ;;
+        "${OPTIONS[SCALE_133]}")  set_monitor "$monitor" "scale" "1.33" ;;
+        "${OPTIONS[SCALE_150]}")  set_monitor "$monitor" "scale" "1.5"  ;;
+        "${OPTIONS[SCALE_200]}")  set_monitor "$monitor" "scale" "2.0"  ;;
+        "${OPTIONS[SET_RESOL]}")  menu_monitor_resolution "$monitor" ;;
+    esac
+}
+
+menu_select_monitors() {
+    local selected monitor
+    local -a options
+
+    options=("${OPTIONS_MULTIPLE_MONITORS[@]}")
+    options+=("$(get_monitor_list)")
+
+    selected="$(menu "$( printf '%s\n' "${options[@]}" )" "Seleccione monitor")"
+    [ -n "$selected" ] || exit 0
+
+    case $selected in
+        "${OPTIONS[SET_MAIN]}")
+            for monitor in $(list_monitors); do
+                [[ $monitor == "$MON_INT" ]] && set_monitor "$monitor" "disabled" "false"
+                [[ $monitor != "$MON_INT" ]] && set_monitor "$monitor" "disabled" "true"
+            done
             ;;
-        "$OPT_SCALE_100") set_scale "$MON" 1.0 ;;
-        "$OPT_SCALE_125") set_scale "$MON" 1.25 ;;
-        "$OPT_SCALE_133") set_scale "$MON" 1.33 ;;
-        "$OPT_SCALE_150") set_scale "$MON" 1.5 ;;
-        "$OPT_SCALE_200") set_scale "$MON" 2.0 ;;
+        "${OPTIONS[SET_DUP]}")
+            for monitor in $(list_monitors); do
+                [[ $monitor == "$MON_INT" ]] && set_monitor "$monitor" "disabled" "false"
+                [[ $monitor != "$MON_INT" ]] && set_monitor "$monitor" "mirror" "$MON_INT"
+            done
+            ;;
+        "${OPTIONS[SET_EXT]}")
+            for monitor in $(list_monitors); do
+                set_monitor "$monitor" "disabled" "false"
+            done
+            ;;
+        "${OPTIONS[SET_SEC]}")
+            for monitor in $(list_monitors); do
+                [[ $monitor == "$MON_INT" ]] && set_monitor "$monitor" "disabled" "true"
+                [[ $monitor != "$MON_INT" ]] && set_monitor "$monitor" "disabled" "false"
+            done
+            ;;
+        *)
+            # monitor="$(printf '%s' "$selected" | cut -d " " -f 2)"
+            IFS=' ' read -r icon monitor _ <<< "$selected"
+            debug "menu select monitors:  selected $selected    monitors $monitor  icon $icon"
+            menu_monitor_props "$monitor"
+            ;;
     esac
 }
 
-set_monitor_main() {
-    for m in $(list_monitors); do
-        get_monitor_data "$m"
-        [[ $MON_INT == "$m" ]] && set_monitor_on "$m" "$MON_RES" "$MON_POS" "$MON_SCALE"
-        [[ $MON_INT != "$m" ]] && set_monitor_off "$m"
-    done
+main() {
+    local monitor
+
+    get_backend
+
+    if (( $(count_monitors) > 1 )); then
+        menu_select_monitors
+    else
+        monitor="$(list_monitors)"
+        menu_monitor_props "$monitor"
+    fi
 }
 
-set_monitor_sec() {
-    for m in $(list_monitors); do
-        get_monitor_data "$m"
-        [[ "$MON_INT" == "$m" ]] && set_monitor_off "$m"
-        [[ "$MON_INT" != "$m" ]] && set_monitor_on "$m" "$MON_RES" "$MON_POS" "$MON_SCALE"
-    done
-}
-
-set_monitor_dup() {
-    for m in $(list_monitors); do
-        get_monitor_data "$m"
-        [[ "$m" == "$MON_INT" ]] && set_monitor_on "$m" "$MON_RES" "$MON_POS" "$MON_SCALE"
-        [[ "$m" != "$MON_INT" ]] && set_monitor_on_mirror "$m" "$MON_RES" "$MON_POS" "$MON_SCALE"
-    done
-}
-
-set_monitor_ext() {
-    for m in $(list_monitors); do
-        get_monitor_data "$m"
-        set_monitor_on "$m" "$MON_RES" "$MON_POS" "$MON_SCALE"
-    done
-}
-
-OPT_SET_MAIN='   Solo pantalla de PC'
-OPT_SET_DUP='   Duplicado'
-OPT_SET_EXT='  󰍹  Ampliar'
-OPT_SET_SEC='󰍹   Solo segunda pantalla'
-OPT_SET_MON_OFF='    Desactivar monitor'
-OPT_SET_MON_ON='    Activar monitor'
-OPT_SET_RESOL='󰹑    Cambiar resolucion'
-OPT_SCALE_100='    Escalar al 100'
-OPT_SCALE_125='    Escalar al 125'
-OPT_SCALE_133='    Escalar al 133'
-OPT_SCALE_150='    Escalar al 150'
-OPT_SCALE_200='    Escalar al 200'
-
-
-get_backend
-
-if (( $(count_monitors) == 1 )); then
-    set_monitor_props "$(list_monitors)"
-else
-    MON=$(select_monitor) || exit 0
-    [ -n "$MON" ] || exit 0
-
-    case $MON in
-        "$OPT_SET_MAIN") set_monitor_main ;;
-        "$OPT_SET_DUP") set_monitor_dup ;;
-        "$OPT_SET_EXT") set_monitor_ext ;;
-        "$OPT_SET_SEC") set_monitor_sec ;;
-        *) set_monitor_props "$(printf '%s' "$MON" | cut -d " " -f 2)" ;;
-    esac
-fi
+main
 
