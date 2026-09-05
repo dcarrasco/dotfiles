@@ -14,9 +14,9 @@ debug() {
 }
 
 menu() {
-    options=$1
-    prompt=$2
-    message=${3:-}
+    local options=$1
+    local prompt=$2
+    local message=${3:-}
 
     if [[ -n "$message" ]]; then
         printf '%s' "$options" | rofi -a 0:2 -dmenu -p "$prompt" -mesg "$message"
@@ -26,7 +26,7 @@ menu() {
 }
 
 notify() {
-    message=$1
+    local message=$1
 
     notify-send -u low 'Pantalla' "$message"
 }
@@ -44,7 +44,7 @@ count_monitors() {
 
 count_enabled_monitors() {
     case $BACKEND in
-        wayland)  hyprland_monitors | jq -r '. | select(.[].disabled == false) | length' ;;
+        wayland)  hyprland_monitors | jq -r '[.[] | select(.disabled == false)] | length' ;;
         x11)      xrandr -q | grep -c ' connected' ;;
     esac
 }
@@ -64,7 +64,7 @@ get_monitor_list() {
             for monitor in $(list_monitors); do
                 local icon='  '
                 [ $MON_INT != "$monitor" ] && icon='󰍹  '
-                printf '%s %s %s' "$icon", "$monitor", "$(get_monitor_property "$monitor" 2)" ;
+                printf '%s %s %s' "$icon", "$monitor", "$(hyprland_monitor_property "$monitor" "description")" ;
             done
             ;;
         x11)
@@ -96,6 +96,7 @@ get_monitor_data() {
             ;;
         x11)
             MON_RES="$(xrandr -q | grep "$monitor" | sed 's/primary //' | cut -d " " -f 3 | cut -d "+" -f 1)"
+            MON_POS='unknown'
             MON_DESC="$monitor"
             MON_SCALE=1.0
             MON_DISABLED="false"
