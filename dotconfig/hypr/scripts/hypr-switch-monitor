@@ -6,7 +6,6 @@ declare -xr CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 
 SCRIPT_PATH=$CONFIG_HOME/hypr/scripts
 SELF=$SCRIPT_PATH/hypr-switch-monitor
-MONITOR_DATA=
 
 declare -A OPTIONS=(
     [SET_PRI]='  Pantalla interna'
@@ -54,15 +53,6 @@ exec_pgm() {
     coproc {
         "$@" > /dev/null 2>&1
     }
-    exit 0
-}
-
-menu() {
-    local options=$1
-    local prompt=$2
-    local message=${3:-}
-
-    printf '%s' "$options" | rofi -dmenu -p "$prompt" -mesg "$message"
 }
 
 load_rofi() {
@@ -103,6 +93,8 @@ count_enabled_monitors() {
 }
 
 list_monitors() {
+    debug "function: list_monitors"
+
     case $BACKEND in
         wayland)  hyprland_monitors | jq -r '.[].name' ;;
         x11)      xrandr -q | awk '$2 == "connected" { print $1 }' ;;
@@ -110,18 +102,15 @@ list_monitors() {
 }
 
 get_monitor_list() {
-    local data description icon
+    local description icon
 
     debug 'function: render_monitor_list'
 
     case $BACKEND in
         wayland)
             for monitor in $(list_monitors); do
-                get_monitor_data "$monitor"
                 description="$(get_monitor_property "$monitor" description)"
-
                 [[ $monitor == "$MON_INT" ]] && icon='' || icon='󰍹'
-
                 printf '%s  %s %s\n' "$icon" "$monitor" "$description"
             done
             ;;
@@ -136,33 +125,20 @@ get_monitor_data() {
 
     debug "function: get_monitor_data($monitor)"
 
-    if [[ -n "$MONITOR_DATA" ]]; then
-        IFS=$'\t' read -r name _ <<< "$MONITOR_DATA"
-        if [[ $name == "$monitor" ]]; then
-            debug "Using cached monitor data"
-            exit 0
-        fi
-    fi
-
     case $BACKEND in
         wayland)
-            MONITOR_DATA="$(hyprland_monitors | jq -r --arg monitor "$monitor" '
+            hyprland_monitors | jq -r --arg monitor "$monitor" '
                 .[] | select(.name == $monitor)
                 | [.name, "\(.width)x\(.height)", "\(.x)x\(.y)", .description, (.scale | tostring), (.disabled | tostring)]
                 | @tsv'
-            )"
             ;;
-
         x11)
-            MONITOR_DATA="$(printf '%s\t%s\t%s\t%s\t%s' \
-                "$(xrandr -q | grep "$monitor" | sed 's/primary //' | cut -d " " -f 3 | cut -d "+" -f 1)" \
-                'unknown' \
-                "$monitor" \
-                '1.0' \
-                'false')"
+            local resolution
+            resolution="$(xrandr -q | grep "$monitor" | sed 's/primary //' | cut -d " " -f 3 | cut -d "+" -f 1)"
+
+            printf '%s\t%s\t%s\t%s\t%s\t%s' "$monitor" "$resolution" unknown "$monitor" 1.0 false
             ;;
     esac
-    debug "Quering monitor data MONITOR_DATA: $MONITOR_DATA"
 }
 
 get_monitor_property() {
@@ -170,11 +146,9 @@ get_monitor_property() {
     local property=$2
     local name res pos desc scale disabled
 
-    [[ -n "$MONITOR_DATA" ]] || die "No existen datos en MONITOR_DATA"
-
     debug "function: get_monitor_property($monitor, $property)"
 
-    IFS=$'\t' read -r name res pos desc scale disabled <<< "$MONITOR_DATA"
+    IFS=$'\t' read -r name res pos desc scale disabled < <(get_monitor_data "$monitor")
 
     case $property in
         name)           printf '%s' "$name" ;;
@@ -183,12 +157,14 @@ get_monitor_property() {
         description)    printf '%s' "$desc" ;;
         scale)          printf '%s' "$scale" ;;
         disabled)       printf '%s' "$disabled" ;;
-        *)              printf ''
+        *)              die "monitor property unknown: $property"
     esac
 }
 
 get_monitor_resolution_list() {
     local monitor=$1
+
+    debug "function: get_monitor_resolution_list($monitor)"
 
     case $BACKEND in
         wayland)
@@ -242,6 +218,8 @@ set_monitor_hypr_conf() {
     local monitor=$1
     local property=$2
     local value=$3
+
+    local resolution position scale
 
     resolution="$(get_monitor_property "$monitor" resolution)"
     position="$(get_monitor_property "$monitor" position)"
@@ -311,20 +289,19 @@ set_monitor_x11() {
     esac
 }
 
-set_monitor() {
+set_monitor_property() {
     local monitor=$1
     local property=$2
     local value=$3
 
-    if [[ $BACKEND == wayland && $HYPRCONF == lua ]]; then
-        set_monitor_hypr_lua  "$monitor" "$property" "$value"
+    debug "function: set_monitor_property($monitor, $property, $value)"
 
-    elif [[ $BACKEND == wayland && $HYPRCONF == conf ]]; then
-        set_monitor_hypr_conf "$monitor" "$property" "$value"
-
-    elif [[ $BACKEND == x11 ]]; then
-        set_monitor_x11  "$monitor" "$property" "$value"
-    fi
+    case "$BACKEND:$HYPRCONF" in
+        wayland:lua)    exec_pgm set_monitor_hypr_lua  "$monitor" "$property" "$value" ;;
+        wayland:conf)   exec_pgm set_monitor_hypr_conf "$monitor" "$property" "$value" ;;
+        x11:*)          exec_pgm set_monitor_x11       "$monitor" "$property" "$value" ;;
+        *)              die "Backend desconocido $BACKEND:$HYPRCONF"
+    esac
 }
 
 get_lid_state() {
@@ -336,12 +313,14 @@ get_backend() {
     BACKEND=x11
     HYPRCONF=conf
 
+    debug "function: get_backend"
+
     if [[ -n ${HYPRLAND_INSTANCE_SIGNATURE:-} ]] && command -v hyprctl >/dev/null 2>&1; then
         BACKEND=wayland
         MON_INT=eDP-1
     fi
 
-    if [[ $BACKEND == wayland && -f "$XDG_CONFIG_HOME/hypr/hyprland.lua" ]]; then
+    if [[ $BACKEND == wayland && -f "$CONFIG_HOME/hypr/hyprland.lua" ]]; then
         HYPRCONF=lua
     fi
 
@@ -352,23 +331,28 @@ apply_monitors_layout() {
     local profile=$1
     local monitor
 
+    debug "function: apply_monitors_layout"
+
     while IFS= read -r monitor; do
         case $profile in
-            main)       set_monitor "$monitor" disabled \
-                            "$([[ $monitor == "$MON_INT" ]] && printf false || printf true)"
-                        ;;
-            secondary)  set_monitor "$monitor" disabled \
-                            "$([[ $monitor == "$MON_INT" ]] && printf true || printf false)"
-                        ;;
-            extend)     set_monitor "$monitor" disabled false
-                        ;;
+            main)
+                set_monitor_property "$monitor" disabled \
+                    "$([[ $monitor == "$MON_INT" ]] && printf false || printf true)"
+                ;;
+            secondary)
+                set_monitor_property "$monitor" disabled \
+                    "$([[ $monitor == "$MON_INT" ]] && printf true || printf false)"
+                ;;
+            extend)
+                set_monitor_property "$monitor" disabled false
+                ;;
             duplicate)
-                        if [[ $monitor == "$MON_INT" ]]; then
-                            set_monitor "$monitor" disabled false
-                        else
-                            set_monitor "$monitor" mirror "$MON_INT"
-                        fi
-                        ;;
+                if [[ $monitor == "$MON_INT" ]]; then
+                    set_monitor_property "$monitor" disabled false
+                else
+                    set_monitor_property "$monitor" mirror "$MON_INT"
+                fi
+                ;;
 
         esac
     done < <(list_monitors)
@@ -380,11 +364,9 @@ entry() {
     local action=$2
     local checked=${3:-}
 
-    if [[ $checked  == true ]]; then
-        label+=' '
-    fi
-
     debug "entry   label: $label  action: $action"
+
+    [[ $checked  == true ]] && label+=' '
 
     printf '%s\0info\x1f%s\n' "$label" "$action"
 }
@@ -407,19 +389,16 @@ disp_scale() {
 
 render_resolution() {
     local monitor=$1
-    local resolution_list resolution
+    local resolution
     local curr_res
 
     debug "function: render_resolution($monitor)"
 
-    get_monitor_data "$monitor"
-
     curr_res="$(get_monitor_property "$monitor" resolution)"
 
-    resolution_list="$(get_monitor_resolution_list "$monitor")"
     while IFS= read -r resolution; do
         entry "$resolution" "RESOL:$resolution" "$([[ $curr_res == "$resolution" ]] && printf true)"
-    done <<< "$resolution_list"
+    done < <(get_monitor_resolution_list "$monitor")
 }
 
 render_multiple_monitor() {
@@ -448,17 +427,17 @@ render_multiple_monitor() {
 }
 
 render_one_monitor() {
-    local monitor=$1
-    local monitor monitor_desc scale resolution
+    local monitor=${1:-}
+    local monitor monitor_desc scale resolution is_disabled
     local opt
 
     debug "function: render_one_monitor($monitor)"
 
-    get_monitor_data "$monitor"
-
     [[ -n "$monitor" ]] || monitor="$(list_monitors)"
     scale="$(get_monitor_property "$monitor" scale)"
     resolution="$(get_monitor_property "$monitor" resolution)"
+    is_disabled="$(get_monitor_property "$monitor" disabled)"
+
     monitor_desc=$(printf '%s: %s %s' \
         "$monitor" "$resolution" "$(disp_scale "$scale")")
 
@@ -468,7 +447,7 @@ render_one_monitor() {
 
     # render_monitor_enable "$monitor"
     if (( $(count_monitors) > 1 )) && [ "$(get_lid_state)" == open ]; then
-        if [[ $(get_monitor_property "$monitor" disabled) == false ]]; then
+        if [[ $is_disabled == false ]]; then
             if (( $(count_enabled_monitors) > 1 )); then
                 debug "monitor $monitor disabled falso"
                 entry "${OPTIONS[SET_OFF]}" "SET_OFF"
@@ -479,7 +458,7 @@ render_one_monitor() {
         fi
     fi
 
-    if [[ $(get_monitor_property "$monitor" disabled) == false ]]; then
+    if [[ $is_disabled == false ]]; then
         for opt in "${OPTIONS_ONE_MONITOR[@]}"; do
             local checked=''
             case "$(disp_scale "$scale")" in
@@ -497,24 +476,26 @@ render_one_monitor() {
 
 handle_selection() {
     local monitor=${ROFI_DATA}
-    get_monitor_data "$monitor"
+
+    debug "function: handle_selection(${ROFI_INFO})"
 
     case ${ROFI_INFO} in
-        SET_PRI)    exec_pgm apply_monitors_layout main ;;
-        SET_DUP)    exec_pgm apply_monitors_layout duplicate ;;
-        SET_EXT)    exec_pgm apply_monitors_layout extend ;;
-        SET_SEC)    exec_pgm apply_monitors_layout secondary ;;
+        SET_PRI)    apply_monitors_layout main ;;
+        SET_DUP)    apply_monitors_layout duplicate ;;
+        SET_EXT)    apply_monitors_layout extend ;;
+        SET_SEC)    apply_monitors_layout secondary ;;
 
-        SET_OFF)    exec_pgm set_monitor "$monitor" disabled true ;;
-        SET_ON)     exec_pgm set_monitor "$monitor" disabled false ;;
+        SET_OFF)    set_monitor_property "$monitor" disabled true ;;
+        SET_ON)     set_monitor_property "$monitor" disabled false ;;
 
-        SCALE_100)  exec_pgm set_monitor "$monitor" scale 1.0 ;;
-        SCALE_125)  exec_pgm set_monitor "$monitor" scale 1.25 ;;
-        SCALE_133)  exec_pgm set_monitor "$monitor" scale 1.33 ;;
-        SCALE_150)  exec_pgm set_monitor "$monitor" scale 1.5  ;;
-        SCALE_200)  exec_pgm set_monitor "$monitor" scale 2.0  ;;
+        SCALE_100)  set_monitor_property "$monitor" scale 1.0 ;;
+        SCALE_125)  set_monitor_property "$monitor" scale 1.25 ;;
+        SCALE_133)  set_monitor_property "$monitor" scale 1.33 ;;
+        SCALE_150)  set_monitor_property "$monitor" scale 1.5  ;;
+        SCALE_200)  set_monitor_property "$monitor" scale 2.0  ;;
+        RESOL:*)    set_monitor_property "$monitor" resolution "${ROFI_INFO#*:}" ;;
+
         SET_RESOL)  render_resolution "$monitor" ;;
-        RESOL:*)    exec_pgm set_monitor "$monitor" resolution "${ROFI_INFO#*:}" ;;
         SELECT:*)   render_one_monitor "${ROFI_INFO#*:}" ;;
     esac
 
@@ -523,7 +504,8 @@ handle_selection() {
 render() {
     local monitor_count
     monitor_count=$(count_monitors)
-    monitor_count=2
+
+    debug "function: render"
 
     printf '\0no-custom\x1ftrue\n'
 
