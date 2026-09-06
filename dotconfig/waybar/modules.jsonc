@@ -278,7 +278,7 @@
             "default": ["", "", ""]
         },
         // "on-click": "pavucontrol",
-        "on-click": "kitty --class hypr-sys-menu wiremix",
+        "on-click": "kitty --class hypr-terminal-float wiremix",
         "on-click-right": "$XDG_CONFIG_HOME/hypr/scripts/hypr-set-volume toggle"
     },
 
