@@ -353,6 +353,9 @@ apply_monitors_layout() {
                     set_monitor_property "$monitor" mirror "$MON_INT"
                 fi
                 ;;
+            *)
+                die "Unknown monitor layout profile: $profile"
+                ;;
 
         esac
     done < <(list_monitors)
@@ -382,6 +385,7 @@ disp_scale() {
         1.4583334)  disp='150%' ;;
         1.5)        disp='150%' ;;
         2)          disp='200%' ;;
+        *)          die "Scale unknown: $scale"
     esac
 
     printf '%s' "$disp"
@@ -467,6 +471,7 @@ render_one_monitor() {
                 133%)   [[ $opt == SCALE_133 ]] && checked=true ;;
                 150%)   [[ $opt == SCALE_150 ]] && checked=true ;;
                 200%)   [[ $opt == SCALE_200 ]] && checked=true ;;
+                *)      die "Displayed scale unknown"
             esac
 
             entry "${OPTIONS[$opt]}" "$opt" "$checked"
@@ -475,11 +480,11 @@ render_one_monitor() {
 }
 
 handle_selection() {
-    local monitor=${ROFI_DATA}
+    local monitor=$ROFI_DATA
 
-    debug "function: handle_selection(${ROFI_INFO})"
+    debug "function: handle_selection($ROFI_INFO)"
 
-    case ${ROFI_INFO} in
+    case $ROFI_INFO in
         SET_PRI)    apply_monitors_layout main ;;
         SET_DUP)    apply_monitors_layout duplicate ;;
         SET_EXT)    apply_monitors_layout extend ;;
@@ -497,6 +502,8 @@ handle_selection() {
 
         SET_RESOL)  render_resolution "$monitor" ;;
         SELECT:*)   render_one_monitor "${ROFI_INFO#*:}" ;;
+
+        *)          die "Selection unknown: $ROFI_INFO"
     esac
 
 }
@@ -530,8 +537,9 @@ main() {
     fi
 
     case $ROFI_RETV in
-        0) render ;;
-        1) handle_selection ;;
+        0)  render ;;
+        1)  handle_selection ;;
+        *)  die "ROFI_RETV unknown: $ROFI_RETV"
     esac
 }
 
