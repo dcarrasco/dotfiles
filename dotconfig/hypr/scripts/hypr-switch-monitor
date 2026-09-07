@@ -14,7 +14,7 @@ declare -A OPTIONS=(
     [SET_EXT]=' 󰍹  Ampliar'
     [SET_OFF]='   Desactivar monitor'
     [SET_ON]='  Activar monitor'
-    [SET_RESOL]='󰹑  Resolucion'
+    [SET_RESOL]='󰹑  Ajustar Resolucion'
     [SCALE_100]='  Escalar al 100%'
     [SCALE_125]='  Escalar al 125%'
     [SCALE_133]='  Escalar al 133%'
@@ -56,7 +56,7 @@ exec_pgm() {
 }
 
 load_rofi() {
-    local -r font='Hack Nerd Font 16'
+    local -r font='Hack Nerd Font 15'
     local -r theme='entry{placeholder:"Search...";} window{width:22%;}'
 
     rofi \
@@ -327,7 +327,7 @@ get_backend() {
     debug "Backend: $BACKEND / Internal Monitor: $MON_INT / HyprConf: $HYPRCONF"
 }
 
-apply_monitors_layout() {
+set_monitors_layout() {
     local profile=$1
     local monitor
 
@@ -359,7 +359,6 @@ apply_monitors_layout() {
 
         esac
     done < <(list_monitors)
-
 }
 
 entry() {
@@ -485,10 +484,10 @@ handle_selection() {
     debug "function: handle_selection($ROFI_INFO)"
 
     case $ROFI_INFO in
-        SET_PRI)    apply_monitors_layout main ;;
-        SET_DUP)    apply_monitors_layout duplicate ;;
-        SET_EXT)    apply_monitors_layout extend ;;
-        SET_SEC)    apply_monitors_layout secondary ;;
+        SET_PRI)    set_monitors_layout main ;;
+        SET_DUP)    set_monitors_layout duplicate ;;
+        SET_EXT)    set_monitors_layout extend ;;
+        SET_SEC)    set_monitors_layout secondary ;;
 
         SET_OFF)    set_monitor_property "$monitor" disabled true ;;
         SET_ON)     set_monitor_property "$monitor" disabled false ;;

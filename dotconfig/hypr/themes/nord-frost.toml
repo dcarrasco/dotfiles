@@ -41,8 +41,8 @@ warning = "nord12"
 critical = "nord11"
 success = "nord14"
 window_bg = { color = "nord6", alpha = 0.80 }
-textbox_bg = "nord3"
+textbox_bg = { color = "nord10", alpha = 0.20 }
 prompt_fg = "nord10"
 prompt_bg = { color = "nord4", alpha = 0.60 }
-placeholder_fg = { color = "nord3", alpha = 0.90 }
+placeholder_fg = { color = "nord3", alpha = 0.30 }
 selected_bg = { color = "nord3", alpha = 0.10 }
