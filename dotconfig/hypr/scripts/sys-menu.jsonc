@@ -64,7 +64,7 @@
     "setup.audio": { "icon": "", "label": "Audio", "action": ["terminal", "wiremix"]  },
     "setup.wifi": { "icon": "", "label": "Wifi", "action": ["hypr-nmcli-rofi"]  },
     "setup.bluetooth": { "icon": "󰂯", "label": "Bluetooth", "action": ["blueman-manager"]  },
-    "setup.monitors": { "icon": "󰍹", "label": "Monitors", "action": ["hypr-switch-monitor"]  },
+    "setup.monitors": { "icon": "󰍹", "label": "Monitors", "action": ["hypr-switch-monitor", "--reset"]  },
     "setup.printers": { "icon": "󰐪", "label": "Printers", "action": ["webapp", "http://localhost:631"]  },
     "setup.keybindings": { "icon": "", "label": "Keybindings", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/keybinds.lua"]  },
     "setup.input": { "icon": "", "label": "Input", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/input.lua"]  },

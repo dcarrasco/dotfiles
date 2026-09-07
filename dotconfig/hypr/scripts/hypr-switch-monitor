@@ -479,7 +479,7 @@ render_one_monitor() {
 }
 
 handle_selection() {
-    local monitor=$ROFI_DATA
+    local monitor=${ROFI_DATA:-}
 
     debug "function: handle_selection($ROFI_INFO)"
 
@@ -502,6 +502,8 @@ handle_selection() {
         SET_RESOL)  render_resolution "$monitor" ;;
         SELECT:*)   render_one_monitor "${ROFI_INFO#*:}" ;;
 
+        act:setup.monitors)     render ;;
+
         *)          die "Selection unknown: $ROFI_INFO"
     esac
 
@@ -523,6 +525,9 @@ render() {
 }
 
 main() {
+    # hack to call hypr-switch-monitor via hypr-sys-menu
+    [[ ${1:-} == '--reset' ]] && ROFI_RETV=''
+
     debug "main -------------------"
     debug "ROFI_RETV ${ROFI_RETV:-}"
     debug "ROFI_INFO ${ROFI_INFO:-}"
@@ -542,5 +547,5 @@ main() {
     esac
 }
 
-main
+main "$@"
 
