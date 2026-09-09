@@ -38,13 +38,13 @@ vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup('close-quickfix-list', { clear = true }),
   pattern = "qf",
   callback = function()
-    vim.keymap.set("n", "<C-esc>", ":cclose<CR>", { silent = true })
+    vim.keymap.set("n", "<C-esc>", ":cclose<CR>", { silent = true, buffer = true })
   end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup('wrap-lines-typst', { clear = true }),
-  pattern = "typ",
+  pattern = "typst",
   callback = function()
     vim.opt.linebreak = true
   end,
