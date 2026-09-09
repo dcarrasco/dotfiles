@@ -6,7 +6,6 @@ return {
 
   -- tpope's utilities
   'tpope/vim-surround',
-  'tpope/vim-commentary',
   {
     'tpope/vim-fugitive',
     config = function()
@@ -42,7 +41,4 @@ return {
 
   -- Simpler way to use some motions (w, b, j, k, f, s)
   -- use('easymotion/vim-easymotion')
-
-  -- Editor config properties
-  'editorconfig/editorconfig-vim',
 }
