@@ -1,38 +1,22 @@
+local languages = { "blade", "c", "javascript", "lua", "php", "python", "rust" }
+
 return {
-  -- Treesitter
   {
-    'nvim-treesitter/nvim-treesitter',
-    branch = 'master',
-    build = ':TSUpdate',
+    "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    lazy = false,
+    build = ":TSUpdate",
     config = function()
-      local configs = require("nvim-treesitter.configs")
+      require("nvim-treesitter").install(languages)
 
-      configs.setup({
-        -- ensure_installed = { "help", "python", "php", "javascript", "c", "lua", "rust" },
-        ensure_installed = { "python", "php", "javascript", "c", "lua", "rust" },
-        sync_install = false,
-        auto_install = true,
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = false,
-        },
-        indent = {
-          enable = true
-        },
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
+        pattern = languages,
+        callback = function()
+          vim.treesitter.start()
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
       })
-
-      local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-      parser_config.blade = {
-        install_info = {
-          url = "https://github.com/EmranMR/tree-sitter-blade",
-          files = {"src/parser.c"},
-          branch = "main",
-        },
-        filetype = "blade"
-      }
-
-    end
+    end,
   },
-
-  -- 'nvim-treesitter/playground',
 }
