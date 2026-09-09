@@ -33,7 +33,6 @@ vim.opt.linebreak = true
 vim.opt.breakindent = true
 vim.opt.showmode = false
 vim.opt.showtabline = 1
-vim.opt.cursorline = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = "␣" }
 

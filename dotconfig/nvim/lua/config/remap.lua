@@ -89,8 +89,6 @@ keymap.set("n", "*", "*zzzv")
 keymap.set("n", "{", "{zz")
 keymap.set("n", "}", "}zz")
 keymap.set("n", "0", "^")
-keymap.set("n", "0", "^")
-keymap.set("n", "^", "0")
 keymap.set("n", "^", "0")
 -- keymap.set("n", "9", "$")
 -- keymap.set("n", "9", "$")
@@ -136,7 +134,6 @@ keymap.set("n", "J", "mzJ`z")
 -- nnoremap <C-S-p> "0P
 -- Inserta espacio y enter
 -- keymap.set("n", "<C-enter>", "i <esc>")
-keymap.set("n", "x", '"_x')
 
 
 -- Select mgmt ----------------------------------------------------------------

@@ -2,7 +2,6 @@ return {
   -- Colorschemes
   'folke/tokyonight.nvim',
   'navarasu/onedark.nvim',
-  'navarasu/onedark.nvim',
   'nordtheme/vim',
   {
     'AlexvZyl/nordic.nvim',
