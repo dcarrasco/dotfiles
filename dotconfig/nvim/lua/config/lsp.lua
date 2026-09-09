@@ -1,9 +1,7 @@
-require('mason').setup()
-
 vim.lsp.config('lua_ls', {
   settings = {
     Lua = {
-      runtine = { version = 'LuaJIT' },
+      runtime = { version = 'LuaJIT' },
       diagnostics = { globals = { 'vim', 'require', 'hl' } },
       telemetry = { enable = false },
     }
