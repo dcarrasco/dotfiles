@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "php",
   -- command = ":set commentstring=//\ %s"
   callback = function()
-    vim.opt.commentstring = '// %s'
+    vim.opt_local.commentstring = '// %s'
   end
 })
 
@@ -29,16 +29,20 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd("TermOpen", {
   group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
   callback = function()
-    vim.opt.number = false
-    vim.opt.relativenumber = false
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
   end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup('close-quickfix-list', { clear = true }),
   pattern = "qf",
-  callback = function()
-    vim.keymap.set("n", "<C-esc>", ":cclose<CR>", { silent = true, buffer = true })
+  callback = function(event)
+    vim.keymap.set("n", "q", "<cmd>close<CR>", {
+      buffer = event.buf,
+      silent = true,
+      desc = "Close quickfix/location window"
+    })
   end,
 })
 
@@ -46,7 +50,7 @@ vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup('wrap-lines-typst', { clear = true }),
   pattern = "typst",
   callback = function()
-    vim.opt.linebreak = true
+    vim.opt_local.linebreak = true
   end,
 })
 
