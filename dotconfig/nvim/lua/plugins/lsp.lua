@@ -70,9 +70,31 @@ return {
           end,
         },
       })
-      require('dapui').setup()
 
       local dap = require('dap')
+      local dapui = require('dapui')
+
+      dapui.setup()
+
+      local map=function(keys, callback, desc)
+        vim.keymap.set("n", keys, callback, {
+          silent = true,
+          desc = "DAP: " .. desc
+        })
+      end
+
+      map("<leader>dt", dap.toggle_breakpoint, "Toggle breakpoint")
+      map("<leader>dc", dap.continue, "Debug continue")
+      map("<leader>dr", dap.repl.open, "Open REPL")
+      map("<leader>dk", dap.terminate, "Terminate")
+      map("<leader>dso", dap.step_over, "Step over")
+      map("<leader>dsi", dap.step_into, "Step into")
+      map("<leader>dsu", dap.step_out, "Step out")
+      map("<leader>dl", dap.run_last, "Run last")
+
+      map("<leader>duu", dapui.open, "Open UI")
+      map("<leader>duc", dapui.close, "Close UI")
+
       dap.adapters.gdb = {
         type = 'executable',
         command = 'gdb',
