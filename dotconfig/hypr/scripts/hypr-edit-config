@@ -52,11 +52,9 @@ arch=(\
     "zsh/.zshenv" \
 )
 
-config_dir=$XDG_CONFIG_HOME
-
 listado=""
-for file in ${arch[@]}; do
-    case $(echo $file | cut -d "/" -f 1) in
+for file in "${arch[@]}"; do
+    case $(echo "$file" | cut -d "/" -f 1) in
         *waybar*)    icon="   " ;;
         *polybar*)   icon="   " ;;
         *hypr*)      icon="   " ;;
@@ -86,7 +84,7 @@ if [[ -n $file ]]; then
     icon=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 1)
     file=$(echo -e "$file" | sed "s/  */ /g" | cut -d " " -f 2)
     notify-send -u low "Editing config file" "$icon   $file..."
-    cd "$(dirname $XDG_CONFIG_HOME/$file)"
+    cd "$(dirname "$XDG_CONFIG_HOME/$file")" || exit 1
     kitty nvim "$XDG_CONFIG_HOME/$file"
 fi
 
