@@ -1,15 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-if [ "$DESKTOP_SESSION" == "bspwm" ]; then
+if [[ $DESKTOP_SESSION == bspwm ]]; then
     keybinds=$(
-        cat "$HOME/.config/sxhkd/sxhkdrc" |
+        cat "$XDG_CONFIG_HOME/sxhkd/sxhkdrc" |
         awk 'BEGIN{ OFS=";" } { if (substr($0,0,1) == "#") {comment=$0; has_comment=1;} else {if (has_comment == 1) {print $0, comment; comment=""; has_comment=false;} } }' |
         sed -e 's/;#/;/'             -e '/^; #*/d'            -e 's/ +/+/g'             \
             -e 's/\+ /+/g'           -e 's/; /;/g'            -e 's/\+Return/+[ENTER]/' \
             -e 's/\+alt/+[ALT]/'     -e 's/\+space/+[SPACE]/' -e 's/\+control/+[CTRL]/' \
             -e 's/\+shift/+[SHIFT]/' -e 's/\+Tab/+[TAB]/'     -e 's/\+Tab/+[TAB]/'      \
             -e 's/^super/ /'        -e 's/^alt/[ALT]/' |
-        awk -F ";" 'function rep(n,c){s=""; for(i=0;i<n;i++) s=s c; return s;} {print $1 rep(28-length($1), " ") $2}'
+        awk -F ";" 'function rep(c,n){s=""; for(i=0;i<n;i++) s=s c; return s;} {print $1 rep(" ", 28-length($1)) $2}'
     )
 else
     keybinds=$(
@@ -20,10 +20,12 @@ else
             -e 's/^72/ +[ALT]+/' -e 's/^73/ +[SHIFT]+[ALT]+/'   \
             -e 's/^0//'            -e 's/^8/[ALT]+/'              \
             -e 's/mouse:272/[mouse left click]/' -e 's/mouse:273/[mouse right click]/' |
-        awk -F, 'function rep(n,c){s=""; for(i=0;i<n;i++) s=s c; return s;} {print $1 $2 rep(30-length($1)-length($2), " ") $3}'
+        awk -F, 'function rep(c,n){s=""; for(i=0;i<n;i++) s=s c; return s;} {print $1 $2 rep(" ", 30-length($1)-length($2)) $3}'
     )
 fi
 
 THEME="window{width:40%;}"
-printf '%s' "$keybinds" | rofi -dmenu -i -p "    Keybinds" -theme-str "$THEME" -font "Hack Nerd Font 12"
+FONT="Hack Nerd Font 12"
+
+printf '%s' "$keybinds" | rofi -dmenu -i -p "    Keybinds" -theme-str "$THEME" -font "$FONT"
 

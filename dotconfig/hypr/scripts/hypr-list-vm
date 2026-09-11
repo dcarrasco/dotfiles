@@ -1,12 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-OPCIONES=$(virsh --connect qemu:///system list --all | cut -c 7- | sed -E 's/[ ]+/ /g' | grep -v Nombre | grep -v "\-\-" | grep -E -v "^$" | awk -F " " '{ print $1 " (" $2 $3 ")" }')
+OPCIONES=$(
+    virsh --connect qemu:///system list --all |
+    sed -n 's/^[[:space:]]*[-[:digit:]+][[:space:]]*\([[:alnum:]_-]*\)[[:space:]]*\([[:alpha:]]*\)/\1 (\2)/p' |
+    grep -v '^--'
+)
 
-theme="prompt{enabled:false;} entry{placeholder:\"Start VM...\";} window{width:22%; height:55%;}"
-VM=$(printf "$OPCIONES" | rofi -dmenu -theme-str "$theme" | cut -d " " -f 1)
+font='Hack Nerd Font 16'
+theme='prompt{enabled:false;} entry{placeholder:"Start VM...";} window{width:22%;}'
 
-echo $VM
+VM=$(printf '%s' "$OPCIONES" |
+    rofi -dmenu -format p -theme-str "$theme" -font "$font" |
+    cut -d " " -f 1
+)
 
-if [ -n "$VM" ]; then
-    ~/.config/hypr/scripts/hypr-start-vm $VM
+if [[ -n "$VM" ]]; then
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-start-vm" "$VM"
 fi

@@ -1,19 +1,23 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-power_profile=$(tuned-adm active | cut -d " " -f 4)
-echo Current profile: $power_profile
+current_profile() {
+    tuned-adm active | sed -n 's/Current active profile: //p'
+}
 
-balanced_profile="balanced"
-on_battery=$(upower -d | grep on-battery | cut -d : -f 2 | xargs)
-if [ "$on_battery" = "yes" ]; then
-    balanced_profile="balanced-battery"
-fi
+on_battery() {
+    upower -d | sed -n 's/^[[:space:]]*on-battery:[[:space:]]//p'
+}
+
+power_profile=$(current_profile)
+echo "Current profile: $power_profile"
+
+[[ "$(on_battery)" == yes ]] && balanced_profile="balanced-battery" || balanced_profile="balanced"
 
 case "$power_profile" in
-    *$balanced_profile*) tuned-adm profile throughput-performance ;;
-    *throughput-performance*) tuned-adm profile powersave ;;
-    *powersave*) tuned-adm profile $balanced_profile ;;
-    *) tuned-adm profile $balanced_profile ;;
+    "$balanced_profile")     tuned-adm profile throughput-performance ;;
+    throughput-performance)  tuned-adm profile powersave ;;
+    powersave)               tuned-adm profile "$balanced_profile" ;;
+    *)                       tuned-adm profile "$balanced_profile" ;;
 esac
 
-notify-send -u low "Power Management" "New profile: $(tuned-adm active | cut -d ' ' -f 4)"
+notify-send -u low "Power Management" "New profile: $(current_profile)"

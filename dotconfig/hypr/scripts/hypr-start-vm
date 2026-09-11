@@ -1,15 +1,15 @@
-#!/bin/bash
-
-# DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+#!/usr/bin/env bash
 
 function start_vm () {
-    state=$(virsh --connect qemu:///system list --all | grep "$1")
+    local vm="$1"
 
-    if [[ "$state" =~ "apagado" ]]; then
-        virsh --connect qemu:///system start "$1" &
+    state="$(virsh --connect qemu:///system list --all | grep "$vm")"
+
+    if [[ $state =~ apagado ]]; then
+        virsh --connect qemu:///system start "$vm" &
     fi
 
-    GDK_BACKEND=x11 WAYLAND_DISPLAY= virt-viewer --connect=qemu:///system --attach --hotkeys zoom-in=ctrl+alt+shift+f11,zoom-out=ctrl+alt+shift+f12 "$1"
+    GDK_BACKEND=x11 WAYLAND_DISPLAY= virt-viewer --connect=qemu:///system --attach --hotkeys zoom-in=ctrl+alt+shift+f11,zoom-out=ctrl+alt+shift+f12 "$vm"
 }
 
 start_vm "$1"

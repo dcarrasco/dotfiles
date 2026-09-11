@@ -1,25 +1,39 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+notify() {
+    local icon="$1"
+    local message="$2"
+    local volume="${3:-}"
+
+    if [[ -n "$volume" ]]; then
+        notify-send -c OSD -h "int:value:$volume" -i "$icon" '' "Volumen ($volume%)"
+    else
+        notify-send -c OSD -i "$icon" '' "$message"
+    fi
+}
 
 step=""
 icon=""
-if [ "$1" = "up" ]; then
+if [[ $1 == "up" ]]; then
     step="5%+"
     icon="audio-volume-high"
-elif [ "$1" = "down" ]; then
+elif [[ $1 = "down" ]]; then
     step="5%-"
     icon="audio-volume-low"
-elif [ "$1" = "toggle" ]; then
+elif [[ $1 == "toggle" ]]; then
     amixer set Master toggle
-    new_status=$(amixer get Master | grep "Front Left:" | sed -e "s/.*\[\(on\|off\)\].*/\1/")
-    if [ "$new_status" = "off" ]; then
-        notify-send -c OSD -i audio-volume-muted "" "Volumen Mute"
+    new_status="$(amixer get Master | grep "Front Left:" | sed -e "s/.*\[\(on\|off\)\].*/\1/")"
+
+    if [[ $new_status == "off" ]]; then
+        notify audio-volume-muted "Volumen Mute"
     else
-        notify-send -c OSD -i audio-volume-high "" "Volumen Unmute"
+        notify audio-volume-high "Volumen Unmute"
     fi
 fi
 
-if [ -n "$step" ]; then
-    amixer set Master $step
-    volume=$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1)
-    notify-send -c OSD -h int:value:$volume -i $icon "" "Volumen ($volume%)"
+if [[ -n "$step" ]]; then
+    amixer set Master "$step"
+    volume="$(amixer get Master | grep "Front Left:" | cut -d [ -f 2 | cut -d % -f 1)"
+
+    notify "$icon" "Volumen ($volume%)" "$volume"
 fi

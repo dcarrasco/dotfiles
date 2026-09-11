@@ -1,14 +1,10 @@
 #!/bin/bash
 
-step=""
-if [ "$1" = "up" ]; then
-    step="10%+"
-elif [ "$1" = "down" ]; then
-    step="10%-"
-fi
+[[ $1 == "up" ]] && step="10%+" || step="10%-"
 
-if [ -n "$step" ]; then
-    brightnessctl s $step
-    brightness=$(brightnessctl -P g)
-    notify-send -c OSD -h int:value:$brightness -i display-brightness-symbolic "" "Brillo pantalla ($brightness%)"
+if [[ -n "$step" ]]; then
+    brightnessctl s "$step"
+    brightness="$(brightnessctl -P g)"
+
+    notify-send -c OSD -h int:value:"$brightness" -i display-brightness-symbolic '' "Brillo pantalla ($brightness%)"
 fi
