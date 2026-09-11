@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$DESKTOP_SESSION" = "bspwm" ]; then
-    [ $(setxkbmap -query | grep layout | awk '{print $2}') = "us" ] && setxkbmap latam || setxkbmap us
+    [[ "$(setxkbmap -query | grep layout | awk '{print $2}')" = us ]] && setxkbmap latam || setxkbmap us
     newlayout=$(setxkbmap -query | grep layout | awk '{print $2}')
 else
     internal=at-translated-set-2-keyboard
@@ -10,22 +10,22 @@ else
     echo "switch internal layout: $newlayout"
     hyprctl switchxkblayout $internal next
 
-    newlayout=$(hyprctl devices -j | jq -r --arg k $internal '.keyboards[] | select(.name==$k).active_keymap')
+    newlayout="$(hyprctl devices -j | jq -r --arg keyb $internal '.keyboards[] | select(.name==$keyb).active_keymap')"
     echo "new internal layout: $newlayout"
 
-    keybs=$(hyprctl devices -j | jq -r '.keyboards[].name' | grep $external)
-    echo "keyboards: $keybs"
+    keyboards="$(hyprctl devices -j | jq -r '.keyboards[].name' | grep $external)"
+    echo "keyboards: $keyboards"
 
-    for i in $keybs; do
-        echo "external: $i"
+    for keyb in $keyboards; do
+        echo "external: $keyb"
         currlayout="xxx"
         echo "current layout0: $currlayout"
         while [[ "$newlayout" != "$currlayout" ]]; do
-            hyprctl switchxkblayout $i next
-            currlayout=$(hyprctl devices -j | jq -r --arg k $i '.keyboards[] | select(.name==$k).active_keymap')
+            hyprctl switchxkblayout "$keyb" next
+            currlayout=$(hyprctl devices -j | jq -r --arg keyb "$keyb" '.keyboards[] | select(.name==$keyb).active_keymap')
             echo "current layout: $currlayout"
         done
     done
 fi
 
-notify-send -u low "Keyboard" "New layout: $newlayout"
+notify-send -u low -i keyboard "Keyboard" "New layout: $newlayout"

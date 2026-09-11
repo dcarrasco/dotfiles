@@ -1,13 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 bluetooth_print() {
-    if [ $(bluetooth_state) = "off" ]; then
-        echo "%{F#66ffffff}"
+    if [[ "$(bluetooth_state)" == off ]]; then
+        printf '%%{F#66FFFFFF}'
     else
-        if [ $(echo info | bluetoothctl | grep 'Device ' | wc -c) -eq 0 ]; then
-            echo ""
+        if bluetoothctl info | grep -q 'Device '; then
+            printf ''
         else
-            echo ""
+            printf ''
         fi
     fi
 }
@@ -15,29 +15,29 @@ bluetooth_print() {
 bluetooth_toggle() {
     if bluetoothctl show | grep -q "Powered: no"; then
         bluetoothctl power on >> /dev/null
+
+        printf 'Encendiendo bluetooth\n'
         sleep 1
 
-        devices_paired=$(bluetoothctl paired-devices | grep Device | cut -d ' ' -f 2)
-        echo "$devices_paired" | while read -r line; do
-            bluetoothctl connect "$line" >> /dev/null
-        done
+        # while read -r _ device name; do
+        #     printf 'Conectando device: %s (%s)\n' "$name" "$device"
+        #     bluetoothctl --timeout 5 connect "$device" >> /dev/null
+        # done < <(bluetoothctl devices | grep Device)
     else
-        devices_paired=$(bluetoothctl paired-devices | grep Device | cut -d ' ' -f 2)
-        echo "$devices_paired" | while read -r line; do
-            bluetoothctl disconnect "$line" >> /dev/null
-        done
+        # Desconecta los dispositivos pareados
+        while read -r _ device name; do
+            printf 'Desconectando device: %s (%s)\n' "$name" "$device"
+            bluetoothctl disconnect "$device" >> /dev/null
+        done < <(bluetoothctl devices Connected | grep Device)
 
         bluetoothctl power off >> /dev/null
+        printf 'Apagando bluetooth\n'
     fi
-    notify-send "Bluetooth" "Set bluetooth $(bluetooth_state)"
+    notify-send -u low "Bluetooth" "Set bluetooth $(bluetooth_state)"
 }
 
 bluetooth_state() {
-    if bluetoothctl show | grep -q "Powered: no"; then
-        echo "off"
-    else
-        echo "on"
-    fi
+    bluetoothctl show | grep -q "Powered: no" && printf 'off' || printf 'on'
 }
 
 case "$1" in

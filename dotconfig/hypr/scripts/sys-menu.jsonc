@@ -53,7 +53,7 @@
     "trigger.toggle.bluetooth":   { "icon": "󰂯", "label": "Bluetooth", "action": ["hypr-bluetooth", "--toggle"], "checked": "[[ $(hypr-bluetooth --state) == \"on\" ]]" },
     "trigger.toggle.power_mgmt":  { "icon": "", "label": "Power Management", "options": "pm_entries", "action": ["tuned-adm", "profile"] },
     "trigger.toggle.keyb_layout": { "icon": "", "label": "Keyboard Layout", "action": ["hypr-switch-keyboard-layout"] },
-    "trigger.toggle.keyb_ctrlcaps": { "icon": "󰪛", "label": "Keyboard ControlCaps", "action": ["hypr-switch-controlcaps"] },
+    "trigger.toggle.keyb_ctrlcaps": { "icon": "󰪛", "label": "Swap Ctrl-Caps", "action": ["hypr-switch-controlcaps"], "checked": "hyprctl getoptions input:kb_options | grep -q swapcaps" },
     "trigger.toggle.screensaver": { "icon": "󱄄", "label": "Screensaver", "action": ["$OMARCHY_BIN_PATH/omarchy-launch-screensaver"] },
     "trigger.toggle.nightlight":  { "icon": "󰔎", "label": "Nightlight", "action": ["hypr-switch-nightlight"], "checked": "[[ -n $(pidof wlsunset) ]]"  },
     "trigger.toggle.idle_lock":   { "icon": "󱫖", "label": "Idle Lock", "action": ["$OMARCHY_BIN_PATH/omarchy-toggle-idle"] },

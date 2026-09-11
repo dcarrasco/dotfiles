@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 HYPRCONF="conf"
-[ -f $HOME/.config/hypr/hyprland.lua ] && HYPRCONF="lua"
+[ -f "$XDG_CONFIG_HOME/hypr/hyprland.lua" ] && HYPRCONF="lua"
 
-if [[ -n "$(hyprctl getoption input:kb_options | grep swapcaps)" ]]; then
+if hyprctl getoption input:kb_options | grep -q swapcaps; then
     case $HYPRCONF in
         *conf*) hyprctl keyword input:kb_options ctrl: ;;
         *lua*)  hyprctl eval "hl.config({ input = { kb_options = 'ctrl:' } })" ;;
