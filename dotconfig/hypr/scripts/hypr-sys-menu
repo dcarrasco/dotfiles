@@ -67,17 +67,6 @@ entry() {
     printf '%s\0info\x1f%s\n' "$label" "$action"
 }
 
-selectable_entry() {
-    local label=$1
-    local info=$2
-    local selected=${3:-false}
-
-    # icons      .
-    # [[ $selected == true ]] && label+=' '
-
-    entry "$label" "$info" "[[ $selected == true ]]"
-}
-
 title_case() {
     sed -E \
         -e 's/^([[:lower:]])/\U\1/'  \
@@ -219,17 +208,14 @@ menu_label() {
     local label=$1
     local len_label=${#label}
     local spaces='                         '
-    local repeat=0
+    local menu_width=19
+    local rofi_colors=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
+    local fg_color
 
-    if (( len_label < 20 )); then
-        repeat=$(( 19 - len_label ))
-        label+="${spaces:0:repeat}"
-    else
-        label="${label::19}"
-    fi
-    label+="<span color=\"#FFFFFF22\"></span>"
+    fg_color=$(sed -nE 's/[[:space:]]*foreground: (.*);/\1/p' "$rofi_colors")
 
-    debug "len_label: $len_label repeat: $repeat"
+    (( len_label <= menu_width )) && label+="${spaces:0:$(( menu_width - len_label ))}" || label="${label::$menu_width}"
+    label+="<span color=\"${fg_color:0:7}44\"></span>"
 
     printf '%s' "$label"
 }

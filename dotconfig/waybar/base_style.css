@@ -24,6 +24,10 @@ __        __          _                  ____                   ____  _         
     padding: 0;
 }
 
+.modules-right {
+    padding-right: 0.5em;
+}
+
 .modules-left .module, .modules-right .module, .modules-center .module {
     margin: 2px 0.5em;
 }
@@ -57,7 +61,7 @@ tooltip label {
 
 button label {
     color: @fg-high;
-    padding: 0px 0.4em;
+    padding: 0px 0.3em;
 }
 
 button.empty label {
@@ -162,3 +166,13 @@ button:hover label {
     background-color: @critical;
 }
 
+#traygroup.expanded {
+    background-color: alpha(@bg-normal, 0.6);
+    border: 1px solid @fg-disabled;
+    border-radius: 0.5em;
+}
+
+#traygroup.expanded #custom-expand-icon,
+#custom-expand-icon:hover {
+    color: @accent1;
+}

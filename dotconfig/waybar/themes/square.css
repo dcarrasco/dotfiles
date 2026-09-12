@@ -13,8 +13,9 @@ __        __          _                      _         _
 }
 
 window#waybar {
-    background: linear-gradient(0deg, @bg-normal, alpha(@bg-normal, 0.7));
+    background: linear-gradient(180deg, @bg-normal, alpha(@bg-normal, 0.8));
     border-bottom: 1px solid alpha(@bg-normal, 0.8);
+    border-radius: 8px;
 }
 
 button label {

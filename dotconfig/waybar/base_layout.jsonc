@@ -21,20 +21,21 @@
     ],
     "modules-right":  [
         "custom/updates",
-        "tray",
-        "idle_inhibitor",
-        // "custom/nightlight",
+        "group/traygroup",
+        // "tray",
+        // "idle_inhibitor",
         "cpu",
         "memory",
         "temperature",
-        "hyprland/language",
+        // "hyprland/language",
         "custom/power-profiles",
-        "bluetooth",
-        "network",
-        "network#eth",
+        // "bluetooth",
+        // "network",
+        // "network#eth",
         "pulseaudio",
         "battery",
         "clock"
+        // "custom/nightlight",
         // "custom/poweroff"
     ]
 }
