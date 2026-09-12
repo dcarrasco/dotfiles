@@ -2,12 +2,12 @@ return {
   -- *************************************************************************************************
   -- Menus
   -- *************************************************************************************************
-  { key = "SPACE", dsp = HYPR.apps.launcher, desc = "Open launcher" },
-  { key = "ALT + SPACE", dsp = HYPR.fn.scripts("hypr-sys-menu"), desc = "System menu" },
+  { key = "ALT + SPACE", dsp = HYPR.apps.launcher, desc = "Open launcher" },
+  { key = "SPACE", dsp = HYPR.fn.scripts("hypr-sys-menu"), desc = "System menu" },
   { key = "CTRL + SPACE", dsp = HYPR.apps.launcher_run, desc = "Open run launcher" },
   { key = "CTRL + V", dsp = HYPR.fn.scripts("hypr-list-vm"), desc = "List virtual machines" },
   { key = "CTRL + Q", dsp = HYPR.apps.logout, desc = "System menu" },
-  { key = "comma", dsp = HYPR.fn.scripts("hypr-edit-config"), desc = "Edit config files" },
+  { key = "comma", dsp = HYPR.fn.scripts("hypr-sys-menu setup.conf"), desc = "Edit config files" },
   { key = "XF86AudioMute", dsp = HYPR.fn.scripts("hypr-show-keybinds"), desc = "Show keyboard bindings" },
   { key = "F1", dsp = HYPR.fn.scripts("hypr-show-keybinds"), desc = "Show keyboard bindings" },
   { mod = "", key = "Help", dsp = HYPR.fn.scripts("hypr-show-keybinds"), desc = "Show keyboard bindings" },

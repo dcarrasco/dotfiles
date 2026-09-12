@@ -12,9 +12,9 @@ HYPR.mainMod = "SUPER"
 local appBinds = {
   { key = "RETURN", dsp = HYPR.apps.tmux, desc = "Open tmux in terminal" },
   { key = "ALT + RETURN", dsp = HYPR.apps.terminal, desc = "Open terminal" },
-  { key = "SHIFT + RETURN", dsp = HYPR.apps.terminal2, desc = "Open alternate terminal" },
+  { key = "SHIFT + RETURN", dsp = HYPR.apps.terminal_alt, desc = "Open alternate terminal" },
   { key = "B", dsp = HYPR.apps.browser, desc = "Open browser" },
-  { key = "ALT + B", dsp = HYPR.apps.browser2, desc = "Open alternate browser" },
+  { key = "ALT + B", dsp = HYPR.apps.browser_alt, desc = "Open alternate browser" },
   { key = "F", dsp = HYPR.apps.files, desc = "Open file manager" },
   { key = "E", dsp = HYPR.apps.files, desc = "Open file manager" },
   { key = "V", dsp = HYPR.fn.scripts("hypr-start-vm windows"), desc = "Open Windows 11" },
