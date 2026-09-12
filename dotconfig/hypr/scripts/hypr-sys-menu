@@ -45,6 +45,7 @@ edit_file() {
     local file=$1
 
     notify-send -u low 'Editing config file' "$file"
+    cd "$(dirname "$file")" || exit 1
     "$TERMINAL" nvim "$file"
 }
 
@@ -71,10 +72,10 @@ selectable_entry() {
     local info=$2
     local selected=${3:-false}
 
-    local checked=' '
-    [[ $selected == true ]] && checked=' '
+    # icons      .
+    # [[ $selected == true ]] && label+=' '
 
-    entry "$checked $label" "$info" ''
+    entry "$label" "$info" "[[ $selected == true ]]"
 }
 
 title_case() {
@@ -96,10 +97,10 @@ bar_layout_entries() {
         local selected=false
         [[ $layout == "$current_layout" ]] && selected=true
 
-        selectable_entry \
+        entry \
             "${layout^}" \
             "act:$menu_item:$layout" \
-            "$selected"
+            "[[ $selected == true ]]"
     done
 }
 
@@ -115,10 +116,10 @@ theme_colors_entries() {
         local selected=false
         [[ $theme_name == "$current_theme" ]] && selected=true
 
-        selectable_entry \
+        entry \
             "$(title_case "$theme_name")" \
             "act:$menu_item:$theme_name" \
-            "$selected"
+            "[[ $selected == true ]]"
     done
 }
 
@@ -134,10 +135,10 @@ font_entries() {
         local selected=false
         [[ $font == "$current_font" ]] && selected=true
 
-        selectable_entry \
+        entry \
             "<span size=\"small\" font_family=\"$font\">$font</span>" \
             "act:$menu_item:$font" \
-            "$selected"
+            "[[ $selected == true ]]"
     done
 }
 
@@ -157,10 +158,10 @@ pm_entries() {
         local selected=false
         [[ $pm == "$current_pm" ]] && selected=true
 
-        selectable_entry \
+        entry \
             "$(title_case "$pm")" \
             "act:$menu_item:$pm" \
-            "$selected"
+            "[[ $pm == $current_pm ]]"
     done
 
 }
@@ -214,6 +215,25 @@ menu_title() {
     menu_query --arg menu "$menu" '.[$menu].label // empty'
 }
 
+menu_label() {
+    local label=$1
+    local len_label=${#label}
+    local spaces='                         '
+    local repeat=0
+
+    if (( len_label < 20 )); then
+        repeat=$(( 19 - len_label ))
+        label+="${spaces:0:repeat}"
+    else
+        label="${label::19}"
+    fi
+    label+="<span color=\"#FFFFFF22\"></span>"
+
+    debug "len_label: $len_label repeat: $repeat"
+
+    printf '%s' "$label"
+}
+
 render() {
     local menu_item=${1:-main}
     local title rows
@@ -230,11 +250,11 @@ render() {
     while IFS=$'\x1e' read -r name icon label action options checked; do
         debug "RENDER: name: $name  icon: $icon  label: $label  action: $action  options: $options  checked: $checked"
         if [[ -n $options ]]; then
-            entry "$icon  $label" "opt:$name" "$checked"
+            entry "$(menu_label "$icon  $label")" "opt:$name" ""
         elif [[ -n $action && -z $options ]]; then
             entry "$icon  $label" "act:$name" "$checked"
         else
-            entry "$icon  $label" "menu:$name" "$checked"
+            entry "$(menu_label "$icon  $label")" "menu:$name" ""
         fi
     done <<< "$rows"
 }
