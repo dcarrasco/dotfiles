@@ -10,12 +10,23 @@
     "system":  { "icon": "", "label": "System" },
 
     // STYLE
-    "style.bar_layout": { "icon": "", "label": "Bar Layout", "options": "bar_layout_entries", "action": ["hypr-switch-bar-layout", "--set"] },
     "style.colors":     { "icon": "󰸌", "label": "Colors", "options": "theme_colors_entries", "action": ["hypr-switch-colors", "--set"] },
+    "style.bar_style":  { "icon": "", "label": "Bar Style", "options": "bar_style_entries", "action": ["hypr-switch-bar-layout", "--set-style"] },
+    "style.bar_layout": { "icon": "", "label": "Bar Layout" },
     "style.fonts":      { "icon": "", "label": "Font", "options": "font_entries", "action": ["hypr-switch-font", "--set"] },
     "style.background": { "icon": "", "label": "Background", "action": ["hypr-switch-wallpaper"] },
     "style.random_bg":  { "icon": "", "label": "Random Background", "action": ["hypr-switch-wallpaper", "random"] },
     "style.hyprland":   { "icon": "", "label": "Hyprland", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/looknfeel.lua"] },
+
+    // BAR POSITION
+    "style.bar_layout.position": { "icon": "", "label": "Position" },
+    "style.bar_layout.position.top":    { "icon": "", "label": "Top", "action": ["hypr-switch-bar-layout", "--set-position", "top"], "checked": "[[ $(hypr-switch-bar-layout --get-position) == top ]]" },
+    "style.bar_layout.position.bottom": { "icon": "", "label": "Bottom", "action": ["hypr-switch-bar-layout", "--set-position", "bottom"], "checked": "[[ $(hypr-switch-bar-layout --get-position) == bottom ]]"},
+
+    // BAR STACKED
+    "style.bar_layout.stack": { "icon": "", "label": "Stack" },
+    "style.bar_layout.stack.stacked":  { "icon": "󰞕", "label": "Stacked", "action": ["hypr-switch-bar-layout", "--set-stack", "stacked"], "checked": "[[ $(hypr-switch-bar-layout --get-stack) == stacked ]]" },
+    "style.bar_layout.stack.floating": { "icon": "", "label": "Floating", "action": ["hypr-switch-bar-layout", "--set-stack", "floating"], "checked": "[[ $(hypr-switch-bar-layout --get-stack) == floating ]]" },
 
     // LEARN
     "learn.keybindings": {"icon": "", "label": "Keybindings", "action": ["hypr-show-keybinds"] },
@@ -73,7 +84,7 @@
     "setup.fingerprint": { "icon": "󰈷", "label": "Fingerprint", "action": ["$OMARCHY_BIN_PATH/omarchy-setup-fingerprint"] },
 
     // CONFIG
-    "setup.conf.waybar":         { "icon": "", "label": "Waybar Modules", "action": ["edit_file", "$CONFIG_HOME/waybar/modules.jsonc"] },
+    "setup.conf.waybar":         { "icon": "", "label": "Waybar Modules", "action": ["edit_file", "$CONFIG_HOME/waybar/modules_config.jsonc"] },
     "setup.conf.waybar_style":   { "icon": "", "label": "Waybar Style", "action": ["edit_file", "$CONFIG_HOME/waybar/style.css"] },
     "setup.conf.hyprland":       { "icon": "", "label": "Hyprland", "action": ["edit_file", "$CONFIG_HOME/hypr/hyprland.lua"] },
     "setup.conf.hypr_envs":      { "icon": "", "label": "Environment", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/envs.lua"] },

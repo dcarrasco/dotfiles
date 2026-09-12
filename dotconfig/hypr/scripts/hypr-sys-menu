@@ -85,21 +85,21 @@ title_case() {
         <<< "$1"
 }
 
-bar_layout_entries() {
+bar_style_entries() {
     local menu_item=$1
-    local current_layout layout
-    local -a layouts=()
+    local current_style style
+    local -a styles=()
 
-    current_layout="$(hypr-switch-bar-layout --current)"
-    mapfile -t layouts < <(hypr-switch-bar-layout --get-layouts )
+    current_style="$(hypr-switch-bar-layout --get-style)"
+    mapfile -t styles < <(hypr-switch-bar-layout --list-styles )
 
-    for layout in "${layouts[@]}"; do
+    for style in "${styles[@]}"; do
         local selected=false
-        [[ $layout == "$current_layout" ]] && selected=true
+        [[ $style == "$current_style" ]] && selected=true
 
         entry \
-            "${layout^}" \
-            "act:$menu_item:$layout" \
+            "${style^}" \
+            "act:$menu_item:$style" \
             "[[ $selected == true ]]"
     done
 }

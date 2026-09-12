@@ -1,11 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+SILENT="${1:-}"
 
 PID=$(pidof waybar)
 if [ -n "$PID" ]; then
-    notify-send -u low "Waybar" "Reload Waybar"
     pkill -SIGUSR2 waybar
+
+    if [[ $SILENT != silent && $SILENT != --silent ]]; then
+        notify-send -u low "Waybar" "Reload Waybar"
+    fi
 else
     # GTK_THEME=Nordic setsid waybar &
     setsid waybar &
-    notify-send -u low "Waybar" "Restore Waybar"
+
+    if [[ $SILENT != silent && $SILENT != --silent ]]; then
+        notify-send -u low "Waybar" "Restore Waybar"
+    fi
 fi
