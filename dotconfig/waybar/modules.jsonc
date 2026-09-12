@@ -4,8 +4,8 @@
 //   \ V  V / (_| | |_| | |_) | (_| | |    | |  | | (_) | (_| | |_| | |  __/\__ \
 //    \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |_|  |_|\___/ \__,_|\__,_|_|\___||___/
 //                 |___/
-
 {
+
     "hyprland/workspaces": {
         "persistent-workspaces": {
             "eDP-1": [ 1, 2, 3, 4, 5 ],
@@ -361,13 +361,13 @@
         "tooltip": true,
         "tooltip-format": "Start menu",
         "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu",
-        "on-click-right": "kitty",
+        "on-click-right": "kitty"
     },
 
     "custom/expand-icon": {
         "format": " ",
         "tooltip": true,
-        "tooltip-format": "Click to expand tray",
+        "tooltip-format": "Click to expand tray"
     },
 
     "group/traygroup": {
@@ -376,15 +376,14 @@
             "transition-duration": 500,
             "transition-left-to-right": true,
             "children-class": "drawer-child",
-            "click-to-reveal": true,
+            "click-to-reveal": true
         },
         "modules": [
             "custom/expand-icon",
             "tray",
             "idle_inhibitor",
             "hyprland/language",
-            "bluetooth",
+            "bluetooth"
         ]
     }
 }
-# vi: ft=json
