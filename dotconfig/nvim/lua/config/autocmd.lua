@@ -54,6 +54,14 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup('jsonc-filetype', { clear = true }),
+  pattern = "jsonc",
+  callback = function()
+    vim.opt_local.filetype = "jsonc"
+  end,
+})
+
 -- vim.api.nvim_create_autocmd("BufWritePre", {
   -- pattern = "*",
   -- command = ":%s/\s\+$//e"
