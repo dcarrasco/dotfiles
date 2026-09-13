@@ -24,6 +24,10 @@ __        __          _                  ____                   ____  _         
     padding: 0;
 }
 
+.modules-left {
+    padding-left: 0.5em;
+}
+
 .modules-right {
     padding-right: 0.5em;
 }
@@ -71,7 +75,6 @@ button.empty label {
 button.active label {
     color: @fg-high;
     font-weight: 700;
-    box-shadow: inset 0 -3px @accent2;
     border: 0;
 }
 
@@ -84,14 +87,16 @@ button:hover label {
 }
 
 #custom-start-menu {
-    padding: 0;
     margin: 0;
+    color: @accent1;
+}
+
+#custom-start-menu:hover {
+    color: @accent2;
 }
 
 #custom-start-menu label {
-    color: @accent1;
     font-size: 24;
-    padding: 0 0 0 0.3em;
 }
 
 #custom-windowstatus {
@@ -113,7 +118,7 @@ button:hover label {
 #idle_inhibitor,
 #custom-poweroff,
 #network {
-    padding: 0 0.7em 0 0em;
+    padding: 0 0.7em 0 0;
 }
 
 
@@ -133,7 +138,6 @@ button:hover label {
 #battery.charging,
 #custom-power-profiles.power-saver {
     color: @success;
-    box-shadow: inset 0 -3px @success;
 }
 
 /* ------------------------------------------------------
@@ -145,7 +149,6 @@ button:hover label {
 #idle_inhibitor.activated,
 #pulseaudio.muted {
     color: @warning;
-    box-shadow: inset 0 -3px @warning;
 }
 
 /* ------------------------------------------------------
@@ -158,7 +161,6 @@ button:hover label {
 #custom-power-profiles.performance,
 #tray > .needs-attention {
     color: @critical;
-    box-shadow: inset 0 -3px @critical;
 }
 
 #tray > .passive {
