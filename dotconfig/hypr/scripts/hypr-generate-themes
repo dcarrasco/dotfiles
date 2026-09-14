@@ -14,33 +14,27 @@ readonly STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
 readonly THEME_STATE=$STATE_HOME/hypr/theme
 
 readonly -a REQUIRED_ROLES=(
-    window_active_border
-    window_active_border_2
-    window_active_shadow
-    window_inactive_border
-    window_inactive_shadow
-    window_group_active_border
-    window_group_inactive_border
+    border_active
+    border_active_alt
+    border_inactive
+    border_group
+    shadow
     groupbar_active
     groupbar_inactive
     groupbar_text
-    bar_bg
-    tooltip_bg
-    fg_normal
-    fg_high
-    fg_disabled
+    bg_window
+    bg_tooltip
+    bg_textbox
+    bg_selected
+    text
+    text_high
+    text_disabled
     accent1
     accent2
     accent3
     warning
     critical
     success
-    window_bg
-    textbox_bg
-    prompt_fg
-    prompt_bg
-    placeholder_fg
-    selected_bg
 )
 
 die() {
@@ -160,17 +154,17 @@ generate_hyprland() {
     staged=$(stage_config_file "$target")
 
     sed -i -E \
-        -e "s/^-- THEME:.*/-- THEME: ${THEME_NAME}/"                                           \
-        -e "s/(color_active_border_1) .*/\1 = \"${THEME[window_active_border]}\",/"            \
-        -e "s/(color_active_border_2) .*/\1 = \"${THEME[window_active_border_2]}\",/"          \
-        -e "s/(color_inactive_border) .*/\1 = \"${THEME[window_inactive_border]}\",/"          \
-        -e "s/(color_group_border_active) .*/\1 = \"${THEME[window_group_active_border]}\",/"  \
-        -e "s/(color_group_border_inactive) .*/\1 = \"${THEME[window_group_inactive_border]}\",/" \
-        -e "s/(color_groupbar_active) .*/\1 = \"${THEME[groupbar_active]}\",/"                 \
-        -e "s/(color_groupbar_inactive) .*/\1 = \"${THEME[groupbar_inactive]}\",/"             \
-        -e "s/(color_text_groupbar) .*/\1 = \"${THEME[groupbar_text]}\",/"                     \
-        -e "s/(color_shadow) .*/\1 = \"${THEME[window_active_shadow]}\",/"                     \
-        -e "s/(color_shadow_inactive) .*/\1 = \"${THEME[window_inactive_shadow]}\",/"          \
+        -e "s/^-- THEME:.*/-- THEME: ${THEME_NAME}/"                                 \
+        -e "s/(color_active_border_1) .*/\1 = \"${THEME[border_active]}\",/"         \
+        -e "s/(color_active_border_2) .*/\1 = \"${THEME[border_active_alt]}\",/"     \
+        -e "s/(color_inactive_border) .*/\1 = \"${THEME[border_inactive]}\",/"       \
+        -e "s/(color_group_border_active) .*/\1 = \"${THEME[border_group]}\",/"      \
+        -e "s/(color_group_border_inactive) .*/\1 = \"${THEME[border_inactive]}\",/" \
+        -e "s/(color_groupbar_active) .*/\1 = \"${THEME[groupbar_active]}\",/"       \
+        -e "s/(color_groupbar_inactive) .*/\1 = \"${THEME[groupbar_inactive]}\",/"   \
+        -e "s/(color_text_groupbar) .*/\1 = \"${THEME[groupbar_text]}\",/"           \
+        -e "s/(color_shadow) .*/\1 = \"${THEME[shadow]}\",/"                         \
+        -e "s/(color_shadow_inactive) .*/\1 = \"${THEME[shadow]}\",/"                \
         "$staged"
 }
 
@@ -180,17 +174,17 @@ generate_hyprland_conf() {
     staged=$(stage_config_file "$target")
 
     sed -i -E \
-        -e "s/^# THEME:.*/# THEME: ${THEME_NAME}/"                                             \
-        -e "s/(\$color_active_border_1) .*/\1 = \"${THEME[window_active_border]}\"/"           \
-        -e "s/(\$color_active_border_2) .*/\1 = \"${THEME[window_active_border_2]}\"/"         \
-        -e "s/(\$color_inactive_border) .*/\1 = \"${THEME[window_inactive_border]}\"/"         \
-        -e "s/(\$color_group_border_active) .*/\1 = \"${THEME[window_group_active_border]}\"/" \
-        -e "s/(\$color_group_border_inactive) .*/\1 = \"${THEME[window_group_inactive_border]}\"/" \
-        -e "s/(\$color_groupbar_active) .*/\1 = \"${THEME[groupbar_active]}\"/"                \
-        -e "s/(\$color_groupbar_inactive) .*/\1 = \"${THEME[groupbar_inactive]}\"/"            \
-        -e "s/(\$color_text_groupbar) .*/\1 = \"${THEME[groupbar_text]}\"/"                    \
-        -e "s/(\$color_shadow) .*/\1 = \"${THEME[window_active_shadow]}\"/"                    \
-        -e "s/(\$color_shadow_inactive) .*/\1 = \"${THEME[window_inactive_shadow]}\"/"         \
+        -e "s/^# THEME:.*/# THEME: ${THEME_NAME}/"                                        \
+        -e "s/(\$color_active_border_1) .*/\1 = \"${THEME[border_active]}\"/"             \
+        -e "s/(\$color_active_border_2) .*/\1 = \"${THEME[border_active_alt]}\"/"         \
+        -e "s/(\$color_inactive_border) .*/\1 = \"${THEME[border_inactive]}\"/"           \
+        -e "s/(\$color_group_border_active) .*/\1 = \"${THEME[border_group]}\"/"   \
+        -e "s/(\$color_group_border_inactive) .*/\1 = \"${THEME[border_inactive]}\"/"     \
+        -e "s/(\$color_groupbar_active) .*/\1 = \"${THEME[groupbar_active]}\"/"           \
+        -e "s/(\$color_groupbar_inactive) .*/\1 = \"${THEME[groupbar_inactive]}\"/"       \
+        -e "s/(\$color_text_groupbar) .*/\1 = \"${THEME[groupbar_text]}\"/"               \
+        -e "s/(\$color_shadow) .*/\1 = \"${THEME[shadow]}\"/"                             \
+        -e "s/(\$color_shadow_inactive) .*/\1 = \"${THEME[shadow]}\"/"                    \
         "$staged"
 }
 
@@ -200,19 +194,19 @@ generate_waybar() {
     staged=$(stage_config_file "$target")
 
     sed -i -E \
-        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"                                  \
-        -e "s/(@define-color bg-normal) .*/\1 $( to_waybar "${THEME[bar_bg]}" );/"           \
-        -e "s/(@define-color bg-tooltip) .*/\1 $( to_waybar "${THEME[tooltip_bg]}" );/"      \
-        -e "s/(@define-color shadow) .*/\1 $( to_waybar "${THEME[bar_bg]}" );/"              \
-        -e "s/(@define-color fg-normal) .*/\1 $( to_waybar "${THEME[fg_normal]}" );/"        \
-        -e "s/(@define-color fg-high) .*/\1 $( to_waybar "${THEME[fg_high]}" );/"            \
-        -e "s/(@define-color fg-disabled) .*/\1 $( to_waybar "${THEME[fg_disabled]}" );/"    \
-        -e "s/(@define-color accent1) .*/\1 $( to_waybar "${THEME[accent1]}" );/"            \
-        -e "s/(@define-color accent2) .*/\1 $( to_waybar "${THEME[accent2]}" );/"            \
-        -e "s/(@define-color accent3) .*/\1 $( to_waybar "${THEME[accent3]}" );/"            \
-        -e "s/(@define-color warning) .*/\1 $( to_waybar "${THEME[warning]}" );/"            \
-        -e "s/(@define-color critical) .*/\1 $( to_waybar "${THEME[critical]}" );/"          \
-        -e "s/(@define-color success) .*/\1 $( to_waybar "${THEME[success]}" );/"            \
+        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"                                 \
+        -e "s/(@define-color bg-normal) .*/\1 $( to_waybar "${THEME[bg_window]}" );/"          \
+        -e "s/(@define-color bg-tooltip) .*/\1 $( to_waybar "${THEME[bg_tooltip]}" );/"     \
+        -e "s/(@define-color shadow) .*/\1 $( to_waybar "${THEME[shadow]}" );/"             \
+        -e "s/(@define-color fg-normal) .*/\1 $( to_waybar "${THEME[text]}" );/"            \
+        -e "s/(@define-color fg-high) .*/\1 $( to_waybar "${THEME[text_high]}" );/"         \
+        -e "s/(@define-color fg-disabled) .*/\1 $( to_waybar "${THEME[text_disabled]}" );/" \
+        -e "s/(@define-color accent1) .*/\1 $( to_waybar "${THEME[accent1]}" );/"           \
+        -e "s/(@define-color accent2) .*/\1 $( to_waybar "${THEME[accent2]}" );/"           \
+        -e "s/(@define-color accent3) .*/\1 $( to_waybar "${THEME[accent3]}" );/"           \
+        -e "s/(@define-color warning) .*/\1 $( to_waybar "${THEME[warning]}" );/"           \
+        -e "s/(@define-color critical) .*/\1 $( to_waybar "${THEME[critical]}" );/"         \
+        -e "s/(@define-color success) .*/\1 $( to_waybar "${THEME[success]}" );/"           \
         "$staged"
 }
 
@@ -222,17 +216,17 @@ generate_rofi() {
     staged=$(stage_config_file "$target")
 
     sed -i -E \
-        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"             \
-        -e "s/(window-border:) .*/\1 ${THEME[window_active_border]};/"  \
-        -e "s/(bg-color:) .*/\1 ${THEME[window_bg]};/"                  \
-        -e "s/(foreground:) .*/\1 ${THEME[fg_normal]};/"                \
-        -e "s/(bg-textbox:) .*/\1 ${THEME[textbox_bg]};/"               \
-        -e "s/(fg-prompt:) .*/\1 ${THEME[prompt_fg]};/"                 \
-        -e "s/(bg-prompt:) .*/\1 ${THEME[prompt_bg]};/"                 \
-        -e "s/(fg-placeholder:) .*/\1 ${THEME[placeholder_fg]};/"       \
-        -e "s/(fg-selected:) .*/\1 ${THEME[accent1]};/"                 \
-        -e "s/(bg-selected:) .*/\1 ${THEME[selected_bg]};/"             \
-        -e "s/(fg-scrollbar:) .*/\1 ${THEME[placeholder_fg]};/"         \
+        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"       \
+        -e "s/(window-border:) .*/\1 ${THEME[border_active]};/"   \
+        -e "s/(bg-color:) .*/\1 ${THEME[bg_window]};/"            \
+        -e "s/(foreground:) .*/\1 ${THEME[text]};/"               \
+        -e "s/(bg-textbox:) .*/\1 ${THEME[bg_textbox]};/"         \
+        -e "s/(fg-prompt:) .*/\1 ${THEME[accent1]};/"         \
+        -e "s/(bg-prompt:) .*/\1 ${THEME[bg_window]};/"           \
+        -e "s/(fg-placeholder:) .*/\1 ${THEME[text_disabled]};/"  \
+        -e "s/(fg-selected:) .*/\1 ${THEME[accent1]};/"           \
+        -e "s/(bg-selected:) .*/\1 ${THEME[bg_selected]};/"       \
+        -e "s/(fg-scrollbar:) .*/\1 ${THEME[text_disabled]};/"    \
         "$staged"
 }
 
