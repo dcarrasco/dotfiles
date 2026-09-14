@@ -7,43 +7,45 @@ declare -A THEME=()
 declare -a LINES=()
 
 THEME_NAME=
-THEME_SOURCE=
 THEME_STAGE=
 
 readonly CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 readonly STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
 readonly THEME_STATE=$STATE_HOME/hypr/theme
+
 readonly -a REQUIRED_ROLES=(
-    WINDOW_ACTIVE_BORDER        WINDOW_ACTIVE_BORDER_2          WINDOW_ACTIVE_SHADOW
-    WINDOW_INACTIVE_BORDER      WINDOW_INACTIVE_SHADOW
-    WINDOW_GROUP_ACTIVE_BORDER  WINDOW_GROUP_INACTIVE_BORDER
-    GROUPBAR_ACTIVE             GROUPBAR_INACTIVE               GROUPBAR_TEXT
-    BAR_BG                      TOOLTIP_BG
-    FG_NORMAL                   FG_HIGH                         FG_DISABLED
-    ACCENT1                     ACCENT2                         ACCENT3
-    WARNING                     CRITICAL                        SUCCESS
-    WINDOW_BG                   TEXTBOX_BG
-    PROMPT_FG                   PROMPT_BG
-    PLACEHOLDER_FG              SELECTED_BG
+    window_active_border
+    window_active_border_2
+    window_active_shadow
+    window_inactive_border
+    window_inactive_shadow
+    window_group_active_border
+    window_group_inactive_border
+    groupbar_active
+    groupbar_inactive
+    groupbar_text
+    bar_bg
+    tooltip_bg
+    fg_normal
+    fg_high
+    fg_disabled
+    accent1
+    accent2
+    accent3
+    warning
+    critical
+    success
+    window_bg
+    textbox_bg
+    prompt_fg
+    prompt_bg
+    placeholder_fg
+    selected_bg
 )
 
-die() { printf "ERROR - generate-theme: %s\n" "$*" >&2; exit 1; }
-
-read_toml() {
-    local section=$1
-    local line_handler=$2
-    local in_section=0
-    local line
-
-    for line in "${LINES[@]}"; do
-        if [[ "$line" =~ ^\[$section\]$ ]]; then
-            in_section=1
-        elif [[ "$line" =~ ^\[[a-zA-Z0-9_]+\]$ ]]; then
-            in_section=0
-        elif (( in_section )) && [[ -n "$line" && "$line" != \#* ]]; then
-            $line_handler "$line"
-        fi
-    done
+die() {
+    notify-send -u critical -t 0 -i dialog-warning 'ERROR: hypr-generate theme: ' "$*"
+    printf "ERROR - generate-theme: %s\n" "$*" >&2; exit 1;
 }
 
 create_stage() {
@@ -115,42 +117,41 @@ to_waybar() {
 }
 
 palette_color() {
-    local name=${1^^}
-    [[ -v "PALETTE[$name]" ]] || die "unknown palette color: $1"
+    local name=$1
+
+    [[ -v "PALETTE[$name]" ]] || die "unknown palette color: $name"
     printf "%s" "${PALETTE[$name]}"
 }
 
-process_palette_line() {
-    local key color color_pattern
-    local line=$1
+process_palette() {
+    local theme=$1
+    local palette color_name color
 
-    color_pattern="^([a-zA-Z0-9_]+)[[:space:]]*=[[:space:]]*\"(#[[:xdigit:]]{6})\"$"
-    if [[ $line =~ $color_pattern ]]; then
-        key="${BASH_REMATCH[1]^^}"
-        color="${BASH_REMATCH[2]^^}"
-        PALETTE[$key]=$color
-    else
-        die "$THEME_SOURCE: palette line not formatted correctly: $line"
-    fi
+    palette="$(jq -r '.palette | to_entries[] | [ .key, .value ] | @tsv' "$theme")"
+
+    while IFS=$'\t' read -r color_name color; do
+        PALETTE[$color_name]=$color
+    done <<< "$palette"
 }
 
-process_role_line() {
-    local line=$1 key plain_pattern alpha_pattern alpha
+process_roles() {
+    local theme_file=$1
+    local plain_colors alpha_colors
+    local role_name color_name alpha
 
-    plain_pattern="^([a-zA-Z0-9_]+)[[:space:]]*=[[:space:]]*\"([a-zA-Z0-9#]+)\"$"
-    alpha_pattern="^([a-zA-Z0-9_]+)[[:space:]]*=[[:space:]]*\{[[:space:]]*color[[:space:]]*=[[:space:]]*\"([a-zA-Z0-9_]+)\"[[:space:]]*,[[:space:]]*alpha[[:space:]]*=[[:space:]]*([0-9\.]+)[[:space:]]*\}$"
+    # process plain colors
+    plain_colors="$(jq -r '.roles | to_entries[] | select (.value | type == "string") | [ .key, .value ] | @tsv' "$theme_file")"
 
-    if [[ $line =~ $plain_pattern ]]; then
-        key="${BASH_REMATCH[1]^^}"
-        THEME[$key]=$(palette_color "${BASH_REMATCH[2]}")
-    elif [[ $line =~ $alpha_pattern ]]; then
-        key="${BASH_REMATCH[1]^^}"
-        alpha=${BASH_REMATCH[3]}
-        awk -v value="$alpha" 'BEGIN { exit !(value >= 0 && value <= 1) }' || die "invalid alpha value: $alpha"
-        THEME[$key]=$(palette_color "${BASH_REMATCH[2]}")$(alpha_to_hex "$alpha")
-    else
-        die "$THEME_SOURCE: role line not formatted correctly: $line"
-    fi
+    while ifs=$'\t' read -r role_name color_name; do
+        THEME[$role_name]="$(palette_color "$color_name")"
+    done <<< "$plain_colors"
+
+    # process alpha colors
+    alpha_colors="$( jq -r '.roles | to_entries[] | select (.value | type == "object") | [ .key, .value.color, .value.alpha ] | @tsv' "$theme_file")"
+
+    while ifs=$'\t' read -r role_name color_name alpha; do
+        THEME[$role_name]="$(palette_color "$color_name")$(alpha_to_hex "$alpha")"
+    done <<< "$alpha_colors"
 }
 
 generate_hyprland() {
@@ -158,18 +159,18 @@ generate_hyprland() {
     local staged
     staged=$(stage_config_file "$target")
 
-    sed -i \
-        -e "s/^-- THEME:.*/-- THEME: ${THEME_NAME}/"                                             \
-        -e "s/\(color_active_border_1\) .*/\1 = \"${THEME[WINDOW_ACTIVE_BORDER]}\",/"            \
-        -e "s/\(color_active_border_2\) .*/\1 = \"${THEME[WINDOW_ACTIVE_BORDER_2]}\",/"          \
-        -e "s/\(color_inactive_border\) .*/\1 = \"${THEME[WINDOW_INACTIVE_BORDER]}\",/"          \
-        -e "s/\(color_group_border_active\) .*/\1 = \"${THEME[WINDOW_GROUP_ACTIVE_BORDER]}\",/"  \
-        -e "s/\(color_group_border_inactive\) .*/\1 = \"${THEME[WINDOW_GROUP_INACTIVE_BORDER]}\",/" \
-        -e "s/\(color_groupbar_active\) .*/\1 = \"${THEME[GROUPBAR_ACTIVE]}\",/"                 \
-        -e "s/\(color_groupbar_inactive\) .*/\1 = \"${THEME[GROUPBAR_INACTIVE]}\",/"             \
-        -e "s/\(color_text_groupbar\) .*/\1 = \"${THEME[GROUPBAR_TEXT]}\",/"                     \
-        -e "s/\(color_shadow\) .*/\1 = \"${THEME[WINDOW_ACTIVE_SHADOW]}\",/"                     \
-        -e "s/\(color_shadow_inactive\) .*/\1 = \"${THEME[WINDOW_INACTIVE_SHADOW]}\",/"          \
+    sed -i -E \
+        -e "s/^-- THEME:.*/-- THEME: ${THEME_NAME}/"                                           \
+        -e "s/(color_active_border_1) .*/\1 = \"${THEME[window_active_border]}\",/"            \
+        -e "s/(color_active_border_2) .*/\1 = \"${THEME[window_active_border_2]}\",/"          \
+        -e "s/(color_inactive_border) .*/\1 = \"${THEME[window_inactive_border]}\",/"          \
+        -e "s/(color_group_border_active) .*/\1 = \"${THEME[window_group_active_border]}\",/"  \
+        -e "s/(color_group_border_inactive) .*/\1 = \"${THEME[window_group_inactive_border]}\",/" \
+        -e "s/(color_groupbar_active) .*/\1 = \"${THEME[groupbar_active]}\",/"                 \
+        -e "s/(color_groupbar_inactive) .*/\1 = \"${THEME[groupbar_inactive]}\",/"             \
+        -e "s/(color_text_groupbar) .*/\1 = \"${THEME[groupbar_text]}\",/"                     \
+        -e "s/(color_shadow) .*/\1 = \"${THEME[window_active_shadow]}\",/"                     \
+        -e "s/(color_shadow_inactive) .*/\1 = \"${THEME[window_inactive_shadow]}\",/"          \
         "$staged"
 }
 
@@ -178,18 +179,18 @@ generate_hyprland_conf() {
     local staged
     staged=$(stage_config_file "$target")
 
-    sed -i \
-        -e "s/^# THEME:.*/# THEME: ${THEME_NAME}/"                                               \
-        -e "s/\(\$color_active_border_1\) .*/\1 = \"${THEME[WINDOW_ACTIVE_BORDER]}\"/"           \
-        -e "s/\(\$color_active_border_2\) .*/\1 = \"${THEME[WINDOW_ACTIVE_BORDER_2]}\"/"         \
-        -e "s/\(\$color_inactive_border\) .*/\1 = \"${THEME[WINDOW_INACTIVE_BORDER]}\"/"         \
-        -e "s/\(\$color_group_border_active\) .*/\1 = \"${THEME[WINDOW_GROUP_ACTIVE_BORDER]}\"/" \
-        -e "s/\(\$color_group_border_inactive\) .*/\1 = \"${THEME[WINDOW_GROUP_INACTIVE_BORDER]}\"/" \
-        -e "s/\(\$color_groupbar_active\) .*/\1 = \"${THEME[GROUPBAR_ACTIVE]}\"/"                \
-        -e "s/\(\$color_groupbar_inactive\) .*/\1 = \"${THEME[GROUPBAR_INACTIVE]}\"/"            \
-        -e "s/\(\$color_text_groupbar\) .*/\1 = \"${THEME[GROUPBAR_TEXT]}\"/"                    \
-        -e "s/\(\$color_shadow\) .*/\1 = \"${THEME[WINDOW_ACTIVE_SHADOW]}\"/"                    \
-        -e "s/\(\$color_shadow_inactive\) .*/\1 = \"${THEME[WINDOW_INACTIVE_SHADOW]}\"/"         \
+    sed -i -E \
+        -e "s/^# THEME:.*/# THEME: ${THEME_NAME}/"                                             \
+        -e "s/(\$color_active_border_1) .*/\1 = \"${THEME[window_active_border]}\"/"           \
+        -e "s/(\$color_active_border_2) .*/\1 = \"${THEME[window_active_border_2]}\"/"         \
+        -e "s/(\$color_inactive_border) .*/\1 = \"${THEME[window_inactive_border]}\"/"         \
+        -e "s/(\$color_group_border_active) .*/\1 = \"${THEME[window_group_active_border]}\"/" \
+        -e "s/(\$color_group_border_inactive) .*/\1 = \"${THEME[window_group_inactive_border]}\"/" \
+        -e "s/(\$color_groupbar_active) .*/\1 = \"${THEME[groupbar_active]}\"/"                \
+        -e "s/(\$color_groupbar_inactive) .*/\1 = \"${THEME[groupbar_inactive]}\"/"            \
+        -e "s/(\$color_text_groupbar) .*/\1 = \"${THEME[groupbar_text]}\"/"                    \
+        -e "s/(\$color_shadow) .*/\1 = \"${THEME[window_active_shadow]}\"/"                    \
+        -e "s/(\$color_shadow_inactive) .*/\1 = \"${THEME[window_inactive_shadow]}\"/"         \
         "$staged"
 }
 
@@ -198,20 +199,20 @@ generate_waybar() {
     local staged
     staged=$(stage_config_file "$target")
 
-    sed -i \
-        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"                                    \
-        -e "s/\(@define-color bg-normal\) .*/\1 $( to_waybar "${THEME[BAR_BG]}" );/"           \
-        -e "s/\(@define-color bg-tooltip\) .*/\1 $( to_waybar "${THEME[TOOLTIP_BG]}" );/"      \
-        -e "s/\(@define-color shadow\) .*/\1 $( to_waybar "${THEME[BAR_BG]}" );/"              \
-        -e "s/\(@define-color fg-normal\) .*/\1 $( to_waybar "${THEME[FG_NORMAL]}" );/"        \
-        -e "s/\(@define-color fg-high\) .*/\1 $( to_waybar "${THEME[FG_HIGH]}" );/"            \
-        -e "s/\(@define-color fg-disabled\) .*/\1 $( to_waybar "${THEME[FG_DISABLED]}" );/"    \
-        -e "s/\(@define-color accent1\) .*/\1 $( to_waybar "${THEME[ACCENT1]}" );/"            \
-        -e "s/\(@define-color accent2\) .*/\1 $( to_waybar "${THEME[ACCENT2]}" );/"            \
-        -e "s/\(@define-color accent3\) .*/\1 $( to_waybar "${THEME[ACCENT3]}" );/"            \
-        -e "s/\(@define-color warning\) .*/\1 $( to_waybar "${THEME[WARNING]}" );/"            \
-        -e "s/\(@define-color critical\) .*/\1 $( to_waybar "${THEME[CRITICAL]}" );/"          \
-        -e "s/\(@define-color success\) .*/\1 $( to_waybar "${THEME[SUCCESS]}" );/"            \
+    sed -i -E \
+        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"                                  \
+        -e "s/(@define-color bg-normal) .*/\1 $( to_waybar "${THEME[bar_bg]}" );/"           \
+        -e "s/(@define-color bg-tooltip) .*/\1 $( to_waybar "${THEME[tooltip_bg]}" );/"      \
+        -e "s/(@define-color shadow) .*/\1 $( to_waybar "${THEME[bar_bg]}" );/"              \
+        -e "s/(@define-color fg-normal) .*/\1 $( to_waybar "${THEME[fg_normal]}" );/"        \
+        -e "s/(@define-color fg-high) .*/\1 $( to_waybar "${THEME[fg_high]}" );/"            \
+        -e "s/(@define-color fg-disabled) .*/\1 $( to_waybar "${THEME[fg_disabled]}" );/"    \
+        -e "s/(@define-color accent1) .*/\1 $( to_waybar "${THEME[accent1]}" );/"            \
+        -e "s/(@define-color accent2) .*/\1 $( to_waybar "${THEME[accent2]}" );/"            \
+        -e "s/(@define-color accent3) .*/\1 $( to_waybar "${THEME[accent3]}" );/"            \
+        -e "s/(@define-color warning) .*/\1 $( to_waybar "${THEME[warning]}" );/"            \
+        -e "s/(@define-color critical) .*/\1 $( to_waybar "${THEME[critical]}" );/"          \
+        -e "s/(@define-color success) .*/\1 $( to_waybar "${THEME[success]}" );/"            \
         "$staged"
 }
 
@@ -220,42 +221,49 @@ generate_rofi() {
     local staged
     staged=$(stage_config_file "$target")
 
-    sed -i \
-        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"               \
-        -e "s/\(window-border:\) .*/\1 ${THEME[WINDOW_ACTIVE_BORDER]};/"  \
-        -e "s/\(bg-color:\) .*/\1 ${THEME[WINDOW_BG]};/"                  \
-        -e "s/\(foreground:\) .*/\1 ${THEME[FG_NORMAL]};/"                \
-        -e "s/\(bg-textbox:\) .*/\1 ${THEME[TEXTBOX_BG]};/"               \
-        -e "s/\(fg-prompt:\) .*/\1 ${THEME[PROMPT_FG]};/"                 \
-        -e "s/\(bg-prompt:\) .*/\1 ${THEME[PROMPT_BG]};/"                 \
-        -e "s/\(fg-placeholder:\) .*/\1 ${THEME[PLACEHOLDER_FG]};/"       \
-        -e "s/\(fg-selected:\) .*/\1 ${THEME[ACCENT1]};/"                 \
-        -e "s/\(bg-selected:\) .*/\1 ${THEME[SELECTED_BG]};/"             \
-        -e "s/\(fg-scrollbar:\) .*/\1 ${THEME[PLACEHOLDER_FG]};/"         \
+    sed -i -E \
+        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"             \
+        -e "s/(window-border:) .*/\1 ${THEME[window_active_border]};/"  \
+        -e "s/(bg-color:) .*/\1 ${THEME[window_bg]};/"                  \
+        -e "s/(foreground:) .*/\1 ${THEME[fg_normal]};/"                \
+        -e "s/(bg-textbox:) .*/\1 ${THEME[textbox_bg]};/"               \
+        -e "s/(fg-prompt:) .*/\1 ${THEME[prompt_fg]};/"                 \
+        -e "s/(bg-prompt:) .*/\1 ${THEME[prompt_bg]};/"                 \
+        -e "s/(fg-placeholder:) .*/\1 ${THEME[placeholder_fg]};/"       \
+        -e "s/(fg-selected:) .*/\1 ${THEME[accent1]};/"                 \
+        -e "s/(bg-selected:) .*/\1 ${THEME[selected_bg]};/"             \
+        -e "s/(fg-scrollbar:) .*/\1 ${THEME[placeholder_fg]};/"         \
         "$staged"
+}
+
+
+
+main() {
+    local theme_file
+
+    THEME_NAME=$1
+    [[ $THEME_NAME =~ ^[a-z0-9-]+$ ]] || die "invalid theme name: $THEME_NAME"
+
+    theme_file="$CONFIG_HOME/hypr/themes/${THEME_NAME}.json"
+    [[ -f "$theme_file" ]] || die "unknown theme: $THEME_NAME (no such file: $theme_file)"
+    jq empty "$theme_file" || die "invalid json file: $theme_file"
+
+    process_palette "$theme_file"
+    process_roles   "$theme_file"
+    validate_theme
+
+    create_stage
+    generate_hyprland
+    generate_hyprland_conf
+    generate_waybar
+    generate_rofi
+    publish_theme
+
+    mkdir -p "${THEME_STATE%/*}" || die "could not create theme state directory"
+    printf '%s\n' "$THEME_NAME" > "$THEME_STATE" || die "could not record current theme"
 }
 
 
 [ $# -eq 1 ] || die "usage: generate-theme <name>"
 
-THEME_NAME=$1
-[[ $THEME_NAME =~ ^[a-z0-9-]+$ ]] || die "invalid theme name: $THEME_NAME"
-
-THEME_SOURCE="$CONFIG_HOME/hypr/themes/${THEME_NAME}.toml"
-[ -f "$THEME_SOURCE" ] || die "unknown theme: $THEME_NAME (no such file: $THEME_SOURCE)"
-
-mapfile -t LINES < "$THEME_SOURCE"
-
-read_toml palette process_palette_line
-read_toml roles   process_role_line
-validate_theme
-
-create_stage
-generate_hyprland
-generate_hyprland_conf
-generate_waybar
-generate_rofi
-publish_theme
-
-mkdir -p "${THEME_STATE%/*}" || die "could not create theme state directory"
-printf '%s\n' "$THEME_NAME" > "$THEME_STATE" || die "could not record current theme"
+main "$1"
