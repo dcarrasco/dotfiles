@@ -10,6 +10,7 @@
         "persistent-workspaces": {
             "eDP-1": [ 1, 2, 3, 4, 5 ],
             "DP-8":  [ 6, 7, 8, 9, 10 ],
+            "DP-9":  [ 6, 7, 8, 9, 10 ],
             "*": 5
         },
         "active-only": true,
@@ -19,21 +20,20 @@
         "on-scroll-up":   "hyprctl dispatch \"hl.dsp.focus({ workspace='-1' })\"",
         "on-scroll-down": "hyprctl dispatch \"hl.dsp.focus({ workspace='+1' })\"",
         "smooth-scrolling-threshold": 0.5,
-        "format": "{icon}",
+        "format": "{icon}{windows}",
         // symbols:                      󰈙                      ,
         "format-icons": {
             "urgent": ""
         },
-        "window-rewrite": {},
+        "format-window-separator": "",
         "workspace-taskbar": {
             "enable": false,
-            "update-active-window": true,
-            "format": "{icon} {title:.22}",
+            "update-active-window": false,
+            "active-window-position": "first",
+            "format": "{icon}",
             "icon-size": 16,
             "orientation": "horizontal"
         },
-        "format-window-separator": "\n",
-        "window-rewrite-default": "{class}",
         "tooltip": true,
         "tooltips": {
             "default": "{windows}"
@@ -56,7 +56,7 @@
     "hyprland/windowcount": {
         "format": "[{}]",
         "format-empty": "[X]",
-        "format-windowed": "[T]",
+        "format-windowed": "[{}]",
         "format-fullscreen": "[{}]",
         "separate-outputs": true
     },
@@ -113,13 +113,13 @@
     },
 
     "idle_inhibitor": {
+        // icons       .
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": "",
+            "deactivated": "󰾪"
         },
-        "tooltip-format-activated": "Idle inhibitor: {status}",
-        "tooltip-format-deactivated": "Idle inhibitor: {status}"
+        "tooltip-format": "Idle inhibitor: {status}"
     },
 
     "tray": {
@@ -241,7 +241,7 @@
         "format-ethernet": "󰈀",
         "format-disabled": "󰈀   off",
         "format-disconnected": "",
-        "tooltip-format": "Eth IP: {ipaddr}/{cidr}\nInterface:{ifname}"
+        "tooltip-format": "Eth IP: {ipaddr}/{cidr}\nInterface:{ifname}\nUp: {bandwidthUpBytesCompact} / Down: {bandwidthDownBytesCompact}"
     },
 
     "bluetooth": {
