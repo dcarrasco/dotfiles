@@ -1,0 +1,43 @@
+{
+    "name": "tokyo-night",
+
+    "palette": {
+        "text":        "#343b58",
+        "background":  "#e6e7ed",
+        "background2": "#6c6e75",
+        "black":       "#15161e",
+        "black2":      "#6c6e75",
+        "red":         "#8c4351",
+        "orange":      "#965027",
+        "yellow":      "#8f5e15",
+        "green":       "#385f0d",
+        "blue":        "#0f4b6e",
+        "magenta":     "#5a3e8e",
+        "cyan":        "#2959aa",
+        "white":       "#40434f"
+    },
+
+    "roles": {
+        "border_active":     "magenta",
+        "border_active_alt": "cyan",
+        "border_inactive":   "black2",
+        "border_group":      "yellow",
+        "shadow":            { "color": "white", "alpha": 0.60 },
+        "groupbar_active":   "yellow",
+        "groupbar_inactive": "black2",
+        "groupbar_text":     "text",
+        "bg_window":         { "color": "background", "alpha": 0.80 },
+        "bg_tooltip":        { "color": "background", "alpha": 0.80 },
+        "bg_textbox":        "black2",
+        "bg_selected":       { "color": "text", "alpha": 0.10 },
+        "text":              { "color": "text", "alpha": 0.80 },
+        "text_high":         "text",
+        "text_disabled":     { "color": "text", "alpha": 0.40 },
+        "accent1": "blue",
+        "accent2": "magenta",
+        "accent3": "cyan",
+        "warning": "yellow",
+        "critical": "red",
+        "success": "green"
+    }
+}

@@ -8,8 +8,9 @@
         "black":       "#15161e",
         "black2":      "#414868",
         "red":         "#f7768e",
-        "green":       "#9ece6a",
+        "orange":      "#ff9e64",
         "yellow":      "#e0af68",
+        "green":       "#9ece6a",
         "blue":        "#7aa2f7",
         "magenta":     "#bb9af7",
         "cyan":        "#7dcfff",
@@ -18,7 +19,7 @@
 
     "roles": {
         "border_active":     "cyan",
-        "border_active_alt": "blue",
+        "border_active_alt": "magenta",
         "border_inactive":   "black2",
         "border_group":      "yellow",
         "shadow":            { "color": "background", "alpha": 0.60 },
@@ -32,11 +33,11 @@
         "text":              { "color": "text", "alpha": 0.80 },
         "text_high":         "text",
         "text_disabled":     { "color": "text", "alpha": 0.40 },
-        "accent1": "blue",
-        "accent2": "magenta",
-        "accent3": "cyan",
-        "warning": "yellow",
-        "critical": "red",
-        "success": "green"
+        "accent1":           "blue",
+        "accent2":           "magenta",
+        "accent3":           "cyan",
+        "warning":           "yellow",
+        "critical":          "red",
+        "success":           "green"
     }
 }
