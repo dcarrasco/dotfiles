@@ -17,9 +17,10 @@ hl.config({
       inactive_border = HYPR.theme.color_inactive_border,
     },
 
-    -- layout = "dwindle"
+    -- layout = "dwindle",
     layout = "master",
     -- layout = "monocle",
+    -- layout = "scrolling",
 
     resize_on_border = true,
     hover_icon_on_border = true,
@@ -37,20 +38,21 @@ hl.config({
     },
     groupbar = {
       enabled = true,
+      blur = true,
       gradients = true,
       rounding = 3,
-      gradient_rounding = 15,
+      gradient_rounding = 10,
+      render_titles = true,
       font_family = "Adwaita Sans",
       font_size = 15,
-      height = 20,
+      height = 25,
       stacked = false,
-      render_titles = true,
-      text_color = HYPR.theme.color_text_groupbar,
+      text_color = HYPR.theme.color_groupbar_inactive,
+      text_color_inactive = HYPR.theme.color_text_groupbar,
       col = {
         active = HYPR.theme.color_groupbar_active,
         inactive = HYPR.theme.color_groupbar_inactive,
       },
-      blur = true,
     },
   },
 
@@ -96,6 +98,10 @@ hl.config({
     mfact = 0.55,
     new_status = "master",
     -- no_gaps_when_only = 1,   # 0 with gaps / 1 no gaps no border / 2 no gaps with border,
+  },
+
+  scrolling = {
+    column_width = 0.45
   },
 
   cursor = {
