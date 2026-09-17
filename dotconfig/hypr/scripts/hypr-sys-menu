@@ -122,26 +122,6 @@ entries_fonts() {
     done
 }
 
-entries_power_profiles() {
-    local menu_item=$1
-    local current_pm pm
-    local -a profiles=(
-        balanced
-        performance
-        eco
-    )
-
-    current_pm="$(hypr-switch-power-mgmt --current)"
-
-    for pm in "${profiles[@]}"; do
-        local selected=false
-        [[ $pm == "$current_pm" ]] && selected=true
-
-        entry "$(title_case "$pm")" "act:$menu_item:$pm" "$selected"
-    done
-
-}
-
 checked_option() {
     local option=$1
     local checked=false
@@ -151,6 +131,9 @@ checked_option() {
         bar_bottom)     [[ $(hypr-switch-bar-layout --get-position) == bottom ]] && checked=true ;;
         bar_stacked)    [[ $(hypr-switch-bar-layout --get-stack) == stacked ]] && checked=true ;;
         bar_floating)   [[ $(hypr-switch-bar-layout --get-stack) == floating ]] && checked=true ;;
+        pm_balanced)    [[ $(hypr-switch-power-mgmt --current) == balanced ]] && checked=true ;;
+        pm_performance) [[ $(hypr-switch-power-mgmt --current) == performance ]] && checked=true ;;
+        pm_eco)         [[ $(hypr-switch-power-mgmt --current) == eco ]] && checked=true ;;
         wifi)           [[ $(nmcli radio wifi) == enabled ]] && checked=true ;;
         bluetooth)      [[ $(hypr-bluetooth --state) == on ]] && checked=true ;;
         ctrlcaps)       hyprctl getoptions input:kb_options | grep -q swapcaps && checked=true ;;
