@@ -437,7 +437,7 @@ render_one_monitor() {
     printf '\0data\x1f%s\n'    "$monitor"
 
     # render_monitor_enable "$monitor"
-    if (( $(count_monitors) > 1 )) && [ "$(get_lid_state)" == open ]; then
+    if (( $(count_monitors) > 1 )) && [[ "$(get_lid_state)" == open ]]; then
         if [[ $is_disabled == false ]]; then
             if (( $(count_enabled_monitors) > 1 )); then
                 debug "monitor $monitor disabled falso"

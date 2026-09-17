@@ -4,7 +4,6 @@ set -euo pipefail
 
 declare -A PALETTE=()
 declare -A THEME=()
-declare -a LINES=()
 
 THEME_NAME=
 THEME_STAGE=
@@ -154,7 +153,7 @@ generate_hyprland() {
     staged=$(stage_config_file "$target")
 
     sed -i -E \
-        -e "s/^-- THEME:.*/-- THEME: ${THEME_NAME}/"                                 \
+        -e "s/^-- THEME:.*/-- THEME: $THEME_NAME/"                                   \
         -e "s/(color_active_border_1) .*/\1 = \"${THEME[border_active]}\",/"         \
         -e "s/(color_active_border_2) .*/\1 = \"${THEME[border_active_alt]}\",/"     \
         -e "s/(color_inactive_border) .*/\1 = \"${THEME[border_inactive]}\",/"       \
@@ -174,11 +173,11 @@ generate_hyprland_conf() {
     staged=$(stage_config_file "$target")
 
     sed -i -E \
-        -e "s/^# THEME:.*/# THEME: ${THEME_NAME}/"                                        \
+        -e "s/^# THEME:.*/# THEME: $THEME_NAME/"                                          \
         -e "s/(\$color_active_border_1) .*/\1 = \"${THEME[border_active]}\"/"             \
         -e "s/(\$color_active_border_2) .*/\1 = \"${THEME[border_active_alt]}\"/"         \
         -e "s/(\$color_inactive_border) .*/\1 = \"${THEME[border_inactive]}\"/"           \
-        -e "s/(\$color_group_border_active) .*/\1 = \"${THEME[border_group]}\"/"   \
+        -e "s/(\$color_group_border_active) .*/\1 = \"${THEME[border_group]}\"/"          \
         -e "s/(\$color_group_border_inactive) .*/\1 = \"${THEME[border_inactive]}\"/"     \
         -e "s/(\$color_groupbar_active) .*/\1 = \"${THEME[groupbar_active]}\"/"           \
         -e "s/(\$color_groupbar_inactive) .*/\1 = \"${THEME[groupbar_inactive]}\"/"       \
@@ -194,8 +193,8 @@ generate_waybar() {
     staged=$(stage_config_file "$target")
 
     sed -i -E \
-        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"                                 \
-        -e "s/(@define-color bg-normal) .*/\1 $( to_waybar "${THEME[bg_window]}" );/"          \
+        -e "s|^/\* THEME:.*\*/|/* THEME: $THEME_NAME */|"                                   \
+        -e "s/(@define-color bg-normal) .*/\1 $( to_waybar "${THEME[bg_window]}" );/"       \
         -e "s/(@define-color bg-tooltip) .*/\1 $( to_waybar "${THEME[bg_tooltip]}" );/"     \
         -e "s/(@define-color shadow) .*/\1 $( to_waybar "${THEME[shadow]}" );/"             \
         -e "s/(@define-color fg-normal) .*/\1 $( to_waybar "${THEME[text]}" );/"            \
@@ -216,12 +215,12 @@ generate_rofi() {
     staged=$(stage_config_file "$target")
 
     sed -i -E \
-        -e "s|^/\* THEME:.*\*/|/* THEME: ${THEME_NAME} */|"       \
+        -e "s|^/\* THEME:.*\*/|/* THEME: $THEME_NAME */|"         \
         -e "s/(window-border:) .*/\1 ${THEME[border_active]};/"   \
         -e "s/(bg-color:) .*/\1 ${THEME[bg_window]};/"            \
         -e "s/(foreground:) .*/\1 ${THEME[text]};/"               \
         -e "s/(bg-textbox:) .*/\1 ${THEME[bg_textbox]};/"         \
-        -e "s/(fg-prompt:) .*/\1 ${THEME[accent1]};/"         \
+        -e "s/(fg-prompt:) .*/\1 ${THEME[accent1]};/"             \
         -e "s/(bg-prompt:) .*/\1 ${THEME[bg_window]};/"           \
         -e "s/(fg-placeholder:) .*/\1 ${THEME[text_disabled]};/"  \
         -e "s/(fg-selected:) .*/\1 ${THEME[accent1]};/"           \
