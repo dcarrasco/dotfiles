@@ -297,9 +297,10 @@
 
     "hyprland/language": {
         "format": " {}",
-        "format-en": "  us",
+        "format-en": " us",
         "format-es": "",
         "keyboard-name": "at-translated-set-2-keyboard",
+        "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-keyboard-layout",
         "tooltip": true,
         "tooltip-format": "Layout: {long}\n<b>SUPER+SHIFT+SPACE</b> to change"
     },
@@ -345,6 +346,7 @@
     "custom/power-profiles": {
         "format": "{text}",
         "exec": "$XDG_CONFIG_HOME/hypr/scripts/hypr-show-power-mgmt",
+        "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-power-mgmt",
         "interval": 1,
         "tooltip": true
     },

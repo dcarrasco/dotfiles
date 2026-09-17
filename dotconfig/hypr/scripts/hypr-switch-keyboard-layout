@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 if [ "$DESKTOP_SESSION" = "bspwm" ]; then
-    [[ "$(setxkbmap -query | grep layout | awk '{print $2}')" = us ]] && setxkbmap latam || setxkbmap us
-    newlayout=$(setxkbmap -query | grep layout | awk '{print $2}')
+    if [[ "$(setxkbmap -query | grep layout | awk '{print $2}')" == us ]]; then
+        setxkbmap latam
+    else
+        setxkbmap us
+    fi
+    newlayout="$(setxkbmap -query | grep layout | awk '{print $2}')"
 else
     internal=at-translated-set-2-keyboard
     external=keychron
