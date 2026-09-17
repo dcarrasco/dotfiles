@@ -20,7 +20,7 @@
         "on-scroll-up":   "hyprctl dispatch \"hl.dsp.focus({ workspace='-1' })\"",
         "on-scroll-down": "hyprctl dispatch \"hl.dsp.focus({ workspace='+1' })\"",
         "smooth-scrolling-threshold": 0.5,
-        "format": "{icon}{windows}",
+        "format": "{icon}",
         // symbols:                      󰈙                      ,
         "format-icons": {
             "urgent": ""
@@ -42,12 +42,12 @@
 
     "hyprland/window": {
         "format": "{title}",
+        "expand": true,
         "icon": false,
         "tooltip": false,
         "separate-outputs": true,
         "rewrite": {
             "(.*) — Mozilla Firefox": "$1",
-            "(.*) - Youtube — Mozilla Firefox": "$1",
             "(.*) - Brave": "$1",
             "(.*) - Chromium": "$1"
         }
