@@ -1,23 +1,55 @@
 #!/usr/bin/env bash
 
 current_profile() {
-    tuned-adm active | sed -n 's/Current active profile: //p'
+    local profile
+    profile="$(tuned-adm active | sed -n 's/Current active profile: //p')"
+
+    case "$profile" in
+        balanced | balanced-battery)    printf 'balanced' ;;
+        throughput-performance)         printf 'performance' ;;
+        powersave)                      printf 'eco' ;;
+        *)                              printf '%s' "$profile" ;;
+    esac
 }
 
 on_battery() {
-    upower -d | sed -n 's/^[[:space:]]*on-battery:[[:space:]]//p'
+    upower -d | sed -nE 's/^[[:space:]]*on-battery:[[:space:]]*//p'
 }
 
-power_profile=$(current_profile)
-echo "Current profile: $power_profile"
+set_to() {
+    local profile=$1
+    local balanced_profile="balanced"
 
-[[ "$(on_battery)" == yes ]] && balanced_profile="balanced-battery" || balanced_profile="balanced"
+    case $profile in
+        throughput-performance | performance)   tuned-adm profile throughput-performance ;;
+        powersave | eco)                        tuned-adm profile powersave ;;
+        *)
+            [[ "$(on_battery)" == yes ]] && balanced_profile="balanced-battery"
+            tuned-adm profile $balanced_profile
+            ;;
+    esac
 
-case "$power_profile" in
-    "$balanced_profile")     tuned-adm profile throughput-performance ;;
-    throughput-performance)  tuned-adm profile powersave ;;
-    powersave)               tuned-adm profile "$balanced_profile" ;;
-    *)                       tuned-adm profile "$balanced_profile" ;;
-esac
+    notify-send -u low "Power Management" "New profile: $profile"
+}
 
-notify-send -u low "Power Management" "New profile: $(current_profile)"
+next() {
+    local profile
+    profile=$(current_profile)
+
+    case "$profile" in
+        balanced)     set_to performance ;;
+        performance)  set_to eco ;;
+        *)            set_to balanced ;;
+    esac
+
+}
+
+main() {
+    case $1 in
+        --set|set)              set_to "$2" ;;
+        --current|current)      current_profile ;;
+        *)                      next ;;
+    esac
+}
+
+main "$@"

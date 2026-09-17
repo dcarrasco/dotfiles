@@ -10,23 +10,23 @@
     "system":  { "icon": "", "label": "System" },
 
     // STYLE
-    "style.colors":     { "icon": "󰸌", "label": "Colors", "options": "theme_colors_entries", "action": ["hypr-switch-colors", "--set"] },
-    "style.bar_style":  { "icon": "", "label": "Bar Style", "options": "bar_style_entries", "action": ["hypr-switch-bar-layout", "--set-style"] },
+    "style.colors":     { "icon": "󰸌", "label": "Colors", "options": "theme_colors", "action": ["hypr-switch-colors", "--set"] },
+    "style.bar_style":  { "icon": "", "label": "Bar Style", "options": "bar_styles", "action": ["hypr-switch-bar-layout", "--set-style"] },
     "style.bar_layout": { "icon": "", "label": "Bar Layout" },
-    "style.fonts":      { "icon": "", "label": "Font", "options": "font_entries", "action": ["hypr-switch-font", "--set"] },
+    "style.fonts":      { "icon": "", "label": "Font", "options": "fonts", "action": ["hypr-switch-font", "--set"] },
     "style.background": { "icon": "", "label": "Background", "action": ["hypr-switch-wallpaper"] },
     "style.random_bg":  { "icon": "", "label": "Random Background", "action": ["hypr-switch-wallpaper", "random"] },
     "style.hyprland":   { "icon": "", "label": "Hyprland", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/looknfeel.lua"] },
 
     // BAR POSITION
     "style.bar_layout.position": { "icon": "", "label": "Position" },
-    "style.bar_layout.position.top":    { "icon": "", "label": "Top", "action": ["hypr-switch-bar-layout", "--set-position", "top"], "checked": "[[ $(hypr-switch-bar-layout --get-position) == top ]]" },
-    "style.bar_layout.position.bottom": { "icon": "", "label": "Bottom", "action": ["hypr-switch-bar-layout", "--set-position", "bottom"], "checked": "[[ $(hypr-switch-bar-layout --get-position) == bottom ]]"},
+    "style.bar_layout.position.top":    { "icon": "", "label": "Top", "action": ["hypr-switch-bar-layout", "--set-position", "top"], "checked": "bar_top" },
+    "style.bar_layout.position.bottom": { "icon": "", "label": "Bottom", "action": ["hypr-switch-bar-layout", "--set-position", "bottom"], "checked": "bar_bottom"},
 
     // BAR STACKED
     "style.bar_layout.stack": { "icon": "", "label": "Stack" },
-    "style.bar_layout.stack.stacked":  { "icon": "󰞕", "label": "Stacked", "action": ["hypr-switch-bar-layout", "--set-stack", "stacked"], "checked": "[[ $(hypr-switch-bar-layout --get-stack) == stacked ]]" },
-    "style.bar_layout.stack.floating": { "icon": "", "label": "Floating", "action": ["hypr-switch-bar-layout", "--set-stack", "floating"], "checked": "[[ $(hypr-switch-bar-layout --get-stack) == floating ]]" },
+    "style.bar_layout.stack.stacked":  { "icon": "󰞕", "label": "Stacked", "action": ["hypr-switch-bar-layout", "--set-stack", "stacked"], "checked": "bar_stacked" },
+    "style.bar_layout.stack.floating": { "icon": "", "label": "Floating", "action": ["hypr-switch-bar-layout", "--set-stack", "floating"], "checked": "bar_floating" },
 
     // LEARN
     "learn.keybindings": {"icon": "", "label": "Keybindings", "action": ["hypr-show-keybinds"] },
@@ -41,9 +41,9 @@
 
     // TRIGGER
     "trigger.search":  { "icon": "", "label": "Search Home", "action": ["hypr-search-home"] },
-    "trigger.emoji":   { "icon": "󰞅", "label": "Emoji", "action": ["gnome-characters"] },
-    "trigger.capture": { "icon": "", "label": "Capture" },
     "trigger.toggle":  { "icon": "", "label": "Toggle" },
+    "trigger.capture": { "icon": "", "label": "Capture" },
+    "trigger.emoji":   { "icon": "󰞅", "label": "Emoji", "action": ["gnome-characters"] },
 
     // CAPTURE
     "trigger.capture.screenshot":   { "icon": "", "label": "Screenshot" },
@@ -61,15 +61,15 @@
     "trigger.capture.screenrecord.display": { "icon": "󰹑", "label": "Display", "action": ["$OMARCHY_BIN_PATH/omarchy-cmd-screenrecord", "output"] },
 
     // TOGGLE
-    "trigger.toggle.wifi":        { "icon": "", "label": "WiFi", "action": ["hypr-switch-wifi"], "checked": "[[ $(nmcli radio wifi) == \"enabled\" ]]" },
-    "trigger.toggle.bluetooth":   { "icon": "󰂯", "label": "Bluetooth", "action": ["hypr-bluetooth", "--toggle"], "checked": "[[ $(hypr-bluetooth --state) == \"on\" ]]" },
-    "trigger.toggle.power_mgmt":  { "icon": "", "label": "Power Management", "options": "pm_entries", "action": ["tuned-adm", "profile"] },
-    "trigger.toggle.keyb_layout": { "icon": "", "label": "Keyboard Layout", "action": ["hypr-switch-keyboard-layout"] },
-    "trigger.toggle.keyb_ctrlcaps": { "icon": "󰪛", "label": "Swap Ctrl-Caps", "action": ["hypr-switch-controlcaps"], "checked": "hyprctl getoptions input:kb_options | grep -q swapcaps" },
-    "trigger.toggle.screensaver": { "icon": "󱄄", "label": "Screensaver", "action": ["$OMARCHY_BIN_PATH/omarchy-launch-screensaver"] },
-    "trigger.toggle.nightlight":  { "icon": "󰔎", "label": "Nightlight", "action": ["hypr-switch-nightlight"], "checked": "[[ -n $(pidof wlsunset) ]]"  },
-    "trigger.toggle.idle_lock":   { "icon": "󱫖", "label": "Idle Lock", "action": ["$OMARCHY_BIN_PATH/omarchy-toggle-idle"] },
-    "trigger.toggle.top_bar":     { "icon": "󰍜", "label": "Top Bar", "action": ["pkill", "-SIGUSR1", "waybar"] },
+    "trigger.toggle.wifi":          { "icon": "", "label": "WiFi", "action": ["hypr-switch-wifi"], "checked": "wifi" },
+    "trigger.toggle.bluetooth":     { "icon": "󰂯", "label": "Bluetooth", "action": ["hypr-bluetooth", "--toggle"], "checked": "bluetooth" },
+    "trigger.toggle.power_mgmt":    { "icon": "", "label": "Power Profiles", "options": "power_profiles", "action": ["hypr-switch-power-mgmt", "--set"] },
+    "trigger.toggle.keyb_layout":   { "icon": "", "label": "Keyboard Layout", "action": ["hypr-switch-keyboard-layout"] },
+    "trigger.toggle.keyb_ctrlcaps": { "icon": "󰪛", "label": "Swap Ctrl-Caps", "action": ["hypr-switch-controlcaps"], "checked": "ctrlcaps" },
+    "trigger.toggle.screensaver":   { "icon": "󱄄", "label": "Screensaver", "action": ["$OMARCHY_BIN_PATH/omarchy-launch-screensaver"] },
+    "trigger.toggle.nightlight":    { "icon": "󰔎", "label": "Nightlight", "action": ["hypr-switch-nightlight"], "checked": "nightlight"  },
+    "trigger.toggle.idle_lock":     { "icon": "󱫖", "label": "Idle Lock", "action": ["$OMARCHY_BIN_PATH/omarchy-toggle-idle"] },
+    "trigger.toggle.top_bar":       { "icon": "󰍜", "label": "Top Bar", "action": ["pkill", "-SIGUSR1", "waybar"] },
 
     // SETUP
     "setup.conf":        { "icon": "", "label": "Configs" },

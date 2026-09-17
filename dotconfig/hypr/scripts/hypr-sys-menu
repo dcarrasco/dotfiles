@@ -58,11 +58,10 @@ webapp() {
 entry() {
     local label=$1
     local action=$2
-    local checked=${3:-}
+    local checked=${3:-false}
 
-    if [[ -n $checked ]] && (eval "$checked"); then
-        label+=' '
-    fi
+    [[ $checked == true ]] && label+=' '
+    [[ ${action:0:3} == opt || ${action:0:4} == menu ]] && label="$(menu_label "$label")"
 
     printf '%s\0info\x1f%s\n' "$label" "$action"
 }
@@ -74,7 +73,7 @@ title_case() {
         <<< "$1"
 }
 
-bar_style_entries() {
+entries_bar_styles() {
     local menu_item=$1
     local current_style style
     local -a styles=()
@@ -86,14 +85,11 @@ bar_style_entries() {
         local selected=false
         [[ $style == "$current_style" ]] && selected=true
 
-        entry \
-            "${style^}" \
-            "act:$menu_item:$style" \
-            "[[ $selected == true ]]"
+        entry "${style^}" "act:$menu_item:$style" "$selected"
     done
 }
 
-theme_colors_entries() {
+entries_theme_colors() {
     local menu_item=$1
     local current_theme theme_name
     local -a themes=()
@@ -105,54 +101,64 @@ theme_colors_entries() {
         local selected=false
         [[ $theme_name == "$current_theme" ]] && selected=true
 
-        entry \
-            "$(title_case "$theme_name")" \
-            "act:$menu_item:$theme_name" \
-            "[[ $selected == true ]]"
+        entry "$(title_case "$theme_name")" "act:$menu_item:$theme_name" "$selected"
     done
 }
 
-font_entries() {
+entries_fonts() {
     local menu_item=$1
-    local current_font font
+    local current_font font label selected
     local -a fonts=()
 
     current_font="$(hypr-switch-font --current)"
     mapfile -t fonts < <(hypr-switch-font --get-fonts)
 
     for font in "${fonts[@]}"; do
-        local selected=false
+        selected=false
         [[ $font == "$current_font" ]] && selected=true
+        label="<span size=\"small\" font_family=\"$font\">$font</span>"
 
-        entry \
-            "<span size=\"small\" font_family=\"$font\">$font</span>" \
-            "act:$menu_item:$font" \
-            "[[ $selected == true ]]"
+        entry "$label" "act:$menu_item:$font" "$selected"
     done
 }
 
-pm_entries() {
+entries_power_profiles() {
     local menu_item=$1
     local current_pm pm
     local -a profiles=(
         balanced
-        balanced-battery
-        throughput-performance
-        powersave
+        performance
+        eco
     )
 
-    current_pm="$(tuned-adm active | sed 's/^Current active profile: //')"
+    current_pm="$(hypr-switch-power-mgmt --current)"
 
     for pm in "${profiles[@]}"; do
         local selected=false
         [[ $pm == "$current_pm" ]] && selected=true
 
-        entry \
-            "$(title_case "$pm")" \
-            "act:$menu_item:$pm" \
-            "[[ $pm == $current_pm ]]"
+        entry "$(title_case "$pm")" "act:$menu_item:$pm" "$selected"
     done
 
+}
+
+checked_option() {
+    local option=$1
+    local checked=false
+
+    case $option in
+        bar_top)        [[ $(hypr-switch-bar-layout --get-position) == top ]]  && checked=true;;
+        bar_bottom)     [[ $(hypr-switch-bar-layout --get-position) == bottom ]] && checked=true ;;
+        bar_stacked)    [[ $(hypr-switch-bar-layout --get-stack) == stacked ]] && checked=true ;;
+        bar_floating)   [[ $(hypr-switch-bar-layout --get-stack) == floating ]] && checked=true ;;
+        wifi)           [[ $(nmcli radio wifi) == enabled ]] && checked=true ;;
+        bluetooth)      [[ $(hypr-bluetooth --state) == on ]] && checked=true ;;
+        ctrlcaps)       hyprctl getoptions input:kb_options | grep -q swapcaps && checked=true ;;
+        nightlight)     [[ -n $(pidof wlsunset) ]] && checked=true ;;
+        *)              die "Checked option not defined"
+    esac
+
+    printf '%s' "$checked"
 }
 
 render_parent_menu() {
@@ -223,6 +229,7 @@ menu_label() {
 render() {
     local menu_item=${1:-main}
     local title rows
+    local selected=false
 
     title=$(menu_title "$menu_item")
     rows=$(process_menu "$menu_item")
@@ -234,13 +241,15 @@ render() {
     printf '\0use-hot-keys\x1ftrue\n'
 
     while IFS=$'\x1e' read -r name icon label action options checked; do
+        selected=false
         debug "RENDER: name: $name  icon: $icon  label: $label  action: $action  options: $options  checked: $checked"
         if [[ -n $options ]]; then
-            entry "$(menu_label "$icon  $label")" "opt:$name" ""
+            entry "$icon  $label" "opt:$name" ""
         elif [[ -n $action && -z $options ]]; then
-            entry "$icon  $label" "act:$name" "$checked"
+            [[ -n "$checked" ]] && selected="$(checked_option "$checked")"
+            entry "$icon  $label" "act:$name" "$selected"
         else
-            entry "$(menu_label "$icon  $label")" "menu:$name" ""
+            entry "$icon  $label" "menu:$name" ""
         fi
     done <<< "$rows"
 }
@@ -288,7 +297,7 @@ render_options() {
     local options_cmd
 
     # shellcheck disable=SC2016 # $menu is a jq variable.
-    options_cmd=$(menu_query --arg menu "$menu_item" '.[$menu].options')
+    options_cmd="entries_$(menu_query --arg menu "$menu_item" '.[$menu].options')"
 
     declare -F "$options_cmd" >/dev/null || die "invalid options function: $options_cmd"
 
