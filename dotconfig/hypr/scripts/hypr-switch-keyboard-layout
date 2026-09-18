@@ -1,20 +1,43 @@
 #!/usr/bin/env bash
 
-if [ "$DESKTOP_SESSION" = "bspwm" ]; then
-    if [[ "$(setxkbmap -query | grep layout | awk '{print $2}')" == us ]]; then
+set -euo pipefail
+
+current_layout() {
+    local keyboard=$1
+
+    if [ "$DESKTOP_SESSION" = "bspwm" ]; then
+        setxkbmap -query | grep layout | awk '{print $2}'
+    else
+        hyprctl devices -j | jq -r --arg keyb "$keyboard" '.keyboards[] | select(.name==$keyb).active_keymap'
+    fi
+}
+
+notify() {
+    local mesg=$1
+
+    notify-send -u low -i keyboard "Keyboard" "$mesg"
+}
+
+bspwm_next() {
+    local newlayout
+
+    if [[ "$(current_layout)" == us ]]; then
         setxkbmap latam
     else
         setxkbmap us
     fi
-    newlayout="$(setxkbmap -query | grep layout | awk '{print $2}')"
-else
-    internal=at-translated-set-2-keyboard
-    external=keychron
+    newlayout="$(current_layout)"
+    notify "New layout: $newlayout"
+}
 
-    echo "switch internal layout: $newlayout"
-    hyprctl switchxkblayout $internal next
+hypr_next() {
+    local newlayout currlayout keyboards keyb
+    local internal=at-translated-set-2-keyboard
+    local external=keychron
 
-    newlayout="$(hyprctl devices -j | jq -r --arg keyb $internal '.keyboards[] | select(.name==$keyb).active_keymap')"
+    hyprctl switchxkblayout $internal next >/dev/null
+
+    newlayout="$(current_layout "$internal")"
     echo "new internal layout: $newlayout"
 
     keyboards="$(hyprctl devices -j | jq -r '.keyboards[].name' | grep $external)"
@@ -26,10 +49,21 @@ else
         echo "current layout0: $currlayout"
         while [[ "$newlayout" != "$currlayout" ]]; do
             hyprctl switchxkblayout "$keyb" next
-            currlayout=$(hyprctl devices -j | jq -r --arg keyb "$keyb" '.keyboards[] | select(.name==$keyb).active_keymap')
+            currlayout="$(current_layout "$keyb")"
             echo "current layout: $currlayout"
         done
     done
-fi
 
-notify-send -u low -i keyboard "Keyboard" "New layout: $newlayout"
+    notify "New layout: $newlayout"
+}
+
+
+main() {
+    if [ "$DESKTOP_SESSION" = "bspwm" ]; then
+        bspwm_next
+    else
+        hypr_next
+    fi
+}
+
+main "$@"

@@ -346,6 +346,7 @@
     "custom/power-profiles": {
         "format": "{text}",
         "exec": "$XDG_CONFIG_HOME/hypr/scripts/hypr-show-power-mgmt",
+        "return-type": "json",
         "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-power-mgmt",
         "interval": 1,
         "tooltip": true

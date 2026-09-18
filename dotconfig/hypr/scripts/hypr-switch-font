@@ -12,9 +12,7 @@ get_fonts() {
 }
 
 current_font() {
-    if [[ -r "$KITTY_CONF" ]]; then
-        cat <(sed -nE 's/^font_family[[:space:]]+//p' "$KITTY_CONF")
-    fi
+    [[ -r "$KITTY_CONF" ]] && sed -nE 's/^font_family[[:space:]]+//p' "$KITTY_CONF"
 }
 
 set_font() {
@@ -24,17 +22,17 @@ set_font() {
         # valida que $font sea una fuenta válida instalada
         if ! get_fonts | grep -q "$font"; then
             printf "%s\n" "ERROR: missing font: $font"
-            notify-send "Font" "ERROR: missing font: $font"
+            notify-send -u critical "Font" "ERROR: missing font: $font"
             exit 1
         fi
 
         if [[ -f $KITTY_CONF ]]; then
-            sed -i "s/^font_family .*/font_family  $font/g" "$KITTY_CONF"
+            sed -i "s/^font_family .*/font_family  $font/" "$KITTY_CONF"
             pkill -USR1 kitty
         fi
 
         if [[ -f $ALACRITTY_CONF ]]; then
-            sed -i "s/^family = \".*\"/family = \"$font\"/g" "$ALACRITTY_CONF"
+            sed -i "s/^family = \".*\"/family = \"$font\"/" "$ALACRITTY_CONF"
         fi
 
         notify-send -u low "Fonts" "Change font to $font"

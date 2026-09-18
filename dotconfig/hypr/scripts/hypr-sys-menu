@@ -8,6 +8,7 @@ TERMINAL=kitty
 SCRIPT_PATH=$CONFIG_HOME/hypr/scripts
 SELF=$SCRIPT_PATH/hypr-sys-menu
 MENU_FILE=$SCRIPT_PATH/sys-menu.jsonc
+MENU_ARROW_COLOR=
 
 export PATH="$SCRIPT_PATH:$PATH"
 
@@ -195,18 +196,22 @@ menu_title() {
 
 menu_label() {
     local label=$1
-    local len_label=${#label}
-    local spaces='                         '
     local menu_width=19
-    local rofi_colors=$XDG_CONFIG_HOME/rofi/themes/colors.rasi
-    local fg_color
+    local spaces
 
-    fg_color=$(sed -nE 's/[[:space:]]*foreground: (.*);/\1/p' "$rofi_colors")
+    if [[ -z "$MENU_ARROW_COLOR" ]]; then
+        arrow_color="$(sed -nE 's/[[:space:]]*foreground: (.*);/\1/p' "$XDG_CONFIG_HOME/rofi/themes/colors.rasi")"
+        MENU_ARROW_COLOR="${arrow_color:0:7}44"
+    fi
 
-    (( len_label <= menu_width )) && label+="${spaces:0:$(( menu_width - len_label ))}" || label="${label::$menu_width}"
-    label+="<span color=\"${fg_color:0:7}44\"></span>"
+    if (( ${#label} <= menu_width )); then
+        printf -v spaces '%*s' "$((menu_width - ${#label}))" ''
+        label+=$spaces
+    else
+        label=${label:0:$menu_width}
+    fi
 
-    printf '%s' "$label"
+    printf '%s' "${label}<span color=\"$MENU_ARROW_COLOR\"></span>"
 }
 
 render() {
