@@ -64,7 +64,7 @@
     "trigger.toggle.wifi":          { "icon": "", "label": "WiFi", "action": ["hypr-switch-wifi"], "checked": "wifi" },
     "trigger.toggle.bluetooth":     { "icon": "󰂯", "label": "Bluetooth", "action": ["hypr-bluetooth", "--toggle"], "checked": "bluetooth" },
     "trigger.toggle.power_mgmt":    { "icon": "", "label": "Power Profiles" },
-    "trigger.toggle.keyb_layout":   { "icon": "", "label": "Keyboard Layout", "action": ["hypr-switch-keyboard-layout"] },
+    "trigger.toggle.keyb_layout":   { "icon": "", "label": "Keyboard Layout", "action": ["hypr-switch-keyboard-layout", "--next"] },
     "trigger.toggle.keyb_ctrlcaps": { "icon": "󰪛", "label": "Swap Ctrl-Caps", "action": ["hypr-switch-controlcaps"], "checked": "ctrlcaps" },
     "trigger.toggle.screensaver":   { "icon": "󱄄", "label": "Screensaver", "action": ["$OMARCHY_BIN_PATH/omarchy-launch-screensaver"] },
     "trigger.toggle.nightlight":    { "icon": "󱩌", "label": "Nightlight", "action": ["hypr-switch-nightlight"], "checked": "nightlight"  },

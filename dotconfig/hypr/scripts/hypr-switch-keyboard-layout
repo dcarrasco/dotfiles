@@ -61,12 +61,22 @@ hypr_next() {
 }
 
 
-main() {
+next() {
     if [[ "$DESKTOP_SESSION" == bspwm ]]; then
         bspwm_next
     else
         hypr_next
     fi
+}
+
+main() {
+    local option=${1:-}
+
+    case "$option" in
+        next | --next)      next ;;
+        toggle | --toggle)  next ;;
+        *)                  next ;;
+    esac
 }
 
 main "$@"

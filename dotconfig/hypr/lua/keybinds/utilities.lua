@@ -17,24 +17,24 @@ return {
   -- *************************************************************************************************
   -- Aesthetics
   -- *************************************************************************************************
-  { key = "XF86MonBrightnessDown", dsp = HYPR.fn.scripts("hypr-switch-wallpaper previous"), desc = "Previo fondo de pantalla" },
-  { key = "XF86MonBrightnessUp", dsp = HYPR.fn.scripts("hypr-switch-wallpaper next"), desc = "Siguiente fondo de pantalla" },
-  { key = "SHIFT + W", dsp = HYPR.fn.scripts("hypr-switch-wallpaper random"), desc = "Fondo de pantalla al azar" },
+  { key = "XF86MonBrightnessDown", dsp = HYPR.fn.scripts("hypr-switch-wallpaper --previous"), desc = "Previo fondo de pantalla" },
+  { key = "XF86MonBrightnessUp", dsp = HYPR.fn.scripts("hypr-switch-wallpaper --next"), desc = "Siguiente fondo de pantalla" },
+  { key = "SHIFT + W", dsp = HYPR.fn.scripts("hypr-switch-wallpaper --random"), desc = "Fondo de pantalla al azar" },
   { key = "ALT + R", dsp = HYPR.fn.scripts("hypr-restore-waybar"), desc = "Reset Waybar" },
   { key = "XF86Favorites", dsp = HYPR.fn.scripts("hypr-restore-waybar"), desc = "Reset Waybar" },
   --
   -- *************************************************************************************************
   -- Screenshots
   -- *************************************************************************************************
-  { mod = "", key = "Print", dsp = HYPR.fn.scripts("hypr-cmd-screenshot file"), desc = "Save screenshot to file" },
-  { key = "SUPER + SHIFT + ALT + S", dsp = HYPR.fn.scripts("hypr-cmd-screenshot region"), desc = "Save screen area to file" },
+  { mod = "", key = "Print", dsp = HYPR.fn.scripts("hypr-cmd-screenshot --file"), desc = "Save screenshot to file" },
+  { key = "SUPER + SHIFT + ALT + S", dsp = HYPR.fn.scripts("hypr-cmd-screenshot --region"), desc = "Save screen area to file" },
   { key = "SUPER + SHIFT + S", dsp = HYPR.fn.scripts("hypr-cmd-screenshot"), desc = "Copy screen area to clipboard" },
   { key = "SUPER + SHIFT + CTRL + S", dsp = "pkill hyprpicker || hyprpicker -a", desc = "Color picker" },
 
   -- *************************************************************************************************
   -- Keyboard
   -- *************************************************************************************************
-  { key = "SHIFT + SPACE", dsp = HYPR.fn.scripts("hypr-switch-keyboard-layout"), desc = "Switch keyboard layout" },
+  { key = "SHIFT + SPACE", dsp = HYPR.fn.scripts("hypr-switch-keyboard-layout --next"), desc = "Switch keyboard layout" },
   { mod = "", key = "switch:on:Lid Switch", dsp = "hyprctl keyword monitor 'eDP-1, disable'", desc = "Disable screen on close lid" },
   { mod = "", key = "switch:off:Lid Switch", dsp = "hyprctl keyword monitor 'eDP-1, preferred, auto, 1'", desc = "Enable screen on close lid" },
   { mod = "", key = "XF86PowerOff", dsp = HYPR.apps.logout, desc = "System menu" },
