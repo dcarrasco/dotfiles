@@ -14,6 +14,7 @@ current_layout() {
 
 notify() {
     local mesg=$1
+    echo "aca"
 
     notify-send -u low -i keyboard "Keyboard" "$mesg"
 }
@@ -38,28 +39,30 @@ hypr_next() {
     hyprctl switchxkblayout $internal next >/dev/null
 
     newlayout="$(current_layout "$internal")"
-    echo "new internal layout: $newlayout"
+    echo "new internal layout: $newlayout" >&2
 
-    keyboards="$(hyprctl devices -j | jq -r '.keyboards[].name' | grep $external)"
-    echo "keyboards: $keyboards"
+    if hyprctl devices -j | jq -r '.keyboards[].name' | grep -q $external; then
+        keyboards="$(hyprctl devices -j | jq -r '.keyboards[].name' | grep $external)"
+        echo "keyboards: $keyboards"
 
-    for keyb in $keyboards; do
-        echo "external: $keyb"
-        currlayout="xxx"
-        echo "current layout0: $currlayout"
-        while [[ "$newlayout" != "$currlayout" ]]; do
-            hyprctl switchxkblayout "$keyb" next
-            currlayout="$(current_layout "$keyb")"
-            echo "current layout: $currlayout"
+        for keyb in $keyboards; do
+            echo "external: $keyb"
+            currlayout="xxx"
+            echo "current layout0: $currlayout"
+            while [[ "$newlayout" != "$currlayout" ]]; do
+                hyprctl switchxkblayout "$keyb" next
+                currlayout="$(current_layout "$keyb")"
+                echo "current layout: $currlayout"
+            done
         done
-    done
+    fi
 
     notify "New layout: $newlayout"
 }
 
 
 main() {
-    if [ "$DESKTOP_SESSION" = "bspwm" ]; then
+    if [[ "$DESKTOP_SESSION" == bspwm ]]; then
         bspwm_next
     else
         hypr_next

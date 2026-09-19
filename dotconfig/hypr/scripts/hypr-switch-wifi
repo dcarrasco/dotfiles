@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$(nmcli radio wifi)" == "enabled" ]; then
     nmcli radio wifi off
-    notify-send "WIFI" "Disable wifi"
+    notify-send -u low -i network-wireless "WIFI" "Disable wifi"
 else
     nmcli radio wifi on
-    notify-send "WIFI" "Enable wifi"
+    notify-send -u low -i network-wireless "WIFI" "Enable wifi"
 fi

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+bluetooth_state() {
+    bluetoothctl show | grep -q "Powered: no" && printf 'off' || printf 'on'
+}
+
 bluetooth_print() {
     if [[ "$(bluetooth_state)" == off ]]; then
         printf '%%{F#66FFFFFF}'
@@ -13,16 +17,9 @@ bluetooth_print() {
 }
 
 bluetooth_toggle() {
-    if bluetoothctl show | grep -q "Powered: no"; then
+    if [[ "$(bluetooth_state)" == off ]]; then
+        # printf 'Encendiendo bluetooth\n'
         bluetoothctl power on >> /dev/null
-
-        printf 'Encendiendo bluetooth\n'
-        sleep 1
-
-        # while read -r _ device name; do
-        #     printf 'Conectando device: %s (%s)\n' "$name" "$device"
-        #     bluetoothctl --timeout 5 connect "$device" >> /dev/null
-        # done < <(bluetoothctl devices | grep Device)
     else
         # Desconecta los dispositivos pareados
         while read -r _ device name; do
@@ -31,13 +28,10 @@ bluetooth_toggle() {
         done < <(bluetoothctl devices Connected | grep Device)
 
         bluetoothctl power off >> /dev/null
-        printf 'Apagando bluetooth\n'
+        # printf 'Apagando bluetooth\n'
     fi
-    notify-send -u low "Bluetooth" "Set bluetooth $(bluetooth_state)"
-}
 
-bluetooth_state() {
-    bluetoothctl show | grep -q "Powered: no" && printf 'off' || printf 'on'
+    notify-send -u low -i bluetooth "Bluetooth" "Set bluetooth $(bluetooth_state)"
 }
 
 case "$1" in

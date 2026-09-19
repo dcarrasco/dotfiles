@@ -252,7 +252,7 @@
         "format-connected": "",
         "on-click": "blueman-manager",
         "on-click-right": "$XDG_CONFIG_HOME/hypr/scripts/hypr-bluetooth --toggle",
-        "tooltip-format": "{status} ({num_connections})\n{device_enumerate}",
+        "tooltip-format": "Status: {status} ({num_connections})\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "* {device_alias}",
         "tooltip-format-enumerate-connected-battery": "* {device_alias} ({device_battery_percentage}%)"
     },
