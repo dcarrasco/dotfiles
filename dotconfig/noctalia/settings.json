@@ -462,7 +462,7 @@
     "nightLight": {
         "autoSchedule": true,
         "dayTemp": "6500",
-        "enabled": true,
+        "enabled": false,
         "forced": false,
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
@@ -634,7 +634,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/daniel/Pictures/Wallpapers",
+        "directory": "/home/daniel/Imágenes//fondos pantalla/",
         "enableMultiMonitorDirectories": false,
         "enabled": false,
         "favorites": [
