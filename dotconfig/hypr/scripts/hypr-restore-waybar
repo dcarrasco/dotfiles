@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 
 SILENT="${1:-}"
+action='Reload'
 
 PID=$(pidof waybar)
+
 if [ -n "$PID" ]; then
     pkill -SIGUSR2 waybar
-
-    if [[ $SILENT != silent && $SILENT != --silent ]]; then
-        notify-send -u low "Waybar" "Reload Waybar"
-    fi
 else
     # GTK_THEME=Nordic setsid waybar &
     setsid waybar &
+    action='Restore'
+fi
 
-    if [[ $SILENT != silent && $SILENT != --silent ]]; then
-        notify-send -u low "Waybar" "Restore Waybar"
-    fi
+if [[ $SILENT != silent && $SILENT != --silent ]]; then
+    notify-send -u low -i reload "Waybar" "$action Waybar"
 fi

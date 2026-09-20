@@ -9,10 +9,12 @@ fi
 
 if [ -n "$wallpaper" ]; then
     # Cambia la configuración inicial del fondo de pantalla
-    sed -i "s|^ *path =.*$|    path = $wallpaper|" "$WALLPAPER_CONFIG"
+    sed -i "s|\([[:space:]]*path =\).*|\1 $wallpaper|" "$WALLPAPER_CONFIG"
 
-    # Ejecuta cambio de fondo de pantalla
+    # Ejecuta cambio de fondo en todas las pantalla
     hyprctl hyprpaper wallpaper "eDP-1,$wallpaper"
+    hyprctl hyprpaper wallpaper "DP-8,$wallpaper"
+    hyprctl hyprpaper wallpaper "DP-9,$wallpaper"
 
-    notify-send -u low "Set wallpaper" "$(basename "$wallpaper")"
+    notify-send -u low -i background "Set wallpaper" "${wallpaper##*/}"
 fi
