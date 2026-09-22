@@ -134,15 +134,16 @@
         "timezone": "America/Santiago",
         "format": "{:L%a %d  %H:%M}",
         "format-alt": "{:L%d %b %Y  %H:%M}",
+        "tooltip": true,
         "tooltip-format": "<tt>{calendar}</tt>",
         "locale": "es_CL.UTF-8",
         "interval": 30,
         "calendar": {
             "format": {
                 "today": "<span color='#EBCB8B'><b>{}</b></span>",
-                "days": "<span color='#D8DEE9'>{}</span>",
-                "weekdays": "<span color='#88c0d0'>{}</span>",
-                "months": "<span color='#88c0d0'>{}</span>"
+                "days": "{}",
+                "weekdays": "<span color='#D8DEE9'>{}</span>",
+                "months": "<span color='#88c0d0'><b>{}</b></span>"
             }
         }
     },
