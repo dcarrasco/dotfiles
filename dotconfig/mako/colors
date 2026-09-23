@@ -1,0 +1,17 @@
+background-color=#5E81ACDD
+text-color=#D8DEE9
+border-color=#D8DEE9
+
+[urgency=low]
+background-color=#2E3440DD
+
+[urgency=normal]
+background-color=#5E81ACDD
+
+[urgency=critical]
+background-color=#BF616ADD
+
+[category=OSD]
+background-color=#2E3440DD
+progress-color=#5E81AC55
+format=%b
