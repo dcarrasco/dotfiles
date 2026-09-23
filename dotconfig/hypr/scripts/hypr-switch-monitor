@@ -71,7 +71,7 @@ load_rofi() {
 notify() {
     local message=$1
 
-    notify-send -u low 'Pantalla' "$message"
+    notify-send -u low -i display 'Pantalla' "$message"
 }
 
 hyprland_monitors() {
@@ -382,6 +382,17 @@ disp_scale() {
     printf '%s' "$disp"
 }
 
+render_header() {
+    prompt=$1
+    message=${2:-}
+    data=${3:-}
+
+    printf '\0no-custom\x1ftrue\n'
+    printf '\0prompt\x1f%s\n'  "$prompt"
+    printf '\0message\x1f%s\n' "$message"
+    printf '\0data\x1f%s\n'    "$data"
+}
+
 render_resolution() {
     local monitor=$1
     local resolution
@@ -390,6 +401,8 @@ render_resolution() {
     debug "function: render_resolution($monitor)"
 
     curr_res="$(get_property "$monitor" resolution)"
+
+    render_header 'Resolucion' "$monitor $curr_res" "$monitor"
 
     while IFS= read -r resolution; do
         entry "$resolution" "RESOL:$resolution" "$([[ $curr_res == "$resolution" ]] && printf true)"
@@ -401,9 +414,7 @@ render_multiple_monitor() {
 
     debug 'function: render_multiple_monitor'
 
-    printf '\0prompt\x1f%s\n'  'Monitor'
-    printf '\0message\x1f%s\n' ''
-    printf '\0data\x1f%s\n'    ''
+    render_header 'Monitor'
 
     for opt in "${OPTIONS_MULTIPLE_MONITORS[@]}"; do
         entry "${OPTIONS[$opt]}" "$opt"
@@ -419,7 +430,8 @@ render_multiple_monitor() {
 
 render_one_monitor() {
     local monitor=${1:-}
-    local monitor_desc scale resolution is_disabled
+    local monitor_desc scale disp_scale resolution is_disabled
+    local checked
     local opt
 
     debug "function: render_one_monitor($monitor)"
@@ -428,13 +440,11 @@ render_one_monitor() {
     scale="$(get_property "$monitor" scale)"
     resolution="$(get_property "$monitor" resolution)"
     is_disabled="$(get_property "$monitor" disabled)"
+    disp_scale="$(disp_scale "$scale")"
 
-    monitor_desc=$(printf '%s: %s %s' \
-        "$monitor" "$resolution" "$(disp_scale "$scale")")
+    monitor_desc=$(printf '%s: %s %s' "$monitor" "$resolution" "$disp_scale")
 
-    printf '\0prompt\x1f%s\n'  'Monitor'
-    printf '\0message\x1f%s\n' "$monitor_desc"
-    printf '\0data\x1f%s\n'    "$monitor"
+    render_header 'Monitor' "$monitor_desc" "$monitor"
 
     # render_monitor_enable "$monitor"
     if (( $(count_monitors) > 1 )) && [[ "$(get_lid_state)" == open ]]; then
@@ -451,15 +461,7 @@ render_one_monitor() {
 
     if [[ $is_disabled == false ]]; then
         for opt in "${OPTIONS_ONE_MONITOR[@]}"; do
-            local checked=''
-            case "$(disp_scale "$scale")" in
-                100%)   [[ $opt == SCALE_100 ]] && checked=true ;;
-                125%)   [[ $opt == SCALE_125 ]] && checked=true ;;
-                133%)   [[ $opt == SCALE_133 ]] && checked=true ;;
-                150%)   [[ $opt == SCALE_150 ]] && checked=true ;;
-                200%)   [[ $opt == SCALE_200 ]] && checked=true ;;
-                *)      die "Displayed scale unknown"
-            esac
+            [[ "${opt#*_}" == "${disp_scale%\%}" ]] && checked=true || checked=''
 
             entry "${OPTIONS[$opt]}" "$opt" "$checked"
         done

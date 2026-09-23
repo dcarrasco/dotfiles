@@ -62,9 +62,13 @@ entry() {
     local checked=${3:-false}
 
     [[ $checked == true ]] && label+=' '
-    [[ ${action:0:3} == opt || ${action:0:4} == menu ]] && label="$(menu_label "$label")"
 
-    printf '%s\0info\x1f%s\n' "$label" "$action"
+    case "$action" in
+        opt:* | menu:*)     menu_label "$label" ;;
+        *)                  printf '%s' "$label" ;;
+    esac
+
+    printf '\0info\x1f%s\n' "$action"
 }
 
 title_case() {
@@ -197,7 +201,7 @@ menu_title() {
 menu_label() {
     local label=$1
     local menu_width=19
-    local spaces
+    local spaces arrow_color
 
     if [[ -z "$MENU_ARROW_COLOR" ]]; then
         arrow_color="$(sed -nE 's/[[:space:]]*foreground: (.*);/\1/p' "$XDG_CONFIG_HOME/rofi/themes/colors.rasi")"
@@ -211,13 +215,14 @@ menu_label() {
         label=${label:0:$menu_width}
     fi
 
-    printf '%s' "${label}<span color=\"$MENU_ARROW_COLOR\"></span>"
+    printf '%s<span color="%s"></span>' "$label" "$MENU_ARROW_COLOR"
 }
 
 render() {
     local menu_item=${1:-main}
     local title rows
     local selected=false
+    local name icon label action options checked
 
     title=$(menu_title "$menu_item")
     rows=$(process_menu "$menu_item")
@@ -228,12 +233,14 @@ render() {
     printf '\0data\x1f%s\n' "$menu_item"
     printf '\0use-hot-keys\x1ftrue\n'
 
+    [[ -n "$rows" ]] || return 0
+
     while IFS=$'\x1e' read -r name icon label action options checked; do
         selected=false
         debug "RENDER: name: $name  icon: $icon  label: $label  action: $action  options: $options  checked: $checked"
         if [[ -n $options ]]; then
             entry "$icon  $label" "opt:$name" ""
-        elif [[ -n $action && -z $options ]]; then
+        elif [[ -n $action ]]; then
             [[ -n "$checked" ]] && selected="$(checked_option "$checked")"
             entry "$icon  $label" "act:$name" "$selected"
         else
