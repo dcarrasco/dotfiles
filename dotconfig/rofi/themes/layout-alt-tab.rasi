@@ -18,7 +18,7 @@ window {
     border-radius: 30px;
     height: 15em;
     width:  70%;
-    icon-theme: "ePapirus";
+    icon-theme: "Papirus";
     // margin: 0 0 0 0;
     // fullscreen: true;
     spacing: 0;
