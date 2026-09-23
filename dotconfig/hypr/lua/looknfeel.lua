@@ -8,7 +8,7 @@
 hl.config({
   general = {
     -- See https://wiki.hyprland.org/Configuring/Variables/ for more
-    border_size = 2,
+    border_size = 3,
     gaps_in = 5,
     gaps_out = 10,
     col = {
@@ -47,8 +47,8 @@ hl.config({
       font_size = 15,
       height = 25,
       stacked = false,
-      text_color = HYPR.theme.color_groupbar_inactive,
-      text_color_inactive = HYPR.theme.color_text_groupbar,
+      text_color = HYPR.theme.color_text_groupbar_active,
+      text_color_inactive = HYPR.theme.color_text_groupbar_inactive,
       col = {
         active = HYPR.theme.color_groupbar_active,
         inactive = HYPR.theme.color_groupbar_inactive,

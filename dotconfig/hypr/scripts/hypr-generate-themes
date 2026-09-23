@@ -18,9 +18,10 @@ readonly -a REQUIRED_ROLES=(
     border_inactive
     border_group
     shadow
-    groupbar_active
-    groupbar_inactive
-    groupbar_text
+    group_active_bg
+    group_active_text
+    group_inactive_bg
+    group_inactive_text
     bg_window
     bg_tooltip
     bg_textbox
@@ -159,9 +160,10 @@ generate_hyprland() {
         -e "s/(color_inactive_border) .*/\1 = \"${THEME[border_inactive]}\",/"       \
         -e "s/(color_group_border_active) .*/\1 = \"${THEME[border_group]}\",/"      \
         -e "s/(color_group_border_inactive) .*/\1 = \"${THEME[border_inactive]}\",/" \
-        -e "s/(color_groupbar_active) .*/\1 = \"${THEME[groupbar_active]}\",/"       \
-        -e "s/(color_groupbar_inactive) .*/\1 = \"${THEME[groupbar_inactive]}\",/"   \
-        -e "s/(color_text_groupbar) .*/\1 = \"${THEME[groupbar_text]}\",/"           \
+        -e "s/(color_groupbar_active) .*/\1 = \"${THEME[group_active_bg]}\",/"       \
+        -e "s/(color_text_groupbar_active) .*/\1 = \"${THEME[group_active_text]}\",/"           \
+        -e "s/(color_groupbar_inactive) .*/\1 = \"${THEME[group_inactive_bg]}\",/"   \
+        -e "s/(color_text_groupbar_inactive) .*/\1 = \"${THEME[group_inactive_text]}\",/"           \
         -e "s/(color_shadow) .*/\1 = \"${THEME[shadow]}\",/"                         \
         -e "s/(color_shadow_inactive) .*/\1 = \"${THEME[shadow]}\",/"                \
         "$staged"
@@ -179,9 +181,10 @@ generate_hyprland_conf() {
         -e "s/(\$color_inactive_border) .*/\1 = \"${THEME[border_inactive]}\"/"           \
         -e "s/(\$color_group_border_active) .*/\1 = \"${THEME[border_group]}\"/"          \
         -e "s/(\$color_group_border_inactive) .*/\1 = \"${THEME[border_inactive]}\"/"     \
-        -e "s/(\$color_groupbar_active) .*/\1 = \"${THEME[groupbar_active]}\"/"           \
-        -e "s/(\$color_groupbar_inactive) .*/\1 = \"${THEME[groupbar_inactive]}\"/"       \
-        -e "s/(\$color_text_groupbar) .*/\1 = \"${THEME[groupbar_text]}\"/"               \
+        -e "s/(\$color_groupbar_active) .*/\1 = \"${THEME[group_active_bg]}\"/"           \
+        -e "s/(\$color_text_groupbar_active) .*/\1 = \"${THEME[group_active_text]}\"/"               \
+        -e "s/(\$color_groupbar_inactive) .*/\1 = \"${THEME[group_inactive_bg]}\"/"       \
+        -e "s/(\$color_text_groupbar_inactive) .*/\1 = \"${THEME[group_inactive_text]}\"/"               \
         -e "s/(\$color_shadow) .*/\1 = \"${THEME[shadow]}\"/"                             \
         -e "s/(\$color_shadow_inactive) .*/\1 = \"${THEME[shadow]}\"/"                    \
         "$staged"

@@ -23,6 +23,7 @@ set_theme() {
     if [ -n "$theme" ]; then
         hypr-generate-themes "${theme,,}"
         [[ $DESKTOP_SESSION == "bspwm" ]] && bspc wm --restart
+
         notify-send -u low "Colors" "Change colors to $theme"
     fi
 }
