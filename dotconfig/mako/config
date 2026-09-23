@@ -1,31 +1,17 @@
 font=Adwaita Sans 11
-background-color=#5E81ACDD
-text-color=#E5E9F0
-border-color=#E5E9F0
 border-radius=10
-border-size=1
+border-size=2
 max-visible=5
+height=150
 default-timeout=5000
 anchor=top-right
 outer-margin=10
 margin=10
 padding=15
 icons=1
-icon-path=/home/daniel/.local/share/icons/ePapirus
+icon-path=/home/daniel/.local/share/icons/Papirus
 max-icon-size=32
 icon-location=left
 group-by=category,summary
 
-[urgency=low]
-background-color=#1e1e2eDD
-
-[urgency=normal]
-background-color=#5E81ACDD
-
-[urgency=critical]
-background-color=#BF616ADD
-
-[category=OSD]
-background-color=#1e1e2eDD
-progress-color=#74c7ec55
-format=%s\n%b
+include=/home/daniel/.config/mako/colors
