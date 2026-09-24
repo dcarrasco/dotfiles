@@ -16,7 +16,7 @@ notify() {
     local mesg=$1
     echo "aca"
 
-    notify-send -u low -i keyboard "Keyboard" "$mesg"
+    notify-send -u low -i preferences-desktop-keyboard "Keyboard" "$mesg"
 }
 
 bspwm_next() {

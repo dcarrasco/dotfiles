@@ -35,7 +35,7 @@ set_font() {
             sed -i "s/^family = \".*\"/family = \"$font\"/" "$ALACRITTY_CONF"
         fi
 
-        notify-send -u low "Fonts" "Change font to $font"
+        notify-send -u low -i preferences-desktop-font "Fonts" "Change font to $font"
     fi
 }
 

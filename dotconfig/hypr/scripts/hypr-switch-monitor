@@ -71,7 +71,7 @@ load_rofi() {
 notify() {
     local message=$1
 
-    notify-send -u low -i display 'Pantalla' "$message"
+    notify-send -u low -i preferences-desktop-display 'Pantalla' "$message"
 }
 
 hyprland_monitors() {

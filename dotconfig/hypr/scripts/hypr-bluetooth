@@ -31,7 +31,7 @@ bluetooth_toggle() {
         # printf 'Apagando bluetooth\n'
     fi
 
-    notify-send -u low -i bluetooth "Bluetooth" "Set bluetooth $(bluetooth_state)"
+    notify-send -u low -i preferences-bluetooth "Bluetooth" "Set bluetooth $(bluetooth_state)"
 }
 
 case "$1" in

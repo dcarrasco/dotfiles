@@ -14,5 +14,5 @@ else
 fi
 
 if [[ $SILENT != silent && $SILENT != --silent ]]; then
-    notify-send -u low -i reload "Waybar" "$action Waybar"
+    notify-send -u low -i preferences-desktop-theme "Waybar" "$action Waybar"
 fi

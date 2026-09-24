@@ -29,7 +29,7 @@ set_to() {
             ;;
     esac
 
-    notify-send -u low "Power Management" "New profile: $profile"
+    notify-send -u low -i preferences-system-power-management "Power Management" "New profile: $profile"
 }
 
 next() {

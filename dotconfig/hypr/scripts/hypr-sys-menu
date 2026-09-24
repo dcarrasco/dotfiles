@@ -45,7 +45,7 @@ present_terminal() {
 edit_file() {
     local file=$1
 
-    notify-send -u low 'Editing config file' "$file"
+    notify-send -u low -i preferences-desktop 'Editing config file' "$file"
     cd "$(dirname "$file")" || exit 1
     "$TERMINAL" nvim "$file"
 }

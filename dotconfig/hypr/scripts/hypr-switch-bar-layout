@@ -47,7 +47,7 @@ set_style() {
         sed -i "s|\"themes/.*\"|\"themes/$1.css\"|" "$WAYBAR_STYLE"
 
         restore_bar
-        notify-send -u low "Bar style" "Change style to $style"
+        notify-send -u low -i topmenu-applet "Bar style" "Change style to $style"
     fi
 
 }
@@ -71,7 +71,7 @@ set_position() {
         fi
 
         restore_bar
-        notify-send -u low "Bar position" "Change bar position to $position"
+        notify-send -u low -i topmenu-applet "Bar position" "Change bar position to $position"
     fi
 }
 
@@ -117,7 +117,7 @@ set_stack() {
         fix_float_margin "$("$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-bar-layout" --get-position)" "$stacked"
 
         restore_bar
-        notify-send -u low "Bar stack" "Change bar position to $stacked"
+        notify-send -u low -i topmenu-applet "Bar stack" "Change bar position to $stacked"
     fi
 }
 

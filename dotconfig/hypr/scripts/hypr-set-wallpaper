@@ -16,5 +16,5 @@ if [ -n "$wallpaper" ]; then
     hyprctl hyprpaper wallpaper "DP-8,$wallpaper"
     hyprctl hyprpaper wallpaper "DP-9,$wallpaper"
 
-    notify-send -u low -i background "Set wallpaper" "${wallpaper##*/}"
+    notify-send -u low -i preferences-wallpaper "Set wallpaper" "${wallpaper##*/}"
 fi
