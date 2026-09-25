@@ -57,7 +57,7 @@ exec_pgm() {
 
 load_rofi() {
     local -r font='Hack Nerd Font 15'
-    local -r theme='entry{placeholder:"Search...";} window{width:22%;}'
+    local -r theme='entry{placeholder:"Search...";} window{width:calc(22% min 400px);}'
 
     rofi \
         -show sysmenu \

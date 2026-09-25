@@ -13,14 +13,14 @@ MENU_ARROW_COLOR=
 export PATH="$SCRIPT_PATH:$PATH"
 
 die() {
-    printf 'ERROR: %s\n' "$*" >&2
+    printf '[ERROR] %s\n' "$*" >&2
     notify-send -u critical -t 0 -i dialog-warning 'ERROR: hypr-sys-menu' "$*"
     exit 1
 }
 
 debug() {
     [[ ${HYPR_SYS_MENU_DEBUG:-false} == true ]] || return 0
-    printf 'DEBUG: %s\n' "$*" >&2
+    printf '[DEBUG] %s\n' "$*" >&2
 }
 
 exec_pgm() {
@@ -312,7 +312,7 @@ handle_selection() {
 
 load_rofi() {
     local -r font='Hack Nerd Font 16'
-    local -r theme='entry{placeholder:"Search...";} window{width:22%;}'
+    local -r theme="entry{placeholder:\"Search...\";} window{${ROFI_LOCATION:-} width:calc (22% min 400px);}"
 
     rofi \
         -show sysmenu \
@@ -326,19 +326,29 @@ load_rofi() {
 }
 
 main() {
-    local initial_menu=${1:-main}
+    debug "MAIN: n_param: $# ($*)"
+    local initial_menu=main
 
-    if [[ -z ${ROFI_RETV:-} ]]; then
-        export INI_MENU="$initial_menu"
-        load_rofi
-        return
-    fi
+    while [[ $# -gt 1 ]]; do
+        case $1 in
+            --location)
+                ROFI_LOCATION="location:$2;"
+                shift 2
+                ;;
+            --menu)
+                initial_menu=$2
+                shift 2
+                ;;
+        esac
+    done
 
-    case $ROFI_RETV in
-        0)   render "${INI_MENU:-main}" ;;
-        1)   handle_selection ;;
-        10)  render_parent_menu ;;
-        *)   die "Unexpected Rofi return value: $ROFI_RETV" ;;
+    debug "MAIN: ROFI_RETV: ${ROFI_RETV:-}"
+    case ${ROFI_RETV:-load_rofi} in
+        load_rofi)  export INI_MENU="$initial_menu"; load_rofi ;;
+        0)          render "${INI_MENU:-main}" ;;
+        1)          handle_selection ;;
+        10)         render_parent_menu ;;
+        *)          die "Unexpected Rofi return value: $ROFI_RETV" ;;
     esac
 }
 

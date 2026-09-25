@@ -49,7 +49,7 @@ if [ ! -f "$ALACRITTY_CONF" ]; then
 fi
 
 if [[ -z "${1:-}" ]]; then
-    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "style"
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" --menu style
 else
     case "$1" in
         set | --set)                set_font "$2" ;;

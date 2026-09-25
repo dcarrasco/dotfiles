@@ -7,7 +7,7 @@ return {
   { key = "CTRL + SPACE", dsp = HYPR.apps.launcher_run, desc = "Open run launcher" },
   { key = "CTRL + V", dsp = HYPR.fn.scripts("hypr-list-vm"), desc = "List virtual machines" },
   { key = "CTRL + Q", dsp = HYPR.apps.logout, desc = "System menu" },
-  { key = "comma", dsp = HYPR.fn.scripts("hypr-sys-menu setup.conf"), desc = "Edit config files" },
+  { key = "comma", dsp = HYPR.fn.scripts("hypr-sys-menu --menu setup.conf"), desc = "Edit config files" },
   { key = "XF86AudioMute", dsp = HYPR.fn.scripts("hypr-show-keybinds"), desc = "Show keyboard bindings" },
   { key = "F1", dsp = HYPR.fn.scripts("hypr-show-keybinds"), desc = "Show keyboard bindings" },
   { mod = "", key = "Help", dsp = HYPR.fn.scripts("hypr-show-keybinds"), desc = "Show keyboard bindings" },

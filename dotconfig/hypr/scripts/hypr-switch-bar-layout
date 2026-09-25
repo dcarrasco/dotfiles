@@ -125,7 +125,7 @@ create_config_file "$WAYBAR_STYLE"
 create_config_file "$WAYBAR_LAYOUT"
 
 if [ -z "${1:-}" ]; then
-    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" "style"
+    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" --menu style
 else
     case "$1" in
         list-styles | --list-styles)    list_styles ;;
