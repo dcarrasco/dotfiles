@@ -11,7 +11,7 @@
 -- monitor=name,resolution,position,scale
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 hl.monitor({ output = "eDP-1", mode = "preferred", position = "0x0", scale = 1.25 })
-hl.monitor({ output = "DP-8", mode = "3840x2160", position = "2240x0", scale = 1.25 })
+hl.monitor({ output = "DP-8",  mode = "3840x2160", position = "2240x0", scale = 1.5 })
 hl.monitor({ output = "Virtual-1", mode = "1920x1080", position = "auto", scale = 1 })
 
 for i = 1, 5 do
