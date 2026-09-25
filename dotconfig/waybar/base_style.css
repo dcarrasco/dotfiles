@@ -46,6 +46,7 @@ tooltip label {
     color: @fg-normal;
     font-weight: 400;
     font-size: 10pt;
+    text-shadow: none;
 }
 
 #workspaces {

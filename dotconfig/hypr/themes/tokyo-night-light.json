@@ -18,8 +18,8 @@
     },
 
     "roles": {
-        "border_active":       "magenta",
-        "border_active_alt":   "cyan",
+        "border_active":       "cyan",
+        "border_active_alt":   "magenta",
         "border_inactive":     "black2",
         "border_group":        "yellow",
         "shadow":              { "color": "white", "alpha": 0.60 },
