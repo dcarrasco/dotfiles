@@ -1,47 +1,53 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 window_status() {
-    echo "$(hyprctl activewindow | grep $1 | cut -d : -f 2)" | xargs
+    local status=$1
+
+    hyprctl -j activewindow | jq -r ".$status"
 }
 
-rofi=$(hyprctl activewindow | grep class | grep Rofi | wc -l)
+window_grouped() {
+    hyprctl -j activewindow | jq -r ".grouped | length"
+}
+
+rofi=$(hyprctl activewindow | grep class | grep -c Rofi)
 
 client_status=""
 extra_status=""
 
-if [ $rofi = 0 ]; then
+if [[ $rofi == 0 ]]; then
     if [ "$(hyprctl activewindow)" != "Invalid" ]; then
         # client_status="     "
         client_status=""
     fi
 
-    if [ "$(window_status floating)" = "1" ]; then
-        # client_status=" "
-        client_status=" "
+    if [[ "$(window_status floating)" == true ]]; then
+        # client_status=" 󱂬    󰖲       "
+        client_status=" "
     fi
 
-    if [ "$(window_status fullscreen:)" = "1" ]; then
+    if [[ "$(window_status fullscreen)" == 1 ]]; then
         # client_status=" "
         # client_status="  "
         # client_status="  "
-        # client_status=" "
-        client_status=" "
+        # client_status=" "
+        client_status=" "
     fi
 
-    if [ "$(window_status fullscreenClient)" = "2" ]; then
+    if [[ "$(window_status fullscreenClient)" == 2 ]]; then
         # extra_status=" "
         # extra_status="           "
         # extra_status=" "
         extra_status=" "
     fi
 
-    if [ "$(window_status pinned)" = "1" ]; then
+    if [[ "$(window_status pinned)" == true ]]; then
         # pinned_status=" "
         # pinned_status=" 󰐃  󰤱   "
         client_status=" "
     fi
 
-    if [ "$(window_status grouped)" != "0" ] && [ "$(window_status grouped)" != "" ]; then
+    if [[ "$(window_grouped)" != 0 ]]; then
         # extra_status=" "
         extra_status=" "
     fi
