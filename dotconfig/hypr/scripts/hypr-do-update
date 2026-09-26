@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 "$XDG_CONFIG_HOME/hypr/scripts/hypr-show-title" "Update system packages..."
 # figlet -c "Update"
@@ -15,15 +15,15 @@ log_installed_pkgs() {
 }
 
 installed_file=$HOME/installed_pkg.txt
-os=$(grep ^NAME= /etc/os-release | cut -d = -f 2 | tr -d '"')
+os="$(sed -n 's/^NAME="\(.*\)"/\1/p' /etc/os-release)"
 
 case ${os,,} in
-    *cachyos*)
+    cachyos*)
         sudo pacman -Ssy
         update_flatpak
         log_installed_pkgs
         ;;
-    *fedora*)
+    fedora*)
         sudo dnf upgrade
         update_flatpak
         log_installed_pkgs
@@ -33,7 +33,7 @@ esac
 
 # Reload update indicator after updating system
 case  "$DESKTOP_SESSION" in
-    bspwm) bspc wm --restart ;;
-    *)     pkill -RTMIN+7 waybar ;;
+    bspwm)  bspc wm --restart ;;
+    *)      pkill -RTMIN+7 waybar ;;
 esac
 

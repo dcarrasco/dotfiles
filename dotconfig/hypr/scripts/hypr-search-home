@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-filename=$(fd . "/home/daniel/" -t f | sed 's/\/home\/daniel\///g' | rofi -dmenu -i -p "Archivos")
+filename=$(fd . "$HOME" -t f | sed "s|$HOME/||" | rofi -dmenu -i -p "Archivos")
 
 if [[ -n "$filename" ]]; then
     xdg-open "/home/daniel/$filename"

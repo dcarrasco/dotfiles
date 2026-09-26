@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -7,13 +7,13 @@ WAYBAR_LAYOUT=$XDG_CONFIG_HOME/waybar/theme.jsonc
 STYLES_DIR=$XDG_CONFIG_HOME/waybar/themes
 
 create_config_file() {
-    if [ ! -f "$1" ]; then
+    if [[ ! -f "$1" ]]; then
         cp "${1}.orig" "$1"
     fi
 }
 
 restore_bar() {
-    if [ "$DESKTOP_SESSION" = "bspwm" ]; then
+    if [[ "$DESKTOP_SESSION" == bspwm ]]; then
         bspc wm --restart;
     else
         "$XDG_CONFIG_HOME/hypr/scripts/hypr-restore-waybar" --silent;
@@ -25,10 +25,10 @@ fix_float_margin() {
 
     if [[ $position == top ]]; then
         echo "top"
-        sed -i "s/\"margin-bottom\":.*/\"margin-bottom\": 0/" "$WAYBAR_LAYOUT"
+        sed -i -E 's/("margin-bottom"):.*/\1: 0/' "$WAYBAR_LAYOUT"
     else
         echo "bottom"
-        sed -i "s/\"margin-top\":.*/\"margin-top\": 0,/" "$WAYBAR_LAYOUT"
+        sed -i -E 's/("margin-top"):.*/\1: 0,/' "$WAYBAR_LAYOUT"
     fi
 }
 
@@ -43,7 +43,7 @@ get_style() {
 set_style() {
     local style=$1
 
-    if [ -n "$style" ]; then
+    if [[ -n "$style" ]]; then
         sed -i "s|\"themes/.*\"|\"themes/$1.css\"|" "$WAYBAR_STYLE"
 
         restore_bar
@@ -61,7 +61,7 @@ set_position() {
     local stack
 
     if [ -n "$position" ]; then
-        sed -i "s/\"position\":.*/\"position\": \"$position\",/" "$WAYBAR_LAYOUT"
+        sed -i -E "s/(\"position\"):.*/\1: \"$position\",/" "$WAYBAR_LAYOUT"
 
         # fixes top/bottom margin in case of floating bar
         stack="$("$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-bar-layout" --get-stack)"
@@ -88,17 +88,17 @@ set_stack() {
     local margin=7
     local position margin_top margin_bottom
 
-    if [ -n "$stacked" ]; then
+    if [[ -n "$stacked" ]]; then
         case $stacked in
             stacked)
-                sed -i "s/\"margin-top\":.*/\"margin-top\": 0,/" "$WAYBAR_LAYOUT"
-                sed -i "s/\"margin-left\":.*/\"margin-left\": 0,/" "$WAYBAR_LAYOUT"
-                sed -i "s/\"margin-right\":.*/\"margin-right\": 0,/" "$WAYBAR_LAYOUT"
-                sed -i "s/\"margin-bottom\":.*/\"margin-bottom\": 0/" "$WAYBAR_LAYOUT"
+                sed -i -E 's/("margin-top").*/\1: 0,/' "$WAYBAR_LAYOUT"
+                sed -i -E 's/("margin-left").*/\1: 0,/' "$WAYBAR_LAYOUT"
+                sed -i -E 's/("margin-right").*/\1: 0,/' "$WAYBAR_LAYOUT"
+                sed -i -E 's/("margin-bottom").*/\1: 0/' "$WAYBAR_LAYOUT"
                 ;;
             floating)
-                sed -i "s/\"margin-left\":.*/\"margin-left\": $margin,/" "$WAYBAR_LAYOUT"
-                sed -i "s/\"margin-right\":.*/\"margin-right\": $margin,/" "$WAYBAR_LAYOUT"
+                sed -i -E "s/(\"margin-left\").*/\1: $margin,/" "$WAYBAR_LAYOUT"
+                sed -i -E "s/(\"margin-right\").*/\1: $margin,/" "$WAYBAR_LAYOUT"
 
                 position="$("$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-bar-layout" --get-position)"
                 if [[ $position == top ]]; then
@@ -109,8 +109,8 @@ set_stack() {
                     margin_bottom=$margin
                 fi
 
-                sed -i "s/\"margin-top\":.*/\"margin-top\": $margin_top,/" "$WAYBAR_LAYOUT"
-                sed -i "s/\"margin-bottom\":.*/\"margin-bottom\": $margin_bottom/" "$WAYBAR_LAYOUT"
+                sed -i -E "s/(\"margin-top\":).*/\1 $margin_top,/" "$WAYBAR_LAYOUT"
+                sed -i -E "s/(\"margin-bottom\":).*/\1 $margin_bottom/" "$WAYBAR_LAYOUT"
                 ;;
         esac
 

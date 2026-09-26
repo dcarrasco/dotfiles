@@ -15,7 +15,7 @@ window {
     border: 3px;
     border-color: @window-border;
     border-radius: 12px;
-    height: calc(60% min 700px);
+    height: calc(61% min 700px);
     width: calc(50% min 900px);
     margin: 0 0 0 0;
     spacing: 0;

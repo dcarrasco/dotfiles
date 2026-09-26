@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -7,7 +7,7 @@ THEME_STATE=$STATE_HOME/hypr/theme
 THEMES_DIR=$XDG_CONFIG_HOME/hypr/themes
 
 current_theme() {
-    if [ -r "$THEME_STATE" ]; then
+    if [[ -r "$THEME_STATE" ]]; then
         IFS= read -r current < "$THEME_STATE"
         printf '%s' "$current"
     fi
@@ -20,7 +20,7 @@ get_themes() {
 set_theme() {
     local theme=$1
 
-    if [ -n "$theme" ]; then
+    if [[ -n "$theme" ]]; then
         hypr-generate-themes "${theme,,}"
         [[ $DESKTOP_SESSION == "bspwm" ]] && bspc wm --restart
 

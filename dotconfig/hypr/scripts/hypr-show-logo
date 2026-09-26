@@ -1,7 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 clear
 printf '\e[34m'
 cat < ~/.config/hypr/scripts/logo.txt
-printf '\e[0m'
-echo
+printf '\e[0m\n'

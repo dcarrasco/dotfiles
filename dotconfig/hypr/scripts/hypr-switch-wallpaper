@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 readonly -a WALLPAPER_FOLDERS=(
     "$HOME/Imágenes/fondos pantalla/abstract"
@@ -50,6 +50,6 @@ case "$1" in
         ;;
 esac
 
-if [ -n "$wallpaper" ]; then
+if [[ -n "$wallpaper" ]]; then
     "$XDG_CONFIG_HOME/hypr/scripts/hypr-set-wallpaper" "$wallpaper"
 fi
