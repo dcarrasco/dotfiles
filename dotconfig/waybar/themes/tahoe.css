@@ -10,6 +10,7 @@ __        __          _                      _         _
 * {
     font-family: SF UI Display, SF Mono, Helvetica, Arial, sans-serif;
     font-size: 12pt;
+    text-shadow: 1px 1px 1px @shadow;
 }
 
 window#waybar {

@@ -21,7 +21,7 @@ __        __          _                  ____                   ____  _         
 }
 
 .modules-left, .modules-right, .modules-center {
-    padding: 0;
+    padding: 2px 0;
 }
 
 .modules-left {
