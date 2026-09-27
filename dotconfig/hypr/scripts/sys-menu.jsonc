@@ -10,34 +10,37 @@
     "system":  { "icon": "", "label": "System" },
 
     // STYLE
-    "style.colors":     { "icon": "󰸌", "label": "Colors", "options": "theme_colors", "action": ["hypr-switch-colors", "--set"] },
-    "style.bar_style":  { "icon": "", "label": "Bar Style", "options": "bar_styles", "action": ["hypr-switch-bar-layout", "--set-style"] },
+    "style.colors":     { "icon": "󰸌", "label": "Theme Colors", "options": "theme_colors", "action": ["hypr-switch-colors", "--set"] },
     "style.bar_layout": { "icon": "", "label": "Bar Layout" },
     "style.fonts":      { "icon": "", "label": "Font", "options": "fonts", "action": ["hypr-switch-font", "--set"] },
     "style.background": { "icon": "", "label": "Background", "action": ["hypr-switch-wallpaper"] },
     "style.random_bg":  { "icon": "", "label": "Random Background", "action": ["hypr-switch-wallpaper", "random"] },
     "style.hyprland":   { "icon": "", "label": "Hyprland", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/looknfeel.lua"] },
 
+    // BAR LAYOUT
+    "style.bar_layout.style":    { "icon": "", "label": "Bar Style", "options": "bar_styles", "action": ["hypr-switch-bar-layout", "--set-style"] },
+    "style.bar_layout.position": { "icon": "󱔓", "label": "Bar Position" },
+    "style.bar_layout.stack":    { "icon": "󱂬", "label": "Stacked/Floating" },
+    "style.bar_layout.modules":  { "icon": "", "label": "Bar Modules", "action": ["edit_file", "$CONFIG_HOME/waybar/base_layout.jsonc"] },
+
     // BAR POSITION
-    "style.bar_layout.position": { "icon": "", "label": "Position" },
-    "style.bar_layout.position.top":    { "icon": "", "label": "Top", "action": ["hypr-switch-bar-layout", "--set-position", "top"], "checked": "bar_top" },
-    "style.bar_layout.position.bottom": { "icon": "", "label": "Bottom", "action": ["hypr-switch-bar-layout", "--set-position", "bottom"], "checked": "bar_bottom"},
+    "style.bar_layout.position.top":    { "icon": "󰞕", "label": "Top",    "action": ["hypr-switch-bar-layout", "--set-position", "top"], "checked": "bar_top" },
+    "style.bar_layout.position.bottom": { "icon": "󰞒", "label": "Bottom", "action": ["hypr-switch-bar-layout", "--set-position", "bottom"], "checked": "bar_bottom"},
 
     // BAR STACKED
-    "style.bar_layout.stack": { "icon": "", "label": "Stack" },
-    "style.bar_layout.stack.stacked":  { "icon": "󰞕", "label": "Stacked", "action": ["hypr-switch-bar-layout", "--set-stack", "stacked"], "checked": "bar_stacked" },
+    "style.bar_layout.stack.stacked":  { "icon": "󰞕", "label": "Stacked",  "action": ["hypr-switch-bar-layout", "--set-stack", "stacked"], "checked": "bar_stacked" },
     "style.bar_layout.stack.floating": { "icon": "", "label": "Floating", "action": ["hypr-switch-bar-layout", "--set-stack", "floating"], "checked": "bar_floating" },
 
     // LEARN
     "learn.keybindings": {"icon": "", "label": "Keybindings", "action": ["hypr-show-keybinds"] },
-    "learn.omarchy":     {"icon": "", "label": "Omarchy", "action": ["webapp", "https://manuals.omamix.org/2/the-omarchy-manual"] },
-    "learn.hyprland":    {"icon": "", "label": "Hyprland", "action": ["webapp", "https://wiki.hypr.land/"] },
-    "learn.waybar":      {"icon": "", "label": "Waybar", "action": ["webapp", "https://github.com/Alexays/Waybar/wiki"] },
-    "learn.nerdfonts":   {"icon": "", "label": "NerdFonts", "action": ["webapp", "https://www.nerdfonts.com/cheat-sheet"] },
-    "learn.arch":        {"icon": "󰣇", "label": "Arch", "action": ["webapp", "https://wiki.archlinux.org/title/Main_page"] },
-    "learn.neovim":      {"icon": "", "label": "Neovim", "action": ["webapp", "https://www.lazyvim.org/keymaps"] },
-    "learn.bash":        {"icon": "󱆃", "label": "Bash", "action": ["webapp", "https://devhints.io/bash"] },
-    "learn.tmux":        {"icon": "", "label": "Tmux", "action": ["webapp", "https://tmuxcheatsheet.com"] },
+    "learn.omarchy":     {"icon": "", "label": "Omarchy",     "action": ["webapp", "https://manuals.omamix.org/2/the-omarchy-manual"] },
+    "learn.hyprland":    {"icon": "", "label": "Hyprland",    "action": ["webapp", "https://wiki.hypr.land/"] },
+    "learn.waybar":      {"icon": "", "label": "Waybar",      "action": ["webapp", "https://github.com/Alexays/Waybar/wiki"] },
+    "learn.nerdfonts":   {"icon": "", "label": "NerdFonts",   "action": ["webapp", "https://www.nerdfonts.com/cheat-sheet"] },
+    "learn.arch":        {"icon": "󰣇", "label": "Arch",        "action": ["webapp", "https://wiki.archlinux.org/title/Main_page"] },
+    "learn.neovim":      {"icon": "", "label": "Neovim",      "action": ["webapp", "https://www.lazyvim.org/keymaps"] },
+    "learn.bash":        {"icon": "󱆃", "label": "Bash",        "action": ["webapp", "https://devhints.io/bash"] },
+    "learn.tmux":        {"icon": "", "label": "Tmux",        "action": ["webapp", "https://tmuxcheatsheet.com"] },
 
     // TRIGGER
     "trigger.search":  { "icon": "", "label": "Search Home", "action": ["hypr-search-home"] },
@@ -116,12 +119,12 @@
     // UPDATE
     "update.update":  { "icon": "", "label": "Update", "action": ["present_terminal", "hypr-do-update"] },
     "update.install": { "icon": "󰉉", "label": "Install package", "action": ["terminal", "hypr-pkg-install; hypr-show-done"] },
-    "update.remove":  { "icon": "󰭌", "label": "Remove package", "action": ["terminal", "hypr-pkg-remove; hypr-show-done"] },
+    "update.remove":  { "icon": "󰭌", "label": "Remove package",  "action": ["terminal", "hypr-pkg-remove; hypr-show-done"] },
 
     // SYSTEM
-    "system.lock":     { "icon": "", "label": "Lock", "action": ["hyprlock"] },
-    "system.logout":   { "icon": "󰗽", "label": "Logout", "action": ["loginctl", "terminate-user", "$USER"] },
-    "system.suspend":  { "icon": "", "label": "Suspend", "action": ["systemctl", "suspend"] },
-    "system.reboot":   { "icon": "", "label": "Reboot", "action": ["systemctl", "reboot"] },
+    "system.lock":     { "icon": "", "label": "Lock",      "action": ["hyprlock"] },
+    "system.logout":   { "icon": "󰗽", "label": "Logout",    "action": ["loginctl", "terminate-user", "$USER"] },
+    "system.suspend":  { "icon": "", "label": "Suspend",   "action": ["systemctl", "suspend"] },
+    "system.reboot":   { "icon": "", "label": "Reboot",    "action": ["systemctl", "reboot"] },
     "system.poweroff": { "icon": "󰐥", "label": "Power off", "action": ["systemctl", "poweroff"] }
 }

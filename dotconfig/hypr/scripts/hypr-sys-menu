@@ -80,15 +80,14 @@ title_case() {
 
 entries_bar_styles() {
     local menu_item=$1
-    local current_style style
+    local current_style style selected
     local -a styles=()
 
     current_style="$(hypr-switch-bar-layout --get-style)"
     mapfile -t styles < <(hypr-switch-bar-layout --list-styles )
 
     for style in "${styles[@]}"; do
-        local selected=false
-        [[ $style == "$current_style" ]] && selected=true
+        [[ $style == "$current_style" ]] && selected=true || selected=false
 
         entry "${style^}" "act:$menu_item:$style" "$selected"
     done
@@ -96,15 +95,14 @@ entries_bar_styles() {
 
 entries_theme_colors() {
     local menu_item=$1
-    local current_theme theme_name
+    local current_theme theme_name selected
     local -a themes=()
 
     current_theme="$(hypr-switch-colors --current)"
     mapfile -t themes < <(hypr-switch-colors --get-themes)
 
     for theme_name in "${themes[@]}"; do
-        local selected=false
-        [[ $theme_name == "$current_theme" ]] && selected=true
+        [[ $theme_name == "$current_theme" ]] && selected=true || selected=false
 
         entry "$(title_case "$theme_name")" "act:$menu_item:$theme_name" "$selected"
     done
@@ -119,8 +117,8 @@ entries_fonts() {
     mapfile -t fonts < <(hypr-switch-font --get-fonts)
 
     for font in "${fonts[@]}"; do
-        selected=false
-        [[ $font == "$current_font" ]] && selected=true
+        [[ $font == "$current_font" ]] && selected=true || selected=false
+
         label="<span size=\"small\" font_family=\"$font\">$font</span>"
 
         entry "$label" "act:$menu_item:$font" "$selected"
@@ -156,6 +154,8 @@ render_parent_menu() {
 
     local parent_menu=${current_menu%.*}
     [[ $parent_menu == "$current_menu" ]] && parent_menu='main'
+
+    debug "render_parent_menu: current_menu: $current_menu parent_menu: $parent_menu"
 
     render "$parent_menu"
 }
@@ -218,21 +218,35 @@ menu_label() {
     printf '%s<span color="%s"></span>' "$label" "$MENU_ARROW_COLOR"
 }
 
+set_rofi_option() {
+    local option=$1
+    local value=$2
+
+    printf '\0%s\x1f%s\n' "$option" "$value"
+}
+
+render_header() {
+    local menu_item=${1:-main}
+    local title
+
+    title=$(menu_title "$menu_item")
+
+    set_rofi_option prompt       "${title:-Start}"
+    set_rofi_option data         "$menu_item"
+    # set_rofi_option no-custom    true
+    set_rofi_option markup-rows  true
+    set_rofi_option use-hot-keys true
+}
+
 render() {
     local menu_item=${1:-main}
-    local title rows
+    local rows
     local selected=false
     local name icon label action options checked
 
-    title=$(menu_title "$menu_item")
+    render_header "$menu_item"
+
     rows=$(process_menu "$menu_item")
-
-    printf '\0prompt\x1f%s\n' "${title:-Start}"
-    printf '\0no-custom\x1ftrue\n'
-    printf '\0markup-rows\x1ftrue\n'
-    printf '\0data\x1f%s\n' "$menu_item"
-    printf '\0use-hot-keys\x1ftrue\n'
-
     [[ -n "$rows" ]] || return 0
 
     while IFS=$'\x1e' read -r name icon label action options checked; do
@@ -247,6 +261,21 @@ render() {
             entry "$icon  $label" "menu:$name" ""
         fi
     done <<< "$rows"
+}
+
+render_options() {
+    local menu_item=$1
+    local options_cmd
+
+    debug "render_options: menu_item: $menu_item"
+
+    render_header "$menu_item"
+
+    # shellcheck disable=SC2016 # $menu is a jq variable.
+    options_cmd="entries_$(menu_query --arg menu "$menu_item" '.[$menu].options')"
+    declare -F "$options_cmd" >/dev/null || die "invalid options function: $options_cmd"
+
+    "$options_cmd" "$menu_item"
 }
 
 run_action() {
@@ -287,20 +316,10 @@ run_action() {
     exec_pgm "${action[@]}"
 }
 
-render_options() {
-    local menu_item=$1
-    local options_cmd
-
-    # shellcheck disable=SC2016 # $menu is a jq variable.
-    options_cmd="entries_$(menu_query --arg menu "$menu_item" '.[$menu].options')"
-
-    declare -F "$options_cmd" >/dev/null || die "invalid options function: $options_cmd"
-
-    "$options_cmd" "$menu_item"
-}
-
 handle_selection() {
     local info="${ROFI_INFO:-}"
+
+    debug "handle_selection: $info"
 
     case $info in
         menu:*)  render         "${info#menu:}" ;;
@@ -326,6 +345,7 @@ load_rofi() {
 }
 
 main() {
+    debug "------------------------------"
     debug "MAIN: n_param: $# ($*)"
     local initial_menu=main
 
@@ -343,10 +363,12 @@ main() {
     done
 
     debug "MAIN: ROFI_RETV: ${ROFI_RETV:-}"
+    debug "MAIN: ROFI_DATA: ${ROFI_DATA:-}"
     case ${ROFI_RETV:-load_rofi} in
         load_rofi)  export INI_MENU="$initial_menu"; load_rofi ;;
         0)          render "${INI_MENU:-main}" ;;
         1)          handle_selection ;;
+        2)          exit 0 ;;
         10)         render_parent_menu ;;
         *)          die "Unexpected Rofi return value: $ROFI_RETV" ;;
     esac
