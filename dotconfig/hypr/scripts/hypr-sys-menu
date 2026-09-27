@@ -83,8 +83,8 @@ entries_bar_styles() {
     local current_style style selected
     local -a styles=()
 
-    current_style="$(hypr-switch-bar-layout --get-style)"
-    mapfile -t styles < <(hypr-switch-bar-layout --list-styles )
+    current_style="$(hypr-bar-layout --get-style)"
+    mapfile -t styles < <(hypr-bar-layout --list-styles )
 
     for style in "${styles[@]}"; do
         [[ $style == "$current_style" ]] && selected=true || selected=false
@@ -130,10 +130,10 @@ checked_option() {
     local checked=false
 
     case $option in
-        bar_top)        [[ $(hypr-switch-bar-layout --get-position) == top ]]  && checked=true;;
-        bar_bottom)     [[ $(hypr-switch-bar-layout --get-position) == bottom ]] && checked=true ;;
-        bar_stacked)    [[ $(hypr-switch-bar-layout --get-stack) == stacked ]] && checked=true ;;
-        bar_floating)   [[ $(hypr-switch-bar-layout --get-stack) == floating ]] && checked=true ;;
+        bar_top)        [[ $(hypr-bar-layout --get-position) == top ]]  && checked=true;;
+        bar_bottom)     [[ $(hypr-bar-layout --get-position) == bottom ]] && checked=true ;;
+        bar_stacked)    [[ $(hypr-bar-layout --get-stack) == stacked ]] && checked=true ;;
+        bar_floating)   [[ $(hypr-bar-layout --get-stack) == floating ]] && checked=true ;;
         pm_balanced)    [[ $(hypr-switch-power-mgmt --current) == balanced ]] && checked=true ;;
         pm_performance) [[ $(hypr-switch-power-mgmt --current) == performance ]] && checked=true ;;
         pm_eco)         [[ $(hypr-switch-power-mgmt --current) == eco ]] && checked=true ;;
@@ -345,14 +345,20 @@ load_rofi() {
 }
 
 main() {
+    local initial_menu=main
+    local bar_position
+
     debug "------------------------------"
     debug "MAIN: n_param: $# ($*)"
-    local initial_menu=main
 
     while [[ $# -gt 1 ]]; do
         case $1 in
             --location)
-                ROFI_LOCATION="location:$2;"
+                bar_position=${2:-center}
+                if [[ $bar_position == bar-stacked ]]; then
+                    [[ $("$SCRIPT_PATH/hypr-bar-layout" --get-position) == top ]] && bar_position=northwest || bar_position=southwest
+                fi
+                ROFI_LOCATION="location:$bar_position;"
                 shift 2
                 ;;
             --menu)
@@ -364,6 +370,7 @@ main() {
 
     debug "MAIN: ROFI_RETV: ${ROFI_RETV:-}"
     debug "MAIN: ROFI_DATA: ${ROFI_DATA:-}"
+    debug "MAIN: ROFI_LOCATION: ${ROFI_LOCATION:-}"
     case ${ROFI_RETV:-load_rofi} in
         load_rofi)  export INI_MENU="$initial_menu"; load_rofi ;;
         0)          render "${INI_MENU:-main}" ;;

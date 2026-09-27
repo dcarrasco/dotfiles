@@ -364,7 +364,7 @@
         "format": "",
         "tooltip": true,
         "tooltip-format": "Start menu",
-        "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu --location northwest",
+        "on-click": "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu --location bar-stacked",
         "on-click-right": "kitty"
     },
 

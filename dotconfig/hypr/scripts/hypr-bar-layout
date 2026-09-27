@@ -64,7 +64,7 @@ set_position() {
         sed -i -E "s/(\"position\"):.*/\1: \"$position\",/" "$WAYBAR_LAYOUT"
 
         # fixes top/bottom margin in case of floating bar
-        stack="$("$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-bar-layout" --get-stack)"
+        stack="$("$XDG_CONFIG_HOME/hypr/scripts/hypr-bar-layout" --get-stack)"
         if [[ $stack == floating ]]; then
             set_stack "$stack"
             fix_float_margin "$position" "$stack"
@@ -100,7 +100,7 @@ set_stack() {
                 sed -i -E "s/(\"margin-left\").*/\1: $margin,/" "$WAYBAR_LAYOUT"
                 sed -i -E "s/(\"margin-right\").*/\1: $margin,/" "$WAYBAR_LAYOUT"
 
-                position="$("$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-bar-layout" --get-position)"
+                position="$("$XDG_CONFIG_HOME/hypr/scripts/hypr-bar-layout" --get-position)"
                 if [[ $position == top ]]; then
                     margin_top=$margin
                     margin_bottom=0
@@ -114,29 +114,45 @@ set_stack() {
                 ;;
         esac
 
-        fix_float_margin "$("$XDG_CONFIG_HOME/hypr/scripts/hypr-switch-bar-layout" --get-position)" "$stacked"
+        fix_float_margin "$("$XDG_CONFIG_HOME/hypr/scripts/hypr-bar-layout" --get-position)" "$stacked"
 
         restore_bar
         notify-send -u low -i topmenu-applet "Bar stack" "Change bar position to $stacked"
     fi
 }
 
+command_help() {
+    cat << EOF
+Uso: hypr-bar-layout [OPCIONES]
+
+    --menu                  Despliega menu de seleccion de estilo de barra
+    --list-styles           Despliega listado de estilos disponibles para la barra
+    --get-style             Despliega estilo actual de la barra
+    --set-style [ESTILO]    Aplica el estilo ESTILO a la barra
+    --get-position          Devuelve la posicion de la barra
+    --set-position [POS]    Aplica la posicion POS a la barra
+    --get-stack             Devuelve si la barra es stacked o flotante
+    --set-stack [STACKED]   Aplica el tipo stacked o flotante a la barra
+
+EOF
+}
+
 create_config_file "$WAYBAR_STYLE"
 create_config_file "$WAYBAR_LAYOUT"
 
-if [ -z "${1:-}" ]; then
-    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" --menu style
-else
-    case "$1" in
-        list-styles | --list-styles)    list_styles ;;
+case "${1:-}" in
+    --menu) "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" --menu style ;;
 
-        get-style | --get-style)        get_style ;;
-        set-style | --set-style)        set_style "$2" ;;
+    list-styles | --list-styles)    list_styles ;;
 
-        get-position | --get-position)  get_position ;;
-        set-position | --set-position)  set_position "$2" ;;
+    get-style | --get-style)        get_style ;;
+    set-style | --set-style)        set_style "$2" ;;
 
-        get-stack | --get-stack)        get_stack ;;
-        set-stack | --set-stack)        set_stack "$2" ;;
-    esac
-fi
+    get-position | --get-position)  get_position ;;
+    set-position | --set-position)  set_position "$2" ;;
+
+    get-stack | --get-stack)        get_stack ;;
+    set-stack | --set-stack)        set_stack "$2" ;;
+
+    *) command_help ;;
+esac
