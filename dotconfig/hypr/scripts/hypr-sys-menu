@@ -19,7 +19,7 @@ die() {
 }
 
 debug() {
-    [[ ${HYPR_SYS_MENU_DEBUG:-false} == true ]] || return 0
+    [[ ${DEBUG:-false} == true ]] || return 0
     printf '[DEBUG] %s\n' "$*" >&2
 }
 
@@ -61,6 +61,8 @@ entry() {
     local action=$2
     local checked=${3:-false}
 
+    debug "ENTRY: label: $label, action: $action, checked: $checked"
+
     [[ $checked == true ]] && label+=' '
 
     case "$action" in
@@ -68,7 +70,7 @@ entry() {
         *)                  printf '%s' "$label" ;;
     esac
 
-    printf '\0info\x1f%s\n' "$action"
+    set_rofi_option info "$action"
 }
 
 title_case() {
@@ -222,6 +224,8 @@ set_rofi_option() {
     local option=$1
     local value=$2
 
+    debug "set_rofi_option: option: $option, value: $value"
+
     printf '\0%s\x1f%s\n' "$option" "$value"
 }
 
@@ -317,7 +321,7 @@ run_action() {
 }
 
 handle_selection() {
-    local info="${ROFI_INFO:-}"
+    local info="${ROFI_INFO:-menu:main}"
 
     debug "handle_selection: $info"
 
@@ -330,14 +334,13 @@ handle_selection() {
 }
 
 load_rofi() {
-    local -r font='Hack Nerd Font 16'
-    local -r theme="entry{placeholder:\"Search...\";} window{${ROFI_LOCATION:-} width:calc (22% min 400px);}"
+    local font='Hack Nerd Font 16'
+    local theme="entry{placeholder:\"Search...\";} window{${ROFI_LOCATION:-} width:calc (22% min 400px);}"
 
     rofi \
         -show sysmenu \
         -modes "sysmenu:$SELF" \
         -i \
-        -format p \
         -theme-str "$theme" \
         -font "$font" \
         -kb-cancel "Control+g,Control+Escape" \
@@ -345,11 +348,14 @@ load_rofi() {
 }
 
 main() {
-    local initial_menu=main
     local bar_position
 
     debug "------------------------------"
-    debug "MAIN: n_param: $# ($*)"
+    debug "MAIN: n_param: $#, params: $*"
+    debug "MAIN: ROFI_RETV: ${ROFI_RETV:-}"
+    debug "MAIN: ROFI_DATA: ${ROFI_DATA:-}"
+    debug "MAIN: ROFI_INFO: ${ROFI_INFO:-}"
+    debug "MAIN: ROFI_LOCATION: ${ROFI_LOCATION:-}"
 
     while [[ $# -gt 1 ]]; do
         case $1 in
@@ -362,19 +368,15 @@ main() {
                 shift 2
                 ;;
             --menu)
-                initial_menu=$2
+                export ROFI_INFO="menu:$2"
                 shift 2
                 ;;
         esac
     done
 
-    debug "MAIN: ROFI_RETV: ${ROFI_RETV:-}"
-    debug "MAIN: ROFI_DATA: ${ROFI_DATA:-}"
-    debug "MAIN: ROFI_LOCATION: ${ROFI_LOCATION:-}"
     case ${ROFI_RETV:-load_rofi} in
-        load_rofi)  export INI_MENU="$initial_menu"; load_rofi ;;
-        0)          render "${INI_MENU:-main}" ;;
-        1)          handle_selection ;;
+        load_rofi)  load_rofi ;;
+        0 | 1)      handle_selection ;;
         2)          exit 0 ;;
         10)         render_parent_menu ;;
         *)          die "Unexpected Rofi return value: $ROFI_RETV" ;;
