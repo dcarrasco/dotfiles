@@ -103,11 +103,13 @@ button:hover label {
 
 #custom-windowstatus {
     margin: 0;
+    padding: 0 0.5em 0 0;
 }
 
 #custom-leftsep {
     color: @accent1;
     margin: 0;
+    padding: 0 0.5em;
 }
 
 #window label {
