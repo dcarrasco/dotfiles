@@ -8,12 +8,7 @@
 */
 
 * {
-    font-family: Adwaita Sans, SF Mono, sans-serif;
-    font-size: 12pt;
-}
-
-.modules-left, .modules-right, .modules-center {
-    padding: 0 0.5em;
+    font-family: Adwaita Sans, sans-serif;
 }
 
 #waybar {

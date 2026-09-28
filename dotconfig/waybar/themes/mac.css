@@ -9,9 +9,6 @@ __      ____ _ _   _| |__   __ _ _ __   ___| |_ _   _| | ___ _   _ __ ___   __ _
 
 * {
     font-family: SF UI Text, SF Mono, sans-serif;
-    font-size: 12pt;
-    /* padding: 0; */
-    /* margin: 0; */
 }
 
 #waybar {
@@ -28,6 +25,9 @@ button.active label {
     color: @accent1;
 }
 
+#custom-start-menu {
+    margin: 2px 0;
+}
 /* ------------------------------------------------------
  * Success state
  * ------------------------------------------------------ */

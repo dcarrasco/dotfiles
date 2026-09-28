@@ -270,13 +270,14 @@
         "format-source": " {volume}%",
         "format-source-muted": "",
         "format-icons": {
+            // font awesome     
+            "default": ["󰕿", "󰖀", "󰕾"],
             "headphone": " ",
             "hands-free": "",
             "headset": " ",
             "phone": " ",
             "portable": "",
-            "car": "",
-            "default": ["", "", ""]
+            "car": ""
         },
         // "on-click": "pavucontrol",
         "on-click": "kitty --class hypr-terminal-float wiremix",

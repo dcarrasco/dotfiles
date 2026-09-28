@@ -29,7 +29,7 @@
         "group_inactive_text": "background",
         "bg_window":           { "color": "background", "alpha": 0.80 },
         "bg_tooltip":          { "color": "background", "alpha": 0.80 },
-        "bg_textbox":          "black2",
+        "bg_textbox":          { "color": "black2", "alpha": 0.40 },
         "bg_selected":         { "color": "text", "alpha": 0.10 },
         "text":                { "color": "text", "alpha": 0.80 },
         "text_high":           "text",

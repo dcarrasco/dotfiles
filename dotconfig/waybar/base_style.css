@@ -20,20 +20,16 @@ __        __          _                  ____                   ____  _         
     margin: 0;
 }
 
-.modules-left, .modules-right, .modules-center {
-    padding: 2px 0;
+.modules-left,
+.modules-right,
+.modules-center {
+    padding: 0 0.5em;
 }
 
-.modules-left {
-    padding-left: 0.5em;
-}
-
-.modules-right {
-    padding-right: 0.5em;
-}
-
-.modules-left .module, .modules-right .module, .modules-center .module {
-    margin: 2px 0.5em;
+.modules-left .module,
+.modules-right .module,
+.modules-center .module {
+    margin: 0.2em 0.5em;
 }
 
 tooltip {
@@ -59,9 +55,7 @@ tooltip label {
 
 #workspaces button {
     border: none;
-    border-radius: 0;
     padding: 0 0.3em;
-    margin: 0;
 }
 
 button label {
@@ -89,16 +83,16 @@ button:hover label {
 
 #custom-start-menu {
     margin: 0;
-    padding: 0.5 0.5em;
+    padding: 0 0.5em;
     color: @accent1;
-}
-
-#custom-start-menu:hover {
-    color: @accent2;
 }
 
 #custom-start-menu label {
     font-size: 24;
+}
+
+#custom-start-menu:hover {
+    color: @accent2;
 }
 
 #custom-windowstatus {
@@ -108,8 +102,6 @@ button:hover label {
 
 #custom-leftsep {
     color: @accent1;
-    margin: 0;
-    padding: 0 0.5em;
 }
 
 #window label {
@@ -120,6 +112,7 @@ button:hover label {
 
 /* double width icons */
 #idle_inhibitor,
+#language,
 #custom-poweroff,
 #network {
     padding: 0 0.7em 0 0;

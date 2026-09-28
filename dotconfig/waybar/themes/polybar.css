@@ -9,17 +9,19 @@
 */
 
 * {
-    font-family: FiraCode Nerd Font;
+    font-family: Hack Nerd Font;
     font-size: 12pt;
 }
 
 window#waybar {
-    background-color: alpha(@bg-normal, 0.8);
-    border-bottom: 1px solid alpha(@bg-normal, 0.8);
     border-radius: 8px;
 }
 
-#worlspaces button {
+.modules-left, .modules-right, .modules-center {
+    padding: 2px 0.5em;
+}
+
+#workspaces button {
     background-color: @bg-selected;
 }
 
@@ -42,6 +44,9 @@ button.urgent label {
     background-color: @bg-critical;
 }
 
+#window label {
+    font-weight: 400;
+}
 
 #clock,
 #bluetooth,
@@ -59,17 +64,17 @@ button.urgent label {
 #mode,
 #idle_inhibitor,
 #scratchpad,
-#language,
 #custom-power-profiles,
 #custom-poweroff,
 #mpd {
     padding: 0 0.4em;
     margin: 0px 0px;
-    border-radius: 7px;
+    border-radius: 0px;
 }
 
 /* Iconos de ancho doble */
 #idle_inhibitor,
+#language,
 #network {
     padding: 0 0.9em 0 0.4em;
 }
