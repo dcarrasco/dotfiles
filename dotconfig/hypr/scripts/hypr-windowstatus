@@ -47,4 +47,4 @@ if [[ $rofi == 0 ]]; then
     fi
 fi
 
-printf '%s' "$client_status$extra_status"
+echo "$client_status$extra_status"
