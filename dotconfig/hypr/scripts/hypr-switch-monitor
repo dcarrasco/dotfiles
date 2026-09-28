@@ -39,14 +39,14 @@ declare -a OPTIONS_MULTIPLE_MONITORS=(
 )
 
 die() {
-    printf 'ERROR: %s ****************\n' "$*" >&2
+    printf '[ERROR] %s ****************\n' "$*" >&2
     notify-send -u critical -t 0 -i dialog-warning 'ERROR: hypr-switch-monitor' "$*"
     exit 1
 }
 
 debug() {
-    [[ ${HYPR_SWITCH_MONITOR_DEBUG:-false} == true ]] || return 0
-    printf 'DEBUG: %s\n' "$*" >&2
+    [[ ${DEBUG:-false} == true ]] || return 0
+    printf '[debug] %s\n' "$*" >&2
 }
 
 exec_pgm() {
@@ -63,7 +63,6 @@ load_rofi() {
         -show sysmenu \
         -modes "sysmenu:$SELF" \
         -i \
-        -format p \
         -theme-str "$theme" \
         -font "$font"
 }
@@ -305,8 +304,6 @@ get_backend() {
     BACKEND=x11
     HYPRCONF=conf
 
-    debug "function: get_backend"
-
     if [[ -n ${HYPRLAND_INSTANCE_SIGNATURE:-} ]] && command -v hyprctl >/dev/null 2>&1; then
         BACKEND=wayland
         MON_INT=eDP-1
@@ -316,7 +313,7 @@ get_backend() {
         HYPRCONF=lua
     fi
 
-    debug "Backend: $BACKEND / Internal Monitor: $MON_INT / HyprConf: $HYPRCONF"
+    debug "get-backend  Backend: $BACKEND / Internal Monitor: $MON_INT / HyprConf: $HYPRCONF"
 }
 
 set_layout() {
@@ -353,6 +350,15 @@ set_layout() {
     done < <(list_monitors)
 }
 
+set_rofi_option() {
+    local option=$1
+    local value=$2
+
+    debug "set_rofi_option: option: $option, value: $value"
+
+    printf '\0%s\x1f%s\n' "$option" "$value"
+}
+
 entry() {
     local label=$1
     local action=$2
@@ -362,7 +368,8 @@ entry() {
 
     [[ $checked  == true ]] && label+=' '
 
-    printf '%s\0info\x1f%s\n' "$label" "$action"
+    printf '%s' "$label"
+    set_rofi_option info "$action"
 }
 
 disp_scale() {
@@ -384,13 +391,13 @@ disp_scale() {
 
 render_header() {
     prompt=$1
-    message=${2:-}
-    data=${3:-}
+    message=$2
+    data=$3
 
-    printf '\0no-custom\x1ftrue\n'
-    printf '\0prompt\x1f%s\n'  "$prompt"
-    printf '\0message\x1f%s\n' "$message"
-    printf '\0data\x1f%s\n'    "$data"
+    set_rofi_option prompt    "$prompt"
+    set_rofi_option no-custom true
+    set_rofi_option message   "$message"
+    set_rofi_option data      "$data"
 }
 
 render_resolution() {
@@ -407,6 +414,8 @@ render_resolution() {
     while IFS= read -r resolution; do
         entry "$resolution" "RESOL:$resolution" "$([[ $curr_res == "$resolution" ]] && printf true)"
     done < <(get_monitor_resolution_list "$monitor")
+
+    entry "󰌑 Back" "SELECT:$monitor"
 }
 
 render_multiple_monitor() {
@@ -504,8 +513,6 @@ render() {
     monitor_count=$(count_monitors)
 
     debug "function: render"
-
-    printf '\0no-custom\x1ftrue\n'
 
     case $monitor_count in
         0)  die "No monitors found" ;;

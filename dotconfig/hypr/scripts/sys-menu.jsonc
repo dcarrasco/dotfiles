@@ -82,10 +82,10 @@
     // SETUP
     "setup.conf":        { "icon": "", "label": "Configs" },
     "setup.audio":       { "icon": "", "label": "Audio", "action": ["terminal", "wiremix"] },
+    "setup.monitors":    { "icon": "󰍹", "label": "Monitors", "action": ["hypr-switch-monitor", "--reset"] },
     "setup.wifi":        { "icon": "", "label": "Wifi", "action": ["hypr-nmcli-rofi"] },
     "setup.vtr":         { "icon": "󰑩", "label": "Modem VTR", "action": ["webapp", "http://192.168.1.1"] },
     "setup.bluetooth":   { "icon": "󰂯", "label": "Bluetooth", "action": ["blueman-manager"] },
-    "setup.monitors":    { "icon": "󰍹", "label": "Monitors", "action": ["hypr-switch-monitor", "--reset"] },
     "setup.printers":    { "icon": "󰐪", "label": "Printers", "action": ["webapp", "http://localhost:631"] },
     "setup.keybindings": { "icon": "", "label": "Keybindings", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/keybinds.lua"] },
     "setup.input":       { "icon": "", "label": "Input", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/input.lua"] },

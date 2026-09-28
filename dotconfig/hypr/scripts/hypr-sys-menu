@@ -20,7 +20,7 @@ die() {
 
 debug() {
     [[ ${DEBUG:-false} == true ]] || return 0
-    printf '[DEBUG] %s\n' "$*" >&2
+    printf '[debug] %s\n' "$*" >&2
 }
 
 exec_pgm() {
