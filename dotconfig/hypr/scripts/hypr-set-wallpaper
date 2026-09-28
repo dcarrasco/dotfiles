@@ -13,6 +13,7 @@ if [[ -n "$wallpaper" ]]; then
 
     # Ejecuta cambio de fondo en todas las pantalla
     hyprctl hyprpaper wallpaper "eDP-1,$wallpaper"
+    hyprctl hyprpaper wallpaper "DP-1,$wallpaper"
     hyprctl hyprpaper wallpaper "DP-8,$wallpaper"
     hyprctl hyprpaper wallpaper "DP-9,$wallpaper"
 

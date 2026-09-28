@@ -391,8 +391,8 @@ disp_scale() {
 
 render_header() {
     prompt=$1
-    message=$2
-    data=$3
+    message=${2:-}
+    data=${3:-}
 
     set_rofi_option prompt    "$prompt"
     set_rofi_option no-custom true

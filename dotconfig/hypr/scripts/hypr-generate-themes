@@ -232,15 +232,13 @@ generate_rofi() {
         "$staged"
 }
 
-
-
 main() {
     local theme_file
 
     THEME_NAME=$1
     [[ $THEME_NAME =~ ^[a-z0-9-]+$ ]] || die "invalid theme name: $THEME_NAME"
 
-    theme_file="$CONFIG_HOME/hypr/themes/${THEME_NAME}.json"
+    theme_file="$CONFIG_HOME/hypr/themes/$THEME_NAME.json"
     [[ -f "$theme_file" ]] || die "unknown theme: $THEME_NAME (no such file: $theme_file)"
     jq empty "$theme_file" || die "invalid json file: $theme_file"
 
@@ -260,6 +258,6 @@ main() {
 }
 
 
-[ $# -eq 1 ] || die "usage: generate-theme <name>"
+[[ $# -eq 1 ]] || die "usage: generate-theme <name>"
 
 main "$1"

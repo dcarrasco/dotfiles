@@ -27,24 +27,18 @@ if [[ $rofi == 0 ]]; then
     fi
 
     if [[ "$(window_status fullscreen)" == 1 ]]; then
-        # client_status=" "
-        # client_status="  "
-        # client_status="  "
-        # client_status=" "
-        client_status=" "
-    fi
-
-    if [[ "$(window_status fullscreenClient)" == 2 ]]; then
-        # extra_status=" "
-        # extra_status="           "
-        # extra_status=" "
-        extra_status=" "
+        # client_status="        "
+        client_status=" "
     fi
 
     if [[ "$(window_status pinned)" == true ]]; then
-        # pinned_status=" "
-        # pinned_status=" 󰐃  󰤱   "
-        client_status=" "
+        # client_status="    󰐃  󰤱   "
+        client_status="󰐃"
+    fi
+
+    if [[ "$(window_status fullscreenClient)" == 2 ]]; then
+        # extra_status="                  "
+        extra_status=" "
     fi
 
     if [[ "$(window_grouped)" != 0 ]]; then
@@ -53,4 +47,4 @@ if [[ $rofi == 0 ]]; then
     fi
 fi
 
-echo "$client_status$extra_status"
+printf '%s' "$client_status$extra_status"
