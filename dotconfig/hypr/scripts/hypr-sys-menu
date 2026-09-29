@@ -136,6 +136,7 @@ checked_option() {
         bar_bottom)     [[ $(hypr-bar-layout --get-position) == bottom ]] && checked=true ;;
         bar_stacked)    [[ $(hypr-bar-layout --get-stack) == stacked ]] && checked=true ;;
         bar_floating)   [[ $(hypr-bar-layout --get-stack) == floating ]] && checked=true ;;
+        bar_center)     [[ $(hypr-bar-layout --get-center) == true ]] && checked=true ;;
         pm_balanced)    [[ $(hypr-switch-power-mgmt --current) == balanced ]] && checked=true ;;
         pm_performance) [[ $(hypr-switch-power-mgmt --current) == performance ]] && checked=true ;;
         pm_eco)         [[ $(hypr-switch-power-mgmt --current) == eco ]] && checked=true ;;

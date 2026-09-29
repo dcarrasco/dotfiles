@@ -25,7 +25,7 @@ fix_float_margin() {
 
     if [[ $position == top ]]; then
         echo "top"
-        sed -i -E 's/("margin-bottom"):.*/\1: 0/' "$WAYBAR_LAYOUT"
+        sed -i -E 's/("margin-bottom"):.*/\1: 0,/' "$WAYBAR_LAYOUT"
     else
         echo "bottom"
         sed -i -E 's/("margin-top"):.*/\1: 0,/' "$WAYBAR_LAYOUT"
@@ -94,7 +94,7 @@ set_stack() {
                 sed -i -E 's/("margin-top").*/\1: 0,/' "$WAYBAR_LAYOUT"
                 sed -i -E 's/("margin-left").*/\1: 0,/' "$WAYBAR_LAYOUT"
                 sed -i -E 's/("margin-right").*/\1: 0,/' "$WAYBAR_LAYOUT"
-                sed -i -E 's/("margin-bottom").*/\1: 0/' "$WAYBAR_LAYOUT"
+                sed -i -E 's/("margin-bottom").*/\1: 0,/' "$WAYBAR_LAYOUT"
                 ;;
             floating)
                 sed -i -E "s/(\"margin-left\").*/\1: $margin,/" "$WAYBAR_LAYOUT"
@@ -110,7 +110,7 @@ set_stack() {
                 fi
 
                 sed -i -E "s/(\"margin-top\":).*/\1 $margin_top,/" "$WAYBAR_LAYOUT"
-                sed -i -E "s/(\"margin-bottom\":).*/\1 $margin_bottom/" "$WAYBAR_LAYOUT"
+                sed -i -E "s/(\"margin-bottom\":).*/\1 $margin_bottom,/" "$WAYBAR_LAYOUT"
                 ;;
         esac
 
@@ -119,6 +119,27 @@ set_stack() {
         restore_bar
         notify-send -u low -i topmenu-applet "Bar stack" "Change bar position to $stacked"
     fi
+}
+
+get_center() {
+    local center
+
+    center=$(sed -nE 's/[[:space:]]*"no-center": (.*)/\1/p' "$WAYBAR_LAYOUT")
+
+    [[ $center == true ]] && center=false || center=true
+
+    printf '%s' "$center"
+}
+
+toggle_center() {
+    local center new_center
+
+    center=$("$XDG_CONFIG_HOME/hypr/scripts/hypr-bar-layout" --get-center)
+
+    sed -i -E "s/([[:space:]]*\"no-center\":) .*/\1 $center/" "$WAYBAR_LAYOUT"
+
+    restore_bar
+    notify-send -u low -i topmenu-applet "Bar Layout" "$( [[ $new_center == true ]] && printf "Enable" || printf "Disable" ) center bar"
 }
 
 command_help() {
@@ -133,6 +154,8 @@ Uso: hypr-bar-layout [OPCIONES]
     --set-position [POS]    Aplica la posicion POS a la barra
     --get-stack             Devuelve si la barra es stacked o flotante
     --set-stack [STACKED]   Aplica el tipo stacked o flotante a la barra
+    --get-center            Devuelve si el modulo central esta activo o no
+    --toggle-center         Activa o desactiva el modulo central
 
 EOF
 }
@@ -143,16 +166,19 @@ create_config_file "$WAYBAR_LAYOUT"
 case "${1:-}" in
     --menu) "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" --menu style ;;
 
-    list-styles | --list-styles)    list_styles ;;
+    list-styles | --list-styles)        list_styles ;;
 
-    get-style | --get-style)        get_style ;;
-    set-style | --set-style)        set_style "$2" ;;
+    get-style | --get-style)            get_style ;;
+    set-style | --set-style)            set_style "$2" ;;
 
-    get-position | --get-position)  get_position ;;
-    set-position | --set-position)  set_position "$2" ;;
+    get-position | --get-position)      get_position ;;
+    set-position | --set-position)      set_position "$2" ;;
 
-    get-stack | --get-stack)        get_stack ;;
-    set-stack | --set-stack)        set_stack "$2" ;;
+    get-stack | --get-stack)            get_stack ;;
+    set-stack | --set-stack)            set_stack "$2" ;;
+
+    get-center | --get-center)          get_center ;;
+    toggle-center | --toggle-center)    toggle_center ;;
 
     *) command_help ;;
 esac

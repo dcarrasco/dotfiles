@@ -18,17 +18,18 @@
     "style.hyprland":   { "icon": "", "label": "Hyprland", "action": ["edit_file", "$CONFIG_HOME/hypr/lua/looknfeel.lua"] },
 
     // BAR LAYOUT
-    "style.bar_layout.style":    { "icon": "", "label": "Bar Style", "options": "bar_styles", "action": ["hypr-bar-layout", "--set-style"] },
-    "style.bar_layout.position": { "icon": "󱔓", "label": "Bar Position" },
-    "style.bar_layout.stack":    { "icon": "󱂬", "label": "Stacked/Floating" },
-    "style.bar_layout.modules":  { "icon": "", "label": "Bar Modules", "action": ["edit_file", "$CONFIG_HOME/waybar/base_layout.jsonc"] },
+    "style.bar_layout.style":    { "icon": "", "label": "Style", "options": "bar_styles", "action": ["hypr-bar-layout", "--set-style"] },
+    "style.bar_layout.position": { "icon": "󱔓", "label": "Position" },
+    "style.bar_layout.stack":    { "icon": "󱂬", "label": "Docked/Floating" },
+    "style.bar_layout.center":   { "icon": "", "label": "Center module", "action": ["hypr-bar-layout", "--toggle-center"], "checked": "bar_center" },
+    "style.bar_layout.modules":  { "icon": "", "label": "Modules", "action": ["edit_file", "$CONFIG_HOME/waybar/base_layout.jsonc"] },
 
     // BAR POSITION
     "style.bar_layout.position.top":    { "icon": "󰞕", "label": "Top",    "action": ["hypr-bar-layout", "--set-position", "top"], "checked": "bar_top" },
     "style.bar_layout.position.bottom": { "icon": "󰞒", "label": "Bottom", "action": ["hypr-bar-layout", "--set-position", "bottom"], "checked": "bar_bottom"},
 
     // BAR STACKED
-    "style.bar_layout.stack.stacked":  { "icon": "󰞕", "label": "Stacked",  "action": ["hypr-bar-layout", "--set-stack", "stacked"], "checked": "bar_stacked" },
+    "style.bar_layout.stack.stacked":  { "icon": "󰞕", "label": "Docked",   "action": ["hypr-bar-layout", "--set-stack", "stacked"], "checked": "bar_stacked" },
     "style.bar_layout.stack.floating": { "icon": "", "label": "Floating", "action": ["hypr-bar-layout", "--set-stack", "floating"], "checked": "bar_floating" },
 
     // LEARN
