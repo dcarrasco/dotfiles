@@ -4,7 +4,7 @@ set -euo pipefail
 
 declare -xr CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 
-TERMINAL=kitty
+TERMINAL=alacritty
 SCRIPT_PATH=$CONFIG_HOME/hypr/scripts
 SELF=$SCRIPT_PATH/hypr-sys-menu
 MENU_FILE=$SCRIPT_PATH/sys-menu.jsonc
@@ -33,7 +33,8 @@ exec_pgm() {
 terminal() {
     local command=$*
 
-    "$TERMINAL" --class hypr-terminal-float --title Fedora bash -c -- "$command"
+    # "$TERMINAL" --class hypr-terminal-float --title Fedora bash -c -- "$command"
+    "$TERMINAL" --class hypr-terminal-float --title Fedora --command bash -c -- "$command"
 }
 
 present_terminal() {
@@ -47,7 +48,8 @@ edit_file() {
 
     notify-send -u low -i preferences-desktop 'Editing config file' "$file"
     cd "$(dirname "$file")" || exit 1
-    "$TERMINAL" nvim "$file"
+    # "$TERMINAL" nvim "$file"
+    "$TERMINAL" --command nvim "$file"
 }
 
 webapp() {

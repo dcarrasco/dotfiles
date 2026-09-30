@@ -28,11 +28,11 @@ set_font() {
 
         if [[ -f $KITTY_CONF ]]; then
             sed -i "s/^font_family .*/font_family  $font/" "$KITTY_CONF"
-            pkill -USR1 kitty
+            pidof kitty && pkill -USR1 kitty
         fi
 
         if [[ -f $ALACRITTY_CONF ]]; then
-            sed -i "s/^family = \".*\"/family = \"$font\"/" "$ALACRITTY_CONF"
+            sed -i -E "s/(family =) .*/\1 \"$font\"/" "$ALACRITTY_CONF"
         fi
 
         notify-send -u low -i preferences-desktop-font "Fonts" "Change font to $font"
@@ -48,13 +48,11 @@ if [ ! -f "$ALACRITTY_CONF" ]; then
     cp "${ALACRITTY_CONF}.orig" "$ALACRITTY_CONF"
 fi
 
-if [[ -z "${1:-}" ]]; then
-    "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" --menu style
-else
-    case "$1" in
-        set | --set)                set_font "$2" ;;
-        current | --current)        current_font ;;
-        get-fonts |--get-fonts)     get_fonts ;;
-    esac
-fi
+case "${1:-menu}" in
+    menu | --menu)              "$XDG_CONFIG_HOME/hypr/scripts/hypr-sys-menu" --menu style ;;
+    set | --set)                set_font "$2" ;;
+    current | --current)        current_font ;;
+    get-fonts |--get-fonts)     get_fonts ;;
+    *)                          echo "ERROR: opcion no valida" >&2 ; exit 1 ;;
+esac
 
