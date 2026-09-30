@@ -143,21 +143,21 @@ toggle_center() {
 }
 
 command_help() {
-    cat << EOF
+    cat <<USAGE
 Uso: hypr-bar-layout [OPCIONES]
 
     --menu                  Despliega menu de seleccion de estilo de barra
     --list-styles           Despliega listado de estilos disponibles para la barra
     --get-style             Despliega estilo actual de la barra
-    --set-style [ESTILO]    Aplica el estilo ESTILO a la barra
+    --set-style <ESTILO>    Aplica el estilo ESTILO a la barra
     --get-position          Devuelve la posicion de la barra
-    --set-position [POS]    Aplica la posicion POS a la barra
+    --set-position <POS>    Aplica la posicion POS a la barra
     --get-stack             Devuelve si la barra es stacked o flotante
-    --set-stack [STACKED]   Aplica el tipo stacked o flotante a la barra
+    --set-stack <STACKED>   Aplica el tipo stacked o flotante a la barra
     --get-center            Devuelve si el modulo central esta activo o no
     --toggle-center         Activa o desactiva el modulo central
 
-EOF
+USAGE
 }
 
 create_config_file "$WAYBAR_STYLE"
