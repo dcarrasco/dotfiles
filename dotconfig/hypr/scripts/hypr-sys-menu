@@ -49,7 +49,7 @@ edit_file() {
     notify-send -u low -i preferences-desktop 'Editing config file' "$file"
     cd "$(dirname "$file")" || exit 1
     # "$TERMINAL" nvim "$file"
-    "$TERMINAL" --command nvim "$file"
+    "$TERMINAL" --working-directory "${file%/*}" --command nvim "$file"
 }
 
 webapp() {
@@ -68,6 +68,10 @@ entry() {
     [[ $checked == true ]] && label+=' '
 
     case "$action" in
+        back:*)
+            printf '%s' "$label"
+            action="menu:${action##*:}"
+            ;;
         opt:* | menu:*)     menu_label "$label" ;;
         *)                  printf '%s' "$label" ;;
     esac
@@ -80,6 +84,14 @@ title_case() {
         -e 's/^([[:lower:]])/\U\1/'  \
         -e 's/-([[:lower:]])/ \U\1/g' \
         <<< "$1"
+}
+
+entry_back() {
+    local menu_item=$1
+
+    if [[ $menu_item != main && ${ROFI_MENU:-} != true ]]; then
+        entry "  Back" "back:$(parent_menu "$menu_item")"
+    fi
 }
 
 entries_bar_styles() {
@@ -152,17 +164,20 @@ checked_option() {
     printf '%s' "$checked"
 }
 
-render_parent_menu() {
-    local current_menu=${ROFI_DATA:-main}
+parent_menu() {
+    local current_menu=$1
+    local parent_menu
 
-    [[ $current_menu == 'main' ]] && exit 0
-
-    local parent_menu=${current_menu%.*}
-    [[ $parent_menu == "$current_menu" ]] && parent_menu='main'
+    if [[ $current_menu == 'main' ]]; then
+        exit 0
+    else
+        parent_menu=${current_menu%.*}
+        [[ $parent_menu == "$current_menu" ]] && parent_menu='main'
+    fi
 
     debug "render_parent_menu: current_menu: $current_menu parent_menu: $parent_menu"
 
-    render "$parent_menu"
+    printf '%s' "$parent_menu"
 }
 
 menu_query() {
@@ -205,7 +220,7 @@ menu_title() {
 
 menu_label() {
     local label=$1
-    local menu_width=19
+    local menu_width=21
     local spaces arrow_color
 
     if [[ -z "$MENU_ARROW_COLOR" ]]; then
@@ -268,6 +283,8 @@ render() {
             entry "$icon  $label" "menu:$name" ""
         fi
     done <<< "$rows"
+
+    entry_back "$menu_item"
 }
 
 render_options() {
@@ -283,6 +300,8 @@ render_options() {
     declare -F "$options_cmd" >/dev/null || die "invalid options function: $options_cmd"
 
     "$options_cmd" "$menu_item"
+
+    entry_back "$menu_item"
 }
 
 run_action() {
@@ -337,28 +356,18 @@ handle_selection() {
 }
 
 load_rofi() {
-    local font='Hack Nerd Font 16'
-    local theme="entry{placeholder:\"Search...\";} window{${ROFI_LOCATION:-} width:calc (22% min 400px);}"
+    local theme="window{${ROFI_LOCATION:-}}"
 
     rofi \
         -show sysmenu \
         -modes "sysmenu:$SELF" \
-        -i \
-        -theme-str "$theme" \
-        -font "$font" \
-        -kb-cancel "Control+g,Control+Escape" \
-        -kb-custom-1 "Escape"
+        -no-cycle \
+        -theme layout-menu \
+        -theme-str "$theme"
 }
 
 main() {
     local bar_position
-
-    debug "------------------------------"
-    debug "MAIN: n_param: $#, params: $*"
-    debug "MAIN: ROFI_RETV: ${ROFI_RETV:-}"
-    debug "MAIN: ROFI_DATA: ${ROFI_DATA:-}"
-    debug "MAIN: ROFI_INFO: ${ROFI_INFO:-}"
-    debug "MAIN: ROFI_LOCATION: ${ROFI_LOCATION:-}"
 
     while [[ $# -gt 1 ]]; do
         case $1 in
@@ -372,16 +381,31 @@ main() {
                 ;;
             --menu)
                 export ROFI_INFO="menu:$2"
+                export ROFI_MENU=true
                 shift 2
                 ;;
         esac
     done
 
+    debug "------------------------------"
+    debug "MAIN: n_param: $#, params: $*"
+    debug "MAIN: ROFI_RETV: ${ROFI_RETV:-}"
+    debug "MAIN: ROFI_DATA: ${ROFI_DATA:-}"
+    debug "MAIN: ROFI_INFO: ${ROFI_INFO:-}"
+    debug "MAIN: ROFI_LOCATION: ${ROFI_LOCATION:-}"
+    debug "MAIN: ROFI_MENU: ${ROFI_MENU:-}"
+
     case ${ROFI_RETV:-load_rofi} in
         load_rofi)  load_rofi ;;
         0 | 1)      handle_selection ;;
         2)          exit 0 ;;
-        10)         render_parent_menu ;;
+        10)
+            if [[ $ROFI_DATA == main ]]; then
+                exit 0
+            else
+                render "$(parent_menu "${ROFI_DATA:-main}")"
+            fi
+            ;;
         *)          die "Unexpected Rofi return value: $ROFI_RETV" ;;
     esac
 }

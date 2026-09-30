@@ -14,7 +14,7 @@ declare -A OPTIONS=(
     [SET_EXT]=' 󰍹  Ampliar'
     [SET_OFF]='   Desactivar monitor'
     [SET_ON]='  Activar monitor'
-    [SET_RESOL]='󰹑  Ajustar Resolucion'
+    [SET_RESOL]='󰹑  Ajustar Resolucion  '
     [SCALE_100]='  Escalar al 100%'
     [SCALE_125]='  Escalar al 125%'
     [SCALE_133]='  Escalar al 133%'
@@ -56,15 +56,11 @@ exec_pgm() {
 }
 
 load_rofi() {
-    local -r font='Hack Nerd Font 15'
-    local -r theme='entry{placeholder:"Search...";} window{width:calc(22% min 400px);}'
-
     rofi \
         -show sysmenu \
         -modes "sysmenu:$SELF" \
-        -i \
-        -theme-str "$theme" \
-        -font "$font"
+        -no-cycle \
+        -theme layout-menu
 }
 
 notify() {
@@ -415,7 +411,7 @@ render_resolution() {
         entry "$resolution" "RESOL:$resolution" "$([[ $curr_res == "$resolution" ]] && printf true)"
     done < <(get_monitor_resolution_list "$monitor")
 
-    entry "󰌑 Back" "SELECT:$monitor"
+    entry "  Back" "SELECT:$monitor"
 }
 
 render_multiple_monitor() {

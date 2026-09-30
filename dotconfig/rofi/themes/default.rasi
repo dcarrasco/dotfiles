@@ -60,7 +60,7 @@ entry {
     placeholder: "Buscar...";
     placeholder-color: @fg-placeholder;
     // background-color: @bg-prompt;
-    border-radius: 15px;
+    border-radius: 12px;
     border: 1px;
     border-color: @fg-scrollbar;
 }
@@ -82,28 +82,26 @@ message {
 
 textbox {
     padding: 1em 1em;
-    border-radius: 15px;
+    border-radius: 12px;
     text-color: @foreground;
     background-color: @bg-textbox;
 }
 
 // listview  ------------------------------------------------------------------------------
 listview {
-    border-radius: 0px 0px 6px 6px;
     dynamic: false;
     border: 0;
-    scrollbar: true;
-    scrollbar-width: 10px;
+    // scrollbar: true;
 }
 
 element {
+    border-radius: 12px;
     padding: 0.5em 1em;
     vertical-align: 0.5;
     text-color: @foreground;
 }
 
 element active {
-    border-radius: 12px;
     border-color: @bg-selected;
     border: 2px;
 }
@@ -111,8 +109,6 @@ element active {
 element selected {
     text-color: @fg-selected;
     background-color: @bg-selected;
-    border-radius: 12px;
-    border-color: @bg-color;
 }
 
 element-text {

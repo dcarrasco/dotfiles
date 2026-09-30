@@ -7,7 +7,6 @@ readonly -a WALLPAPER_FOLDERS=(
     "$HOME/Imágenes/BingWallpaper"
 )
 
-ROFI_THEME="$XDG_CONFIG_HOME/rofi/themes/layout-wallpapers.rasi"
 WALLPAPER_CONFIG="$XDG_CONFIG_HOME/hypr/hyprpaper.conf"
 
 wallpaper_list() {
@@ -17,14 +16,14 @@ wallpaper_list() {
 }
 
 current_wallpaper() {
-    basename "$(grep path "$WALLPAPER_CONFIG" | cut -d "=" -f 2)"
+    sed -nE 's|[[:space:]]*path = .*/(.*)|\1|p'
 }
 
 wallpaper_number() {
     wallpaper_list | grep -n "$(current_wallpaper)" | cut -d ":" -f 1
 }
 
-if [ ! -f "$WALLPAPER_CONFIG" ]; then
+if [[ ! -f "$WALLPAPER_CONFIG" ]]; then
     cp "${WALLPAPER_CONFIG}.orig" "$WALLPAPER_CONFIG"
 fi
 
@@ -45,8 +44,8 @@ case "$1" in
     *)
         theme="prompt{enabled:false;} entry{placeholder:\"Elegir fondo de pantalla...\";}"
         wallpaper=$(wallpaper_list |
-            sed 's/\(.*\)/\1\x00icon\x1f\1/' |
-            rofi -dmenu -show-icons -config "$ROFI_THEME" -theme-str "$theme")
+            sed -E 's/(.*)/\1\x00icon\x1f\1/' |
+            rofi -dmenu -show-icons -config layout-wallpapers -theme-str "$theme")
         ;;
 esac
 
