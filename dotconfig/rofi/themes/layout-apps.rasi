@@ -10,11 +10,12 @@
 
 // inputbar ------------------------------------------------------------------------------
 prompt {
-    font: "SF UI Display 30";
+    font: "SF UI Display 36";
+    padding: 0 0.3em 0 0;
 }
 
 entry {
-    font: "SF UI Display 24";
+    font: "SF UI Display 22";
     placeholder: "Aplicaciones";
 }
 
@@ -23,30 +24,5 @@ listview {
     // flow: horizontal;
     columns: 2;
     fixed-columns: true;
-}
-
-element {
-    // orientation: vertical;
-    border-radius: 0.5em;
-    spacing: 0.5em;
-    padding: 0.4em 1em;
-}
-
-element selected {
-    border-color: @fg-scrollbar;
-    border: 1px;
-}
-
-element-text {
-    // horizontal-align: 0.5;
-    font: "SF UI Display 15";
-    cursor: pointer;
-    padding: 0em;
-}
-
-element-icon {
-    size: 1.2em;
-    horizontal-align: 0.5;
-    padding: 0;
 }
 

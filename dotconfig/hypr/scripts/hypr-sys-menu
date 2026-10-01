@@ -361,7 +361,6 @@ load_rofi() {
     rofi \
         -show sysmenu \
         -modes "sysmenu:$SELF" \
-        -no-cycle \
         -theme layout-menu \
         -theme-str "$theme"
 }
@@ -396,17 +395,20 @@ main() {
     debug "MAIN: ROFI_MENU: ${ROFI_MENU:-}"
 
     case ${ROFI_RETV:-load_rofi} in
-        load_rofi)  load_rofi ;;
-        0 | 1)      handle_selection ;;
-        2)          exit 0 ;;
-        10)
-            if [[ $ROFI_DATA == main ]]; then
-                exit 0
-            else
-                render "$(parent_menu "${ROFI_DATA:-main}")"
-            fi
-            ;;
-        *)          die "Unexpected Rofi return value: $ROFI_RETV" ;;
+        load_rofi)  rofi -show sysmenu -modes "sysmenu:$SELF" \
+                        -theme layout-menu -theme-str "window{${ROFI_LOCATION:-}}"
+                    ;;
+        0 | 1)  handle_selection
+                ;;
+        2)      exit 0
+                ;;
+        10)     if [[ $ROFI_DATA == main ]]; then
+                    exit 0
+                else
+                    render "$(parent_menu "${ROFI_DATA:-main}")"
+                fi
+                ;;
+        *)      die "Unexpected Rofi return value: $ROFI_RETV" ;;
     esac
 }
 
