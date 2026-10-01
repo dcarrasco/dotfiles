@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 OPCIONES=$(
     virsh --connect qemu:///system list --all |
-    sed -nE 's/ [-[:digit:]+][ ]*([[:alnum:]_-]*[ ]*[[:alpha:]]*)/\1/p'
+    sed -nE 's/ [-[:digit:]+][ ]*([[:alnum:]_-]*[ ]*[[:alpha:]]*)/\1/p' |
+    sed -E  's/(.*)[[:space:]]*(apagado)/\1/' |
+    sed -E  's/([^[:space:]]*)[[:space:]]*(ejecutando)/\1 /' |
+    sort
 )
 
-VM=$(
-    printf '%s' "$OPCIONES" |
-    rofi -dmenu -p 'Start VM' -no-cycle -theme layout-menu |
-    cut -d " " -f 1
-)
+VM=$(printf '%s' "$OPCIONES" | rofi -dmenu -p 'Start VM' -theme layout-menu | cut -d " " -f 1)
 
 if [[ -n "$VM" ]]; then
     "$XDG_CONFIG_HOME/hypr/scripts/hypr-start-vm" "$VM"
