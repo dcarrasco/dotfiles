@@ -17,7 +17,7 @@ window {
     border-radius: 12px;
     height: calc(61% min 700px);
     width: calc(50% min 900px);
-    margin: 0 0 0 0;
+    margin: 0;
     spacing: 0;
     children:  [mainbox];
     orientation: horizontal;
@@ -34,7 +34,7 @@ mainbox {
 
 // inputbar ------------------------------------------------------------------------------
 inputbar {
-    padding: 0 0 1em 0;
+    padding: 0 0 1em;
     spacing: 1em;
     children: [ prompt, entry ];
     // children: [ prompt, entry, case-indicator, num-filtered-rows, num-rows ];
