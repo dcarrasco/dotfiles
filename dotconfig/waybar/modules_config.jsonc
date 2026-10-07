@@ -166,7 +166,10 @@
     "memory": {
         // "format": "    {}%",
         "interval": 15,
-        "format": "  {used:0.1f}G",
+        "format": "{icon}  {used:0.1f}G",
+        "format-warning": "{icon}  {used:0.1f}G ({percentage}%)",
+        "format-critical": "{icon}  {used:0.1f}G ({percentage}%)",
+        "format-icons": [""],
         "states": {
             "warning": 80,
             "critical": 90
