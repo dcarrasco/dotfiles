@@ -33,7 +33,6 @@ exec_pgm() {
 terminal() {
     local command=$*
 
-    # "$TERMINAL" --class hypr-terminal-float --title Fedora bash -c -- "$command"
     "$TERMINAL" --class hypr-terminal-float --title Fedora --command bash -c -- "$command"
 }
 
@@ -55,7 +54,7 @@ edit_file() {
 webapp() {
     local url=$1
 
-    brave-browser --password-store=basic --new-window --app="$url"
+    chromium-browser --new-window --app="$url"
 }
 
 entry() {
