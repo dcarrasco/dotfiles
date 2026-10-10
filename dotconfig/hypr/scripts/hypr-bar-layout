@@ -20,18 +20,6 @@ restore_bar() {
     fi
 }
 
-fix_float_margin() {
-    local position=$1
-
-    if [[ $position == top ]]; then
-        echo "top"
-        sed -i -E 's/("margin-bottom"):.*/\1: 0,/' "$WAYBAR_LAYOUT"
-    else
-        echo "bottom"
-        sed -i -E 's/("margin-top"):.*/\1: 0,/' "$WAYBAR_LAYOUT"
-    fi
-}
-
 list_styles() {
     find "$STYLES_DIR" -type f -printf '%f\n' | sed 's/\.css//' | sort -u
 }
@@ -67,7 +55,6 @@ set_position() {
         stack="$("$XDG_CONFIG_HOME/hypr/scripts/hypr-bar-layout" --get-stack)"
         if [[ $stack == floating ]]; then
             set_stack "$stack"
-            fix_float_margin "$position" "$stack"
         fi
 
         restore_bar
@@ -78,45 +65,31 @@ set_position() {
 get_stack() {
     local margin
 
-    margin=$(sed -nE 's/[[:space:]]*"margin-left": (.*),/\1/p' "$WAYBAR_LAYOUT")
+    margin=$(sed -nE 's/[[:space:]]*margin: (.*);/\1/p' "$WAYBAR_STYLE")
 
-    [[ $margin == 0 ]] && printf 'stacked' || printf 'floating'
+    [[ $margin == 0em ]] && printf 'stacked' || printf 'floating'
 }
 
 set_stack() {
     local stacked=$1
     local margin=7
-    local position margin_top margin_bottom
+    local position
 
     if [[ -n "$stacked" ]]; then
         case $stacked in
             stacked)
-                sed -i -E 's/("margin-top").*/\1: 0,/' "$WAYBAR_LAYOUT"
-                sed -i -E 's/("margin-left").*/\1: 0,/' "$WAYBAR_LAYOUT"
-                sed -i -E 's/("margin-right").*/\1: 0,/' "$WAYBAR_LAYOUT"
-                sed -i -E 's/("margin-bottom").*/\1: 0,/' "$WAYBAR_LAYOUT"
+                sed -i -E 's/([[:space:]]margin): .*;/\1: 0em;/' "$WAYBAR_STYLE"
                 ;;
             floating)
-                sed -i -E "s/(\"margin-left\").*/\1: $margin,/" "$WAYBAR_LAYOUT"
-                sed -i -E "s/(\"margin-right\").*/\1: $margin,/" "$WAYBAR_LAYOUT"
-
                 position="$("$XDG_CONFIG_HOME/hypr/scripts/hypr-bar-layout" --get-position)"
                 if [[ $position == top ]]; then
-                    margin_top=$margin
-                    margin_bottom=0
+                    sed -i -E 's/([[:space:]]margin): .*;/\1: 0.5em 0.5em 0em 0.5em;/' "$WAYBAR_STYLE"
                 else
-                    margin_top=0
-                    margin_bottom=$margin
+                    sed -i -E 's/([[:space:]]margin): .*;/\1: 0em 0.5em 0.5em 0.5em;/' "$WAYBAR_STYLE"
                 fi
-
-                sed -i -E "s/(\"margin-top\":).*/\1 $margin_top,/" "$WAYBAR_LAYOUT"
-                sed -i -E "s/(\"margin-bottom\":).*/\1 $margin_bottom,/" "$WAYBAR_LAYOUT"
                 ;;
         esac
 
-        fix_float_margin "$("$XDG_CONFIG_HOME/hypr/scripts/hypr-bar-layout" --get-position)" "$stacked"
-
-        restore_bar
         notify-send -u low -i topmenu-applet "Bar stack" "Change bar position to $stacked"
     fi
 }
