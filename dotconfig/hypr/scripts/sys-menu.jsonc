@@ -21,7 +21,6 @@
     "style.bar_layout.style":    { "icon": "", "label": "Style", "options": "bar_styles", "action": ["hypr-bar-layout", "--set-style"] },
     "style.bar_layout.position": { "icon": "󱔓", "label": "Position" },
     "style.bar_layout.stack":    { "icon": "󱂬", "label": "Docked/Floating" },
-    "style.bar_layout.center":   { "icon": "", "label": "Center module", "action": ["hypr-bar-layout", "--toggle-center"], "checked": "bar_center" },
     "style.bar_layout.modules":  { "icon": "", "label": "Modules", "action": ["edit_file", "$CONFIG_HOME/waybar/base_layout.jsonc"] },
 
     // BAR POSITION

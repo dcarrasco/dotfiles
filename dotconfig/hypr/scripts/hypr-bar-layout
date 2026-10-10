@@ -41,7 +41,7 @@ set_style() {
 }
 
 get_position() {
-    sed -nE 's/[[:space:]]*"position": "(.*)",/\1/p' "$WAYBAR_LAYOUT"
+    sed -nE 's/[[:space:]]*"position": "(.*)"/\1/p' "$WAYBAR_LAYOUT"
 }
 
 set_position() {
@@ -49,7 +49,7 @@ set_position() {
     local stack
 
     if [ -n "$position" ]; then
-        sed -i -E "s/(\"position\"):.*/\1: \"$position\",/" "$WAYBAR_LAYOUT"
+        sed -i -E "s/(\"position\"):.*/\1: \"$position\"/" "$WAYBAR_LAYOUT"
 
         # fixes top/bottom margin in case of floating bar
         stack="$("$XDG_CONFIG_HOME/hypr/scripts/hypr-bar-layout" --get-stack)"
@@ -94,27 +94,6 @@ set_stack() {
     fi
 }
 
-get_center() {
-    local center
-
-    center=$(sed -nE 's/[[:space:]]*"no-center": (.*)/\1/p' "$WAYBAR_LAYOUT")
-
-    [[ $center == true ]] && center=false || center=true
-
-    printf '%s' "$center"
-}
-
-toggle_center() {
-    local center new_center
-
-    center=$("$XDG_CONFIG_HOME/hypr/scripts/hypr-bar-layout" --get-center)
-
-    sed -i -E "s/([[:space:]]*\"no-center\":) .*/\1 $center/" "$WAYBAR_LAYOUT"
-
-    restore_bar
-    notify-send -u low -i topmenu-applet "Bar Layout" "$( [[ $new_center == true ]] && printf "Enable" || printf "Disable" ) center bar"
-}
-
 command_help() {
     cat <<USAGE
 Uso: hypr-bar-layout [OPCIONES]
@@ -127,8 +106,6 @@ Uso: hypr-bar-layout [OPCIONES]
     --set-position <POS>    Aplica la posicion POS a la barra
     --get-stack             Devuelve si la barra es stacked o flotante
     --set-stack <STACKED>   Aplica el tipo stacked o flotante a la barra
-    --get-center            Devuelve si el modulo central esta activo o no
-    --toggle-center         Activa o desactiva el modulo central
 
 USAGE
 }
@@ -149,9 +126,6 @@ case "${1:-}" in
 
     get-stack | --get-stack)            get_stack ;;
     set-stack | --set-stack)            set_stack "$2" ;;
-
-    get-center | --get-center)          get_center ;;
-    toggle-center | --toggle-center)    toggle_center ;;
 
     *) command_help ;;
 esac
