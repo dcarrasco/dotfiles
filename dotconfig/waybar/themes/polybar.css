@@ -13,7 +13,7 @@
     font-size: 12pt;
 }
 
-window#waybar {
+waybar > box {
     border-radius: 8px;
 }
 

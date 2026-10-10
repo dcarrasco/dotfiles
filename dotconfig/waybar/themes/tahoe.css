@@ -13,7 +13,7 @@ __        __          _                      _         _
     text-shadow: 1px 1px 1px @shadow;
 }
 
-window#waybar {
+#waybar > box {
     background-color: transparent;
 }
 

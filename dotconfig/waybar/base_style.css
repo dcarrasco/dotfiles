@@ -14,10 +14,16 @@ __        __          _                  ____                   ____  _         
 }
 
 #waybar {
-    color: @fg-normal;
-    background: @bg-normal;
+    background-color: transparent;
     padding: 0;
     margin: 0;
+}
+
+#waybar > box {
+    color: @fg-normal;
+    background-color: @bg-normal;
+    /* margin: 0.5em 0.5em 0 0.5em; */
+    /* border-radius: 0.5em; */
 }
 
 .modules-left,

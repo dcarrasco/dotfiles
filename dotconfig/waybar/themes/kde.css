@@ -11,8 +11,8 @@
     font-family: Noto Sans, Helvetica, Arial, sans-serif;
 }
 
-#waybar {
-    border-radius: 10px;
+#waybar > box {
+    border-radius: 0.7em;
 }
 
 .modules-left, .modules-right, .modules-center {

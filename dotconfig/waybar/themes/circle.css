@@ -12,10 +12,9 @@ __        __          _                      _         _
     font-size: 12pt;
 }
 
-window#waybar {
-    background: linear-gradient(0deg, alpha(@bg-normal, 0.7), alpha(@bg-normal, 0.8));
-    border-bottom: 1px solid alpha(@bg-normal, 0.8);
-    border-radius: 24px;
+#waybar > box {
+    background: linear-gradient(0deg, alpha(@bg-normal, 0.7), alpha(@bg-normal, 0.9));
+    border-radius: 2em;
     border: 1px solid alpha(@fg-normal, 0.5);
 }
 

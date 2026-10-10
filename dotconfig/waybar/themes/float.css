@@ -12,14 +12,14 @@
     font-size: 12pt;
 }
 
-#waybar {
+#waybar > box {
     background-color: transparent;
 }
 
 .modules-left, .modules-right, .modules-center {
-    padding: 0 1em;
-    background: alpha(@bg-normal, 0.6);
-    border-radius: 20px;
+    padding: 0.2em 1em;
+    background-color: @bg-normal;
+    border-radius: 2em;
     border: 2px solid alpha(@fg-normal, 0.8);
 }
 
