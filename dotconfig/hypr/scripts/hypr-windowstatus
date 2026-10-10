@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SCRIPTS="$XDG_CONFIG_HOME/hypr/scripts"
+
 window_status() {
     local status=$1
 
@@ -10,41 +12,59 @@ window_grouped() {
     hyprctl -j activewindow | jq -r ".grouped | length"
 }
 
-rofi=$(hyprctl activewindow | grep class | grep -c Rofi)
+print_status() {
+    rofi=$(hyprctl activewindow | grep class | grep -c Rofi)
 
-client_status=""
-extra_status=""
+    client_status=""
+    extra_status=""
 
-if [[ $rofi == 0 ]]; then
-    if [ "$(hyprctl activewindow)" != "Invalid" ]; then
-        # client_status="     "
-        client_status=""
+    if [[ $rofi == 0 ]]; then
+        if [ "$(hyprctl activewindow)" != "Invalid" ]; then
+            # client_status="     "
+            client_status=""
+        fi
+
+        if [[ "$(window_status floating)" == true ]]; then
+            # client_status=" 󱂬    󰖲       "
+            client_status=" "
+        fi
+
+        if [[ "$(window_status fullscreen)" == 1 ]]; then
+            # client_status="        "
+            client_status=" "
+        fi
+
+        if [[ "$(window_status pinned)" == true ]]; then
+            # client_status="    󰐃  󰤱   "
+            client_status="󰐃"
+        fi
+
+        if [[ "$(window_status fullscreenClient)" == 2 ]]; then
+            # extra_status="                  "
+            extra_status=" "
+        fi
+
+        if [[ "$(window_grouped)" != 0 ]]; then
+            # extra_status=" "
+            extra_status=" "
+        fi
     fi
 
-    if [[ "$(window_status floating)" == true ]]; then
-        # client_status=" 󱂬    󰖲       "
-        client_status=" "
-    fi
+    echo "$client_status$extra_status"
+}
 
+# set bar as stacked when configred as floating and window is maximized
+set_floating_bar() {
     if [[ "$(window_status fullscreen)" == 1 ]]; then
-        # client_status="        "
-        client_status=" "
+        if [[ "$("$SCRIPTS/hypr-bar-layout" --get-configured-stack)" == floating ]]; then
+            "$SCRIPTS/hypr-bar-layout" --set-visual-stack stacked
+        fi
+    else
+        if [[ "$("$SCRIPTS/hypr-bar-layout" --get-configured-stack)" != "$("$SCRIPTS/hypr-bar-layout" --get-stack)" ]]; then
+            "$SCRIPTS/hypr-bar-layout" --set-visual-stack "$("$SCRIPTS/hypr-bar-layout" --get-configured-stack)"
+        fi
     fi
+}
 
-    if [[ "$(window_status pinned)" == true ]]; then
-        # client_status="    󰐃  󰤱   "
-        client_status="󰐃"
-    fi
-
-    if [[ "$(window_status fullscreenClient)" == 2 ]]; then
-        # extra_status="                  "
-        extra_status=" "
-    fi
-
-    if [[ "$(window_grouped)" != 0 ]]; then
-        # extra_status=" "
-        extra_status=" "
-    fi
-fi
-
-echo "$client_status$extra_status"
+print_status
+set_floating_bar

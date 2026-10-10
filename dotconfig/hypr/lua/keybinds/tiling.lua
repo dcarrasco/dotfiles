@@ -12,7 +12,6 @@ return {
   { key = "ALT + F", dsp = hl.dsp.window.float(), desc = "Toggle floating" },
   { key = "CTRL + F", dsp = hl.dsp.window.pin(), desc = "Pin window" },
   { key = "ALT + P", dsp = hl.dsp.window.pseudo(), desc = "Toggle pseudo floating" },
-  -- { key = "SUPER + S", hl.dsp.layout("togglesplit"), { desc = "Toggle pseudo floating" },
   { key = "S", dsp = hl.dsp.layout("swapwithmaster"), desc = "Swap with master" },
   { key = "M", dsp = hl.dsp.window.fullscreen({mode = "maximized", action = "toggle"}), desc = "Maximize window" },
   { key = "ALT + M", dsp = hl.dsp.window.fullscreen({mode = "fullscreen", action = "toggle"}), desc = "Fullscreen" },

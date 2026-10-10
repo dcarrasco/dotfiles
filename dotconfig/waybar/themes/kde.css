@@ -13,6 +13,7 @@
 
 #waybar > box {
     border-radius: 0.7em;
+    border: 1px solid alpha(@fg-normal, 0.5);
 }
 
 .modules-left, .modules-right, .modules-center {
