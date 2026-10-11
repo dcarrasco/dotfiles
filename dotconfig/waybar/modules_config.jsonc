@@ -275,9 +275,9 @@
         "format-icons": {
             // font awesome     
             "default": ["󰕿", "󰖀", "󰕾"],
-            "headphone": " ",
+            "headphone": "󰋋 ",
             "hands-free": "",
-            "headset": " ",
+            "headset": "󰋋 ",
             "phone": " ",
             "portable": "",
             "car": ""

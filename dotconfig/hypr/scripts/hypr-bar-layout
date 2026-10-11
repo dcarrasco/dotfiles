@@ -95,6 +95,10 @@ set_stack() {
 
 set_visual_stack() {
     local stacked=$1
+    local margin top_mg bottom_mg
+    local mg="0.3em"
+    top_mg="$mg $mg 0em $mg"
+    bottom_mg="0em $mg $mg $mg"
 
     if [[ -n "$stacked" ]]; then
         case $stacked in
@@ -102,11 +106,8 @@ set_visual_stack() {
                 sed -i -E 's/([[:space:]]margin): .*;/\1: 0em;/' "$WAYBAR_STYLE"
                 ;;
             floating)
-                if [[ "$("$SCRIPTS/hypr-bar-layout" --get-position)" == top ]]; then
-                    sed -i -E 's/([[:space:]]margin): .*;/\1: 0.5em 0.5em 0em 0.5em;/' "$WAYBAR_STYLE"
-                else
-                    sed -i -E 's/([[:space:]]margin): .*;/\1: 0em 0.5em 0.5em 0.5em;/' "$WAYBAR_STYLE"
-                fi
+                [[ "$("$SCRIPTS/hypr-bar-layout" --get-position)" == top ]] && margin="$top_mg" || margin="$bottom_mg"
+                sed -i -E "s/([[:space:]]margin): .*;/\1: $margin;/" "$WAYBAR_STYLE"
                 ;;
         esac
     fi

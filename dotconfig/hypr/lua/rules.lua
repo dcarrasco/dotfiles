@@ -38,7 +38,7 @@ hl.window_rule({ match = {class = "variety", title = "^(Imágenes de Variety)$"}
 
 -- Waybar
 hl.layer_rule({ match = {namespace = "waybar"}, blur = true })
-hl.layer_rule({ match = {namespace = "waybar"}, ignore_alpha = 0 })
+hl.layer_rule({ match = {namespace = "waybar"}, ignore_alpha = 0.2 })
 
 -- Aesthetics
 hl.layer_rule({ match = {namespace = "logout_dialog"}, blur = true })

@@ -18,7 +18,7 @@ waybar > box {
 }
 
 .modules-left, .modules-right, .modules-center {
-    padding: 2px 0.5em;
+    padding: 0em 0.5em;
 }
 
 #workspaces button {
@@ -26,7 +26,7 @@ waybar > box {
 }
 
 button label {
-    padding: 0px 0.7em;
+    padding: 0.4em 0.7em;
 }
 
 button.empty label {

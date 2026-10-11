@@ -16,68 +16,14 @@
     border: 1px solid alpha(@fg-normal, 0.5);
 }
 
-.modules-left, .modules-right, .modules-center {
-    padding: 0.3em 0.5em;
-}
-
-.modules-left .module, .modules-right .module, .modules-center .module {
-    margin: 2px 0.4em;
-}
-
-tooltip {
-    border: 2px solid @fg-normal;
-    border-radius: 12px;
-}
-
-#workspaces {
-    padding: 0;
-}
-
-button {
-    border: none;
-    border-radius: 0;
-    padding: 0 0.3em;
-    margin: 0;
-}
-
 button label {
-    color: @fg-high;
-    padding: 0px 0.4em;
+    padding: 0px 0.7em;
     border-radius: 5px;
     margin: 1px 0;
-}
-
-button.empty label {
-    color: @fg-disabled;
-}
-
-button.active label {
-    color: @fg-high;
-    font-weight: 800;
-}
-
-button.urgent label {
-    color: @critical;
+    /* background-color: alpha(@fg-normal, 0.2); */
 }
 
 button:hover label {
-    color: @fg-high;
     background-color: alpha(@fg-normal, 0.2);
-    font-weight: 600;
-}
-
-#custom-windowstatus {
-    padding:0 0.3em;
-}
-
-#window label {
-    font-size: 13pt;
-}
-
-/* iconos de ancho doble */
-#network,
-#idle_inhibitor,
-#language {
-    padding: 0 0.8em 0 0.4em;
 }
 
