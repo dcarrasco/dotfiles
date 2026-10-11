@@ -56,12 +56,12 @@ print_status() {
 # set bar as stacked when configred as floating and window is maximized
 set_floating_bar() {
     if [[ "$(window_status fullscreen)" == 1 ]]; then
-        if [[ "$("$SCRIPTS/hypr-bar-layout" --get-configured-stack)" == floating ]]; then
+        if [[ "$("$SCRIPTS/hypr-bar-layout" --get-stack)" == floating ]]; then
             "$SCRIPTS/hypr-bar-layout" --set-visual-stack stacked
         fi
     else
-        if [[ "$("$SCRIPTS/hypr-bar-layout" --get-configured-stack)" != "$("$SCRIPTS/hypr-bar-layout" --get-stack)" ]]; then
-            "$SCRIPTS/hypr-bar-layout" --set-visual-stack "$("$SCRIPTS/hypr-bar-layout" --get-configured-stack)"
+        if [[ "$("$SCRIPTS/hypr-bar-layout" --get-stack)" != "$("$SCRIPTS/hypr-bar-layout" --get-visual-stack)" ]]; then
+            "$SCRIPTS/hypr-bar-layout" --set-visual-stack "$("$SCRIPTS/hypr-bar-layout" --get-stack)"
         fi
     fi
 }

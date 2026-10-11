@@ -25,14 +25,12 @@ list_styles() {
     find "$STYLES_DIR" -type f -printf '%f\n' | sed 's/\.css//' | sort -u
 }
 
-get_style() {
-    sed -nE 's|.*themes/(.*).css";|\1|p' "$WAYBAR_STYLE" | head -n 1
-}
-
 set_style() {
     local style=$1
 
     if [[ -n "$style" ]]; then
+        "$SCRIPTS/hypr-state" --set-prop bar-style "$style"
+
         sed -i "s|\"themes/.*\"|\"themes/$1.css\"|" "$WAYBAR_STYLE"
 
         restore_bar
@@ -41,15 +39,13 @@ set_style() {
 
 }
 
-get_position() {
-    sed -nE 's/[[:space:]]*"position": "(.*)"/\1/p' "$WAYBAR_LAYOUT"
-}
-
 set_position() {
     local position=$1
     local stack
 
     if [ -n "$position" ]; then
+        "$SCRIPTS/hypr-state" --set-prop bar-position "$position"
+
         sed -i -E "s/(\"position\"):.*/\1: \"$position\"/" "$WAYBAR_LAYOUT"
 
         # fixes top/bottom margin in case of floating bar
@@ -63,53 +59,38 @@ set_position() {
     fi
 }
 
-get_stack() {
-    local margin
-
-    margin=$(sed -nE 's/[[:space:]]*margin: (.*);/\1/p' "$WAYBAR_STYLE")
-
-    [[ $margin == 0em ]] && printf 'stacked' || printf 'floating'
-}
-
-get_configured_stack() {
-    sed -nE 's/[[:space:]]*"bar-stacked": "(.*)",/\1/p' "$WAYBAR_LAYOUT"
-}
-
 set_stack() {
     local stacked=$1
 
     if [[ -n "$stacked" ]]; then
-        set_visual_stack "$stacked"
+        "$SCRIPTS/hypr-state" --set-prop bar-stacked "$stacked"
 
-        case $stacked in
-            stacked)
-                sed -i -E 's/([[:space:]]"bar-stacked"): ".*",/\1: "stacked",/' "$WAYBAR_LAYOUT"
-                ;;
-            floating)
-                sed -i -E 's/([[:space:]]"bar-stacked"): ".*",/\1: "floating",/' "$WAYBAR_LAYOUT"
-        esac
+        set_visual_stack "$stacked"
 
         notify-send -u low -i topmenu-applet "Bar stack" "Change bar position to $stacked"
     fi
 }
 
+get_visual_stack() {
+    local margin
+    margin=$(sed -nE 's/[[:space:]]*margin: (.*);/\1/p' "$WAYBAR_STYLE")
+
+    [[ $margin == 0em ]] && printf 'stacked' || printf 'floating'
+}
+
 set_visual_stack() {
     local stacked=$1
-    local margin top_mg bottom_mg
+    local margin="0em"
     local mg="0.3em"
-    top_mg="$mg $mg 0em $mg"
-    bottom_mg="0em $mg $mg $mg"
+    local top_mg="$mg $mg 0em $mg"
+    local bottom_mg="0em $mg $mg $mg"
 
     if [[ -n "$stacked" ]]; then
-        case $stacked in
-            stacked)
-                sed -i -E 's/([[:space:]]margin): .*;/\1: 0em;/' "$WAYBAR_STYLE"
-                ;;
-            floating)
-                [[ "$("$SCRIPTS/hypr-bar-layout" --get-position)" == top ]] && margin="$top_mg" || margin="$bottom_mg"
-                sed -i -E "s/([[:space:]]margin): .*;/\1: $margin;/" "$WAYBAR_STYLE"
-                ;;
-        esac
+        if [[ $stacked == floating ]]; then
+            [[ "$("$SCRIPTS/hypr-bar-layout" --get-position)" == top ]] && margin="$top_mg" || margin="$bottom_mg"
+        fi
+
+        sed -i -E "s/([[:space:]]*margin): .*;/\1: $margin;/" "$WAYBAR_STYLE"
     fi
 }
 
@@ -124,8 +105,8 @@ Uso: hypr-bar-layout [OPCIONES]
     --get-position                 Devuelve la posicion de la barra
     --set-position <POS>           Aplica la posicion POS a la barra
     --get-stack                    Devuelve si la barra es stacked o flotante
-    --get-configured-stack         Devuelve si la barra es stacked o flotante
     --set-stack <STACKED>          Aplica el tipo stacked o flotante a la barra
+    --get-visual-stack             Devuelve si la barra es stacked o flotante
     --set-visual-stack <STACKED>   Aplica el tipo stacked o flotante a la barra
 
 USAGE
@@ -135,20 +116,15 @@ create_config_file "$WAYBAR_STYLE"
 create_config_file "$WAYBAR_LAYOUT"
 
 case "${1:-}" in
-    --menu) "$SCRIPTS/hypr-sys-menu" --menu style ;;
-
-    list-styles | --list-styles)        list_styles ;;
-
-    get-style | --get-style)            get_style ;;
-    set-style | --set-style)            set_style "$2" ;;
-
-    get-position | --get-position)      get_position ;;
-    set-position | --set-position)      set_position "$2" ;;
-
-    get-stack | --get-stack)            get_stack ;;
-    set-stack | --set-stack)            set_stack "$2" ;;
-    --get-configured-stack)             get_configured_stack ;;
-    --set-visual-stack)                 set_visual_stack "$2" ;;
-
-    *) command_help ;;
+    --menu)                 "$SCRIPTS/hypr-sys-menu" --menu style ;;
+    --list-styles)          list_styles ;;
+    --get-style)            "$SCRIPTS/hypr-state" --get-prop bar-style ;;
+    --set-style)            set_style "$2" ;;
+    --get-position)         "$SCRIPTS/hypr-state" --get-prop bar-position ;;
+    --set-position)         set_position "$2" ;;
+    --get-stack)           "$SCRIPTS/hypr-state" --get-prop bar-stacked ;;
+    --set-stack)            set_stack "$2" ;;
+    --get-visual-stack)     get_visual_stack ;;
+    --set-visual-stack)     set_visual_stack "$2" ;;
+    *)                      command_help ;;
 esac

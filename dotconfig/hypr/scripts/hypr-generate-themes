@@ -8,6 +8,7 @@ declare -A THEME=()
 THEME_NAME=
 THEME_STAGE=
 
+readonly SCRIPTS=$XDG_CONFIG_HOME/hypr/scripts
 readonly CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 readonly STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
 readonly THEME_STATE=$STATE_HOME/hypr/theme
@@ -253,8 +254,7 @@ main() {
     generate_rofi
     publish_theme
 
-    mkdir -p "${THEME_STATE%/*}" || die "could not create theme state directory"
-    printf '%s\n' "$THEME_NAME" > "$THEME_STATE" || die "could not record current theme"
+    "$SCRIPTS/hypr-state" --set-prop color "$THEME_NAME"
 }
 
 

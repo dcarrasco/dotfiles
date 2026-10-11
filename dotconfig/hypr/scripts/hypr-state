@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
+readonly THEME_STATE=$STATE_HOME/hypr/theme
+
+has_prop() {
+    (( $(grep -c "$prop =" "$THEME_STATE") == 0 )) && printf 'false' || printf 'true'
+}
+
+get_prop() {
+    local prop="${1:-}"
+
+    [[ "$(has_prop "$prop")" == false ]] && exit 1
+
+    sed -nE "s/($prop) = (.*)/\2/p" "$THEME_STATE"
+}
+
+set_prop() {
+    local prop="${1:-}"
+    local value="${2:-}"
+
+    if [[ "$(has_prop "$prop")" == true ]]; then
+        sed -i -E "s/($prop) = (.*)/$prop = $value/" "$THEME_STATE"
+    else
+        printf '%s = %s\n' "$prop" "$value" >> "$THEME_STATE"
+    fi
+}
+
+main() {
+    mkdir -p "${THEME_STATE%/*}" || die "could not create theme state directory"
+
+    case "${1:-}" in
+        --get-prop)     get_prop "$2" ;;
+        --set-prop)     set_prop "$2" "$3" ;;
+    esac
+}
+
+main "$@"
