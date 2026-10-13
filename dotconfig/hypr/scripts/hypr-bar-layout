@@ -81,7 +81,7 @@ get_visual_stack() {
 set_visual_stack() {
     local stacked=$1
     local margin="0em"
-    local mg="0.3em"
+    local mg="0.4em"
     local top_mg="$mg $mg 0em $mg"
     local bottom_mg="0em $mg $mg $mg"
 
