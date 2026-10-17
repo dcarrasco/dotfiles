@@ -10,8 +10,6 @@ THEME_STAGE=
 
 readonly SCRIPTS=$XDG_CONFIG_HOME/hypr/scripts
 readonly CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
-readonly STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
-readonly THEME_STATE=$STATE_HOME/hypr/theme
 
 readonly -a REQUIRED_ROLES=(
     border_active
