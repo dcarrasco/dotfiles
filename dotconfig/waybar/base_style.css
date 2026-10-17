@@ -35,7 +35,7 @@ __        __          _                  ____                   ____  _         
 .modules-left .module,
 .modules-right .module,
 .modules-center .module {
-    margin: 0em 0.5em;
+    margin: 0em 0.6em;
 }
 
 tooltip {
@@ -115,7 +115,7 @@ button:hover label {
 #language,
 #custom-poweroff,
 #network {
-    padding: 0 0.5em 0 0;
+    /* padding: 0; */
 }
 
 /* ------------------------------------------------------
