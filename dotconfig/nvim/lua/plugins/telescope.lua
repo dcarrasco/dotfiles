@@ -6,7 +6,17 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
 
     config = function()
+      local actions = require("telescope.actions")
+
       require('telescope').setup {
+        defaults = {
+          mappings = {
+            i = {
+              ["<Tab>"] = actions.move_selection_previous,
+              ["<S-Tab>"] = actions.move_selection_next,
+            }
+          }
+        },
         pickers = {
           buffers = { theme = "ivy", sort_mru = true, sort_lastused = true },
           colorscheme = { theme = "dropdown", enable_preview = false }
