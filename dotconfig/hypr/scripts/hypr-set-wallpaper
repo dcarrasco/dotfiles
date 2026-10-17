@@ -9,7 +9,7 @@ fi
 
 if [[ -n "$wallpaper" ]]; then
     # Cambia la configuración inicial del fondo de pantalla
-    sed -iE "s|([[:space:]]*path =).*|\1 $wallpaper|" "$WALLPAPER_CONFIG"
+    sed -i -E "s|([[:space:]]*path) = .*|\1 = $wallpaper|" "$WALLPAPER_CONFIG"
 
     # Ejecuta cambio de fondo en todas las pantalla
     hyprctl hyprpaper wallpaper "eDP-1,$wallpaper"

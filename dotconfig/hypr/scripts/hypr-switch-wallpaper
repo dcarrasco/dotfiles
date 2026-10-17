@@ -16,7 +16,7 @@ wallpaper_list() {
 }
 
 current_wallpaper() {
-    sed -nE 's|[[:space:]]*path = .*/(.*)|\1|p'
+    sed -nE 's|[[:space:]]*path = .*/(.*)|\1|p' "$WALLPAPER_CONFIG"
 }
 
 wallpaper_number() {
