@@ -151,7 +151,7 @@
     "cpu": {
         "interval": 5,
         //       
-        "format": "  {usage:>2}%",
+        "format": "  {usage}%",
         "states": {
             "warning": 60,
             "critical": 80
