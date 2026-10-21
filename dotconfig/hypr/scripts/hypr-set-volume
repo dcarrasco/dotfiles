@@ -14,22 +14,36 @@ notify() {
 
 step=""
 icon=""
-if [[ $1 == "up" ]]; then
-    step="5%+"
-    icon="audio-volume-high"
-elif [[ $1 = "down" ]]; then
-    step="5%-"
-    icon="audio-volume-low"
-elif [[ $1 == "toggle" ]]; then
-    amixer set Master toggle
-    new_status="$(amixer get Master | grep "Front Left:" | sed -e "s/.*\[\(on\|off\)\].*/\1/")"
+case $1 in
+    up)
+        step="5%+"
+        icon="audio-volume-high"
+        ;;
+    down)
+        step="5%-"
+        icon="audio-volume-low"
+        ;;
+    toggle)
+        amixer set Master toggle
+        new_status="$(amixer get Master | sed -nE "s/ *Front Left.*\[(on|off)\].*/\1/p")"
 
-    if [[ $new_status == "off" ]]; then
-        notify audio-volume-muted "Volumen Mute"
-    else
-        notify audio-volume-high "Volumen Unmute"
-    fi
-fi
+        if [[ $new_status == "off" ]]; then
+            notify audio-volume-muted "Volumen Mute"
+        else
+            notify audio-volume-high "Volumen Unmute"
+        fi
+        ;;
+    toggle-mic)
+        amixer set Capture toggle
+        new_status="$(amixer get Capture | grep "Front Left:" | sed -E "s/.*\[(on|off)\].*/\1/")"
+
+        if [[ $new_status == "off" ]]; then
+            notify mic-volume-muted "Volumen Mute"
+        else
+            notify mic-volume-high "Volumen Unmute"
+        fi
+        ;;
+esac
 
 if [[ -n "$step" ]]; then
     amixer set Master "$step"
