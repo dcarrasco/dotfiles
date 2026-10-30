@@ -27,3 +27,14 @@ button:hover label {
     background-color: alpha(@fg-normal, 0.2);
 }
 
+.modules-right .module,
+.modules-center .module {
+    margin: 0em 0em;
+    padding: 0em 0.6em;
+    border-radius: 0.7em;
+}
+
+.modules-right .module:hover,
+.modules-center .module:hover {
+    background-color: alpha(@fg-normal, 0.2);
+}
