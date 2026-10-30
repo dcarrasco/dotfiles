@@ -159,7 +159,7 @@
         "tooltip": true,
         "tooltip-format": "Freq: {avg_frequency}GHz\nCore0: {usage0}%\nCore1: {usage1}%\nCore2: {usage2}%\nCore3: {usage3}%\nCore4: {usage4}%\nCore5: {usage5}%\nCore6: {usage6}%\nCore7: {usage7}%\nCore8: {usage8}%\nCore9:{usage9}%\nCore10: {usage10}%\nCore11: {usage11}%\nCore12: {usage12}%\nCore13: {usage13}%\nCore14: {usage15}%\nCore15: {usage15}%",
         // "on-click": "flatpak run net.nokyan.Resources",
-        "on-click": "kitty --class hypr-terminal-float btop"
+        "on-click": "alacritty --class hypr-terminal-float --command btop"
         // "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
     },
 
@@ -175,7 +175,8 @@
             "critical": 90
         },
         "tooltip": true,
-        "tooltip-format": "RAM {used:0.1f}G / {total:0.1f}G used ({percentage}%)\nSWAP {swapUsed:0.1f}G / {swapTotal:0.1f}G used"
+        "tooltip-format": "RAM {used:0.1f}G / {total:0.1f}G used ({percentage}%)\nSWAP {swapUsed:0.1f}G / {swapTotal:0.1f}G used",
+        "on-click": "alacritty --class hypr-terminal-float --command btop"
     },
 
     "temperature": {
@@ -330,7 +331,7 @@
         "return-type": "json",
         "format": "{}",
         "exec": "$XDG_CONFIG_HOME/hypr/scripts/hypr-show-updates",
-        "on-click": "kitty --class hypr-terminal-float -d $XDG_CONFIG_HOME/hypr/scripts bash -c \"./hypr-show-logo; ./hypr-do-update; ./hypr-show-done \"",
+        "on-click": "alacritty --class hypr-terminal-float --working-directory $XDG_CONFIG_HOME/hypr/scripts --command bash -c \"./hypr-show-logo; ./hypr-do-update; ./hypr-show-done \"",
         "interval": 900,
         "signal": 7,
         "tooltip": true
