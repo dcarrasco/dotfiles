@@ -27,9 +27,9 @@ return {
   -- Screenshots
   -- *************************************************************************************************
   { mod = "", key = "Print", dsp = HYPR.fn.scripts("hypr-cmd-screenshot --file"), desc = "Save screenshot to file" },
-  { key = "SUPER + SHIFT + ALT + S", dsp = HYPR.fn.scripts("hypr-cmd-screenshot --region"), desc = "Save screen area to file" },
-  { key = "SUPER + SHIFT + S", dsp = HYPR.fn.scripts("hypr-cmd-screenshot"), desc = "Copy screen area to clipboard" },
-  { key = "SUPER + SHIFT + CTRL + S", dsp = "pkill hyprpicker || hyprpicker -a", desc = "Color picker" },
+  { key = "SHIFT + ALT + S", dsp = HYPR.fn.scripts("hypr-cmd-screenshot --region"), desc = "Save screen area to file" },
+  { key = "SHIFT + S", dsp = HYPR.fn.scripts("hypr-cmd-screenshot"), desc = "Copy screen area to clipboard" },
+  { key = "SHIFT + CTRL + S", dsp = "pkill hyprpicker || hyprpicker -a", desc = "Color picker" },
 
   -- *************************************************************************************************
   -- Keyboard
