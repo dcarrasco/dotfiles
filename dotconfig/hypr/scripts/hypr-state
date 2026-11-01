@@ -3,33 +3,30 @@
 set -euo pipefail
 
 readonly STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
-readonly THEME_STATE=$STATE_HOME/hypr/theme
+readonly HYPR_STATE=$STATE_HOME/hypr-state.json
 
 has_prop() {
-    (( $(grep -c "$prop =" "$THEME_STATE") == 0 )) && printf 'false' || printf 'true'
+    local prop="${1:-}"
+
+    jq --arg prop "$prop" 'has($prop)' "$HYPR_STATE"
 }
 
 get_prop() {
     local prop="${1:-}"
 
-    [[ "$(has_prop "$prop")" == false ]] && exit 1
-
-    sed -nE "s/($prop) = (.*)/\2/p" "$THEME_STATE"
+    jq -r --arg prop "$prop" '.[$prop]' "$HYPR_STATE"
 }
 
 set_prop() {
     local prop="${1:-}"
     local value="${2:-}"
-
-    if [[ "$(has_prop "$prop")" == true ]]; then
-        sed -i -E "s/($prop) = (.*)/$prop = $value/" "$THEME_STATE"
-    else
-        printf '%s = %s\n' "$prop" "$value" >> "$THEME_STATE"
-    fi
+#
+    tmp=$(mktemp)
+    jq --arg prop "$prop" --arg value "$value" --sort-keys '.[$prop]=$value' "$HYPR_STATE" > "$tmp" && mv "$tmp" "$HYPR_STATE"
 }
 
 main() {
-    mkdir -p "${THEME_STATE%/*}" || die "could not create theme state directory"
+    [[ -e "$HYPR_STATE" ]] || printf '{}' > "$HYPR_STATE"
 
     case "${1:-}" in
         --get-prop)     get_prop "$2" ;;
