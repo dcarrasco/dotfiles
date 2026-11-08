@@ -24,7 +24,7 @@ case ${os,,} in
         log_installed_pkgs
         ;;
     fedora*)
-        sudo dnf upgrade
+        sudo dnf upgrade --refresh
         update_flatpak
         log_installed_pkgs
         ;;
