@@ -12,16 +12,11 @@ __      ____ _ _   _| |__   __ _ _ __   ___| |_ _   _| | ___ _   _ __ ___   __ _
 }
 
 #waybar > box {
+    padding: 2px 0;
     border-bottom: 1px solid @bg-normal;
 }
 
-#window label {
-    font-size: 13pt;
-}
-
 button.active label {
-    font-size: 13pt;
-    box-shadow: 0 0 transparent;
     color: @accent1;
 }
 
