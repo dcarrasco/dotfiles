@@ -22,14 +22,12 @@ __        __          _                  ____                   ____  _         
 #waybar > box {
     color: @fg-normal;
     background-color: @bg-normal;
-    /* margin: 0.5em 0.5em 0 0.5em; */
-    /* border-radius: 0.5em; */
 }
 
 .modules-left,
 .modules-right,
 .modules-center {
-    padding: 0.2em 0.5em;
+    padding: 0em 0.5em;
 }
 
 .modules-left .module,
@@ -86,19 +84,11 @@ button:hover label {
     margin: 0;
     padding: 0 0.5em;
     color: @accent1;
-}
-
-#custom-start-menu label {
     font-size: 24px;
 }
 
 #custom-start-menu:hover {
     color: @accent2;
-}
-
-#custom-windowstatus {
-    margin: 0;
-    padding: 0 0.5em 0 0;
 }
 
 #custom-leftsep {
