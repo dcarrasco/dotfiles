@@ -30,7 +30,7 @@
         "group_active_text":   "nord3",
         "group_inactive_bg":   "nord2",
         "group_inactive_text": "nord4",
-        "bg_window":           { "color": "nord4", "alpha": 0.80 },
+        "bg_window":           { "color": "nord6", "alpha": 0.80 },
         "bg_tooltip":          { "color": "nord6", "alpha": 0.80 },
         "bg_textbox":          { "color": "nord10", "alpha": 0.20 },
         "bg_selected":         { "color": "nord3", "alpha": 0.10 },
