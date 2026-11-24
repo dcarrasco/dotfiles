@@ -24,9 +24,17 @@ debug() {
 }
 
 exec_pgm() {
-    coproc {
-        "$@" > /dev/null 2>&1
-    }
+    if [[ ${1:-} == rofi ]]; then
+        coproc {
+            sleep 0.1
+            "$@" > /dev/null 2>&1
+        }
+    else
+        coproc {
+            "$@" > /dev/null 2>&1
+        }
+    fi
+
     exit 0
 }
 
